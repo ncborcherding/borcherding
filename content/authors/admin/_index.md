@@ -67,8 +67,8 @@ email: ""
 highlight_name: false
 ---
 
-Nick is a member of the Washington University Department of Pathology and Immunology dual residency and post-doc PSTP program. He is co-mentored by [Jon Brestoff](https://brestofflab.com/) and [David DeNardo](https://www.icce-wustl.org/david-denardo-lab.html) investigating the role mitochondria transfer between immune and stromal cell components.  
+Nick is a member of the Washington University Department of Pathology and Immunology dual residency and post-doc PSTP program. He is co-mentored by [Jon Brestoff](https://brestofflab.com/) and [David DeNardo](https://www.icce-wustl.org/david-denardo-lab.html) investigating the role mitochondria transfer between immune and stromal cells in adipose tissue and the tumor microenvironment.  
 
-In his free time, Nick likes to write R packages for the single-cell community, including [scRepertoire](https://github.com/ncborcherding/scRepertoire), [escape](https://github.com/ncborcherding/escape), and [Trex](https://github.com/ncborcherding/Trex). In addition, he has compiled the largest immune single-cell data set for tumors, which is freely available to [anyone](https://github.com/ncborcherding/utility).
+In his free time, Nick likes to write R packages for the single-cell community, including [scRepertoire](https://github.com/ncborcherding/scRepertoire), [escape](https://github.com/ncborcherding/escape), and [Trex](https://github.com/ncborcherding/Trex). In addition, he has compiled the largest immune single-cell RNA/TCR data set for tumors, which is freely available to [anyone](https://github.com/ncborcherding/utility).
 
 {{< icon name="download" pack="fas" >}} Download my {{< staticref "uploads/demo_resume.pdf" "newtab" >}}resumé{{< /staticref >}}.
