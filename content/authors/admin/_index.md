@@ -19,8 +19,10 @@ bio: My research includes systems immunology, single-cell sequencing technology,
 # Interests to show in About widget
 interests:
 - Tumor Immunology
-- Adaptive immune receptor repertoire analyses
-- Open data science
+- Immunometabolism 
+- Single-cell immune profiling 
+- Adaptive immune receptor repertoire analyses 
+- Open data science 
 
 # Education to show in About widget
 education:
@@ -61,7 +63,7 @@ social:
 #   link: uploads/resume.pdf
 
 # Enter email to display Gravatar (if Gravatar enabled in Config)
-email: ""
+email: "ncborch@gmail.com"
 
 # Highlight the author in author lists? (true/false)
 highlight_name: false
