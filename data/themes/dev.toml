@@ -1,0 +1,41 @@
+# Theme metadata
+
+name = "dev"
+
+
+
+# Is theme light or dark?
+
+light = true
+
+
+
+# Primary
+
+primary = "#177E89"
+
+
+
+# Menu
+
+menu_primary = "#084C61"
+
+menu_text = "#fff"
+
+menu_text_active = "#DB3A34"
+
+menu_title = "#fff"
+
+
+
+# Backgrounds
+
+background = "#fff4dd"
+
+home_section_odd = "#fff4dd"
+
+home_section_even = "#ffe9bb"
+
+
+
+font = "Mukta"
