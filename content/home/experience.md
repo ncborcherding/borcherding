@@ -25,7 +25,6 @@ experience:
     date_start: '2020-07-01'
     date_end: ''
     
-experience:
   - title: MD/PhD Student
     company: Carver College of Medicine, University of Iowa
     company_url: 'https://medicine.uiowa.edu/'
