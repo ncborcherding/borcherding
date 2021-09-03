@@ -24,6 +24,15 @@ experience:
     location: Missouri
     date_start: '2020-07-01'
     date_end: ''
+    
+experience:
+  - title: MD/PhD Student
+    company: Carver College of Medicine, University of Iowa
+    company_url: 'https://medicine.uiowa.edu/'
+    company_logo: Iowaseal
+    location: Iowa
+    date_start: '2014-08-01'
+    date_end: '2020-05-15'
 
 design:
   columns: '2'
