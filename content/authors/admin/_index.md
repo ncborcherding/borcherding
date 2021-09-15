@@ -73,4 +73,4 @@ Nick is a member of the Washington University Department of Pathology and Immuno
 
 In his free time, Nick likes to write R packages for the single-cell community, including [scRepertoire](https://github.com/ncborcherding/scRepertoire), [escape](https://github.com/ncborcherding/escape), and [Trex](https://github.com/ncborcherding/Trex). In addition, he has compiled the largest immune single-cell RNA/TCR data set for tumors, which is freely available to [anyone](https://github.com/ncborcherding/utility).
 
-{{< icon name="download" pack="fas" >}} Download my {{< staticref "uploads/demo_resume.pdf" "newtab" >}}resumé{{< /staticref >}}.
+{{< icon name="download" pack="fas" >}} Download my {{< staticref "uploads/borcherdingCV.pdf" "newtab" >}}CV{{< /staticref >}}.
