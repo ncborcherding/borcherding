@@ -60,6 +60,9 @@ social:
 - icon: github
   icon_pack: fab
   link: https://github.com/ncborcherding
+- icon: linkedin
+  icon_pack: fab
+  link: https://www.linkedin.com/in/thehumanborch/
 
 # Link to a PDF of your resume/CV.
 # To use: copy your resume to `static/uploads/borcherding_cv.pdf`, enable `ai` icons in `params.toml`, 

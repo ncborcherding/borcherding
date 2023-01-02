@@ -42,7 +42,9 @@ publication_short: In *Immunity*
 abstract: In this study we profiled vaccine-induced polyclonal antibodies as well as plasmablast-derived mAbs from individuals who received SARS-CoV-2 spike mRNA vaccine. Polyclonal antibody responses in vaccinees were robust and comparable to or exceeded those seen after natural infection. However, the ratio of binding to neutralizing antibodies after vaccination was greater than that after natural infection and, at the monoclonal level, we found that the majority of vaccine-induced antibodies did not have neutralizing activity. We also found a co-dominance of mAbs targeting the NTD and RBD of SARS-CoV-2 spike and an original antigenic-sin like backboost to spikes of seasonal human coronaviruses OC43 and HKU1. Neutralizing activity of NTD mAbs but not RBD mAbs against a clinical viral isolate carrying E484K as well as extensive changes in the NTD was abolished, suggesting that a proportion of vaccine-induced RBD binding antibodies may provide substantial protection against viral variants carrying single E484K RBD mutations. 
 
 tags:
-- BCR, Immune Response, COVID-19
+- BCR
+- Immune Response
+- COVID-19
 featured: true
 
 links:
