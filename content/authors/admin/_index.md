@@ -6,7 +6,7 @@ title: Nick Borcherding
 superuser: true
 
 # Role/position/tagline
-role: PGY-2 Clinical Pathology Resident
+role: PGY-3 Clinical Pathology Resident
 
 # Organizations/Affiliations to show in About widget
 organizations:
@@ -36,6 +36,9 @@ education:
   - course: MS in Pathology
     institution: University of Iowa
     year: 2014
+  - course: BS in Nutritional Sciences
+    institution: Iowa State University
+    year: 2012
 
 # Social/Academic Networking
 # For available icons, see: https://wowchemy.com/docs/getting-started/page-builder/#icons
@@ -56,7 +59,7 @@ social:
   link: https://github.com/ncborcherding
 
 # Link to a PDF of your resume/CV.
-# To use: copy your resume to `static/uploads/resume.pdf`, enable `ai` icons in `params.toml`, 
+# To use: copy your resume to `static/uploads/borcherding_cv.pdf`, enable `ai` icons in `params.toml`, 
 # and uncomment the lines below.
 # - icon: cv
 #   icon_pack: ai
@@ -73,4 +76,4 @@ Nick is a member of the Washington University Department of Pathology and Immuno
 
 In his free time, Nick likes to write R packages for the single-cell community, including [scRepertoire](https://github.com/ncborcherding/scRepertoire), [escape](https://github.com/ncborcherding/escape), and [Trex](https://github.com/ncborcherding/Trex). In addition, he has compiled the largest immune single-cell RNA/TCR data set for tumors, which is freely available to [anyone](https://github.com/ncborcherding/utility).
 
-{{< icon name="download" pack="fas" >}} Download my {{< staticref "uploads/demo_resume.pdf" "newtab" >}}resumé{{< /staticref >}}.
+{{< icon name="download" pack="fas" >}} Download my {{< staticref "uploads/demo_resume.pdf" "newtab" >}}curriculum vitae{{< /staticref >}}.
