@@ -17,6 +17,22 @@ subtitle:
 date_format: Jan 2006
 
 experience:
+  - title: Computational Biology Advisor
+    company: Omniscope
+    company_url: 'https://pathology.wustl.edu/'
+    company_logo: omniscope
+    location: Barcelona
+    date_start: '2023-01-03'
+    date_end: ''
+    
+  - title: Consulting Senior Computational Biologist
+    company: Santa Ana Bio
+    company_url: 
+    company_logo: 
+    location: Iowa
+    date_start: '2022-09-15'
+    date_end: ''
+    
   - title: Resident, Clinical Pathology
     company: Washington University
     company_url: 'https://pathology.wustl.edu/'
