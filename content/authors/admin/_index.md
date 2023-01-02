@@ -27,6 +27,9 @@ interests:
 # Education to show in About widget
 education:
   courses:
+  - course: Clinical Pathology Residency
+    institution: Washington University St Louis
+    year: 2023
   - course: Medical Doctorate
     institution: University of Iowa
     year: 2020
