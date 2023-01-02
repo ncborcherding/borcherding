@@ -19,7 +19,7 @@ date_format: Jan 2006
 experience:
   - title: Computational Biology Advisor
     company: Omniscope
-    company_url: 'https://pathology.wustl.edu/'
+    company_url: 'https://www.omniscope.ai/'
     company_logo: omniscope
     location: Barcelona
     date_start: '2023-01-03'
