@@ -1,17 +1,18 @@
 ---
-title: "Content Evaluation, Usage Profile, and Student Preferences Related to a Medical Student Wiki for Student-Authored Learning Resources (Carverpedia)"
+title: "Contribution of synergism between PHF8 and HER2 signalling to breast cancer development and drug resistance"
 authors:
+- Qi Liu
 - admin
-- Matthew Rudolph
-- Amy Tierney
-- Reuben Vyn
-- Darren Hoffmann
+- Peng Shao
+- Peterson K Maina
+- Weizhou Zhang
+- Hank H Qi
 
-date: "2016-12-08T00:00:00Z"
-doi: "10.1007/s40670-016-0358-0"
+date: "2020-01-07T00:00:00Z"
+doi: "10.1016/j.ebiom.2019.102612"
 
 # Schedule page publish date (NOT publication's date).
-publishDate: "2016-12-08T00:00:00Z"
+publishDate: "2020-01-07T00:00:00Z"
 
 # Publication type.
 # Legend: 0 = Uncategorized; 1 = Conference paper; 2 = Journal article;
@@ -20,18 +21,28 @@ publishDate: "2016-12-08T00:00:00Z"
 publication_types: ["2"]
 
 # Publication name and optional abbreviated publication name.
-publication: In *Medical Science Education*
-publication_short: In *Medical Science Education*
+publication: In *EBioMedicine*
+publication_short: In *EBiomedicine*
 
-abstract: We identified a lack of continuity in student-generated learning aids and the sharing of advice and resources between medical graduating classes. Carverpedia, built in the UIowa Wiki platform, is a novel collaboration between pre-clinical medical students and faculty to produce a centralized location for learning aids at the Carver College of Medicine. Carverpedia is designed to organize files and links in a centralized location accessible to all students. Previously, items were shared through various modalities (e.g., Facebook, email, etc.) without equal access for every student or well-developed archiving. After one academic year of use, there were 217 resources posted to the wiki site by 34 authors. Content posted on Carverpedia differed from Facebook content, with increased content summaries and active-learning. Site utilization, collected by Google Analytics, found 2979 sessions on Carverpedia and a total of 10,253 page views. Site usage and posting of resources was highly correlated with basic science exam schedule. This corresponded with the students surveyed on site usage, with the majority of students using Carverpedia for basic science courses, like Gross Anatomy and Foundations of Cellular Life. Of note, surveyed students found faculty-authored content, practice questions, content summaries, and active-learning resources the most useful of the resources posted. Overall, we found the Wiki format is effective as a means of creating an online community of support and collaboration for student-authored and faculty-authored learning resources.
+abstract:  
+Background: HER2 plays a critical role in tumourigenesis and is associated with poor prognosis of patients with HER2-positive breast cancers. Although anti-HER2 drugs are beneficial for treating breast cancer, de novo, or acquired resistance often develops. Epigenetic factors are increasingly targeted for therapy; however, such mechanisms that interact with HER2 signalling are poorly understood.
+
+Methods: RNA sequencing was performed to identify PHF8 targets downstream of HER2 signalling. CHIP-qPCR were used to investigate how PHF8 regulates HER2 transcription. ELISA determined cytokine secretion. Cell-based assay revealed a feed forward loop in HER2 signalling and then evaluated in vivo.
+
+Findings: We report the synergistic interplay between histone demethylase PHF8 and HER2 signalling. Specifically, PHF8 levels were elevated in HER2-positive breast cancers and upregulated by HER2. PHF8 functioned as a coactivator that regulated the expression of HER2, markers of the HER2-driven epithelial-to-mesenchymal transition and cytokines. The HER2-PHF8-IL-6 regulatory axis was active in cell lines and in newly established MMTV-Her2/MMTV-Cre/Phf8fl°x/fl°x mouse models, which revealed the oncogenic function of Phf8 in breast cancer for the first time. Further, the PHF8-IL-6 axis contributed to the resistance to trastuzumab in vitro and may play a critical role in the infiltration of T cells in HER2-driven breast cancers.
+
+Interpretation: These findings provided informative mechanistic insight into the potential application of PHF8 inhibitors to overcome resistance to anti-HER2 therapies. 
 
 tags:
-- Medical education
-- wiki
-- platform
-featured: true
+- cancer
+- breast cancer
+- HER2
+featured: false
 
-url_pdf: https://github.com/ncborcherding/borcherding/blob/master/content/publication/borcherding2017content/borcherding2017content.pdf
+links:
+- name: Pubmed
+  url: https://pubmed.ncbi.nlm.nih.gov/31923801/
+url_pdf: https://github.com/ncborcherding/borcherding/blob/master/content/publication/liu2020contribution/liu2020contribution.pdf
 #url_code: '#'
 #url_dataset: '#'
 #url_poster: '#'
@@ -39,12 +50,5 @@ url_pdf: https://github.com/ncborcherding/borcherding/blob/master/content/public
 #url_slides: ''
 #url_source: '#'
 #url_video: '#'
-
-# Featured image
-# To use, add an image named `featured.jpg/png` to your page's folder. 
-image:
-  caption: 
-  focal_point: ""
-  preview_only: false
 ---
 

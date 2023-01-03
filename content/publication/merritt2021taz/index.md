@@ -1,17 +1,24 @@
 ---
-title: "Content Evaluation, Usage Profile, and Student Preferences Related to a Medical Student Wiki for Student-Authored Learning Resources (Carverpedia)"
+title: "TAZ-CAMTA1 and YAP-TFE3 alter the TAZ/YAP transcriptome by recruiting the ATAC histone acetyltransferase complex"
 authors:
+- Nicole Merritt
+- Keith Garcia
+- Dushyandi Rajendran
+- Zhen-Yuan Lin
+- Xiaomeng Zhang
+- Katrina A Mitchell
 - admin
-- Matthew Rudolph
-- Amy Tierney
-- Reuben Vyn
-- Darren Hoffmann
+- Colleen Fullenkamp
+- Michael S Chimenti
+- Anne-Claude Gingras
+- Kieran F Harvey
+- Munir R Tanas
 
-date: "2016-12-08T00:00:00Z"
-doi: "10.1007/s40670-016-0358-0"
+date: "2021-04-29T00:00:00Z"
+doi: "10.7554/eLife.62857 "
 
 # Schedule page publish date (NOT publication's date).
-publishDate: "2016-12-08T00:00:00Z"
+publishDate: "2021-04-29T00:00:00Z"
 
 # Publication type.
 # Legend: 0 = Uncategorized; 1 = Conference paper; 2 = Journal article;
@@ -20,18 +27,22 @@ publishDate: "2016-12-08T00:00:00Z"
 publication_types: ["2"]
 
 # Publication name and optional abbreviated publication name.
-publication: In *Medical Science Education*
-publication_short: In *Medical Science Education*
+publication: In *eLife*
+publication_short: In *eLife*
 
-abstract: We identified a lack of continuity in student-generated learning aids and the sharing of advice and resources between medical graduating classes. Carverpedia, built in the UIowa Wiki platform, is a novel collaboration between pre-clinical medical students and faculty to produce a centralized location for learning aids at the Carver College of Medicine. Carverpedia is designed to organize files and links in a centralized location accessible to all students. Previously, items were shared through various modalities (e.g., Facebook, email, etc.) without equal access for every student or well-developed archiving. After one academic year of use, there were 217 resources posted to the wiki site by 34 authors. Content posted on Carverpedia differed from Facebook content, with increased content summaries and active-learning. Site utilization, collected by Google Analytics, found 2979 sessions on Carverpedia and a total of 10,253 page views. Site usage and posting of resources was highly correlated with basic science exam schedule. This corresponded with the students surveyed on site usage, with the majority of students using Carverpedia for basic science courses, like Gross Anatomy and Foundations of Cellular Life. Of note, surveyed students found faculty-authored content, practice questions, content summaries, and active-learning resources the most useful of the resources posted. Overall, we found the Wiki format is effective as a means of creating an online community of support and collaboration for student-authored and faculty-authored learning resources.
+abstract: 
+Epithelioid hemangioendothelioma (EHE) is a vascular sarcoma that metastasizes early in its clinical course and lacks an effective medical therapy. The TAZ-CAMTA1 and YAP-TFE3 fusion proteins are chimeric transcription factors and initiating oncogenic drivers of EHE. A combined proteomic/genetic screen in human cell lines identified YEATS2 and ZZZ3, components of the Ada2a-containing histone acetyltransferase (ATAC) complex, as key interactors of both fusion proteins despite the dissimilarity of the C terminal fusion partners CAMTA1 and TFE3. Integrative next-generation sequencing approaches in human and murine cell lines showed that the fusion proteins drive a unique transcriptome by simultaneously hyperactivating a TEAD-based transcriptional program and modulating the chromatin environment via interaction with the ATAC complex. Interaction of the ATAC complex with both fusion proteins indicates that it is a key oncogenic driver and unifying enzymatic therapeutic target for this sarcoma. This study presents an approach to mechanistically dissect how chimeric transcription factors drive the formation of human cancers. 
 
 tags:
-- Medical education
-- wiki
-- platform
-featured: true
+- cancer
+- ATAC-seq
+- sarcoma
+featured: false
 
-url_pdf: https://github.com/ncborcherding/borcherding/blob/master/content/publication/borcherding2017content/borcherding2017content.pdf
+links:
+- name: Pubmed
+  url: https://pubmed.ncbi.nlm.nih.gov/33913810/
+url_pdf: https://github.com/ncborcherding/borcherding/blob/master/content/publication/merritt2021taz/merritt2021taz.pdf
 #url_code: '#'
 #url_dataset: '#'
 #url_poster: '#'
@@ -39,12 +50,5 @@ url_pdf: https://github.com/ncborcherding/borcherding/blob/master/content/public
 #url_slides: ''
 #url_source: '#'
 #url_video: '#'
-
-# Featured image
-# To use, add an image named `featured.jpg/png` to your page's folder. 
-image:
-  caption: 
-  focal_point: ""
-  preview_only: false
 ---
 

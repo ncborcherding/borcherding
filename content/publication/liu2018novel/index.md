@@ -1,17 +1,19 @@
 ---
-title: "Content Evaluation, Usage Profile, and Student Preferences Related to a Medical Student Wiki for Student-Authored Learning Resources (Carverpedia)"
+title: "A novel HER2 gene body enhancer contributes to HER2 expression"
 authors:
+- Qi Liu
+- Mikhail V Kulak
 - admin
-- Matthew Rudolph
-- Amy Tierney
-- Reuben Vyn
-- Darren Hoffmann
+- Peterson Maina
+- Weizhou Zhang
+- Ronald J Weigel
+- Hank H Qi
 
-date: "2016-12-08T00:00:00Z"
-doi: "10.1007/s40670-016-0358-0"
+date: "2018-02-01T00:00:00Z"
+doi: " DOI: 10.1038/onc.2017.382"
 
 # Schedule page publish date (NOT publication's date).
-publishDate: "2016-12-08T00:00:00Z"
+publishDate: "2018-02-01T00:00:00Z"
 
 # Publication type.
 # Legend: 0 = Uncategorized; 1 = Conference paper; 2 = Journal article;
@@ -20,18 +22,22 @@ publishDate: "2016-12-08T00:00:00Z"
 publication_types: ["2"]
 
 # Publication name and optional abbreviated publication name.
-publication: In *Medical Science Education*
-publication_short: In *Medical Science Education*
+publication: In *Oncogene*
+publication_short: In *Oncogene*
 
-abstract: We identified a lack of continuity in student-generated learning aids and the sharing of advice and resources between medical graduating classes. Carverpedia, built in the UIowa Wiki platform, is a novel collaboration between pre-clinical medical students and faculty to produce a centralized location for learning aids at the Carver College of Medicine. Carverpedia is designed to organize files and links in a centralized location accessible to all students. Previously, items were shared through various modalities (e.g., Facebook, email, etc.) without equal access for every student or well-developed archiving. After one academic year of use, there were 217 resources posted to the wiki site by 34 authors. Content posted on Carverpedia differed from Facebook content, with increased content summaries and active-learning. Site utilization, collected by Google Analytics, found 2979 sessions on Carverpedia and a total of 10,253 page views. Site usage and posting of resources was highly correlated with basic science exam schedule. This corresponded with the students surveyed on site usage, with the majority of students using Carverpedia for basic science courses, like Gross Anatomy and Foundations of Cellular Life. Of note, surveyed students found faculty-authored content, practice questions, content summaries, and active-learning resources the most useful of the resources posted. Overall, we found the Wiki format is effective as a means of creating an online community of support and collaboration for student-authored and faculty-authored learning resources.
+abstract: The transcriptional regulation of the human epidermal growth factor receptor-2 (HER2) contributes to an enhanced HER2 expression in HER2-positive breast cancers with HER2 gene amplification and HER2-low or HER2-negative breast cancers following radiotherapy or endocrine therapy, and this drives tumorigenesis and the resistance to therapy. Epigenetic mechanisms are critical for transcription regulation, however, such mechanisms in the transcription regulation of HER2 are limited to the involvement of tri-methylated histone 3 lysine 4 (H3K4me3) and acetylated histone 3 lysine 9 (H3K9ac) at the HER2 promoter region. Here, we report the identification of a novel enhancer in the HER2 3' gene body, which we have termed HER2 gene body enhancer (HGE). The HGE starts from the 3' end of intron 19 and extends into intron 22, possesses enhancer histone modification marks in specific cells and enhances the transcriptional activity of the HER2 promoters. We also found that TFAP2C, a known regulator of HER2, binds to HGE and is required for its enhancer function and that DNA methylation in the HGE region inhibits the histone modifications characterizing enhancer and is inversely correlated with HER2 expression in breast cancer samples. The identification of this novel enhancer sheds a light on the roles of epigenetic mechanisms in HER2 transcription, in both HER2-positive breast cancer samples and individuals with HER2-low or HER2-negative breast cancers undergoing radiotherapy or endocrine therapy. 
 
 tags:
-- Medical education
-- wiki
-- platform
-featured: true
+- cancer
+- breast cancer
+- HER2
+- methylation
+featured: false
 
-url_pdf: https://github.com/ncborcherding/borcherding/blob/master/content/publication/borcherding2017content/borcherding2017content.pdf
+links:
+- name: Pubmed
+  url: https://pubmed.ncbi.nlm.nih.gov/29800567/
+url_pdf: https://github.com/ncborcherding/borcherding/blob/master/content/publication/liu2018novel/liu2018novel.pdf
 #url_code: '#'
 #url_dataset: '#'
 #url_poster: '#'
@@ -39,12 +45,5 @@ url_pdf: https://github.com/ncborcherding/borcherding/blob/master/content/public
 #url_slides: ''
 #url_source: '#'
 #url_video: '#'
-
-# Featured image
-# To use, add an image named `featured.jpg/png` to your page's folder. 
-image:
-  caption: 
-  focal_point: ""
-  preview_only: false
 ---
 

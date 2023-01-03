@@ -1,17 +1,18 @@
 ---
-title: "Content Evaluation, Usage Profile, and Student Preferences Related to a Medical Student Wiki for Student-Authored Learning Resources (Carverpedia)"
+title: "Identification of novel TGF-β regulated genes with pro-migratory roles"
 authors:
+- Qi Liu
 - admin
-- Matthew Rudolph
-- Amy Tierney
-- Reuben Vyn
-- Darren Hoffmann
+- Pen Shao
+- Huojun Cao
+- Weizhou Zhang
+- Hank H Qi
 
-date: "2016-12-08T00:00:00Z"
-doi: "10.1007/s40670-016-0358-0"
+date: "2019-12-01T00:00:00Z"
+doi: "10.1016/j.bbadis.2019.165537"
 
 # Schedule page publish date (NOT publication's date).
-publishDate: "2016-12-08T00:00:00Z"
+publishDate: "2019-12-01T00:00:00Z"
 
 # Publication type.
 # Legend: 0 = Uncategorized; 1 = Conference paper; 2 = Journal article;
@@ -20,18 +21,19 @@ publishDate: "2016-12-08T00:00:00Z"
 publication_types: ["2"]
 
 # Publication name and optional abbreviated publication name.
-publication: In *Medical Science Education*
-publication_short: In *Medical Science Education*
+publication: In *Biochimica et Biophysica Acta*
+publication_short: In *Biochimica et Biophysica Acta*
 
-abstract: We identified a lack of continuity in student-generated learning aids and the sharing of advice and resources between medical graduating classes. Carverpedia, built in the UIowa Wiki platform, is a novel collaboration between pre-clinical medical students and faculty to produce a centralized location for learning aids at the Carver College of Medicine. Carverpedia is designed to organize files and links in a centralized location accessible to all students. Previously, items were shared through various modalities (e.g., Facebook, email, etc.) without equal access for every student or well-developed archiving. After one academic year of use, there were 217 resources posted to the wiki site by 34 authors. Content posted on Carverpedia differed from Facebook content, with increased content summaries and active-learning. Site utilization, collected by Google Analytics, found 2979 sessions on Carverpedia and a total of 10,253 page views. Site usage and posting of resources was highly correlated with basic science exam schedule. This corresponded with the students surveyed on site usage, with the majority of students using Carverpedia for basic science courses, like Gross Anatomy and Foundations of Cellular Life. Of note, surveyed students found faculty-authored content, practice questions, content summaries, and active-learning resources the most useful of the resources posted. Overall, we found the Wiki format is effective as a means of creating an online community of support and collaboration for student-authored and faculty-authored learning resources.
+abstract: Transforming growth factor-β (TGF-β) signaling plays fundamental roles in the development and homeostasis of somatic cells. Dysregulated TGF-β signaling contributes to cancer progression and relapse to therapies by inducing epithelial-to-mesenchymal transition (EMT), enriching cancer stem cells, and promoting immunosuppression. Although many TGF-β-regulated genes have been identified, only a few datasets were obtained by next-generation sequencing. In this study, we performed RNA-sequencing analysis of MCF10A cells and identified 1166 genes that were upregulated and 861 genes that were downregulated by TGF-β. Gene set enrichment analysis revealed that focal adhesion and metabolic pathways were the top enriched pathways of the up- and downregulated genes, respectively. Genes in these pathways also possess significant predictive value for renal cancers. Moreover, we confirmed that TGF-β induced expression of MICAL1 and 2, and the histone demethylase, KDM7A, and revealed their regulatory roles on TGF-β-induced cell migration. We also show a critical effect of KDM7A in regulating the acetylation of H3K27 on TGF-β-induced genes. In sum, this study identified novel effectors that mediate the pro-migratory role of TGF-β signaling, paving the way for future studies that investigate the function of MICAL family members in cancer and the novel epigenetic mechanisms downstream TGF-β signaling. 
 
 tags:
-- Medical education
-- wiki
-- platform
+- cancer
 featured: true
 
-url_pdf: https://github.com/ncborcherding/borcherding/blob/master/content/publication/borcherding2017content/borcherding2017content.pdf
+links:
+- name: Pubmed
+  url: https://pubmed.ncbi.nlm.nih.gov/31449970/
+url_pdf: https://github.com/ncborcherding/borcherding/blob/master/content/publication/liu2019identification/liu2019identification.pdf
 #url_code: '#'
 #url_dataset: '#'
 #url_poster: '#'
@@ -39,12 +41,5 @@ url_pdf: https://github.com/ncborcherding/borcherding/blob/master/content/public
 #url_slides: ''
 #url_source: '#'
 #url_video: '#'
-
-# Featured image
-# To use, add an image named `featured.jpg/png` to your page's folder. 
-image:
-  caption: 
-  focal_point: ""
-  preview_only: false
 ---
 

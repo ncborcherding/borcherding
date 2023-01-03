@@ -1,17 +1,16 @@
 ---
-title: "Content Evaluation, Usage Profile, and Student Preferences Related to a Medical Student Wiki for Student-Authored Learning Resources (Carverpedia)"
+title: "Bone marrow stromal antigen 2 (BST-2) DNA is demethylated in breast tumors and breast cancer cells"
 authors:
+- Wadie D Mahauad-Fernandez
 - admin
-- Matthew Rudolph
-- Amy Tierney
-- Reuben Vyn
-- Darren Hoffmann
+- Weizhou Zhang
+- Chioma M Okeoma
 
-date: "2016-12-08T00:00:00Z"
-doi: "10.1007/s40670-016-0358-0"
+date: "2015-04-10T00:00:00Z"
+doi: "10.1371/journal.pone.0123931"
 
 # Schedule page publish date (NOT publication's date).
-publishDate: "2016-12-08T00:00:00Z"
+publishDate: "2015-04-10T00:00:00Z"
 
 # Publication type.
 # Legend: 0 = Uncategorized; 1 = Conference paper; 2 = Journal article;
@@ -20,18 +19,31 @@ publishDate: "2016-12-08T00:00:00Z"
 publication_types: ["2"]
 
 # Publication name and optional abbreviated publication name.
-publication: In *Medical Science Education*
-publication_short: In *Medical Science Education*
+publication: In *PLoS One*
+publication_short: In *PLoS One*
 
-abstract: We identified a lack of continuity in student-generated learning aids and the sharing of advice and resources between medical graduating classes. Carverpedia, built in the UIowa Wiki platform, is a novel collaboration between pre-clinical medical students and faculty to produce a centralized location for learning aids at the Carver College of Medicine. Carverpedia is designed to organize files and links in a centralized location accessible to all students. Previously, items were shared through various modalities (e.g., Facebook, email, etc.) without equal access for every student or well-developed archiving. After one academic year of use, there were 217 resources posted to the wiki site by 34 authors. Content posted on Carverpedia differed from Facebook content, with increased content summaries and active-learning. Site utilization, collected by Google Analytics, found 2979 sessions on Carverpedia and a total of 10,253 page views. Site usage and posting of resources was highly correlated with basic science exam schedule. This corresponded with the students surveyed on site usage, with the majority of students using Carverpedia for basic science courses, like Gross Anatomy and Foundations of Cellular Life. Of note, surveyed students found faculty-authored content, practice questions, content summaries, and active-learning resources the most useful of the resources posted. Overall, we found the Wiki format is effective as a means of creating an online community of support and collaboration for student-authored and faculty-authored learning resources.
+abstract: 
+
+Background: Bone marrow stromal antigen 2 (BST-2) is a known anti-viral gene that has been recently identified to be overexpressed in many cancers, including breast cancer. BST-2 is critical for the invasiveness of breast cancer cells and the formation of metastasis in vivo. Although the regulation of BST-2 in immune cells is unraveling, it is unknown how BST-2 expression is regulated in breast cancer. We hypothesized that meta-analyses of BST-2 gene expression and BST-2 DNA methylation profiles would illuminate mechanisms regulating elevated BST-2 expression in breast tumor tissues and cells.
+
+Materials and methods: We performed comprehensive meta-analyses of BST-2 gene expression and BST-2 DNA methylation in The Cancer Genome Atlas (TCGA) and various Gene Expression Omnibus (GEO) datasets. BST-2 expression levels and BST-2 DNA methylation status at specific CpG sites on the BST-2 gene were compared for various breast tumor molecular subtypes and breast cancer cell lines.
+
+Results: We show that BST-2 gene expression is inversely associated with the methylation status at specific CpG sites in primary breast cancer specimens and breast cancer cell lines. BST-2 demethylation is significantly more prevalent in primary tumors and cancer cells than in normal breast tissues or normal mammary epithelial cells. Demethylation of the BST-2 gene significantly correlates with its mRNA expression. These studies provide the initial evidence that significant differences exist in BST-2 DNA methylation patterns between breast tumors and normal breast tissues, and that BST-2 expression patterns in tumors and cancer cells correlate with hypomethylated BST-2 DNA.
+
+Conclusion: Our study suggests that the DNA methylation pattern and expression of BST-2 may play a role in disease pathogenesis and could serve as a biomarker for the diagnosis of breast cancer.
+
 
 tags:
-- Medical education
-- wiki
-- platform
-featured: true
+- cancer
+- breast cancer
+- Methylation
+- Immune Response
+featured: false
 
-url_pdf: https://github.com/ncborcherding/borcherding/blob/master/content/publication/borcherding2017content/borcherding2017content.pdf
+links:
+- name: Pubmed
+  url: https://pubmed.ncbi.nlm.nih.gov/25860442/
+url_pdf: https://github.com/ncborcherding/borcherding/blob/master/content/publication/mahauad2015bone/mahauad2015bone.pdf
 #url_code: '#'
 #url_dataset: '#'
 #url_poster: '#'
@@ -39,12 +51,5 @@ url_pdf: https://github.com/ncborcherding/borcherding/blob/master/content/public
 #url_slides: ''
 #url_source: '#'
 #url_video: '#'
-
-# Featured image
-# To use, add an image named `featured.jpg/png` to your page's folder. 
-image:
-  caption: 
-  focal_point: ""
-  preview_only: false
 ---
 
