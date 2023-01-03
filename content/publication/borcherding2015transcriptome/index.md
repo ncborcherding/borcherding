@@ -1,15 +1,16 @@
 ---
-title: "ROR1, an embryonic protein with an emerging role in cancer biology"
+title: "Transcriptome analysis of basal and luminal tumor-initiating cells in ErbB2-driven breast cancer"
 authors:
 - admin
+- Nicholas Bormann
 - David Kusner
-- Guang-Hui Liu
+- Ryan Kolb
 - Weizhou Zhang
-date: "2014-04-22T00:00:00Z"
-doi: "10.1007/s13238-014-0059-7"
+date: "2015-06-01T00:00:00Z"
+doi: "10.1016/j.gdata.2015.04.008 "
 
 # Schedule page publish date (NOT publication's date).
-publishDate: "2014-04-22T00:00:00Z"
+publishDate: "2015-06-01T00:00:00Z"
 
 # Publication type.
 # Legend: 0 = Uncategorized; 1 = Conference paper; 2 = Journal article;
@@ -18,23 +19,23 @@ publishDate: "2014-04-22T00:00:00Z"
 publication_types: ["2"]
 
 # Publication name and optional abbreviated publication name.
-publication: In *Protein Cell*
-publication_short: In *Protein Cell*
+publication: In *Genomics Data*
+publication_short: In *Genomics Data*
 
-abstract: Receptor tyrosine kinase-like orphan receptor 1 (ROR1) is a member of the ROR family consisting of ROR1 and ROR2. RORs contain two distinct extracellular cysteine-rich domains and one transmembrane domain. Within the intracellular portion, ROR1 possesses a tyrosine kinase domain, two serine/threonine-rich domains and a proline-rich domain. RORs have been studied in the context of embryonic patterning and neurogenesis through a variety of homologs. These physiologic functions are dichotomous based on the requirement of the kinase domain. A growing literature has established ROR1 as a marker for cancer, such as in CLL and other blood malignancies. In addition, ROR1 is critically involved in progression of a number of blood and solid malignancies. ROR1 has been shown to inhibit apoptosis, potentiate EGFR signaling, and induce epithelial-mesenchymal transition (EMT). Importantly, ROR1 is only detectable in embryonic tissue and generally absent in adult tissue, making the protein an ideal drug target for cancer therapy. 
+abstract: Breast cancer is the leading cause of cancer-related mortality for females worldwide. Improving early screening strategies and understanding the events that lead to tumor initiation have led to demonstrable improvements in clinical outcome. Our previous work revealed a variance in the tumorigenic capacity between different mammary epithelial cell populations in an MMTV-ErbB2 mouse model. In order to greater understand how different mammary epithelial cells influence the tumorigenic capacity in ErbB2-induced breast cancer, we transplanted different cell populations from pre-neoplastic MMTV-ErbB2 female mice into recipient mice for tumorigenic study. We found that different mammary epithelial cells bear different tumorigenic potentials even when induced by the same ErbB2 proto-oncogene. To understand the difference in tumors formed from different epithelial cells, we performed gene expression profiling using these tumors (GSE64487). Several genes were further validated using real-time reverse transcription polymerase chain reaction (RT-PCR). Here we provide further details on the experimental methods and microarray analysis. This data provides a resource to further understanding how different mammary cell populations can initiate ErbB2-driven tumors and the role of these cell populations as putative tumor-initiating cells (TICs).
 
 tags:
 - cancer
-- oncofetal antigen
+- HER2
 - receptor tyrosine kinase
-- Wnt signaling
+- Breast cancer
 
-featured: true
+featured: false
 
 links:
 - name: Pubmed
-  url: https://pubmed.ncbi.nlm.nih.gov/24752542/
-url_pdf: https://github.com/ncborcherding/borcherding/blob/master/content/publication/borcherding2014ror1/borcherding2014ror1.pdf
+  url: https://pubmed.ncbi.nlm.nih.gov/26167451/
+url_pdf: https://github.com/ncborcherding/borcherding/blob/master/content/publication/borcherding2015transcriptome/borcherding2015transcriptome.pdf
 #url_code: '#'
 #url_dataset: '#'
 #url_poster: '#'
