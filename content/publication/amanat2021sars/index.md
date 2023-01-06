@@ -45,7 +45,7 @@ tags:
 - BCR
 - Immune Response
 - COVID-19
-featured: true
+featured: false
 
 links:
 - name: Pubmed
