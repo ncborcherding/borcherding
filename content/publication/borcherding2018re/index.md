@@ -8,7 +8,6 @@ authors:
 - Ryan Kolb
 - Andrew Bellizzi
 - Weizhou Zhang
-
 date: "2018-08-01T00:00:00Z"
 doi: "10.1016/j.ajpath.2018.05.003""
 
