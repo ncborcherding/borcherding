@@ -23,7 +23,8 @@ publication_types: ["2"]
 publication: In *Molecular Metabolism*
 publication_short: In *Molecular Metabolism*
 
-abstract: Objective: Metabolomics as an approach to solve biological problems is exponentially increasing in use. Thus, this a pivotal time for the adoption of best practices. It is well known that disrupted tissue oxygen supply rapidly alters cellular energy charge. However, the speed and extent to which delayed mouse tissue freezing after dissection alters the broad metabolome is not well described. Furthermore, how tissue genotype may modulate such metabolomic drift and the degree to which traced 13C-isotopologue distributions may change have not been addressed.
+abstract: 
+Objective: Metabolomics as an approach to solve biological problems is exponentially increasing in use. Thus, this a pivotal time for the adoption of best practices. It is well known that disrupted tissue oxygen supply rapidly alters cellular energy charge. However, the speed and extent to which delayed mouse tissue freezing after dissection alters the broad metabolome is not well described. Furthermore, how tissue genotype may modulate such metabolomic drift and the degree to which traced 13C-isotopologue distributions may change have not been addressed.
 
 Methods: By combined liquid chromatography (LC)- and gas chromatography (GC)-mass spectrometry (MS), we measured how levels of 255 mouse liver metabolites changed following 30-second, 1-minute, 3-minute, and 10-minute freezing delays. We then performed test-of-concept delay-to-freeze experiments evaluating broad metabolomic drift in mouse heart and skeletal muscle, differential metabolomic change between wildtype (WT) and mitochondrial pyruvate carrier (MPC) knockout mouse livers, and shifts in 13C-isotopologue abundances and enrichments traced from 13C-labled glucose into mouse liver.
 
