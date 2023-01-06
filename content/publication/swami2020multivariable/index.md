@@ -10,7 +10,7 @@ authors:
 - Yousef Zakharia
 - Mohammed Milhem
 date: "2020-10-27T00:00:00Z"
-doi: "10.3390/antibiotics9110740 
+doi: "10.3390/antibiotics9110740"
 
 # Schedule page publish date (NOT publication's date).
 publishDate: "2020-10-27T00:00:00Z"
