@@ -26,7 +26,8 @@ publication_types: ["2"]
 publication: In *Frontiers in medicine*
 publication_short: In *Frontiers in medicine*
 
-abstract: Purpose: To investigate IL-17 related mechanisms for developing dry eye disease in the Pinkie mouse strain with a loss of function RXRα mutation.
+abstract: 
+Purpose: To investigate IL-17 related mechanisms for developing dry eye disease in the Pinkie mouse strain with a loss of function RXRα mutation.
 
 Methods: Measures of dry eye disease were assessed in the cornea and conjunctiva. Expression profiling was performed by single-cell RNA sequencing (scRNA-seq) to compare gene expression in conjunctival immune cells. Conjunctival immune cells were immunophenotyped by flow cytometry and confocal microscopy. The activity of RXRα ligand 9-cis retinoic acid (RA) was evaluated in cultured monocytes and γδ T cells.
 
