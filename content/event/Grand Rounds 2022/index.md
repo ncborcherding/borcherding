@@ -18,7 +18,7 @@ abstract: "Diagnostic and prognostic complications of CTCL may be addressed by T
 # Talk start and end times.
 #   End time can optionally be hidden by prefixing the line with `#`.
 date: "2022-09-23T13:00:00Z"
-date_end: "2023209-23T15:00:00Z"
+date_end: "2022-09-23T15:00:00Z"
 all_day: false
 
 # Schedule page publish date (NOT talk date).
