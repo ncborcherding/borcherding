@@ -13,7 +13,7 @@ authors:
 - Matthew J Potthoff
 - Enrique Fuentes-Mattei
 - Lesley G Ellies
-= C Michael Knudson
+- C Michael Knudson
 - Mong-Hong Lee
 - Sai-Ching J Yeung
 - Suzanne L Cassel
