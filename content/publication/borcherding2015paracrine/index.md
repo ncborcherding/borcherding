@@ -28,7 +28,7 @@ tags:
 - microenvironment
 - Wnt signaling
 
-featured: true
+featured: false
 
 links:
 - name: Pubmed

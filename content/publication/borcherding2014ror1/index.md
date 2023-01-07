@@ -29,7 +29,7 @@ tags:
 - receptor tyrosine kinase
 - Wnt signaling
 
-featured: true
+featured: false
 
 links:
 - name: Pubmed

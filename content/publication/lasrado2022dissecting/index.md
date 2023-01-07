@@ -34,7 +34,7 @@ links:
 - name: Pubmed
   url: https://pubmed.ncbi.nlm.nih.gov/35243228/
 url_pdf: https://github.com/ncborcherding/borcherding/blob/master/content/publication/lasrado2022dissecting/lasrado2022dissecting.pdf
-#url_code: '#'
+url_code: https://github.com/ncborcherding/Lasrado_Myocarditis
 #url_dataset: '#'
 #url_poster: '#'
 #url_project: ''

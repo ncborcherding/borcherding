@@ -35,7 +35,7 @@ links:
 - name: Pubmed
   url: https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6173115.1/
 url_pdf: https://github.com/ncborcherding/borcherding/blob/master/content/publication/borcherding2018trgated/borcherding2018trgated.pdf
-#url_code: '#'
+url_code: https://github.com/ncborcherding/TRGAted
 #url_dataset: '#'
 #url_poster: '#'
 #url_project: ''

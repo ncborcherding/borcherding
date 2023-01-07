@@ -35,7 +35,7 @@ abstract: The Toll-like receptor 8 (TLR8) agonist VTX-2337 (motolimod) is an ant
 tags:
 - cancer
 - Immunotherapy
-featured: true
+featured: false
 
 links:
 - name: Pubmed

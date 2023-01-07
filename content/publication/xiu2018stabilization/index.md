@@ -31,7 +31,7 @@ abstract: Canonical NF-κB signaling is constitutively activated in acute myeloi
 
 tags:
 - cancer
-featured: true
+featured: false
 
 links:
 - name: Pubmed

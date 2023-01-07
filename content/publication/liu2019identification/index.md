@@ -28,7 +28,7 @@ abstract: Transforming growth factor-β (TGF-β) signaling plays fundamental rol
 
 tags:
 - cancer
-featured: true
+featured: false
 
 links:
 - name: Pubmed

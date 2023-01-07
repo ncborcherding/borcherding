@@ -30,7 +30,7 @@ tags:
 - cancer
 - Proteomics
 - Breast cancer
-featured: true
+featured: false
 
 links:
 - name: Pubmed

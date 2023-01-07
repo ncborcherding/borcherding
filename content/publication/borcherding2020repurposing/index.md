@@ -27,13 +27,13 @@ tags:
 - COVID-19
 - Review
 - Immune Response
-featured: true
+featured: false
 
 links:
 - name: Pubmed
   url: https://pubmed.ncbi.nlm.nih.gov/33239864/
 url_pdf: https://github.com/ncborcherding/borcherding/blob/master/content/publication/borcherding2020repurposing/borcherding2020repurposing.pdf
-#url_code: '#'
+url_code: https://github.com/ncborcherding/COVIDreview
 #url_dataset: '#'
 #url_poster: '#'
 #url_project: ''
