@@ -25,7 +25,7 @@ experience:
     date_start: '2023-01-03'
     date_end: ''
     
-  - title: Consulting Senior Computational Biologist
+  - title: Senior Computational Biologist and Staff Pathologist
     company: Santa Ana Bio
     company_url: 
     company_logo: 
