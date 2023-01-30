@@ -29,7 +29,7 @@ tags:
 - cancer
 - platform
 - Web App
-featured: true
+featured: false
 
 links:
 - name: Pubmed
