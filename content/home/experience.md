@@ -29,7 +29,7 @@ experience:
     company: Santa Ana Bio
     company_url: 
     company_logo: 
-    location: Iowa
+    location: California
     date_start: '2022-09-15'
     date_end: ''
     
