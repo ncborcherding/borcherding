@@ -17,18 +17,26 @@ subtitle:
 date_format: Jan 2006
 
 experience:
+  - title: Head of Computational Biology
+    company: Omniscope
+    company_url: 'https://www.omniscope.ai/'
+    company_logo: omniscope
+    location: Barcelona
+    date_start: '2023-07-01'
+    date_end: ''
+    
   - title: Computational Biology Advisor
     company: Omniscope
     company_url: 'https://www.omniscope.ai/'
     company_logo: omniscope
     location: Barcelona
     date_start: '2023-01-03'
-    date_end: ''
+    date_end: '2023-06-30'
     
   - title: Senior Computational Biologist and Staff Pathologist
     company: Santa Ana Bio
-    company_url: 
-    company_logo: 
+    company_url: 'https://www.santaanabio.com/'
+    company_logo: sab
     location: California
     date_start: '2022-09-15'
     date_end: ''
@@ -39,7 +47,7 @@ experience:
     company_logo: WUSTLseal
     location: Missouri
     date_start: '2020-07-01'
-    date_end: ''
+    date_end: '2023-06-30'
     
   - title: MD/PhD Student
     company: Carver College of Medicine, University of Iowa
