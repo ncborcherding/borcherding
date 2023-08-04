@@ -1,14 +1,21 @@
 ---
 title: "TCRpheno"
 output: html_document
-date: "2023-08-03"
+date: "2023-08-04"
 ---
 
-I happened upon this [preprint](https://www.biorxiv.org/content/10.1101/2023.07.20.549939v1) the other day examining latent cell fate information within the TCR sequences. Naturally, my first thought was to apply the approach from Laguttata et el to the single-cell objects I have. Here is an example of how to easily implement the [TCRpheno](https://github.com/kalaga27/tcrpheno). Please check out the preprint and code repository!!
+I happened upon this [preprint](https://www.biorxiv.org/content/10.1101/2023.07.20.549939v1) the other day examining latent cell fate information within the TCR sequences. Naturally, my first thought was to apply the approach from Lagattuta et el to the single-cell objects I have. Here is an example of how to easily implement the [TCRpheno](https://github.com/kalaga27/tcrpheno). Please check out the preprint and code repository - there are some really interesting findings on memory formation.
 
-# Getting Target Sequence
+# Loading Libraries and Functions
 
 We will first need to load scRepertoire and tcrpheno and make a function to organize the TCR sequences into a compatible format for tcrpheno.
+
+The tcrpheno models can be installed using: 
+```
+remotes::install_github("kalaga27/tcrpheno")
+```
+
+We can load the tcrpheno and the rest of the packages/function we need with:
 
 ```
 library(scRepertoire)
@@ -16,6 +23,8 @@ library(tcrpheno)
 library(Seurat)
 library(stringr)
 library(viridis)
+library(scCustomize)
+library(patchwork)
 
 convert.contigs <- function(data) {
 #extracting TCR chain info from single-cell object meta data
@@ -90,11 +99,12 @@ DimPlot(seurat, group.by = "cloneType") + scale_color_viridis(discrete = TRUE, d
 <img align="center" src="https://www.borch.dev/post/tcrpheno/clones.jpg">
 
 # Running tcrpheno
+I ran into an issue here about the way beta chains are converted - for now we can apply tcrpheno on just the alpha chains.
 
 ```
 extracted.TCRs <- convert.contigs(seurat)
 extracted.TCRs <- na.omit(extracted.TCRs)
-tcrpheno.results <- score_tcrs(extracted.TCRs, "b")
+tcrpheno.results <- score_tcrs(extracted.TCRs, "a")
 
 seurat <- AddMetaData(seurat, tcrpheno.results)
 
@@ -104,12 +114,25 @@ FeaturePlot(seurat, c("TCRalpha.CD8", "TCRalpha.reg"), cols = viridis_pal()(10),
 
 # Comparing with Gene Expression
 
-Here you can see the TCRalpha.CD8 model appears to preferentially identify CD8A-positive cells in the upper dense cluster. Overall I am pretty impressed and will update this post as I play around more.
+Here you can see the TCRalpha.CD8 model appears to preferentially identify CD8A-positive cells in the upper dense cluster. 
 
 ```
 FeaturePlot(seurat, c("CD8A", "FOXP3"), cols = viridis_pal()(10), order = TRUE)
 ```
 <img align="center" src="https://www.borch.dev/post/tcrpheno/genes.jpg">
+
+We can look at the overlay of both CD8A gene expression and the predicted CD8 score based on the alpha chain analysis using scCustomize function ```Plot_Density_Joint_Only()```
+
+```
+cells <- rownames(seurat[[]])[!is.na(seurat@meta.data$TCRalpha.CD8)]
+seurat.subset <- subset(seurat, cells = cells)
+plot1 <- Plot_Density_Joint_Only(seurat_object = seurat.subset, features = c("CD8A", "TCRalpha.CD8"), viridis_palette = "viridis")
+plot2 <- DimPlot(seurat.subset)
+plot1 + plot2
+```
+
+<img align="center" src="https://www.borch.dev/post/tcrpheno/joint.jpg">
+
 
 # Conclusion
 
