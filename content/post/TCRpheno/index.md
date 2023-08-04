@@ -121,7 +121,7 @@ FeaturePlot(seurat, c("CD8A", "FOXP3"), cols = viridis_pal()(10), order = TRUE)
 ```
 <img align="center" src="https://www.borch.dev/post/tcrpheno/genes.jpg">
 
-We can look at the overlay of both CD8A gene expression and the predicted CD8 score based on the alpha chain analysis using scCustomize function ```Plot_Density_Joint_Only()```
+We can look at the overlay of both CD8A gene expression and the predicted CD8 score based on the alpha chain analysis using scCustomize function ```Plot_Density_Joint_Only()```. What is really interesting to me is the CD8+ portion of C3 that tcrpheno identifies with the CD8 alpha model.
 
 ```
 cells <- rownames(seurat[[]])[!is.na(seurat@meta.data$TCRalpha.CD8)]
