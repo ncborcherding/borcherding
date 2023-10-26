@@ -55,7 +55,7 @@ by barcodes."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/lib
       <a href="../articles/Repertoire_Summary.html">Summarizing Repertoires</a>
     </li>
     <li>
-      <a href="../articles/Clonal_Diversity.html">Clonal Diversity and Overlap</a>
+      <a href="../articles/Clonal_Diversity.html">Clonal Diversity, Rarefaction, and Overlap</a>
     </li>
     <li>
       <a href="../articles/Clonal_Cluster.html">Clustering Sequences by Edit Distance</a>
@@ -108,7 +108,7 @@ by barcodes.</p>
 
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">exportClones</span><span class="op">(</span></span>
-<span>  <span class="va">df</span>,</span>
+<span>  <span class="va">input.data</span>,</span>
 <span>  group.by <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  write.file <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  dir <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -118,7 +118,7 @@ by barcodes.</p>
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>df</dt>
+    <dl><dt>input.data</dt>
 <dd><p>The product of <code><a href="combineTCR.html">combineTCR</a></code>, <code><a href="combineBCR.html">combineBCR</a></code>, or
 <code><a href="combineExpression.html">combineExpression</a></code>.</p></dd>
 
@@ -128,7 +128,7 @@ by barcodes.</p>
 
 
 <dt>write.file</dt>
-<dd><p>TRUE, save the file, FALSE, return a data.frame</p></dd>
+<dd><p><strong>TRUE</strong>, save the file or <strong>FALSE</strong>, return a data.frame</p></dd>
 
 
 <dt>dir</dt>
@@ -143,7 +143,7 @@ by barcodes.</p>
     <h2>Value</h2>
     
 
-<p>ggplot of percentage of V and J gene pairings as a heatmap</p>
+<p>CSV file of the paired sequences.</p>
     </div>
     <div id="author">
     <h2>Author</h2>

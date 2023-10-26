@@ -5,13 +5,13 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Comparing Clonal Diversity • scRepertoire</title>
+<title>Comparing Clonal Diversity and Overlap • scRepertoire</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="Comparing Clonal Diversity">
+<script src="../pkgdown.js"></script><meta property="og:title" content="Comparing Clonal Diversity and Overlap">
 <meta property="og:description" content="scRepertoire">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -73,7 +73,7 @@
       <a href="../articles/Repertoire_Summary.html">Summarizing Repertoires</a>
     </li>
     <li>
-      <a href="../articles/Clonal_Diversity.html">Clonal Diversity and Overlap</a>
+      <a href="../articles/Clonal_Diversity.html">Clonal Diversity, Rarefaction, and Overlap</a>
     </li>
     <li>
       <a href="../articles/Clonal_Cluster.html">Clustering Sequences by Edit Distance</a>
@@ -122,9 +122,9 @@
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1 data-toc-skip>Comparing Clonal Diversity</h1>
+      <h1 data-toc-skip>Comparing Clonal Diversity and Overlap</h1>
             
-            <h4 data-toc-skip class="date">Compiled: October 24,
+            <h4 data-toc-skip class="date">Compiled: October 25,
 2023</h4>
       
       
@@ -170,7 +170,49 @@ Skip the bootstrapping calculations.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Return only a subset of metrics</span></span>
 <span><span class="fu"><a href="../reference/clonalDiversity.html">clonalDiversity</a></span><span class="op">(</span><span class="va">combined.TCR</span>, metrics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"shannon"</span>, <span class="st">"ACE"</span><span class="op">)</span>, cloneCall <span class="op">=</span> <span class="st">"gene"</span>, n.boots <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Clonal_Diversity_files/figure-html/unnamed-chunk-1-2.png" width="700"></p>
+<p><img src="Clonal_Diversity_files/figure-html/unnamed-chunk-1-2.png" width="700">
+## clonaRarefaction</p>
+<p>We can also use Hill numbers to estimate the rarefaction, or
+estimating species richness, using the the abundance of clones across
+groupings. Underlying the rarefaction calculation is the use of observed
+receptor of abundance to compute diversity.</p>
+<p><strong>hill.numbers</strong> + 0 - species-richness<br>
++ 1 - Shannon<br>
++ 2 - Simpson</p>
+<p><strong>plot.type</strong><br>
++ 1 - sample-size-based rarefaction/extrapolation<br>
++ 2 - sample completeness curve<br>
++ 3 - coverage-based rarefaction/extrapolation curve</p>
+<p>This relies on the <a href="https://cran.r-project.org/web/packages/iNEXT/index.html" class="external-link">iNEXT</a>
+with the accompanying <a href="http://chao.stat.nthu.edu.tw/wordpress/paper/120_pdf_appendix.pdf" class="external-link">manuscript</a>.
+Like the other wrapping functions in scRepetoire, please cite the
+original work.</p>
+<div class="section level3">
+<h3 id="rarefaction-using-shannon-diversity-q-0">Rarefaction using Shannon Diversity (q = 0)<a class="anchor" aria-label="anchor" href="#rarefaction-using-shannon-diversity-q-0"></a>
+</h3>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/clonalRarefaction.html">clonalRarefaction</a></span><span class="op">(</span><span class="va">combined.TCR</span>, plot.type <span class="op">=</span> <span class="fl">1</span>, hill.numbers <span class="op">=</span> <span class="fl">0</span>, n.boots <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
+<p><img src="Clonal_Diversity_files/figure-html/unnamed-chunk-2-1.png" width="700"></p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/clonalRarefaction.html">clonalRarefaction</a></span><span class="op">(</span><span class="va">combined.TCR</span>, plot.type <span class="op">=</span> <span class="fl">2</span>, hill.numbers <span class="op">=</span> <span class="fl">0</span>, n.boots <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
+<p><img src="Clonal_Diversity_files/figure-html/unnamed-chunk-2-2.png" width="700"></p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/clonalRarefaction.html">clonalRarefaction</a></span><span class="op">(</span><span class="va">combined.TCR</span>, plot.type <span class="op">=</span> <span class="fl">3</span>, hill.numbers <span class="op">=</span> <span class="fl">0</span>, n.boots <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
+<p><img src="Clonal_Diversity_files/figure-html/unnamed-chunk-2-3.png" width="700"></p>
+</div>
+<div class="section level3">
+<h3 id="rarefaction-using-shannon-diversity-q-1">Rarefaction using Shannon Diversity (q = 1)<a class="anchor" aria-label="anchor" href="#rarefaction-using-shannon-diversity-q-1"></a>
+</h3>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/clonalRarefaction.html">clonalRarefaction</a></span><span class="op">(</span><span class="va">combined.TCR</span>, plot.type <span class="op">=</span> <span class="fl">1</span>, hill.numbers <span class="op">=</span> <span class="fl">1</span>, n.boots <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
+<p><img src="Clonal_Diversity_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/clonalRarefaction.html">clonalRarefaction</a></span><span class="op">(</span><span class="va">combined.TCR</span>, plot.type <span class="op">=</span> <span class="fl">2</span>, hill.numbers <span class="op">=</span> <span class="fl">1</span>, n.boots <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
+<p><img src="Clonal_Diversity_files/figure-html/unnamed-chunk-3-2.png" width="700"></p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/clonalRarefaction.html">clonalRarefaction</a></span><span class="op">(</span><span class="va">combined.TCR</span>, plot.type <span class="op">=</span> <span class="fl">3</span>, hill.numbers <span class="op">=</span> <span class="fl">1</span>, n.boots <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
+<p><img src="Clonal_Diversity_files/figure-html/unnamed-chunk-3-3.png" width="700"></p>
+</div>
 </div>
 <div class="section level2">
 <h2 id="clonalsizedistribution">clonalSizeDistribution<a class="anchor" aria-label="anchor" href="#clonalsizedistribution"></a>
@@ -184,9 +226,9 @@ repertoires can be compared using Euclidean distance.</p>
 <p>If using this function, please read/cite <a href="https://pubmed.ncbi.nlm.nih.gov/30485278/" class="external-link">Koch et al.</a> and
 check out the <a href="https://bioconductor.org/packages/release/bioc/html/powerTCR.html" class="external-link">powerTCR</a>
 R package.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/clonalSizeDistribution.html">clonalSizeDistribution</a></span><span class="op">(</span><span class="va">combined.TCR</span>, cloneCall <span class="op">=</span> <span class="st">"aa"</span>, method <span class="op">=</span> <span class="st">"ward.D2"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Clonal_Diversity_files/figure-html/unnamed-chunk-2-1.png" width="700"></p>
+<p><img src="Clonal_Diversity_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
 </div>
 <div class="section level2">
 <h2 id="clonaloverlap">clonalOverlap<a class="anchor" aria-label="anchor" href="#clonaloverlap"></a>
@@ -194,19 +236,12 @@ R package.</p>
 <p>If you are interested in measures of similarity between the samples
 loaded into scRepertoire, using <code><a href="../reference/clonalOverlap.html">clonalOverlap()</a></code> can assist
 in the visualization.</p>
-<p>The methods for calculating overlap are described below:</p>
-<p>Overlap Coefficient: </p>
-<p>Raw Count Overlap: </p>
-<p>Morisita Index: </p>
-<p>Jaccard Index: </p>
-<p>Cosine Similarity: </p>
-<p>Where: </p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/clonalOverlap.html">clonalOverlap</a></span><span class="op">(</span><span class="va">combined.TCR</span>, cloneCall <span class="op">=</span> <span class="st">"strict"</span>, method <span class="op">=</span> <span class="st">"morisita"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Clonal_Diversity_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<p><img src="Clonal_Diversity_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/clonalOverlap.html">clonalOverlap</a></span><span class="op">(</span><span class="va">combined.TCR</span>, cloneCall <span class="op">=</span> <span class="st">"strict"</span>, method <span class="op">=</span> <span class="st">"raw"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Clonal_Diversity_files/figure-html/unnamed-chunk-3-2.png" width="700"></p>
+<p><img src="Clonal_Diversity_files/figure-html/unnamed-chunk-5-2.png" width="700"></p>
 </div>
   </div>
 

@@ -73,7 +73,7 @@
       <a href="../articles/Repertoire_Summary.html">Summarizing Repertoires</a>
     </li>
     <li>
-      <a href="../articles/Clonal_Diversity.html">Clonal Diversity and Overlap</a>
+      <a href="../articles/Clonal_Diversity.html">Clonal Diversity, Rarefaction, and Overlap</a>
     </li>
     <li>
       <a href="../articles/Clonal_Cluster.html">Clustering Sequences by Edit Distance</a>
@@ -124,7 +124,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Loading Data into scRepertoire</h1>
             
-            <h4 data-toc-skip class="date">Compiled: October 24,
+            <h4 data-toc-skip class="date">Compiled: October 25,
 2023</h4>
       
       
@@ -194,7 +194,7 @@ process the contig data</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Directory example</span></span>
 <span><span class="va">contig.output</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"~/Documents/MyExperiment"</span><span class="op">)</span></span>
-<span><span class="va">contig.list</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/loadContigs.html">loadContigs</a></span><span class="op">(</span>dir <span class="op">=</span> <span class="va">contig.output</span>, format <span class="op">=</span> <span class="st">"TRUST4"</span><span class="op">)</span></span>
+<span><span class="va">contig.list</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/loadContigs.html">loadContigs</a></span><span class="op">(</span>input <span class="op">=</span> <span class="va">contig.output</span>, format <span class="op">=</span> <span class="st">"TRUST4"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># List of data frames example</span></span>
 <span><span class="va">S1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="st">"~/Documents/MyExperiment/Sample1/outs/barcode_results.csv"</span><span class="op">)</span></span>
@@ -203,7 +203,7 @@ process the contig data</p>
 <span><span class="va">S4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="st">"~/Documents/MyExperiment/Sample4/outs/barcode_results.csv"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">contig_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">S1</span>, <span class="va">S2</span>, <span class="va">S3</span>, <span class="va">S4</span><span class="op">)</span></span>
-<span><span class="va">contig.list</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/loadContigs.html">loadContigs</a></span><span class="op">(</span>dir <span class="op">=</span> <span class="va">contig.output</span>, format <span class="op">=</span> <span class="st">"WAT3R"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">contig.list</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/loadContigs.html">loadContigs</a></span><span class="op">(</span>input <span class="op">=</span> <span class="va">contig.output</span>, format <span class="op">=</span> <span class="st">"WAT3R"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="multiplexed-experiment">Multiplexed Experiment<a class="anchor" aria-label="anchor" href="#multiplexed-experiment"></a>

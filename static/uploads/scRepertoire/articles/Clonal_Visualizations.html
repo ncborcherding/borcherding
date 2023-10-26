@@ -73,7 +73,7 @@
       <a href="../articles/Repertoire_Summary.html">Summarizing Repertoires</a>
     </li>
     <li>
-      <a href="../articles/Clonal_Diversity.html">Clonal Diversity and Overlap</a>
+      <a href="../articles/Clonal_Diversity.html">Clonal Diversity, Rarefaction, and Overlap</a>
     </li>
     <li>
       <a href="../articles/Clonal_Cluster.html">Clustering Sequences by Edit Distance</a>
@@ -124,7 +124,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Basic Clonal Visualizations</h1>
             
-            <h4 data-toc-skip class="date">Compiled: October 24,
+            <h4 data-toc-skip class="date">Compiled: October 25,
 2023</h4>
       
       
@@ -156,43 +156,14 @@ of the clonal repertoire<br>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/clonalQuant.html">clonalQuant</a></span><span class="op">(</span><span class="va">combined.TCR</span>, cloneCall <span class="op">=</span> <span class="st">"strict"</span>, chain <span class="op">=</span> <span class="st">"both"</span>, scale <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Clonal_Visualizations_files/figure-html/unnamed-chunk-1-1.png" width="700"></p>
-<p>For all visualizations in scRepertoire, there are 2 ways to adjust
-the color scheme: + Change the <strong>palette</strong> parameter to the
-desired color scheme. This approach uses the built-in palettes of
-grDevices and we can access the list of color schemes using
-<code><a href="https://rdrr.io/r/grDevices/palettes.html" class="external-link">hcl.pals()</a></code>.<br>
-+ Add a ggplot layer with a new color scheme.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/clonalQuant.html">clonalQuant</a></span><span class="op">(</span><span class="va">combined.TCR</span>, cloneCall <span class="op">=</span> <span class="st">"strict"</span>, chain <span class="op">=</span> <span class="st">"both"</span>, scale <span class="op">=</span> <span class="cn">TRUE</span>, palette <span class="op">=</span> <span class="st">"Zissou 1"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Clonal_Visualizations_files/figure-html/unnamed-chunk-2-1.png" width="700"></p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/clonalQuant.html">clonalQuant</a></span><span class="op">(</span><span class="va">combined.TCR</span>, cloneCall <span class="op">=</span> <span class="st">"strict"</span>, chain <span class="op">=</span> <span class="st">"both"</span>, scale <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span> <span class="fu">scale_fill_manual</span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/palettes.html" class="external-link">hcl.colors</a></span><span class="op">(</span><span class="fl">8</span>,</span>
-<span>    <span class="st">"geyser"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Clonal_Visualizations_files/figure-html/unnamed-chunk-2-2.png" width="700"></p>
-<p>Within each of the general analysis functions, there is the ability
-to export the data frame used to create the visualization. To get the
-exported values, use <strong>exportTable</strong> = TRUE. It will return
-the data frame used to make the graph instead of the visual output.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">clonalQuant_output</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/clonalQuant.html">clonalQuant</a></span><span class="op">(</span><span class="va">combined.TCR</span>, cloneCall <span class="op">=</span> <span class="st">"strict"</span>, scale <span class="op">=</span> <span class="cn">TRUE</span>, exportTable <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="va">clonalQuant_output</span></span></code></pre></div>
-<pre><code><span><span class="co">##   contigs values total   scaled</span></span>
-<span><span class="co">## 1     745   P17B  2805 26.55971</span></span>
-<span><span class="co">## 2    2117   P17L  2893 73.17663</span></span>
-<span><span class="co">## 3    1254   P18B  1328 94.42771</span></span>
-<span><span class="co">## 4    1202   P18L  1278 94.05321</span></span>
-<span><span class="co">## 5    5544   P19B  6942 79.86171</span></span>
-<span><span class="co">## 6    1619   P19L  2747 58.93702</span></span>
-<span><span class="co">## 7    6087   P20B  8991 67.70103</span></span>
-<span><span class="co">## 8     192   P20L   201 95.52239</span></span></code></pre>
 <p>Another option here is to be able to define the visualization by data
-classes. Here, we used the <code><a href="../reference/combineTCR.html">combineTCR()</a></code> to define the
+classes. Here, we used the <code><a href="../reference/combineTCR.html">combineTCR()</a></code> list to define the
 <strong>Type</strong> variable as part of the naming structure. We can
 use the <strong>group.by</strong> to specifically use a column in the
 data set to organize the visualization.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/clonalQuant.html">clonalQuant</a></span><span class="op">(</span><span class="va">combined.TCR</span>, cloneCall <span class="op">=</span> <span class="st">"gene"</span>, group.by <span class="op">=</span> <span class="st">"Type"</span>, scale <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Clonal_Visualizations_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
+<p><img src="Clonal_Visualizations_files/figure-html/unnamed-chunk-2-1.png" width="700"></p>
 </div>
 <div class="section level2">
 <h2 id="clonalabundance">clonalAbundance<a class="anchor" aria-label="anchor" href="#clonalabundance"></a>
@@ -203,12 +174,12 @@ with a total number of clonotypes by the number of instances within the
 sample or run. Like above, we can also group.by this by vectors within
 the contig object using the <strong>group.by</strong> variable in the
 function.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/clonalAbundance.html">clonalAbundance</a></span><span class="op">(</span><span class="va">combined.TCR</span>, cloneCall <span class="op">=</span> <span class="st">"gene"</span>, scale <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Clonal_Visualizations_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<p><img src="Clonal_Visualizations_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/clonalAbundance.html">clonalAbundance</a></span><span class="op">(</span><span class="va">combined.TCR</span>, group.by <span class="op">=</span> <span class="st">"Type"</span>, scale <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Clonal_Visualizations_files/figure-html/unnamed-chunk-5-2.png" width="700"></p>
+<p><img src="Clonal_Visualizations_files/figure-html/unnamed-chunk-3-2.png" width="700"></p>
 </div>
 <div class="section level2">
 <h2 id="clonallength">clonalLength<a class="anchor" aria-label="anchor" href="#clonallength"></a>
@@ -223,12 +194,12 @@ multiple chains within a single barcode.</p>
 <p><em>chain</em><br>
 + “both” for combined chain visualization<br>
 + “TRA”, “TRB”, “TRD”, “TRG”, “IGH” or “IGL” to select single chain</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/clonalLength.html">clonalLength</a></span><span class="op">(</span><span class="va">combined.TCR</span>, cloneCall <span class="op">=</span> <span class="st">"aa"</span>, chain <span class="op">=</span> <span class="st">"both"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Clonal_Visualizations_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<p><img src="Clonal_Visualizations_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/clonalLength.html">clonalLength</a></span><span class="op">(</span><span class="va">combined.TCR</span>, cloneCall <span class="op">=</span> <span class="st">"aa"</span>, chain <span class="op">=</span> <span class="st">"TRA"</span>, scale <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Clonal_Visualizations_files/figure-html/unnamed-chunk-6-2.png" width="700"></p>
+<p><img src="Clonal_Visualizations_files/figure-html/unnamed-chunk-4-2.png" width="700"></p>
 </div>
 <div class="section level2">
 <h2 id="clonalcompare">clonalCompare<a class="anchor" aria-label="anchor" href="#clonalcompare"></a>
@@ -254,17 +225,17 @@ out.</p>
 <p><strong>relabel.clones</strong><br>
 * Simplify the isolated clonotypes to numerical designations to allow
 for a tidier visualization</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/clonalCompare.html">clonalCompare</a></span><span class="op">(</span><span class="va">combined.TCR</span>, top.clones <span class="op">=</span> <span class="fl">10</span>, samples <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"P17B"</span>, <span class="st">"P17L"</span><span class="op">)</span>, cloneCall <span class="op">=</span> <span class="st">"aa"</span>, graph <span class="op">=</span> <span class="st">"alluvial"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Clonal_Visualizations_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
+<p><img src="Clonal_Visualizations_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
 <p>We can also choose to highlight specific clonotypes, such as in the
 case of <em>“CVVSDNTGGFKTIF_CASSVRRERANTGELFF”</em> and
 <em>“NA_CASSVRRERANTGELFF”</em>:</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/clonalCompare.html">clonalCompare</a></span><span class="op">(</span><span class="va">combined.TCR</span>, top.clones <span class="op">=</span> <span class="fl">10</span>, highlight.clones <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"CVVSDNTGGFKTIF_CASSVRRERANTGELFF"</span>,</span>
 <span>    <span class="st">"NA_CASSVRRERANTGELFF"</span><span class="op">)</span>, relabel.clones <span class="op">=</span> <span class="cn">TRUE</span>, samples <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"P17B"</span>, <span class="st">"P17L"</span><span class="op">)</span>, cloneCall <span class="op">=</span> <span class="st">"aa"</span>,</span>
 <span>    graph <span class="op">=</span> <span class="st">"alluvial"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Clonal_Visualizations_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
+<p><img src="Clonal_Visualizations_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
 </div>
 <div class="section level2">
 <h2 id="clonalscatter">clonalScatter<a class="anchor" aria-label="anchor" href="#clonalscatter"></a>
@@ -283,10 +254,10 @@ y-axis<br>
 * “proportion” for the relative proportion the clonotype represents
 across all clonotypes<br>
 * “count” for the total count of clonotypes by sample</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/clonalScatter.html">clonalScatter</a></span><span class="op">(</span><span class="va">combined.TCR</span>, cloneCall <span class="op">=</span> <span class="st">"gene"</span>, x.axis <span class="op">=</span> <span class="st">"P18B"</span>, y.axis <span class="op">=</span> <span class="st">"P18L"</span>, dot.size <span class="op">=</span> <span class="st">"total"</span>,</span>
 <span>    graph <span class="op">=</span> <span class="st">"proportion"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Clonal_Visualizations_files/figure-html/unnamed-chunk-9-1.png" width="700"></p>
+<p><img src="Clonal_Visualizations_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
 </div>
   </div>
 

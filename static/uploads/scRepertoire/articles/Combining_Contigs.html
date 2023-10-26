@@ -73,7 +73,7 @@
       <a href="../articles/Repertoire_Summary.html">Summarizing Repertoires</a>
     </li>
     <li>
-      <a href="../articles/Clonal_Diversity.html">Clonal Diversity and Overlap</a>
+      <a href="../articles/Clonal_Diversity.html">Clonal Diversity, Rarefaction, and Overlap</a>
     </li>
     <li>
       <a href="../articles/Clonal_Cluster.html">Clustering Sequences by Edit Distance</a>
@@ -124,7 +124,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Combining Contigs into Clones</h1>
             
-            <h4 data-toc-skip class="date">Compiled: October 24,
+            <h4 data-toc-skip class="date">Compiled: October 25,
 2023</h4>
       
       
@@ -150,8 +150,8 @@ could use nucleotide (<strong>nt</strong>) or the V(D)JC genes
 (<strong>genes</strong>) to define a clone. The latter
 <strong>genes</strong> would be a more permissive definition of
 <em>“clones”</em>, as multiple amino acid or nucleotide sequences can
-results from the same gene combination. Another option to define clone
-is use of the V(D)JC and nucleotide sequence (<strong>strict</strong>).
+result from the same gene combination. Another option to define clone is
+the use of the V(D)JC and nucleotide sequence (<strong>strict</strong>).
 scRepertoire allows for the use of all these definitions of clones and
 allows for users to select both or individual chains to examine.</p>
 <p>The first step in getting clones is to use the single-cell barcodes
@@ -160,7 +160,7 @@ to organize cells into paired sequences. This is accomplished using
 <div class="section level2">
 <h2 id="combinetcr">combineTCR<a class="anchor" aria-label="anchor" href="#combinetcr"></a>
 </h2>
-<p><strong>df</strong><br>
+<p><strong>input.data</strong><br>
 * List of <em>filtered_contig_annotations.csv</em> data frames from the
 10x Cell Ranger.<br>
 * List of data processed using <code><a href="../reference/loadContigs.html">loadContigs()</a></code>.</p>

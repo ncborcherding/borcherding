@@ -56,7 +56,7 @@ or expanded, either exclusive or shared between the selected samples."><!-- math
       <a href="../articles/Repertoire_Summary.html">Summarizing Repertoires</a>
     </li>
     <li>
-      <a href="../articles/Clonal_Diversity.html">Clonal Diversity and Overlap</a>
+      <a href="../articles/Clonal_Diversity.html">Clonal Diversity, Rarefaction, and Overlap</a>
     </li>
     <li>
       <a href="../articles/Clonal_Cluster.html">Clustering Sequences by Edit Distance</a>
@@ -110,7 +110,7 @@ or expanded, either exclusive or shared between the selected samples.</p>
 
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">clonalScatter</span><span class="op">(</span></span>
-<span>  <span class="va">df</span>,</span>
+<span>  <span class="va">input.data</span>,</span>
 <span>  cloneCall <span class="op">=</span> <span class="st">"strict"</span>,</span>
 <span>  x.axis <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  y.axis <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -125,15 +125,15 @@ or expanded, either exclusive or shared between the selected samples.</p>
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>df</dt>
+    <dl><dt>input.data</dt>
 <dd><p>The product of <code><a href="combineTCR.html">combineTCR</a></code>, <code><a href="combineBCR.html">combineBCR</a></code>, or
 <code><a href="combineExpression.html">combineExpression</a></code>.</p></dd>
 
 
 <dt>cloneCall</dt>
 <dd><p>How to call the clonotype - VDJC gene (gene), 
-CDR3 nucleotide (nt), CDR3 amino acid (aa), or 
-VDJC gene + CDR3 nucleotide (strict).</p></dd>
+CDR3 nucleotide (nt), CDR3 amino acid (aa),
+VDJC gene + CDR3 nucleotide (strict) or a custom variable in the data.</p></dd>
 
 
 <dt>x.axis</dt>
@@ -174,7 +174,7 @@ use for size of dots.</p></dd>
     <h2>Value</h2>
     
 
-<p>ggplot of the relative clonotype numbers</p>
+<p>ggplot of the relative clonotype numbers between two sequencing runs</p>
     </div>
 
     <div id="ref-examples">

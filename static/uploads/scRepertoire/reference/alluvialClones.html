@@ -59,7 +59,7 @@ the end of the graph."><!-- mathjax --><script src="https://cdnjs.cloudflare.com
       <a href="../articles/Repertoire_Summary.html">Summarizing Repertoires</a>
     </li>
     <li>
-      <a href="../articles/Clonal_Diversity.html">Clonal Diversity and Overlap</a>
+      <a href="../articles/Clonal_Diversity.html">Clonal Diversity, Rarefaction, and Overlap</a>
     </li>
     <li>
       <a href="../articles/Clonal_Cluster.html">Clustering Sequences by Edit Distance</a>
@@ -116,7 +116,7 @@ the end of the graph.</p>
 
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">alluvialClones</span><span class="op">(</span></span>
-<span>  <span class="va">sc</span>,</span>
+<span>  <span class="va">sc.data</span>,</span>
 <span>  cloneCall <span class="op">=</span> <span class="st">"strict"</span>,</span>
 <span>  chain <span class="op">=</span> <span class="st">"both"</span>,</span>
 <span>  y.axes <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -130,14 +130,14 @@ the end of the graph.</p>
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>sc</dt>
+    <dl><dt>sc.data</dt>
 <dd><p>The single-cell object to visualize after <code><a href="combineExpression.html">combineExpression</a></code>.</p></dd>
 
 
 <dt>cloneCall</dt>
 <dd><p>How to call the clonotype - VDJC gene (gene), 
-CDR3 nucleotide (nt) or CDR3 amino acid (aa), or 
-VDJC gene + CDR3 nucleotide (strict).</p></dd>
+CDR3 nucleotide (nt), CDR3 amino acid (aa),
+VDJC gene + CDR3 nucleotide (strict) or a custom variable in the data.</p></dd>
 
 
 <dt>chain</dt>

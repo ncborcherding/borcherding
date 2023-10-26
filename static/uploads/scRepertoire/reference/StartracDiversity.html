@@ -61,7 +61,7 @@ read and cite the linked manuscript.'><!-- mathjax --><script src="https://cdnjs
       <a href="../articles/Repertoire_Summary.html">Summarizing Repertoires</a>
     </li>
     <li>
-      <a href="../articles/Clonal_Diversity.html">Clonal Diversity and Overlap</a>
+      <a href="../articles/Clonal_Diversity.html">Clonal Diversity, Rarefaction, and Overlap</a>
     </li>
     <li>
       <a href="../articles/Clonal_Cluster.html">Clustering Sequences by Edit Distance</a>
@@ -120,7 +120,7 @@ read and cite the linked manuscript.</p>
 
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">StartracDiversity</span><span class="op">(</span></span>
-<span>  <span class="va">sc</span>,</span>
+<span>  <span class="va">sc.data</span>,</span>
 <span>  cloneCall <span class="op">=</span> <span class="st">"strict"</span>,</span>
 <span>  chain <span class="op">=</span> <span class="st">"both"</span>,</span>
 <span>  type <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -132,16 +132,16 @@ read and cite the linked manuscript.</p>
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>sc</dt>
-<dd><p>The seurat or SCE object to visualize after combineExpression(). 
+    <dl><dt>sc.data</dt>
+<dd><p>The single-cell object after <code><a href="combineExpression.html">combineExpression</a></code>.
 For SCE objects, the cluster variable must be in the meta data under 
 "cluster".</p></dd>
 
 
 <dt>cloneCall</dt>
 <dd><p>How to call the clonotype - VDJC gene (gene), 
-CDR3 nucleotide (nt), CDR3 amino acid (aa), or 
-VDJC gene + CDR3 nucleotide (strict).</p></dd>
+CDR3 nucleotide (nt), CDR3 amino acid (aa),
+VDJC gene + CDR3 nucleotide (strict) or a custom variable in the data.</p></dd>
 
 
 <dt>chain</dt>
@@ -185,7 +185,7 @@ e.g. "both", "TRA", "TRG", "IGH", "IGL".</p></dd>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">#Getting a sample of a Seurat object</span></span></span>
 <span class="r-in"><span><span class="va">scRep_example</span>  <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/get.html" class="external-link">get</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"scRep_example"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">scRep_example</span>  <span class="op">&lt;-</span> <span class="fu"><a href="combineExpression.html">combineExpression</a></span><span class="op">(</span><span class="va">combined</span>, <span class="va">scRep_example</span> <span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">scRep_example</span>  <span class="op">&lt;-</span> <span class="fu"><a href="combineExpression.html">combineExpression</a></span><span class="op">(</span><span class="va">combined</span>, <span class="va">scRep_example</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">scRep_example</span><span class="op">$</span><span class="va">Patient</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/substr.html" class="external-link">substring</a></span><span class="op">(</span><span class="va">scRep_example</span><span class="op">$</span><span class="va">orig.ident</span>,<span class="fl">1</span>,<span class="fl">3</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">scRep_example</span><span class="op">$</span><span class="va">Type</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/substr.html" class="external-link">substring</a></span><span class="op">(</span><span class="va">scRep_example</span><span class="op">$</span><span class="va">orig.ident</span>,<span class="fl">4</span>,<span class="fl">4</span><span class="op">)</span> </span></span>
 <span class="r-in"><span></span></span>
@@ -195,7 +195,6 @@ e.g. "both", "TRA", "TRG", "IGH", "IGL".</p></dd>
 <span class="r-in"><span>                  group.by <span class="op">=</span> <span class="st">"Patient"</span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Removed 62 rows containing non-finite values (`stat_boxplot()`).</span>
 <span class="r-plt img"><img src="StartracDiversity-1.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

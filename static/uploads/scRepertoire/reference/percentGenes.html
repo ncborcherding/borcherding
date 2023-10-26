@@ -55,7 +55,7 @@ grouping variables"><!-- mathjax --><script src="https://cdnjs.cloudflare.com/aj
       <a href="../articles/Repertoire_Summary.html">Summarizing Repertoires</a>
     </li>
     <li>
-      <a href="../articles/Clonal_Diversity.html">Clonal Diversity and Overlap</a>
+      <a href="../articles/Clonal_Diversity.html">Clonal Diversity, Rarefaction, and Overlap</a>
     </li>
     <li>
       <a href="../articles/Clonal_Cluster.html">Clustering Sequences by Edit Distance</a>
@@ -108,7 +108,7 @@ grouping variables</p>
 
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">percentGenes</span><span class="op">(</span></span>
-<span>  <span class="va">df</span>,</span>
+<span>  <span class="va">input.data</span>,</span>
 <span>  chain <span class="op">=</span> <span class="st">"TRB"</span>,</span>
 <span>  gene <span class="op">=</span> <span class="st">"Vgene"</span>,</span>
 <span>  group.by <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -119,7 +119,7 @@ grouping variables</p>
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>df</dt>
+    <dl><dt>input.data</dt>
 <dd><p>The product of <code><a href="combineTCR.html">combineTCR</a></code>, <code><a href="combineBCR.html">combineBCR</a></code>, or
 <code><a href="combineExpression.html">combineExpression</a></code>.</p></dd>
 
@@ -157,7 +157,9 @@ grouping variables</p>
 <span class="r-in"><span><span class="va">combined</span> <span class="op">&lt;-</span> <span class="fu"><a href="combineTCR.html">combineTCR</a></span><span class="op">(</span><span class="va">contig_list</span>, </span></span>
 <span class="r-in"><span>                        samples <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"P17B"</span>, <span class="st">"P17L"</span>, <span class="st">"P18B"</span>, <span class="st">"P18L"</span>, </span></span>
 <span class="r-in"><span>                                    <span class="st">"P19B"</span>,<span class="st">"P19L"</span>, <span class="st">"P20B"</span>, <span class="st">"P20L"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">percentGenes</span><span class="op">(</span><span class="va">combined</span>, chain <span class="op">=</span> <span class="st">"TRB"</span>, gene <span class="op">=</span> <span class="st">"Vgene"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">percentGenes</span><span class="op">(</span><span class="va">combined</span>, </span></span>
+<span class="r-in"><span>             chain <span class="op">=</span> <span class="st">"TRB"</span>, </span></span>
+<span class="r-in"><span>             gene <span class="op">=</span> <span class="st">"Vgene"</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="percentGenes-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>

@@ -54,7 +54,7 @@
       <a href="../articles/Repertoire_Summary.html">Summarizing Repertoires</a>
     </li>
     <li>
-      <a href="../articles/Clonal_Diversity.html">Clonal Diversity and Overlap</a>
+      <a href="../articles/Clonal_Diversity.html">Clonal Diversity, Rarefaction, and Overlap</a>
     </li>
     <li>
       <a href="../articles/Clonal_Cluster.html">Clustering Sequences by Edit Distance</a>
@@ -135,14 +135,18 @@
 </ul></div>
 <div class="section level3">
 <h3 id="underlying-changes-2-0-0">UNDERLYING CHANGES<a class="anchor" aria-label="anchor" href="#underlying-changes-2-0-0"></a></h3>
-<ul><li>startrac diversity metric re-implemented to remove startrac-class object intermediary</li>
+<ul><li>.theCall now allows for a custom header/variable and checks the colnames.</li>
+<li>Replaced data arguments to be more descriptive: <em>df</em> is now <em>input.data</em>, <em>dir</em> is now <em>input</em>, and <em>sc</em> is now <em>sc.data</em>
+</li>
+<li>Deep clean on the documentation for each function for increased consistency and explainability</li>
+<li>startrac diversity metric re-implemented to remove startrac-class object intermediary</li>
 <li>implemented powerTCR locally to reduce dependencies and continue support</li>
 <li>Universalized underlying function language and intermediate variables</li>
 <li>License change to MIT</li>
 <li>group.by and split.by have been consolidated into single group.by parameter</li>
 <li>Added support for .json, Omniscope, and MiXCR formats for <code><a href="../reference/loadContigs.html">loadContigs()</a></code>
 </li>
-<li>Made GitHub.io webstie for support/vignettes/FAQ</li>
+<li>Made GitHub.io website for support/vignettes/FAQ</li>
 <li>Restructured NEWS Tracking</li>
 </ul></div>
 <div class="section level3">

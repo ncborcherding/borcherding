@@ -73,7 +73,7 @@
       <a href="../articles/Repertoire_Summary.html">Summarizing Repertoires</a>
     </li>
     <li>
-      <a href="../articles/Clonal_Diversity.html">Clonal Diversity and Overlap</a>
+      <a href="../articles/Clonal_Diversity.html">Clonal Diversity, Rarefaction, and Overlap</a>
     </li>
     <li>
       <a href="../articles/Clonal_Cluster.html">Clustering Sequences by Edit Distance</a>
@@ -124,7 +124,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Frequently Asked Questions</h1>
             
-            <h4 data-toc-skip class="date">Compiled: October 24,
+            <h4 data-toc-skip class="date">Compiled: October 25,
 2023</h4>
       
       
@@ -163,6 +163,43 @@ barcodes in the Seurat object by using the RenameCells().</p>
 <span><span class="va">seuratObj</span> <span class="op">&lt;-</span> <span class="fu">RenameCells</span><span class="op">(</span><span class="va">seuratObj</span>, new.names <span class="op">=</span> <span class="va">cell.barcodes</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
+<h3 id="adjusting-color-palettes">Adjusting Color Palettes<a class="anchor" aria-label="anchor" href="#adjusting-color-palettes"></a>
+</h3>
+<p>For all visualizations in scRepertoire, there are 2 ways to adjust
+the color scheme: + Change the <strong>palette</strong> parameter to the
+desired color scheme. This approach uses the built-in palettes of
+grDevices and we can access the list of color schemes using
+<code><a href="https://rdrr.io/r/grDevices/palettes.html" class="external-link">hcl.pals()</a></code>.<br>
++ Add a ggplot layer with a new color scheme.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/clonalQuant.html">clonalQuant</a></span><span class="op">(</span><span class="va">combined.TCR</span>, cloneCall <span class="op">=</span> <span class="st">"strict"</span>, chain <span class="op">=</span> <span class="st">"both"</span>, scale <span class="op">=</span> <span class="cn">TRUE</span>, palette <span class="op">=</span> <span class="st">"Zissou 1"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="FAQ_files/figure-html/unnamed-chunk-2-1.png" width="700"></p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/clonalQuant.html">clonalQuant</a></span><span class="op">(</span><span class="va">combined.TCR</span>, cloneCall <span class="op">=</span> <span class="st">"strict"</span>, chain <span class="op">=</span> <span class="st">"both"</span>, scale <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span> <span class="fu">scale_fill_manual</span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/palettes.html" class="external-link">hcl.colors</a></span><span class="op">(</span><span class="fl">8</span>,</span>
+<span>    <span class="st">"geyser"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p><img src="FAQ_files/figure-html/unnamed-chunk-2-2.png" width="700"></p>
+</div>
+<div class="section level3">
+<h3 id="getting-data-used-in-plots">Getting Data Used in Plots<a class="anchor" aria-label="anchor" href="#getting-data-used-in-plots"></a>
+</h3>
+<p>Within each of the general analysis functions, there is the ability
+to export the data frame used to create the visualization. To get the
+exported values, use <strong>exportTable</strong> = TRUE. It will return
+the data frame used to make the graph instead of the visual output.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">clonalQuant_output</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/clonalQuant.html">clonalQuant</a></span><span class="op">(</span><span class="va">combined.TCR</span>, cloneCall <span class="op">=</span> <span class="st">"strict"</span>, scale <span class="op">=</span> <span class="cn">TRUE</span>, exportTable <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="va">clonalQuant_output</span></span></code></pre></div>
+<pre><code><span><span class="co">##   contigs values total   scaled</span></span>
+<span><span class="co">## 1     745   P17B  2805 26.55971</span></span>
+<span><span class="co">## 2    2117   P17L  2893 73.17663</span></span>
+<span><span class="co">## 3    1254   P18B  1328 94.42771</span></span>
+<span><span class="co">## 4    1202   P18L  1278 94.05321</span></span>
+<span><span class="co">## 5    5544   P19B  6942 79.86171</span></span>
+<span><span class="co">## 6    1619   P19L  2747 58.93702</span></span>
+<span><span class="co">## 7    6087   P20B  8991 67.70103</span></span>
+<span><span class="co">## 8     192   P20L   201 95.52239</span></span></code></pre>
+</div>
+<div class="section level3">
 <h3 id="citing-screpertoire">Citing scRepertoire<a class="anchor" aria-label="anchor" href="#citing-screpertoire"></a>
 </h3>
 <p><strong><em>Borcherding, N. &amp; Wang, Q. scRepertoire v2: Expanded
@@ -171,16 +208,11 @@ toolkit for single-cell immune repertoire analysis</em></strong></p>
 <div class="section level3">
 <h3 id="bug-reportsnew-features">Bug Reports/New Features<a class="anchor" aria-label="anchor" href="#bug-reportsnew-features"></a>
 </h3>
-<div class="section level5">
-<h5 id="github-issue">
-<a href="https://github.com/ncborcherding/scRepertoire/issues" class="external-link">GitHub
-issue</a><a class="anchor" aria-label="anchor" href="#github-issue"></a>
-</h5>
-<p>If possible please include a <a href="https://reprex.tidyverse.org/" class="external-link">reproducible example</a>.
+<p>Submit a <a href="https://github.com/ncborcherding/scRepertoire/issues" class="external-link">GitHub
+issue</a> - if possible please include a <a href="https://reprex.tidyverse.org/" class="external-link">reproducible example</a>.
 Alternatively, an example with the internal
 <strong>scRep_example</strong> and <strong>contig_list</strong> would be
 extremely helpful.</p>
-</div>
 </div>
 <div class="section level3">
 <h3 id="features-or-enhancements-requests">Features or Enhancements Requests<a class="anchor" aria-label="anchor" href="#features-or-enhancements-requests"></a>

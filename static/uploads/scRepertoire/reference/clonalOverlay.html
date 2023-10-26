@@ -57,7 +57,7 @@ ProjectTIL."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs
       <a href="../articles/Repertoire_Summary.html">Summarizing Repertoires</a>
     </li>
     <li>
-      <a href="../articles/Clonal_Diversity.html">Clonal Diversity and Overlap</a>
+      <a href="../articles/Clonal_Diversity.html">Clonal Diversity, Rarefaction, and Overlap</a>
     </li>
     <li>
       <a href="../articles/Clonal_Cluster.html">Clustering Sequences by Edit Distance</a>
@@ -112,7 +112,7 @@ Credit to the idea goes to Drs Andreatta and Carmona and their work with
 
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">clonalOverlay</span><span class="op">(</span></span>
-<span>  <span class="va">sc</span>,</span>
+<span>  <span class="va">sc.data</span>,</span>
 <span>  reduction <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  freq.cutpoint <span class="op">=</span> <span class="fl">30</span>,</span>
 <span>  bins <span class="op">=</span> <span class="fl">25</span>,</span>
@@ -122,7 +122,7 @@ Credit to the idea goes to Drs Andreatta and Carmona and their work with
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>sc</dt>
+    <dl><dt>sc.data</dt>
 <dd><p>The single-cell object after <code><a href="combineExpression.html">combineExpression</a></code>.</p></dd>
 
 

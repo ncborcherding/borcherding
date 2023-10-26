@@ -59,7 +59,7 @@ output for the data is preferred, set exportTable = TRUE."><!-- mathjax --><scri
       <a href="../articles/Repertoire_Summary.html">Summarizing Repertoires</a>
     </li>
     <li>
-      <a href="../articles/Clonal_Diversity.html">Clonal Diversity and Overlap</a>
+      <a href="../articles/Clonal_Diversity.html">Clonal Diversity, Rarefaction, and Overlap</a>
     </li>
     <li>
       <a href="../articles/Clonal_Cluster.html">Clustering Sequences by Edit Distance</a>
@@ -111,12 +111,12 @@ The grouping of these clonotypes is based on the parameter cloneSize,
 at default, cloneSize will group the clonotypes into bins of Rare = 0 
 to 0.0001, Small = 0.0001 to 0.001, etc. To adjust the proportions, 
 change the number or labeling of the cloneSize paramter. If a matrix 
-output for the data is preferred, set exportTable = TRUE.</p>
+output for the data is preferred, set <strong>exportTable</strong> = TRUE.</p>
     </div>
 
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">clonalHomeostasis</span><span class="op">(</span></span>
-<span>  <span class="va">df</span>,</span>
+<span>  <span class="va">input.data</span>,</span>
 <span>  cloneSize <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>Rare <span class="op">=</span> <span class="fl">1e-04</span>, Small <span class="op">=</span> <span class="fl">0.001</span>, Medium <span class="op">=</span> <span class="fl">0.01</span>, Large <span class="op">=</span> <span class="fl">0.1</span>, Hyperexpanded <span class="op">=</span></span>
 <span>    <span class="fl">1</span><span class="op">)</span>,</span>
 <span>  cloneCall <span class="op">=</span> <span class="st">"strict"</span>,</span>
@@ -129,7 +129,7 @@ output for the data is preferred, set exportTable = TRUE.</p>
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>df</dt>
+    <dl><dt>input.data</dt>
 <dd><p>The product of <code><a href="combineTCR.html">combineTCR</a></code>, <code><a href="combineBCR.html">combineBCR</a></code>, or
 <code><a href="combineExpression.html">combineExpression</a></code>.</p></dd>
 
@@ -140,8 +140,8 @@ output for the data is preferred, set exportTable = TRUE.</p>
 
 <dt>cloneCall</dt>
 <dd><p>How to call the clonotype - VDJC gene (gene), 
-CDR3 nucleotide (nt), CDR3 amino acid (aa), or 
-VDJC gene + CDR3 nucleotide (strict).</p></dd>
+CDR3 nucleotide (nt), CDR3 amino acid (aa),
+VDJC gene + CDR3 nucleotide (strict) or a custom variable in the data.</p></dd>
 
 
 <dt>chain</dt>

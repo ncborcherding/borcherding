@@ -58,7 +58,7 @@ the length of the combined object."><!-- mathjax --><script src="https://cdnjs.c
       <a href="../articles/Repertoire_Summary.html">Summarizing Repertoires</a>
     </li>
     <li>
-      <a href="../articles/Clonal_Diversity.html">Clonal Diversity and Overlap</a>
+      <a href="../articles/Clonal_Diversity.html">Clonal Diversity, Rarefaction, and Overlap</a>
     </li>
     <li>
       <a href="../articles/Clonal_Cluster.html">Clustering Sequences by Edit Distance</a>
@@ -113,16 +113,16 @@ the length of the combined object.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">addVariable</span><span class="op">(</span><span class="va">df</span>, name <span class="op">=</span> <span class="cn">NULL</span>, variables <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">addVariable</span><span class="op">(</span><span class="va">input.data</span>, variable.name <span class="op">=</span> <span class="cn">NULL</span>, variables <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>df</dt>
+    <dl><dt>input.data</dt>
 <dd><p>The product of <code><a href="combineTCR.html">combineTCR</a></code> or <code><a href="combineBCR.html">combineBCR</a></code>.</p></dd>
 
 
-<dt>name</dt>
+<dt>variable.name</dt>
 <dd><p>The column header to add.</p></dd>
 
 
@@ -134,17 +134,18 @@ the length of the combined object.</p>
     <h2>Value</h2>
     
 
-<p>list of contigs with a new column (name).</p>
+<p>input.data list with the variable column added to each element.</p>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">combined</span> <span class="op">&lt;-</span> <span class="fu"><a href="combineTCR.html">combineTCR</a></span><span class="op">(</span><span class="va">contig_list</span>, </span></span>
-<span class="r-in"><span>                        samples <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"P17B"</span>, <span class="st">"P17L"</span>, <span class="st">"P18B"</span>, <span class="st">"P18L"</span>, </span></span>
+<span class="r-in"><span>                       samples <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"P17B"</span>, <span class="st">"P17L"</span>, <span class="st">"P18B"</span>, <span class="st">"P18L"</span>, </span></span>
 <span class="r-in"><span>                                    <span class="st">"P19B"</span>,<span class="st">"P19L"</span>, <span class="st">"P20B"</span>, <span class="st">"P20L"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">combined</span> <span class="op">&lt;-</span> <span class="fu">addVariable</span><span class="op">(</span><span class="va">combined</span>, </span></span>
-<span class="r-in"><span>                       name <span class="op">=</span> <span class="st">"Type"</span>, </span></span>
-<span class="r-in"><span>                       variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"B"</span>, <span class="st">"L"</span><span class="op">)</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>                        variable.name <span class="op">=</span> <span class="st">"Type"</span>, </span></span>
+<span class="r-in"><span>                        variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"B"</span>, <span class="st">"L"</span><span class="op">)</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in addVariable(combined, variable.name = "Type", variables = rep(c("B",     "L"), 4)):</span> unused argument (variable.name = "Type")</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

@@ -58,7 +58,7 @@ proportion to be visualized."><!-- mathjax --><script src="https://cdnjs.cloudfl
       <a href="../articles/Repertoire_Summary.html">Summarizing Repertoires</a>
     </li>
     <li>
-      <a href="../articles/Clonal_Diversity.html">Clonal Diversity and Overlap</a>
+      <a href="../articles/Clonal_Diversity.html">Clonal Diversity, Rarefaction, and Overlap</a>
     </li>
     <li>
       <a href="../articles/Clonal_Cluster.html">Clustering Sequences by Edit Distance</a>
@@ -114,7 +114,7 @@ proportion to be visualized.</p>
 
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">clonalCompare</span><span class="op">(</span></span>
-<span>  <span class="va">df</span>,</span>
+<span>  <span class="va">input.data</span>,</span>
 <span>  cloneCall <span class="op">=</span> <span class="st">"strict"</span>,</span>
 <span>  chain <span class="op">=</span> <span class="st">"both"</span>,</span>
 <span>  samples <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -131,15 +131,9 @@ proportion to be visualized.</p>
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>df</dt>
+    <dl><dt>input.data</dt>
 <dd><p>The product of <code><a href="combineTCR.html">combineTCR</a></code>, <code><a href="combineBCR.html">combineBCR</a></code>, or
 <code><a href="combineExpression.html">combineExpression</a></code>.</p></dd>
-
-
-<dt>cloneCall</dt>
-<dd><p>How to call the clonotype - VDJC gene (gene), 
-CDR3 nucleotide (nt), CDR3 amino acid (aa), or 
-VDJC gene + CDR3 nucleotide (strict).</p></dd>
 
 
 <dt>chain</dt>
@@ -184,6 +178,12 @@ to group the new list. NULL will return clusters.</p></dd>
 
 <dt>palette</dt>
 <dd><p>Colors to use in visualization - input any <a href="https://rdrr.io/r/grDevices/palettes.html" class="external-link">hcl.pals</a>.</p></dd>
+
+
+<dt>cloneCallHow</dt>
+<dd><p>to call the clonotype - VDJC gene (gene), 
+CDR3 nucleotide (nt), CDR3 amino acid (aa),
+VDJC gene + CDR3 nucleotide (strict) or a custom variable in the data.</p></dd>
 
 </dl></div>
     <div id="value">

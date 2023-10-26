@@ -55,7 +55,7 @@ various overlap metrics for clonotypes."><!-- mathjax --><script src="https://cd
       <a href="../articles/Repertoire_Summary.html">Summarizing Repertoires</a>
     </li>
     <li>
-      <a href="../articles/Clonal_Diversity.html">Clonal Diversity and Overlap</a>
+      <a href="../articles/Clonal_Diversity.html">Clonal Diversity, Rarefaction, and Overlap</a>
     </li>
     <li>
       <a href="../articles/Clonal_Cluster.html">Clustering Sequences by Edit Distance</a>
@@ -108,7 +108,7 @@ various overlap metrics for clonotypes.</p>
 
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">clonalOverlap</span><span class="op">(</span></span>
-<span>  <span class="va">df</span>,</span>
+<span>  <span class="va">input.data</span>,</span>
 <span>  cloneCall <span class="op">=</span> <span class="st">"strict"</span>,</span>
 <span>  method <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  chain <span class="op">=</span> <span class="st">"both"</span>,</span>
@@ -120,20 +120,20 @@ various overlap metrics for clonotypes.</p>
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>df</dt>
+    <dl><dt>input.data</dt>
 <dd><p>The product of <code><a href="combineTCR.html">combineTCR</a></code>, <code><a href="combineBCR.html">combineBCR</a></code>, or
 <code><a href="combineExpression.html">combineExpression</a></code>.</p></dd>
 
 
 <dt>cloneCall</dt>
 <dd><p>How to call the clonotype - VDJC gene (gene), 
-CDR3 nucleotide (nt), CDR3 amino acid (aa), or 
-VDJC gene + CDR3 nucleotide (strict).</p></dd>
+CDR3 nucleotide (nt), CDR3 amino acid (aa),
+VDJC gene + CDR3 nucleotide (strict) or a custom variable in the data.</p></dd>
 
 
 <dt>method</dt>
-<dd><p>The method to calculate the "overlap", 
-for the base numbers.</p></dd>
+<dd><p>The method to calculate the "overlap", "morisita", 
+"jaccard", "cosine" indices or "raw" for the base numbers.</p></dd>
 
 
 <dt>chain</dt>
@@ -162,15 +162,15 @@ e.g. "both", "TRA", "TRG", "IGH", "IGL"</p></dd>
     <div id="details">
     <h2>Details</h2>
     <p>The formulas for the indices are as follows:</p>
-<p>Overlap Coefficient: 
+<p><strong>Overlap Coefficient:</strong>
 $$overlap = \frac{\sum \min(a_i, b_i)}{\min(\sum a_i, \sum b_i)}$$</p>
-<p>Raw Count Overlap:
+<p><strong>Raw Count Overlap:</strong>
 $$raw = \sum \min(a_i, b_i)$$</p>
-<p>Morisita Index:
+<p><strong>Morisita Index:</strong>
 $$morisita = \frac{\sum a_i b_i}{(\sum a_i)(\sum b_i)}$$</p>
-<p>Jaccard Index:
+<p><strong>Jaccard Index:</strong>
 $$jaccard = \frac{\sum \min(a_i, b_i)}{\sum a_i + \sum b_i - \sum \min(a_i, b_i)}$$</p>
-<p>Cosine Similarity:
+<p><strong>Cosine Similarity:</strong>
 $$cosine = \frac{\sum a_i b_i}{\sqrt{(\sum a_i^2)(\sum b_i^2)}}$$</p>
 <p>Where:</p><ul><li><p>\(a_i\) and \(b_i\) are the abundances of species \(i\) in groups A and B, respectively.</p></li>
 </ul></div>
@@ -183,7 +183,7 @@ $$cosine = \frac{\sum a_i b_i}{\sqrt{(\sum a_i^2)(\sum b_i^2)}}$$</p>
 <span class="r-in"><span>                                    <span class="st">"P19B"</span>,<span class="st">"P19L"</span>, <span class="st">"P20B"</span>, <span class="st">"P20L"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">clonalOverlap</span><span class="op">(</span><span class="va">combined</span>, </span></span>
-<span class="r-in"><span>              cloneCall <span class="op">=</span> <span class="st">"gene"</span>, </span></span>
+<span class="r-in"><span>              cloneCall <span class="op">=</span> <span class="st">"aa"</span>, </span></span>
 <span class="r-in"><span>              method <span class="op">=</span> <span class="st">"jaccard"</span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Removed 36 rows containing missing values (`geom_text()`).</span>
 <span class="r-plt img"><img src="clonalOverlap-1.png" alt="" width="700" height="433"></span>
