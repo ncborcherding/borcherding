@@ -124,7 +124,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Clustering by Edit Distance</h1>
             
-            <h4 data-toc-skip class="date">Compiled: October 25,
+            <h4 data-toc-skip class="date">Compiled: November 01,
 2023</h4>
       
       
@@ -152,15 +152,13 @@ can be applied to the B or T cell receptors at the level of nucleotides
 each list element by generating a network connected by the similarity in
 sequence. This network is directed by the threshold variable, where 0.85
 is the normalized mean edit distance.</p>
-<p>Clonotype cluster by distance:</p>
-<ul>
-<li>TCRA:Cluster.1 [chain:] + :Cluster + [number]<br>
-</li>
-<li>TCRA.123 [chain:] + [number]</li>
-</ul>
-<p>Cluster denotes if the cluster was called using the normalized
-Levenshtein distance, which takes the edit distance calculated between 2
-sequences and divides that by the mean of the sequence lengths.</p>
+<p>Edit-distance based clusters will have the following format:<br>
+* [chain:] + :Cluster + [number] [e.g., TRA:Cluster.1]</p>
+<p><em>Cluster</em> denotes if the cluster was called using the
+normalized Levenshtein distance, which takes the edit distance
+calculated between 2 sequences and divides that by the mean of the
+sequence lengths. Unconnected sequences will have <em>NA</em>
+values.</p>
 <div class="section level3">
 <h3 id="basic-use">Basic use:<a class="anchor" aria-label="anchor" href="#basic-use"></a>
 </h3>
@@ -168,63 +166,14 @@ sequences and divides that by the mean of the sequence lengths.</p>
 <code class="sourceCode R"><span><span class="va">sub_combined</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/clonalCluster.html">clonalCluster</a></span><span class="op">(</span><span class="va">combined.TCR</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span>, chain <span class="op">=</span> <span class="st">"TRA"</span>, sequence <span class="op">=</span> <span class="st">"aa"</span>, threshold <span class="op">=</span> <span class="fl">0.85</span>,</span>
 <span>    group.by <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">sub_combined</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##           cdr3_aa1                 barcode sample                     TCR1</span></span>
-<span><span class="co">## 1 CALRRYSGAGSYQLTF P17L_AAACCTGAGGTGTTAA-1   P17L      TRAV9-2.TRAJ28.TRAC</span></span>
-<span><span class="co">## 2    CLVGPDNDYKLSF P17L_AAACCTGCACGTTGGC-1   P17L        TRAV4.TRAJ20.TRAC</span></span>
-<span><span class="co">## 3     CAPHTGGFKTIF P17L_AAACCTGGTACGACCC-1   P17L        TRAV20.TRAJ9.TRAC</span></span>
-<span><span class="co">## 4  CAYRSNNFGNEKLTF P17L_AAACCTGGTTCGCTAA-1   P17L TRAV38-2/DV8.TRAJ48.TRAC</span></span>
-<span><span class="co">## 5 CAVGAKSGGGADGLTF P17L_AAACCTGTCAGCACAT-1   P17L      TRAV8-3.TRAJ45.TRAC</span></span>
-<span><span class="co">## 6     CAENMDDYKLSF P17L_AAACCTGTCCGGCACA-1   P17L     TRAV13-2.TRAJ20.TRAC</span></span>
-<span><span class="co">##                                           cdr3_nt1                        TCR2</span></span>
-<span><span class="co">## 1 TGTGCTCTGAGGAGGTACTCTGGGGCTGGGAGTTACCAACTCACTTTC TRBV12-4.None.TRBJ2-1.TRBC2</span></span>
-<span><span class="co">## 2          TGCCTCGTGGGTCCTGATAACGACTACAAGCTCAGCTTT  TRBV6-5.None.TRBJ2-1.TRBC2</span></span>
-<span><span class="co">## 3             TGTGCTCCCCATACTGGAGGCTTCAAAACTATCTTT TRBV11-2.None.TRBJ2-7.TRBC2</span></span>
-<span><span class="co">## 4    TGTGCTTATAGGAGCAATAACTTTGGAAATGAGAAATTAACCTTT  TRBV5-5.None.TRBJ2-3.TRBC2</span></span>
-<span><span class="co">## 5 TGTGCTGTGGGTGCGAAATCAGGAGGAGGTGCTGACGGACTCACCTTT  TRBV3-1.None.TRBJ2-7.TRBC2</span></span>
-<span><span class="co">## 6             TGTGCAGAGAATATGGACGACTACAAGCTCAGCTTT  TRBV7-2.None.TRBJ1-5.TRBC1</span></span>
-<span><span class="co">##           cdr3_aa2                                         cdr3_nt2</span></span>
-<span><span class="co">## 1 CASSLARGGPYNEQFF TGTGCCAGCAGTTTAGCGCGGGGGGGGCCCTACAATGAGCAGTTCTTC</span></span>
-<span><span class="co">## 2 CASSYSRHRSYNEQFF TGTGCCAGCAGTTACTCGCGGCACCGTTCCTACAATGAGCAGTTCTTC</span></span>
-<span><span class="co">## 3   CASSFTQGRYEQYF       TGTGCCAGCAGCTTTACCCAGGGGCGTTACGAGCAGTACTTC</span></span>
-<span><span class="co">## 4 CASSLGPNLNTDTQYF TGTGCCAGCAGCTTGGGCCCGAACCTTAACACAGATACGCAGTATTTT</span></span>
-<span><span class="co">## 5      CASSQVYEQYF                TGTGCCAGCAGCCAAGTTTACGAGCAGTACTTC</span></span>
-<span><span class="co">## 6  CASSLMTGEGQPQHF    TGTGCCAGCAGCCTGATGACAGGGGAGGGTCAGCCCCAGCATTTT</span></span>
-<span><span class="co">##                     CTgene</span></span>
-<span><span class="co">## 1      TRAV9-2.TRAJ28.TRAC</span></span>
-<span><span class="co">## 2        TRAV4.TRAJ20.TRAC</span></span>
-<span><span class="co">## 3        TRAV20.TRAJ9.TRAC</span></span>
-<span><span class="co">## 4 TRAV38-2/DV8.TRAJ48.TRAC</span></span>
-<span><span class="co">## 5      TRAV8-3.TRAJ45.TRAC</span></span>
-<span><span class="co">## 6     TRAV13-2.TRAJ20.TRAC</span></span>
-<span><span class="co">##                                                                                                CTnt</span></span>
-<span><span class="co">## 1 TGTGCTCTGAGGAGGTACTCTGGGGCTGGGAGTTACCAACTCACTTTC_TGTGCCAGCAGTTTAGCGCGGGGGGGGCCCTACAATGAGCAGTTCTTC</span></span>
-<span><span class="co">## 2          TGCCTCGTGGGTCCTGATAACGACTACAAGCTCAGCTTT_TGTGCCAGCAGTTACTCGCGGCACCGTTCCTACAATGAGCAGTTCTTC</span></span>
-<span><span class="co">## 3                   TGTGCTCCCCATACTGGAGGCTTCAAAACTATCTTT_TGTGCCAGCAGCTTTACCCAGGGGCGTTACGAGCAGTACTTC</span></span>
-<span><span class="co">## 4    TGTGCTTATAGGAGCAATAACTTTGGAAATGAGAAATTAACCTTT_TGTGCCAGCAGCTTGGGCCCGAACCTTAACACAGATACGCAGTATTTT</span></span>
-<span><span class="co">## 5                TGTGCTGTGGGTGCGAAATCAGGAGGAGGTGCTGACGGACTCACCTTT_TGTGCCAGCAGCCAAGTTTACGAGCAGTACTTC</span></span>
-<span><span class="co">## 6                TGTGCAGAGAATATGGACGACTACAAGCTCAGCTTT_TGTGCCAGCAGCCTGATGACAGGGGAGGGTCAGCCCCAGCATTTT</span></span>
-<span><span class="co">##                                CTaa</span></span>
-<span><span class="co">## 1 CALRRYSGAGSYQLTF_CASSLARGGPYNEQFF</span></span>
-<span><span class="co">## 2    CLVGPDNDYKLSF_CASSYSRHRSYNEQFF</span></span>
-<span><span class="co">## 3       CAPHTGGFKTIF_CASSFTQGRYEQYF</span></span>
-<span><span class="co">## 4  CAYRSNNFGNEKLTF_CASSLGPNLNTDTQYF</span></span>
-<span><span class="co">## 5      CAVGAKSGGGADGLTF_CASSQVYEQYF</span></span>
-<span><span class="co">## 6      CAENMDDYKLSF_CASSLMTGEGQPQHF</span></span>
-<span><span class="co">##                                                                                                                                             CTstrict</span></span>
-<span><span class="co">## 1  TRAV9-2.TRAJ28.TRAC_TGTGCTCTGAGGAGGTACTCTGGGGCTGGGAGTTACCAACTCACTTTC_TRBV12-4.None.TRBJ2-1.TRBC2_TGTGCCAGCAGTTTAGCGCGGGGGGGGCCCTACAATGAGCAGTTCTTC</span></span>
-<span><span class="co">## 2              TRAV4.TRAJ20.TRAC_TGCCTCGTGGGTCCTGATAACGACTACAAGCTCAGCTTT_TRBV6-5.None.TRBJ2-1.TRBC2_TGTGCCAGCAGTTACTCGCGGCACCGTTCCTACAATGAGCAGTTCTTC</span></span>
-<span><span class="co">## 3                      TRAV20.TRAJ9.TRAC_TGTGCTCCCCATACTGGAGGCTTCAAAACTATCTTT_TRBV11-2.None.TRBJ2-7.TRBC2_TGTGCCAGCAGCTTTACCCAGGGGCGTTACGAGCAGTACTTC</span></span>
-<span><span class="co">## 4 TRAV38-2/DV8.TRAJ48.TRAC_TGTGCTTATAGGAGCAATAACTTTGGAAATGAGAAATTAACCTTT_TRBV5-5.None.TRBJ2-3.TRBC2_TGTGCCAGCAGCTTGGGCCCGAACCTTAACACAGATACGCAGTATTTT</span></span>
-<span><span class="co">## 5                  TRAV8-3.TRAJ45.TRAC_TGTGCTGTGGGTGCGAAATCAGGAGGAGGTGCTGACGGACTCACCTTT_TRBV3-1.None.TRBJ2-7.TRBC2_TGTGCCAGCAGCCAAGTTTACGAGCAGTACTTC</span></span>
-<span><span class="co">## 6                 TRAV13-2.TRAJ20.TRAC_TGTGCAGAGAATATGGACGACTACAAGCTCAGCTTT_TRBV7-2.None.TRBJ1-5.TRBC1_TGTGCCAGCAGCCTGATGACAGGGGAGGGTCAGCCCCAGCATTTT</span></span>
-<span><span class="co">##      TRA_cluster</span></span>
-<span><span class="co">## 1  TRA:Cluster.1</span></span>
-<span><span class="co">## 2          TRA.1</span></span>
-<span><span class="co">## 3          TRA.2</span></span>
-<span><span class="co">## 4          TRA.3</span></span>
-<span><span class="co">## 5 TRA:Cluster.21</span></span>
-<span><span class="co">## 6          TRA.4</span></span></code></pre>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">sub_combined</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">13</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##                   barcode sample    TRA_cluster</span></span>
+<span><span class="co">## 1 P17L_AAACCTGAGGTGTTAA-1   P17L  TRA:Cluster.1</span></span>
+<span><span class="co">## 2 P17L_AAACCTGCACGTTGGC-1   P17L           &lt;NA&gt;</span></span>
+<span><span class="co">## 3 P17L_AAACCTGGTACGACCC-1   P17L           &lt;NA&gt;</span></span>
+<span><span class="co">## 4 P17L_AAACCTGGTTCGCTAA-1   P17L           &lt;NA&gt;</span></span>
+<span><span class="co">## 5 P17L_AAACCTGTCAGCACAT-1   P17L TRA:Cluster.21</span></span>
+<span><span class="co">## 6 P17L_AAACCTGTCCGGCACA-1   P17L           &lt;NA&gt;</span></span></code></pre>
 <p>If performed over the number of samples, such as the list elements,
 <strong>group.by</strong> can used to calculate only the clusters on the
 setting of patient sample (<strong>group.by</strong> = “Patient”) or
