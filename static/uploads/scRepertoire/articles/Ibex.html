@@ -124,7 +124,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Combining Deep Learning and BCRs with Ibex</h1>
             
-            <h4 data-toc-skip class="date">Compiled: November 01,
+            <h4 data-toc-skip class="date">Compiled: November 04,
 2023</h4>
       
       
@@ -134,7 +134,6 @@
 
     
     
-<hr>
 <style>
 p.caption {
   font-size: 0.9em;
@@ -196,7 +195,9 @@ object.</p>
 If choosing the geometric transformation, what value of theta to use
 (default is pi)</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">ibex_vectors</span> <span class="op">&lt;-</span> <span class="fu">Ibex.matrix</span><span class="op">(</span><span class="va">SeuratObj</span>, chains <span class="op">=</span> <span class="st">"Light"</span>, encoder.input <span class="op">=</span> <span class="st">"OHE"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">ibex_vectors</span> <span class="op">&lt;-</span> <span class="fu">Ibex.matrix</span><span class="op">(</span><span class="va">SeuratObj</span>, </span>
+<span>                            chains <span class="op">=</span> <span class="st">"Light"</span>,</span>
+<span>                            encoder.input <span class="op">=</span> <span class="st">"OHE"</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] "Calculating the encoding values..."</span></span></code></pre>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">qplot</span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">ibex_vectors</span><span class="op">)</span>, <span class="va">Ibex_2</span>, <span class="va">Ibex_3</span><span class="op">)</span> <span class="op">+</span> <span class="fu">theme_classic</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
@@ -211,7 +212,10 @@ further analysis. Importantly, <code>runIbex()</code> will remove single
 cells that do not have recovered BCR data in the metadata of the
 object.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">SeuratObj</span> <span class="op">&lt;-</span> <span class="fu">runIbex</span><span class="op">(</span><span class="va">SeuratObj</span>, chains <span class="op">=</span> <span class="st">"Heavy"</span>, encoder.input <span class="op">=</span> <span class="st">"KF"</span>, reduction.name <span class="op">=</span> <span class="st">"ibex.KF"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">SeuratObj</span> <span class="op">&lt;-</span> <span class="fu">runIbex</span><span class="op">(</span><span class="va">SeuratObj</span>, </span>
+<span>                     chains <span class="op">=</span> <span class="st">"Heavy"</span>,</span>
+<span>                     encoder.input <span class="op">=</span> <span class="st">"KF"</span>, </span>
+<span>                     reduction.name <span class="op">=</span> <span class="st">"ibex.KF"</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] "Calculating the encoding values..."</span></span></code></pre>
 </div>
 <div class="section level3">
@@ -222,14 +226,19 @@ object.</p>
 can calculate the nearest neighbor and shared nearest neighbor indexes
 and generate a UMAP.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Generating UMAP from ibex Neighbors</span></span>
-<span><span class="va">SeuratObj</span> <span class="op">&lt;-</span> <span class="fu">RunUMAP</span><span class="op">(</span><span class="va">SeuratObj</span>, reduction <span class="op">=</span> <span class="st">"ibex.KF"</span>, dims <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">30</span>, reduction.name <span class="op">=</span> <span class="st">"ibex.umap"</span>,</span>
-<span>    reduction.key <span class="op">=</span> <span class="st">"ibexUMAP_"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="co">#Generating UMAP from ibex Neighbors</span></span>
+<span><span class="va">SeuratObj</span> <span class="op">&lt;-</span> <span class="fu">RunUMAP</span><span class="op">(</span><span class="va">SeuratObj</span>, </span>
+<span>                     reduction <span class="op">=</span> <span class="st">"ibex.KF"</span>,</span>
+<span>                     dims <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">30</span>,</span>
+<span>                     reduction.name <span class="op">=</span> <span class="st">'ibex.umap'</span>, </span>
+<span>                     reduction.key <span class="op">=</span> <span class="st">'ibexUMAP_'</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># ibex UMAP</span></span>
+<span><span class="co">#ibex UMAP</span></span>
 <span><span class="va">plot1</span> <span class="op">&lt;-</span> <span class="fu">DimPlot</span><span class="op">(</span><span class="va">SeuratObj</span>, reduction <span class="op">=</span> <span class="st">"ibex.umap"</span><span class="op">)</span> <span class="op">+</span> <span class="fu">NoLegend</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="va">plot2</span> <span class="op">&lt;-</span> <span class="fu">DimPlot</span><span class="op">(</span><span class="va">SeuratObj</span>, group.by <span class="op">=</span> <span class="st">"CTaa"</span>, reduction <span class="op">=</span> <span class="st">"ibex.umap"</span><span class="op">)</span> <span class="op">+</span> <span class="fu">scale_color_viridis</span><span class="op">(</span>discrete <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>    option <span class="op">=</span> <span class="st">"B"</span><span class="op">)</span> <span class="op">+</span> <span class="fu">theme</span><span class="op">(</span>plot.title <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu">NoLegend</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">plot2</span> <span class="op">&lt;-</span> <span class="fu">DimPlot</span><span class="op">(</span><span class="va">SeuratObj</span>, group.by <span class="op">=</span> <span class="st">"CTaa"</span>, reduction <span class="op">=</span> <span class="st">"ibex.umap"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu">scale_color_viridis</span><span class="op">(</span>discrete <span class="op">=</span> <span class="cn">TRUE</span>, option <span class="op">=</span> <span class="st">"B"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu">theme</span><span class="op">(</span>plot.title <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">NoLegend</span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">plot1</span> <span class="op">+</span> <span class="va">plot2</span></span></code></pre></div>
 <p><img src="Ibex_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
@@ -239,15 +248,27 @@ please read the Satija’s group <a href="https://pubmed.ncbi.nlm.nih.gov/340621
 the RNA, ADT protein levels, and ibex vectors for the WNN
 calculations.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">SeuratObj</span> <span class="op">&lt;-</span> <span class="fu">FindMultiModalNeighbors</span><span class="op">(</span><span class="va">SeuratObj</span>, reduction.list <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"pca"</span>, <span class="st">"apca"</span>, <span class="st">"ibex.KF"</span><span class="op">)</span>,</span>
-<span>    dims.list <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">30</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">20</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">30</span><span class="op">)</span>, modality.weight.name <span class="op">=</span> <span class="st">"RNA.weight"</span><span class="op">)</span></span>
-<span><span class="va">SeuratObj</span> <span class="op">&lt;-</span> <span class="fu">RunUMAP</span><span class="op">(</span><span class="va">SeuratObj</span>, nn.name <span class="op">=</span> <span class="st">"weighted.nn"</span>, reduction.name <span class="op">=</span> <span class="st">"wnn.umap"</span>, reduction.key <span class="op">=</span> <span class="st">"wnnUMAP_"</span><span class="op">)</span></span>
-<span><span class="va">SeuratObj</span> <span class="op">&lt;-</span> <span class="fu">FindClusters</span><span class="op">(</span><span class="va">SeuratObj</span>, graph.name <span class="op">=</span> <span class="st">"wsnn"</span>, resolution <span class="op">=</span> <span class="fl">0.6</span>, algorithm <span class="op">=</span> <span class="fl">3</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">SeuratObj</span> <span class="op">&lt;-</span> <span class="fu">FindMultiModalNeighbors</span><span class="op">(</span></span>
+<span>                    <span class="va">SeuratObj</span>, </span>
+<span>                    reduction.list <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"pca"</span>, <span class="st">"apca"</span>, <span class="st">"ibex.KF"</span><span class="op">)</span>, </span>
+<span>                    dims.list <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">30</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">20</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">30</span><span class="op">)</span>, </span>
+<span>                    modality.weight.name <span class="op">=</span> <span class="st">"RNA.weight"</span></span>
+<span>                  <span class="op">)</span></span>
+<span><span class="va">SeuratObj</span> <span class="op">&lt;-</span> <span class="fu">RunUMAP</span><span class="op">(</span><span class="va">SeuratObj</span>, </span>
+<span>                     nn.name <span class="op">=</span> <span class="st">"weighted.nn"</span>, </span>
+<span>                     reduction.name <span class="op">=</span> <span class="st">"wnn.umap"</span>, </span>
+<span>                     reduction.key <span class="op">=</span> <span class="st">"wnnUMAP_"</span><span class="op">)</span></span>
+<span><span class="va">SeuratObj</span> <span class="op">&lt;-</span> <span class="fu">FindClusters</span><span class="op">(</span><span class="va">SeuratObj</span>, </span>
+<span>                          graph.name <span class="op">=</span> <span class="st">"wsnn"</span>, </span>
+<span>                          resolution <span class="op">=</span> <span class="fl">0.6</span>,</span>
+<span>                          algorithm <span class="op">=</span> <span class="fl">3</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># WNN UMAP</span></span>
+<span><span class="co">#WNN UMAP</span></span>
 <span><span class="va">plot3</span> <span class="op">&lt;-</span> <span class="fu">DimPlot</span><span class="op">(</span><span class="va">SeuratObj</span>, reduction <span class="op">=</span> <span class="st">"wnn.umap"</span><span class="op">)</span></span>
-<span><span class="va">plot4</span> <span class="op">&lt;-</span> <span class="fu">DimPlot</span><span class="op">(</span><span class="va">SeuratObj</span>, reduction <span class="op">=</span> <span class="st">"wnn.umap"</span>, group.by <span class="op">=</span> <span class="st">"CTaa"</span><span class="op">)</span> <span class="op">+</span> <span class="fu">scale_color_viridis</span><span class="op">(</span>discrete <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>    option <span class="op">=</span> <span class="st">"B"</span><span class="op">)</span> <span class="op">+</span> <span class="fu">theme</span><span class="op">(</span>plot.title <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu">NoLegend</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">plot4</span> <span class="op">&lt;-</span> <span class="fu">DimPlot</span><span class="op">(</span><span class="va">SeuratObj</span>, reduction <span class="op">=</span> <span class="st">"wnn.umap"</span>, group.by <span class="op">=</span> <span class="st">"CTaa"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu">scale_color_viridis</span><span class="op">(</span>discrete <span class="op">=</span> <span class="cn">TRUE</span>, option <span class="op">=</span> <span class="st">"B"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu">theme</span><span class="op">(</span>plot.title <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">NoLegend</span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">plot3</span> <span class="op">+</span> <span class="va">plot4</span></span></code></pre></div>
 <p><img src="Ibex_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
@@ -260,11 +281,19 @@ ADT, or Ibex as individual components. Remember, the clusters that we
 are displaying in UMAP are based on clusters defined by the weighted
 nearest neighbors calculated above.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">SeuratObj</span> <span class="op">&lt;-</span> <span class="fu">RunUMAP</span><span class="op">(</span><span class="va">SeuratObj</span>, reduction <span class="op">=</span> <span class="st">"pca"</span>, dims <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">30</span>, assay <span class="op">=</span> <span class="st">"RNA"</span>, reduction.name <span class="op">=</span> <span class="st">"rna.umap"</span>,</span>
-<span>    reduction.key <span class="op">=</span> <span class="st">"rnaUMAP_"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">SeuratObj</span> <span class="op">&lt;-</span> <span class="fu">RunUMAP</span><span class="op">(</span><span class="va">SeuratObj</span>, </span>
+<span>                     reduction <span class="op">=</span> <span class="st">'pca'</span>, </span>
+<span>                     dims <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">30</span>, </span>
+<span>                     assay <span class="op">=</span> <span class="st">'RNA'</span>, </span>
+<span>                     reduction.name <span class="op">=</span> <span class="st">'rna.umap'</span>, </span>
+<span>                     reduction.key <span class="op">=</span> <span class="st">'rnaUMAP_'</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">SeuratObj</span> <span class="op">&lt;-</span> <span class="fu">RunUMAP</span><span class="op">(</span><span class="va">SeuratObj</span>, reduction <span class="op">=</span> <span class="st">"apca"</span>, dims <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">20</span>, assay <span class="op">=</span> <span class="st">"ADT"</span>, reduction.name <span class="op">=</span> <span class="st">"adt.umap"</span>,</span>
-<span>    reduction.key <span class="op">=</span> <span class="st">"adtUMAP_"</span><span class="op">)</span></span>
+<span><span class="va">SeuratObj</span> <span class="op">&lt;-</span> <span class="fu">RunUMAP</span><span class="op">(</span><span class="va">SeuratObj</span>, </span>
+<span>                     reduction <span class="op">=</span> <span class="st">'apca'</span>, </span>
+<span>                     dims <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">20</span>, </span>
+<span>                     assay <span class="op">=</span> <span class="st">'ADT'</span>, </span>
+<span>                     reduction.name <span class="op">=</span> <span class="st">'adt.umap'</span>, </span>
+<span>                     reduction.key <span class="op">=</span> <span class="st">'adtUMAP_'</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">plot5</span> <span class="op">&lt;-</span> <span class="fu">DimPlot</span><span class="op">(</span><span class="va">SeuratObj</span>, reduction <span class="op">=</span> <span class="st">"rna.umap"</span><span class="op">)</span> <span class="op">+</span> <span class="fu">NoLegend</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">plot6</span> <span class="op">&lt;-</span> <span class="fu">DimPlot</span><span class="op">(</span><span class="va">SeuratObj</span>, reduction <span class="op">=</span> <span class="st">"adt.umap"</span><span class="op">)</span> <span class="op">+</span> <span class="fu">NoLegend</span><span class="op">(</span><span class="op">)</span></span>
@@ -288,14 +317,17 @@ approach, Ibex offers the function <code>CoNGAfy()</code>. For
 above. After performing <code>CoNGAfy()</code>, the user can use any of
 the above reduction strategies.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">CoNGA.seurat</span> <span class="op">&lt;-</span> <span class="fu">CoNGAfy</span><span class="op">(</span><span class="va">SeuratObj</span>, method <span class="op">=</span> <span class="st">"dist"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">CoNGA.seurat</span> <span class="op">&lt;-</span> <span class="fu">CoNGAfy</span><span class="op">(</span><span class="va">SeuratObj</span>, </span>
+<span>                         method <span class="op">=</span> <span class="st">"dist"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">CoNGA.seurat</span> <span class="op">&lt;-</span> <span class="fu">runIbex</span><span class="op">(</span><span class="va">CoNGA.seurat</span>, encoder.input <span class="op">=</span> <span class="st">"KF"</span>, reduction.name <span class="op">=</span> <span class="st">"ibex.KF"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">CoNGA.seurat</span> <span class="op">&lt;-</span> <span class="fu">runIbex</span><span class="op">(</span><span class="va">CoNGA.seurat</span>, </span>
+<span>                        encoder.input <span class="op">=</span> <span class="st">"KF"</span>, </span>
+<span>                        reduction.name <span class="op">=</span> <span class="st">"ibex.KF"</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] "Calculating the encoding values..."</span></span></code></pre>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">CoNGA.seurat</span> <span class="op">&lt;-</span> <span class="va">CoNGA.seurat</span> <span class="op">%&gt;%</span></span>
-<span>    <span class="fu">FindNeighbors</span><span class="op">(</span>reduction <span class="op">=</span> <span class="st">"ibex.KF"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>    <span class="fu">FindClusters</span><span class="op">(</span>algorithm <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></code></pre></div>
+<span>                  <span class="fu">FindNeighbors</span><span class="op">(</span>reduction <span class="op">=</span> <span class="st">"ibex.KF"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>                  <span class="fu">FindClusters</span><span class="op">(</span>algorithm <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Modularity Optimizer version 1.3.0 by Ludo Waltman and Nees Jan van Eck</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## Number of nodes: 1012</span></span>
@@ -306,8 +338,11 @@ the above reduction strategies.</p>
 <span><span class="co">## Number of communities: 7</span></span>
 <span><span class="co">## Elapsed time: 0 seconds</span></span></code></pre>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">CoNGA.seurat</span> <span class="op">&lt;-</span> <span class="fu">RunUMAP</span><span class="op">(</span><span class="va">CoNGA.seurat</span>, reduction <span class="op">=</span> <span class="st">"ibex.KF"</span>, dims <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">20</span>, reduction.name <span class="op">=</span> <span class="st">"ibex.umap"</span>,</span>
-<span>    reduction.key <span class="op">=</span> <span class="st">"ibexUMAP_"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">CoNGA.seurat</span> <span class="op">&lt;-</span> <span class="fu">RunUMAP</span><span class="op">(</span><span class="va">CoNGA.seurat</span>, </span>
+<span>                        reduction <span class="op">=</span> <span class="st">"ibex.KF"</span>, </span>
+<span>                        dims <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">20</span>, </span>
+<span>                        reduction.name <span class="op">=</span> <span class="st">'ibex.umap'</span>, </span>
+<span>                        reduction.key <span class="op">=</span> <span class="st">'ibexUMAP_'</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">DimPlot</span><span class="op">(</span><span class="va">CoNGA.seurat</span>, reduction <span class="op">=</span> <span class="st">"ibex.umap"</span><span class="op">)</span> <span class="op">+</span> <span class="fu">NoLegend</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Ibex_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>

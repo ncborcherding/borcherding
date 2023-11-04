@@ -124,7 +124,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Summarizing Repertoires</h1>
             
-            <h4 data-toc-skip class="date">Compiled: November 01,
+            <h4 data-toc-skip class="date">Compiled: November 04,
 2023</h4>
       
       
@@ -134,7 +134,6 @@
 
     
     
-<hr>
 <style>
 p.caption {
   font-size: 0.9em;
@@ -165,7 +164,11 @@ across chains, scaling, etc.</p>
 + “variance” to order by variance between the separate variable
 categories</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/vizGenes.html">vizGenes</a></span><span class="op">(</span><span class="va">combined.TCR</span>, x.axis <span class="op">=</span> <span class="st">"TRBV"</span>, y.axis <span class="op">=</span> <span class="cn">NULL</span>, plot <span class="op">=</span> <span class="st">"barplot"</span>, scale <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/vizGenes.html">vizGenes</a></span><span class="op">(</span><span class="va">combined.TCR</span>, </span>
+<span>         x.axis <span class="op">=</span> <span class="st">"TRBV"</span>,</span>
+<span>         y.axis <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>         plot <span class="op">=</span> <span class="st">"barplot"</span>,  </span>
+<span>         scale <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Repertoire_Summary_files/figure-html/unnamed-chunk-1-1.png" width="700"></p>
 <p><code><a href="../reference/vizGenes.html">vizGenes()</a></code> can also be used to look at the usage of
 genes in a single chain. For example, say we are interested in the
@@ -173,18 +176,30 @@ difference in TRB V and J usage between lung and peripheral blood
 samples - we can easily take a look at this using the following
 code:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Peripheral Blood</span></span>
-<span><span class="fu"><a href="../reference/vizGenes.html">vizGenes</a></span><span class="op">(</span><span class="va">combined.TCR</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">3</span>, <span class="fl">5</span>, <span class="fl">7</span><span class="op">)</span><span class="op">]</span>, x.axis <span class="op">=</span> <span class="st">"TRBV"</span>, y.axis <span class="op">=</span> <span class="st">"TRBJ"</span>, plot <span class="op">=</span> <span class="st">"heatmap"</span>, scale <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="co">#Peripheral Blood</span></span>
+<span><span class="fu"><a href="../reference/vizGenes.html">vizGenes</a></span><span class="op">(</span><span class="va">combined.TCR</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">3</span>,<span class="fl">5</span>,<span class="fl">7</span><span class="op">)</span><span class="op">]</span>, </span>
+<span>         x.axis <span class="op">=</span> <span class="st">"TRBV"</span>,</span>
+<span>         y.axis <span class="op">=</span> <span class="st">"TRBJ"</span>,</span>
+<span>         plot <span class="op">=</span> <span class="st">"heatmap"</span>,  </span>
+<span>         scale <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Repertoire_Summary_files/figure-html/unnamed-chunk-2-1.png" width="700"></p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Lung</span></span>
-<span><span class="fu"><a href="../reference/vizGenes.html">vizGenes</a></span><span class="op">(</span><span class="va">combined.TCR</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">4</span>, <span class="fl">6</span>, <span class="fl">8</span><span class="op">)</span><span class="op">]</span>, x.axis <span class="op">=</span> <span class="st">"TRBV"</span>, y.axis <span class="op">=</span> <span class="st">"TRBJ"</span>, plot <span class="op">=</span> <span class="st">"heatmap"</span>, scale <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="co">#Lung</span></span>
+<span><span class="fu"><a href="../reference/vizGenes.html">vizGenes</a></span><span class="op">(</span><span class="va">combined.TCR</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">4</span>,<span class="fl">6</span>,<span class="fl">8</span><span class="op">)</span><span class="op">]</span>, </span>
+<span>         x.axis <span class="op">=</span> <span class="st">"TRBV"</span>,</span>
+<span>         y.axis <span class="op">=</span> <span class="st">"TRBJ"</span>,</span>
+<span>         plot <span class="op">=</span> <span class="st">"heatmap"</span>,  </span>
+<span>         scale <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Repertoire_Summary_files/figure-html/unnamed-chunk-2-2.png" width="700"></p>
 <p>For the P17 patient samples, what if we are interested in chain
 pairings, we can look at TRBV and TRAV at the same time using them as
 inputs to <strong>x.axis</strong> and <strong>y.axis</strong>.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/vizGenes.html">vizGenes</a></span><span class="op">(</span><span class="va">combined.TCR</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">]</span>, x.axis <span class="op">=</span> <span class="st">"TRBV"</span>, y.axis <span class="op">=</span> <span class="st">"TRAV"</span>, plot <span class="op">=</span> <span class="st">"heatmap"</span>, scale <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/vizGenes.html">vizGenes</a></span><span class="op">(</span><span class="va">combined.TCR</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span><span class="op">]</span>, </span>
+<span>         x.axis <span class="op">=</span> <span class="st">"TRBV"</span>,</span>
+<span>         y.axis <span class="op">=</span> <span class="st">"TRAV"</span>,</span>
+<span>         plot <span class="op">=</span> <span class="st">"heatmap"</span>, </span>
+<span>         scale <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Repertoire_Summary_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
 </div>
 <div class="section level2">
@@ -196,7 +211,9 @@ sequences with NAs up to the maximum of <strong>aa.length</strong>.
 Sequences longer than <strong>aa.length</strong> will be removed before
 visualization.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/percentAA.html">percentAA</a></span><span class="op">(</span><span class="va">combined.TCR</span>, chain <span class="op">=</span> <span class="st">"TRB"</span>, aa.length <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/percentAA.html">percentAA</a></span><span class="op">(</span><span class="va">combined.TCR</span>, </span>
+<span>          chain <span class="op">=</span> <span class="st">"TRB"</span>, </span>
+<span>          aa.length <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Repertoire_Summary_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
 </div>
 <div class="section level2">
@@ -210,26 +227,34 @@ the chain of interest and then indicate the gene of interest with the
 genes, and 2) the quantification of the genes are limited to all the V
 or J genes seen across the samples, not all possible V or J genes.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/percentGenes.html">percentGenes</a></span><span class="op">(</span><span class="va">combined.TCR</span>, chain <span class="op">=</span> <span class="st">"TRB"</span>, gene <span class="op">=</span> <span class="st">"Vgene"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/percentGenes.html">percentGenes</a></span><span class="op">(</span><span class="va">combined.TCR</span>, </span>
+<span>             chain <span class="op">=</span> <span class="st">"TRB"</span>, </span>
+<span>             gene <span class="op">=</span> <span class="st">"Vgene"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Repertoire_Summary_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
 <p>We can also use the output <code><a href="../reference/percentGenes.html">percentGenes()</a></code> for
 dimensional reduction to summarise the gene usage by sample. This can be
 done with a simple principal component analysis (below) or even more
 complex reductions.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">df.genes</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/percentGenes.html">percentGenes</a></span><span class="op">(</span><span class="va">combined.TCR</span>, chain <span class="op">=</span> <span class="st">"TRB"</span>, gene <span class="op">=</span> <span class="st">"Vgene"</span>, exportTable <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">df.genes</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/percentGenes.html">percentGenes</a></span><span class="op">(</span><span class="va">combined.TCR</span>, </span>
+<span>                         chain <span class="op">=</span> <span class="st">"TRB"</span>, </span>
+<span>                         gene <span class="op">=</span> <span class="st">"Vgene"</span>, </span>
+<span>                         exportTable <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Performing PCA</span></span>
+<span><span class="co">#Performing PCA</span></span>
 <span><span class="va">pc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/prcomp.html" class="external-link">prcomp</a></span><span class="op">(</span><span class="va">df.genes</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Getting data frame to plot from</span></span>
-<span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">pc</span><span class="op">$</span><span class="va">x</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span>, <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">df.genes</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#Getting data frame to plot from</span></span>
+<span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">pc</span><span class="op">$</span><span class="va">x</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span>, <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">df.genes</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">df</span><span class="op">$</span><span class="va">PC1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">PC1</span><span class="op">)</span></span>
 <span><span class="va">df</span><span class="op">$</span><span class="va">PC2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">PC2</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Plotting</span></span>
-<span><span class="fu">ggplot</span><span class="op">(</span><span class="va">df</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">PC1</span>, y <span class="op">=</span> <span class="va">PC2</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu">geom_point</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>fill <span class="op">=</span> <span class="va">df</span><span class="op">[</span>, <span class="fl">3</span><span class="op">]</span><span class="op">)</span>, shape <span class="op">=</span> <span class="fl">21</span>, size <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op">+</span> <span class="fu">guides</span><span class="op">(</span>fill <span class="op">=</span> <span class="fu">guide_legend</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Samples"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu">scale_fill_manual</span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/palettes.html" class="external-link">hcl.colors</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span>, <span class="st">"inferno"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu">theme_classic</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span><span class="co">#Plotting</span></span>
+<span><span class="fu">ggplot</span><span class="op">(</span><span class="va">df</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">PC1</span>, y <span class="op">=</span> <span class="va">PC2</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu">geom_point</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>fill <span class="op">=</span><span class="va">df</span><span class="op">[</span>,<span class="fl">3</span><span class="op">]</span><span class="op">)</span>, shape <span class="op">=</span> <span class="fl">21</span>, size <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu">guides</span><span class="op">(</span>fill<span class="op">=</span><span class="fu">guide_legend</span><span class="op">(</span>title<span class="op">=</span><span class="st">"Samples"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu">scale_fill_manual</span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/palettes.html" class="external-link">hcl.colors</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span>, <span class="st">"inferno"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu">theme_classic</span><span class="op">(</span><span class="op">)</span> </span></code></pre></div>
 <p><img src="Repertoire_Summary_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
 </div>
 <div class="section level2">
@@ -241,22 +266,28 @@ function will quantify the percentage of V and J paired together across
 individual repertoires. The output can be visualized using a heatmap or
 as input for further dimensional reduction.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/percentVJ.html">percentVJ</a></span><span class="op">(</span><span class="va">combined.TCR</span>, chain <span class="op">=</span> <span class="st">"TRB"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/percentVJ.html">percentVJ</a></span><span class="op">(</span><span class="va">combined.TCR</span>, </span>
+<span>          chain <span class="op">=</span> <span class="st">"TRB"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Repertoire_Summary_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">df.genes</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/percentVJ.html">percentVJ</a></span><span class="op">(</span><span class="va">combined.TCR</span>, chain <span class="op">=</span> <span class="st">"TRB"</span>, exportTable <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">df.genes</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/percentVJ.html">percentVJ</a></span><span class="op">(</span><span class="va">combined.TCR</span>, </span>
+<span>                      chain <span class="op">=</span> <span class="st">"TRB"</span>, </span>
+<span>                      exportTable <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Performing PCA</span></span>
+<span><span class="co">#Performing PCA</span></span>
 <span><span class="va">pc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/prcomp.html" class="external-link">prcomp</a></span><span class="op">(</span><span class="va">df.genes</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Getting data frame to plot from</span></span>
-<span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">pc</span><span class="op">$</span><span class="va">x</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span>, <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">df.genes</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#Getting data frame to plot from</span></span>
+<span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">pc</span><span class="op">$</span><span class="va">x</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span>, <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">df.genes</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> </span>
 <span><span class="va">df</span><span class="op">$</span><span class="va">PC1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">PC1</span><span class="op">)</span></span>
 <span><span class="va">df</span><span class="op">$</span><span class="va">PC2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">PC2</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Plotting</span></span>
-<span><span class="fu">ggplot</span><span class="op">(</span><span class="va">df</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">PC1</span>, y <span class="op">=</span> <span class="va">PC2</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu">geom_point</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>fill <span class="op">=</span> <span class="va">df</span><span class="op">[</span>, <span class="fl">3</span><span class="op">]</span><span class="op">)</span>, shape <span class="op">=</span> <span class="fl">21</span>, size <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op">+</span> <span class="fu">guides</span><span class="op">(</span>fill <span class="op">=</span> <span class="fu">guide_legend</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Samples"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu">scale_fill_manual</span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/palettes.html" class="external-link">hcl.colors</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span>, <span class="st">"inferno"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu">theme_classic</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span><span class="co">#Plotting</span></span>
+<span><span class="fu">ggplot</span><span class="op">(</span><span class="va">df</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">PC1</span>, y <span class="op">=</span> <span class="va">PC2</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu">geom_point</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>fill <span class="op">=</span><span class="va">df</span><span class="op">[</span>,<span class="fl">3</span><span class="op">]</span><span class="op">)</span>, shape <span class="op">=</span> <span class="fl">21</span>, size <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu">guides</span><span class="op">(</span>fill<span class="op">=</span><span class="fu">guide_legend</span><span class="op">(</span>title<span class="op">=</span><span class="st">"Samples"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu">scale_fill_manual</span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/palettes.html" class="external-link">hcl.colors</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span>, <span class="st">"inferno"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu">theme_classic</span><span class="op">(</span><span class="op">)</span> </span></code></pre></div>
 <p><img src="Repertoire_Summary_files/figure-html/unnamed-chunk-7-2.png" width="700"></p>
 </div>
 <div class="section level2">
@@ -271,10 +302,18 @@ Numerical value for the length of the kmer.</p>
 Display the most variable genes determined by mean absolute
 deviation.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/percentKmer.html">percentKmer</a></span><span class="op">(</span><span class="va">combined.TCR</span>, cloneCall <span class="op">=</span> <span class="st">"aa"</span>, chain <span class="op">=</span> <span class="st">"TRB"</span>, motif.length <span class="op">=</span> <span class="fl">3</span>, top.motifs <span class="op">=</span> <span class="fl">25</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/percentKmer.html">percentKmer</a></span><span class="op">(</span><span class="va">combined.TCR</span>, </span>
+<span>            cloneCall <span class="op">=</span> <span class="st">"aa"</span>,</span>
+<span>            chain <span class="op">=</span> <span class="st">"TRB"</span>, </span>
+<span>            motif.length <span class="op">=</span> <span class="fl">3</span>, </span>
+<span>            top.motifs <span class="op">=</span> <span class="fl">25</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Repertoire_Summary_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/percentKmer.html">percentKmer</a></span><span class="op">(</span><span class="va">combined.TCR</span>, cloneCall <span class="op">=</span> <span class="st">"nt"</span>, chain <span class="op">=</span> <span class="st">"TRB"</span>, motif.length <span class="op">=</span> <span class="fl">3</span>, top.motifs <span class="op">=</span> <span class="fl">25</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/percentKmer.html">percentKmer</a></span><span class="op">(</span><span class="va">combined.TCR</span>, </span>
+<span>            cloneCall <span class="op">=</span> <span class="st">"nt"</span>,</span>
+<span>            chain <span class="op">=</span> <span class="st">"TRB"</span>, </span>
+<span>            motif.length <span class="op">=</span> <span class="fl">3</span>, </span>
+<span>            top.motifs <span class="op">=</span> <span class="fl">25</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Repertoire_Summary_files/figure-html/unnamed-chunk-8-2.png" width="700"></p>
 </div>
   </div>

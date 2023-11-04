@@ -124,7 +124,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Clustering by Edit Distance</h1>
             
-            <h4 data-toc-skip class="date">Compiled: November 01,
+            <h4 data-toc-skip class="date">Compiled: November 04,
 2023</h4>
       
       
@@ -134,7 +134,6 @@
 
     
     
-<hr>
 <style>
 p.caption {
   font-size: 0.9em;
@@ -163,10 +162,13 @@ values.</p>
 <h3 id="basic-use">Basic use:<a class="anchor" aria-label="anchor" href="#basic-use"></a>
 </h3>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">sub_combined</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/clonalCluster.html">clonalCluster</a></span><span class="op">(</span><span class="va">combined.TCR</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span>, chain <span class="op">=</span> <span class="st">"TRA"</span>, sequence <span class="op">=</span> <span class="st">"aa"</span>, threshold <span class="op">=</span> <span class="fl">0.85</span>,</span>
-<span>    group.by <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">sub_combined</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/clonalCluster.html">clonalCluster</a></span><span class="op">(</span><span class="va">combined.TCR</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span>, </span>
+<span>                              chain <span class="op">=</span> <span class="st">"TRA"</span>, </span>
+<span>                              sequence <span class="op">=</span> <span class="st">"aa"</span>, </span>
+<span>                              threshold <span class="op">=</span> <span class="fl">0.85</span>, </span>
+<span>                              group.by <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">sub_combined</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">13</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">sub_combined</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">13</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##                   barcode sample    TRA_cluster</span></span>
 <span><span class="co">## 1 P17L_AAACCTGAGGTGTTAA-1   P17L  TRA:Cluster.1</span></span>
 <span><span class="co">## 2 P17L_AAACCTGCACGTTGGC-1   P17L           &lt;NA&gt;</span></span>
@@ -185,20 +187,24 @@ call <code><a href="../reference/clonalCluster.html">clonalCluster()</a></code> 
 <h3 id="clustering-with-attached-data">Clustering with attached data:<a class="anchor" aria-label="anchor" href="#clustering-with-attached-data"></a>
 </h3>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Adding patient information</span></span>
-<span><span class="va">scRep_example</span><span class="op">$</span><span class="va">Patient</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/substr.html" class="external-link">substr</a></span><span class="op">(</span><span class="va">scRep_example</span><span class="op">$</span><span class="va">orig.ident</span>, <span class="fl">1</span>, <span class="fl">3</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="co">#Adding patient information</span></span>
+<span><span class="va">scRep_example</span><span class="op">$</span><span class="va">Patient</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/substr.html" class="external-link">substr</a></span><span class="op">(</span><span class="va">scRep_example</span><span class="op">$</span><span class="va">orig.ident</span>, <span class="fl">1</span>,<span class="fl">3</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Adding type information</span></span>
-<span><span class="va">scRep_example</span><span class="op">$</span><span class="va">Type</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/substr.html" class="external-link">substr</a></span><span class="op">(</span><span class="va">scRep_example</span><span class="op">$</span><span class="va">orig.ident</span>, <span class="fl">4</span>, <span class="fl">4</span><span class="op">)</span></span>
+<span><span class="co">#Adding type information</span></span>
+<span><span class="va">scRep_example</span><span class="op">$</span><span class="va">Type</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/substr.html" class="external-link">substr</a></span><span class="op">(</span><span class="va">scRep_example</span><span class="op">$</span><span class="va">orig.ident</span>, <span class="fl">4</span>,<span class="fl">4</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Define color palette</span></span>
-<span><span class="va">colorblind_vector</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/palettes.html" class="external-link">hcl.colors</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">7</span>, palette <span class="op">=</span> <span class="st">"inferno"</span>, fixup <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#Define color palette </span></span>
+<span><span class="va">colorblind_vector</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/palettes.html" class="external-link">hcl.colors</a></span><span class="op">(</span>n<span class="op">=</span><span class="fl">7</span>, palette <span class="op">=</span> <span class="st">"inferno"</span>, fixup <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">scRep_example</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/clonalCluster.html">clonalCluster</a></span><span class="op">(</span><span class="va">scRep_example</span>, chain <span class="op">=</span> <span class="st">"TRA"</span>, sequence <span class="op">=</span> <span class="st">"aa"</span>, threshold <span class="op">=</span> <span class="fl">0.85</span>,</span>
-<span>    group.by <span class="op">=</span> <span class="st">"Patient"</span><span class="op">)</span></span>
+<span><span class="va">scRep_example</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/clonalCluster.html">clonalCluster</a></span><span class="op">(</span><span class="va">scRep_example</span>, </span>
+<span>                               chain <span class="op">=</span> <span class="st">"TRA"</span>, </span>
+<span>                               sequence <span class="op">=</span> <span class="st">"aa"</span>, </span>
+<span>                               threshold <span class="op">=</span> <span class="fl">0.85</span>, </span>
+<span>                               group.by <span class="op">=</span> <span class="st">"Patient"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">DimPlot</span><span class="op">(</span><span class="va">scRep_example</span>, group.by <span class="op">=</span> <span class="st">"TRA_cluster"</span><span class="op">)</span> <span class="op">+</span> <span class="fu">scale_color_manual</span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/palettes.html" class="external-link">hcl.colors</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">scRep_example</span><span class="op">@</span><span class="va">meta.data</span><span class="op">[</span>,</span>
-<span>    <span class="st">"TRA_cluster"</span><span class="op">]</span><span class="op">)</span><span class="op">)</span>, <span class="st">"inferno"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu">NoLegend</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">DimPlot</span><span class="op">(</span><span class="va">scRep_example</span>, group.by <span class="op">=</span> <span class="st">"TRA_cluster"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu">scale_color_manual</span><span class="op">(</span>values <span class="op">=</span>  <span class="fu"><a href="https://rdrr.io/r/grDevices/palettes.html" class="external-link">hcl.colors</a></span><span class="op">(</span>n<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">scRep_example</span><span class="op">@</span><span class="va">meta.data</span><span class="op">[</span>,<span class="st">"TRA_cluster"</span><span class="op">]</span><span class="op">)</span><span class="op">)</span>, <span class="st">"inferno"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu">NoLegend</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Clonal_Cluster_files/figure-html/unnamed-chunk-2-1.png" width="700"></p>
 <p>Using <code><a href="../reference/clonalCluster.html">clonalCluster()</a></code>, we can also return an igraph
 object of all the related sequences using <strong>exportGraph</strong> =
@@ -211,18 +217,27 @@ igraph <a href="https://r.igraph.org/" class="external-link">website</a>.</p>
 <h3 id="returning-an-igraph-object">Returning an igraph object:<a class="anchor" aria-label="anchor" href="#returning-an-igraph-object"></a>
 </h3>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Clustering Patient 19 samples</span></span>
-<span><span class="va">igraph.object</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/clonalCluster.html">clonalCluster</a></span><span class="op">(</span><span class="va">combined.TCR</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">6</span><span class="op">)</span><span class="op">]</span>, chain <span class="op">=</span> <span class="st">"TRB"</span>, sequence <span class="op">=</span> <span class="st">"aa"</span>, group.by <span class="op">=</span> <span class="st">"sample"</span>,</span>
-<span>    threshold <span class="op">=</span> <span class="fl">0.85</span>, exportGraph <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="co">#Clustering Patient 19 samples</span></span>
+<span><span class="va">igraph.object</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/clonalCluster.html">clonalCluster</a></span><span class="op">(</span><span class="va">combined.TCR</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>,<span class="fl">6</span><span class="op">)</span><span class="op">]</span>,</span>
+<span>                               chain <span class="op">=</span> <span class="st">"TRB"</span>,</span>
+<span>                               sequence <span class="op">=</span> <span class="st">"aa"</span>,</span>
+<span>                               group.by <span class="op">=</span> <span class="st">"sample"</span>,</span>
+<span>                               threshold <span class="op">=</span> <span class="fl">0.85</span>, </span>
+<span>                               exportGraph <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Setting color scheme</span></span>
+<span><span class="co">#Setting color scheme</span></span>
 <span><span class="va">col_legend</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="fu">igraph</span><span class="fu">::</span><span class="fu"><a href="https://r.igraph.org/reference/V.html" class="external-link">V</a></span><span class="op">(</span><span class="va">igraph.object</span><span class="op">)</span><span class="op">$</span><span class="va">group</span><span class="op">)</span></span>
-<span><span class="va">col_samples</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/palettes.html" class="external-link">hcl.colors</a></span><span class="op">(</span><span class="fl">3</span>, <span class="st">"inferno"</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">col_legend</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="va">col_samples</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/palettes.html" class="external-link">hcl.colors</a></span><span class="op">(</span><span class="fl">3</span>,<span class="st">"inferno"</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">col_legend</span><span class="op">)</span><span class="op">]</span></span>
 <span><span class="va">color.legend</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="fu">igraph</span><span class="fu">::</span><span class="fu"><a href="https://r.igraph.org/reference/V.html" class="external-link">V</a></span><span class="op">(</span><span class="va">igraph.object</span><span class="op">)</span><span class="op">$</span><span class="va">group</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Plotting</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">igraph.object</span>, vertex.size <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="fu">igraph</span><span class="fu">::</span><span class="fu"><a href="https://r.igraph.org/reference/V.html" class="external-link">V</a></span><span class="op">(</span><span class="va">igraph.object</span><span class="op">)</span><span class="op">$</span><span class="va">size</span><span class="op">)</span>, vertex.label <span class="op">=</span> <span class="cn">NA</span>, edge.arrow.size <span class="op">=</span> <span class="fl">0.25</span>,</span>
-<span>    vertex.color <span class="op">=</span> <span class="va">col_samples</span><span class="op">)</span></span>
+<span><span class="co">#Plotting</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span></span>
+<span>  <span class="va">igraph.object</span>,</span>
+<span>  vertex.size     <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="fu">igraph</span><span class="fu">::</span><span class="fu"><a href="https://r.igraph.org/reference/V.html" class="external-link">V</a></span><span class="op">(</span><span class="va">igraph.object</span><span class="op">)</span><span class="op">$</span><span class="va">size</span><span class="op">)</span>,</span>
+<span>  vertex.label    <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  edge.arrow.size <span class="op">=</span> <span class="fl">.25</span>,</span>
+<span>  vertex.color    <span class="op">=</span> <span class="va">col_samples</span></span>
+<span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/legend.html" class="external-link">legend</a></span><span class="op">(</span><span class="st">"topleft"</span>, legend <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">color.legend</span><span class="op">)</span>, pch <span class="op">=</span> <span class="fl">16</span>, col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">col_samples</span><span class="op">)</span>, bty <span class="op">=</span> <span class="st">"n"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Clonal_Cluster_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
 </div>
