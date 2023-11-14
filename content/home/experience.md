@@ -39,7 +39,7 @@ experience:
     company_logo: sab
     location: California
     date_start: '2022-09-15'
-    date_end: ''
+    date_end: '2023-08-01'
     
   - title: Resident, Clinical Pathology
     company: Washington University
