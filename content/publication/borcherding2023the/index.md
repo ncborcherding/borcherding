@@ -22,8 +22,9 @@ publication_short: In *Nature*
 abstract: Mitochondria are believed to have originated through an ancient endosymbiotic process in which proteobacteria were captured and co-opted for energy production and cellular metabolism. Mitochondria segregate during cell division and differentiation, with vertical inheritance of mitochondria and the mitochondrial DNA genome from parent to daughter cells. However, an emerging body of literature indicates that some cell types export their mitochondria for delivery to developmentally unrelated cell types, a process called intercellular mitochondria transfer. In this Review, we describe the mechanisms by which mitochondria are transferred between cells and discuss how intercellular mitochondria transfer regulates the physiology and function of various organ systems in health and disease. In particular, we discuss the role of mitochondria transfer in regulating cellular metabolism, cancer, the immune system, maintenance of tissue homeostasis, mitochondrial quality control, wound healing and adipose tissue function. We also highlight the potential of targeting intercellular mitochondria transfer as a therapeutic strategy to treat human diseases and augment cellular therapies. 
 
 tags:
-- cancer
-- Immunotherapy
+- Metabolism
+- Mitochondria
+- microenvironment
 featured: true
 
 links:
