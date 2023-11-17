@@ -22,9 +22,6 @@
     <loc>https://www.borch.dev/uploads/scRepertoire/articles/Clonal_Dynamics.html</loc>
   </url>
   <url>
-    <loc>https://www.borch.dev/uploads/scRepertoire/articles/Clonal_Rarefaction.html</loc>
-  </url>
-  <url>
     <loc>https://www.borch.dev/uploads/scRepertoire/articles/Clonal_Visualizations.html</loc>
   </url>
   <url>
@@ -55,64 +52,7 @@
     <loc>https://www.borch.dev/uploads/scRepertoire/articles/Trex.html</loc>
   </url>
   <url>
-    <loc>https://www.borch.dev/uploads/scRepertoire/articles/Trex_Trajectory.html</loc>
-  </url>
-  <url>
-    <loc>https://www.borch.dev/uploads/scRepertoire/articles/articles/Attaching_SC.html</loc>
-  </url>
-  <url>
-    <loc>https://www.borch.dev/uploads/scRepertoire/articles/articles/Clonal_Bias.html</loc>
-  </url>
-  <url>
-    <loc>https://www.borch.dev/uploads/scRepertoire/articles/articles/Clonal_Cluster.html</loc>
-  </url>
-  <url>
-    <loc>https://www.borch.dev/uploads/scRepertoire/articles/articles/Clonal_Diversity.html</loc>
-  </url>
-  <url>
-    <loc>https://www.borch.dev/uploads/scRepertoire/articles/articles/Clonal_Dynamics.html</loc>
-  </url>
-  <url>
-    <loc>https://www.borch.dev/uploads/scRepertoire/articles/articles/Clonal_Rarefaction.html</loc>
-  </url>
-  <url>
-    <loc>https://www.borch.dev/uploads/scRepertoire/articles/articles/Clonal_Visualizations.html</loc>
-  </url>
-  <url>
-    <loc>https://www.borch.dev/uploads/scRepertoire/articles/articles/Combining_Contigs.html</loc>
-  </url>
-  <url>
-    <loc>https://www.borch.dev/uploads/scRepertoire/articles/articles/FAQ.html</loc>
-  </url>
-  <url>
-    <loc>https://www.borch.dev/uploads/scRepertoire/articles/articles/Ibex.html</loc>
-  </url>
-  <url>
-    <loc>https://www.borch.dev/uploads/scRepertoire/articles/articles/Installation.html</loc>
-  </url>
-  <url>
-    <loc>https://www.borch.dev/uploads/scRepertoire/articles/articles/Loading.html</loc>
-  </url>
-  <url>
-    <loc>https://www.borch.dev/uploads/scRepertoire/articles/articles/Processing.html</loc>
-  </url>
-  <url>
-    <loc>https://www.borch.dev/uploads/scRepertoire/articles/articles/Repertoire_Summary.html</loc>
-  </url>
-  <url>
-    <loc>https://www.borch.dev/uploads/scRepertoire/articles/articles/SC_Visualizations.html</loc>
-  </url>
-  <url>
-    <loc>https://www.borch.dev/uploads/scRepertoire/articles/articles/Trex.html</loc>
-  </url>
-  <url>
-    <loc>https://www.borch.dev/uploads/scRepertoire/articles/articles/Trex_Trajectory.html</loc>
-  </url>
-  <url>
     <loc>https://www.borch.dev/uploads/scRepertoire/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>https://www.borch.dev/uploads/scRepertoire/articles/vignette.html</loc>
   </url>
   <url>
     <loc>https://www.borch.dev/uploads/scRepertoire/authors.html</loc>
@@ -181,9 +121,6 @@
     <loc>https://www.borch.dev/uploads/scRepertoire/reference/clonalSizeDistribution.html</loc>
   </url>
   <url>
-    <loc>https://www.borch.dev/uploads/scRepertoire/reference/clusterTCR.html</loc>
-  </url>
-  <url>
     <loc>https://www.borch.dev/uploads/scRepertoire/reference/combineBCR.html</loc>
   </url>
   <url>
@@ -211,9 +148,6 @@
     <loc>https://www.borch.dev/uploads/scRepertoire/reference/index.html</loc>
   </url>
   <url>
-    <loc>https://www.borch.dev/uploads/scRepertoire/reference/inferCDR.html</loc>
-  </url>
-  <url>
     <loc>https://www.borch.dev/uploads/scRepertoire/reference/loadContigs.html</loc>
   </url>
   <url>
@@ -239,9 +173,6 @@
   </url>
   <url>
     <loc>https://www.borch.dev/uploads/scRepertoire/reference/subsetClones.html</loc>
-  </url>
-  <url>
-    <loc>https://www.borch.dev/uploads/scRepertoire/reference/subsetContig.html</loc>
   </url>
   <url>
     <loc>https://www.borch.dev/uploads/scRepertoire/reference/vizGenes.html</loc>
