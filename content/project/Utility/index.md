@@ -1,6 +1,6 @@
 ---
 title: Utility
-summary: Collection of Tumor-Infiltrating Lymphocyte Single-Cell Experiments with TCR 
+summary: Collection of Tumor-Infiltrating Lymphocyte Single-Cell Experiments with TCRs
 tags:
 - Single-Cell
 - TCR
@@ -15,7 +15,7 @@ links:
   icon_pack: fab
   name: Follow
   url: https://twitter.com/theHumanBorch
-url_code: "https://github.com/ncborcherding/utility/tree/dev"
+url_code: "https://github.com/ncborcherding/utility/"
 #url_pdf: ""
 #url_slides: ""
 #url_video: ""
@@ -27,17 +27,16 @@ the data set for everyone, a complete summary of the sequencing runs and the sam
 
 ### Folder Structure
 ```
-├── Data_conversion.Rmd
-├── NEWS.txt
-├── Processing_Utility.Rmd
-├── README.md
-├── Summarize_Data.Rmd
-├── annotation
+├── code
+│   ├── Processing_Utility.Rmd - general processing script
+│   └── Summarize_Data.Rmd - script to get summary data
 ├── data
 │   ├── SequencingRuns - 10x Outputs
-│ └── processedData - Processed .rds
-├── qc
-├── scGateDB
+│   └── processedData - Processed .rds and larger combined cohorts
+├── NEWS.txt - changes made
+├── outputs
+│   └── qc - plots for quality control purposes
+├── README.md
 └── summaryInfo
     ├── TcellSummaryTable.csv
     ├── cohortSummaryTable.csv
@@ -45,33 +44,46 @@ the data set for everyone, a complete summary of the sequencing runs and the sam
     ├── sample.directory.xlsx - all the available data for the cohort
     ├── sessionInfo.txt - what I am running in terms of the pipeline
     └── tumorSummaryTable.csv
+
 ```
 
 ### Sample ID:
 
-<img align="center" src="https://github.com/ncborcherding/utility/blob/dev/www/utility.graphic.png">
+<img align="center" src="https://github.com/ncborcherding/utility/blob/main/www/utility_info.png">
+
 
 #### Cohort Information
-Here is the current list of data sources, the number of cells that passed filtering by tissue type. Please cite the data if you are using utility!
+Here is the current list of data sources, the number of cells that passed filtering by tissue type. **Please cite** the data if you are using uTILity.
 
-|             | Blood | Juxta | LN   | Met | Normal | Tumor | Cancer Type | Date Added | Citation |
-|-------------|-------|-------|------|-----|---|-------|-------------|------------|----------|
-| CCR-20-4394 | 0     | 0     | 0    | 0   |0      | 26760 | Ovarian     | 6/19/21 |[cite](https://clincancerres.aacrjournals.org/content/early/2021/06/10/1078-0432.CCR-20-4394) |
-| EGAS00001004809| 0     | 0     | 0    | 0   | 0      | 181667 | Breast      | 3/30/22 |[cite](https://pubmed.ncbi.nlm.nih.gov/33958794/) |
-| GSE114724   | 0     | 0     | 0    | 0   | 0      | 27651 | Breast      | 6/19/21 |[cite](https://pubmed.ncbi.nlm.nih.gov/29961579/) |
-| GSE121636   | 12319 | 0     | 0    | 0   | 0      | 11436 | Renal       | 6/19/21 |[cite](https://pubmed.ncbi.nlm.nih.gov/33504936/) |
-| GSE123814   | 0     | 0     | 0    | 0   |0      | 77496 | Multiple    | 7/4/21 |[cite](https://pubmed.ncbi.nlm.nih.gov/31359002/) |
-| GSE139555   | 20664 | 0     | 0    | 0   | 69827  | 83301 | Multiple    | 6/19/21 |[cite](https://pubmed.ncbi.nlm.nih.gov/32103181/) |
-| GSE145370   | 0     | 0     | 0    | 0   | 40916  | 66592 | Esophageal  | 6/19/21 |[cite](https://pubmed.ncbi.nlm.nih.gov/33293583/) |
-| GSE148190   | 6201  | 0     | 15644| 0   | 0      | 2263  | Melanoma    | 6/19/21 |[cite](https://pubmed.ncbi.nlm.nih.gov/32539073/) |
-| GSE154826   | 0     | 0     | 0    | 0   | 13414   | 14491  | Lung    | 9/21/21 |[cite](https://pubmed.ncbi.nlm.nih.gov/34767762/) |
-| GSE159251   | 47721 | 0     | 5705 | 0   | 0      | 8355  | Melanoma    | 9/21/21 |[cite](https://pubmed.ncbi.nlm.nih.gov/32539073/) |
-| GSE162500   | 23401 | 3761  | 0    | 0   | 0      | 14644 | Lung        | 6/19/21 |[cite](https://pubmed.ncbi.nlm.nih.gov/33514641/) |
-| GSE164522   | 46027 | 0     | 46376|36648 | 86811 | 36990 | Colorectal | 6/25/22 | [cite](https://pubmed.ncbi.nlm.nih.gov/35303421/) |
-| GSE176021   | 132673| 0     | 71062|32011 |128387 | 436608 | Lung      | 8/1/21 |[cite](https://pubmed.ncbi.nlm.nih.gov/34290408/) |
-| GSE179994   | 0     | 0     | 0    | 0   |0       | 140915 | Lung      | 3/30/22 |[cite](https://pubmed.ncbi.nlm.nih.gov/35121991/) |
-| GSE180268   | 0     | 0     | 29699| 0   | 0      | 23215 | HNSCC      | 9/21/21 |[cite](https://pubmed.ncbi.nlm.nih.gov/34471285/) |
-| GSE180268   | 40429 | 0     | 0    | 0   | 27622  | 40429 | Renal      | 3/30/31 |[cite](https://pubmed.ncbi.nlm.nih.gov/35668194/) |
-| GSE195486   | 0     | 0     | 0    | 0   | 0      | 122511 | Ovarian   | 6/25/22 |[cite](https://pubmed.ncbi.nlm.nih.gov/35427494/) |
-| GSE200996   | 1211659| 0    | 0    | 0   | 0      | 86235  | HNSCC     | 7/15/22 | [cite](https://pubmed.ncbi.nlm.nih.gov/35803260/) | 
-| PRJNA705465 | 30340 | 0     | 3505 | 0   | 15113  | 97966 | Renal      | 9/21/21 |[cite](https://pubmed.ncbi.nlm.nih.gov/33861994/) |
+
+|                  | Tumor  | Normal | Blood  | Juxta | LN    | Met   | Cancer Type   | Citations                                         |
+|------------------|--------|--------|--------|-------|-------|-------|---------------|---------------------------------------------------|
+| CCR-20-4394      | 26760  | 0      | 0      | 0     | 0     | 0     | Ovarian       | [cite](https://pubmed.ncbi.nlm.nih.gov/33963000/) |
+| EGAS00001004809  | 181667 | 0      | 0      | 0     | 0     | 0     | Breast        | [cite](https://pubmed.ncbi.nlm.nih.gov/33958794/) |
+| GSE114724        | 27651  | 0      | 0      | 0     | 0     | 0     | Breast        | [cite](https://pubmed.ncbi.nlm.nih.gov/29961579/) |
+| GSE121636        | 11436  | 0      | 12319  | 0     | 0     | 0     | Renal         | [cite](https://pubmed.ncbi.nlm.nih.gov/33504936/) |
+| GSE123814        | 78034  | 0      | 0      | 0     | 0     | 0     | Multiple      | [cite](https://pubmed.ncbi.nlm.nih.gov/31359002/) |
+| GSE139555        | 93160  | 78625  | 25363  | 0     | 0     | 0     | Multiple      | [cite](https://pubmed.ncbi.nlm.nih.gov/32103181/) |
+| GSE145370        | 66592  | 40916  | 0      | 0     | 0     | 0     | Esophageal    | [cite](https://pubmed.ncbi.nlm.nih.gov/33293583/) |
+| GSE148190        | 2263   | 0      | 6201   | 0     | 15644 | 0     | Melanoma      | [cite](https://pubmed.ncbi.nlm.nih.gov/32539073/) |
+| GSE154826        | 14491  | 13414  | 0      | 0     | 0     | 0     | Lung          | [cite](https://pubmed.ncbi.nlm.nih.gov/34767762/) |
+| GSE159251        | 8356   | 0      | 47721  | 0     | 5705  | 0     | Melanoma      | [cite](https://pubmed.ncbi.nlm.nih.gov/32539073/) |
+| GSE162500        | 14644  | 0      | 23401  | 3761  | 0     | 0     | Lung          | [cite](https://pubmed.ncbi.nlm.nih.gov/33514641/) |
+| GSE164522        | 36990  | 86811  | 46027  | 0     | 46376 | 36648 | Colorectal    | [cite](https://pubmed.ncbi.nlm.nih.gov/35303421/) |
+| GSE168844        | 0      | 0      | 55302  | 0     | 0     | 0     | Lung          | [cite](https://pubmed.ncbi.nlm.nih.gov/36219677/) |
+| GSE176021        | 436609 | 128411 | 132673 | 0     | 71063 | 32011 | Lung          | [cite](https://pubmed.ncbi.nlm.nih.gov/34290408/) |
+| GSE179994        | 78574  | 0      | 0      | 0     | 0     | 62341 | Lung          | [cite](https://pubmed.ncbi.nlm.nih.gov/35121991/) |
+| GSE180268        | 23215  | 0      | 0      | 0     | 29699 | 0     | HNSCC         | [cite](https://pubmed.ncbi.nlm.nih.gov/34471285/) |
+| GSE181061        | 40429  | 27622  | 37426  | 0     | 0     | 0     | Renal         | [cite](https://pubmed.ncbi.nlm.nih.gov/35668194/) |
+| GSE185206        | 163294 | 17231  | 0      | 0     | 9820  | 0     | Lung          | [cite](https://pubmed.ncbi.nlm.nih.gov/37001526/) |
+| GSE195486        | 122512 | 0      | 0      | 0     | 0     | 0     | Ovarian       | [cite](https://pubmed.ncbi.nlm.nih.gov/35427494/) |
+| GSE200218        | 0     | 0       | 0      | 0     | 0     | 18495 | Melanoma      | [cite](https://pubmed.ncbi.nlm.nih.gov/35803246/) |
+| GSE200996        | 86235 | 0       | 152722 | 0     | 0     | 0     | HNSCC         | [cite](https://pubmed.ncbi.nlm.nih.gov/35803260/) |
+| GSE201425        | 22888 | 0       | 27781  | 0     | 11350 | 12253 | Biliary       | [cite](https://pubmed.ncbi.nlm.nih.gov/35982235/) | 
+| GSE211504        | 0     | 0       | 33685  | 0     | 0     | 0     | Melanoma      | [cite](https://pubmed.ncbi.nlm.nih.gov/35907015/) |
+| GSE212217        | 0     | 0       | 229505 | 0     | 0     | 0     | Endometrial   | [cite](https://pubmed.ncbi.nlm.nih.gov/36301137/) |
+| GSE213243        | 2835  | 0       | 18363  | 0     | 0     | 2693  | Ovarian       | [cite](https://pubmed.ncbi.nlm.nih.gov/36248860/) |
+| GSE215219        | 26303 | 0       | 66000  | 0     | 0     | 0     | Lung          | [cite](https://pubmed.ncbi.nlm.nih.gov/37476074/) |
+| GSE227708        | 53087 | 0       | 0      | 0     | 0     | 0     | Merkel Cell   | [cite](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi) |
+| GSE242477        | 41595 | 0       | 21595  | 0     | 0     | 0     | Melanoma      | [cite](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE242477) |
+| PRJNA705464      | 98892 | 15113   | 30340  | 0     | 3505  | 0     | Renal         | [cite](https://pubmed.ncbi.nlm.nih.gov/33861994/) |
