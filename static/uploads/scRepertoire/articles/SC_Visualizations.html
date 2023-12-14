@@ -124,7 +124,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Visualizations for Single-Cell Objects</h1>
             
-            <h4 data-toc-skip class="date">Compiled: November 17,
+            <h4 data-toc-skip class="date">Compiled: December 13,
 2023</h4>
       
       
@@ -236,16 +236,17 @@ the <code>highlightClonotypes()</code> below. In order to highlight the
 clonotypes, we first need to use the <strong>cloneCall</strong>, the
 type of sequence we will be using, and then the specific sequences
 themselves using <strong>sequence</strong>. Below, we can see the steps
-to highlight the two most prominent sequences
-<em>“CVVSDNTGGFKTIF_CASSVRRERANTGELFF”</em> and
-<em>“NA_CASSVRRERANTGELFF”</em>.</p>
+to highlight the most prominent sequences
+<em>CAERGSGGSYIPTF_CASSDPSGRQGPRWDTQYF</em>, and
+<em>CARKVRDSSYKLIF_CASSDSGYNEQFF</em>.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">scRep_example</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/highlightClones.html">highlightClones</a></span><span class="op">(</span><span class="va">scRep_example</span>, </span>
 <span>                    cloneCall<span class="op">=</span> <span class="st">"aa"</span>, </span>
-<span>                    sequence <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"CVVSDNTGGFKTIF_CASSVRRERANTGELFF"</span>, </span>
-<span>                                 <span class="st">"NA_CASSVRRERANTGELFF"</span><span class="op">)</span><span class="op">)</span></span>
+<span>                    sequence <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"CAERGSGGSYIPTF_CASSDPSGRQGPRWDTQYF"</span>, </span>
+<span>                                 <span class="st">"CARKVRDSSYKLIF_CASSDSGYNEQFF"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">Seurat</span><span class="fu">::</span><span class="fu"><a href="https://satijalab.org/seurat/reference/DimPlot.html" class="external-link">DimPlot</a></span><span class="op">(</span><span class="va">scRep_example</span>, group.by <span class="op">=</span> <span class="st">"highlight"</span><span class="op">)</span> </span></code></pre></div>
+<span><span class="fu">Seurat</span><span class="fu">::</span><span class="fu"><a href="https://satijalab.org/seurat/reference/DimPlot.html" class="external-link">DimPlot</a></span><span class="op">(</span><span class="va">scRep_example</span>, group.by <span class="op">=</span> <span class="st">"highlight"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="SC_Visualizations_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
 </div>
 <div class="section level2">
