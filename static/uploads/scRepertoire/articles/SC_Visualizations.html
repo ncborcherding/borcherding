@@ -124,8 +124,8 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Visualizations for Single-Cell Objects</h1>
             
-            <h4 data-toc-skip class="date">Compiled: December 13,
-2023</h4>
+            <h4 data-toc-skip class="date">Compiled: January 10,
+2024</h4>
       
       
       <div class="hidden name"><code>SC_Visualizations.Rmd</code></div>
@@ -144,22 +144,31 @@ p.caption {
 </h2>
 <p>Using the dimensional reduction graphs as a reference, we can also
 generate an overlay of the position of clonally-expanded cells using
-<code><a href="../reference/clonalOverlay.html">clonalOverlay()</a></code>. Select the <strong>reduction</strong> for
-the visualization, default is “PCA” and the
-<strong>freq.cutpoint</strong> or lowest clonal frequency or proportion
-to generate the contour plot.</p>
-<p>We can modify the contours by selecting the number of
-<strong>bins</strong> or the number of contours drawn.
-<code><a href="../reference/clonalOverlay.html">clonalOverlay()</a></code> can be used to look across all cells or
+<code><a href="../reference/clonalOverlay.html">clonalOverlay()</a></code>.</p>
+<p><strong>reduction</strong></p>
+<ul>
+<li>The dimensional reduction for the visualization, <strong>(default =
+“pca”)</strong>
+</li>
+</ul>
+<p><strong>freq.cutpoint</strong></p>
+<ul>
+<li>lowest clonal frequency or proportion to generate the contour
+plot</li>
+</ul>
+<p><strong>bins</strong></p>
+<ul>
+<li>the number of contours to draw</li>
+</ul>
+<p><code><a href="../reference/clonalOverlay.html">clonalOverlay()</a></code> can be used to look across all cells or
 faceted by a meta data variable using <strong>facet.by</strong>. The
 overall dimensional reduction will be maintained as we facet, while the
 contour plots will adjust based on the <strong>facet.by</strong>
 variable. The coloring of the dot plot is based on the active identity
 of the single-cell object.</p>
-<p>This visualization was authored by Dr. Francesco Mazziotta from Johns
-Hopkins and inspired by Drs. Carmona and Andreatta and their work with
-<a href="https://github.com/carmonalab/ProjecTILs" class="external-link">ProjectTIL</a>, which
-is a great pipeline to annotated T cell subtypes.</p>
+<p>This visualization was authored by Dr. Francesco Mazziotta and
+inspired by Drs. Carmona and Andreatta and their work with <a href="https://github.com/carmonalab/ProjecTILs" class="external-link">ProjectTIL</a>, which is
+a great pipeline to annotated T cell subtypes.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/clonalOverlay.html">clonalOverlay</a></span><span class="op">(</span><span class="va">scRep_example</span>, </span>
 <span>              reduction <span class="op">=</span> <span class="st">"umap"</span>, </span>
@@ -173,21 +182,34 @@ is a great pipeline to annotated T cell subtypes.</p>
 <h2 id="clonalnetwork">clonalNetwork<a class="anchor" aria-label="anchor" href="#clonalnetwork"></a>
 </h2>
 <p>Similar to <code><a href="../reference/clonalOverlay.html">clonalOverlay()</a></code>, we can look at the network
-interaction of clonotypes shared between clusters along the single-cell
+interaction of clones shared between clusters along the single-cell
 dimensional reduction using <code><a href="../reference/clonalNetwork.html">clonalNetwork()</a></code>. This function
 shows the relative proportion of clones from the starting node, with the
 ending node indicated by the arrow.</p>
 <p>Filtering for clones can be accomplished using 3 methods:</p>
-<p><strong>filter.clones</strong><br>
-* Select a number to isolate the clones comprising the top X number of
-cells (filter.clones = 2000)<br>
-* Select “min” to make sure all groups are scaled to the size of the
-minimum group</p>
-<p><strong>filter.identity</strong><br>
-* For the identity chosen to visualize, show the to and from network
-connections for a single group</p>
-<p><strong>filter.proportion</strong> * Remove clones that comprise less
-than a certain proportion of clones in groups.</p>
+<p><strong>filter.clones</strong></p>
+<ul>
+<li>Select a number to isolate the clones comprising the top n number of
+cells (e.g., <strong>filter.clones</strong> = 2000)<br>
+</li>
+<li>Select “min” to make sure all groups are scaled to the size of the
+minimum group</li>
+</ul>
+<p><strong>filter.identity</strong></p>
+<ul>
+<li>For the identity chosen to visualize, show the to and from network
+connections for a single group</li>
+</ul>
+<p><strong>filter.proportion</strong></p>
+<ul>
+<li>Remove clones that comprise less than a certain proportion of clones
+in groups.</li>
+</ul>
+<p><strong>filter.graph</strong></p>
+<ul>
+<li>Remove the reciprocal edges from the half of the graph, allowing for
+cleaner visualization.</li>
+</ul>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#ggraph needs to be loaded due to issues with ggplot</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggraph.data-imaginist.com" class="external-link">ggraph</a></span><span class="op">)</span></span>
@@ -200,17 +222,19 @@ than a certain proportion of clones in groups.</p>
 <span>              filter.identity <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>              cloneCall <span class="op">=</span> <span class="st">"aa"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="SC_Visualizations_files/figure-html/unnamed-chunk-2-1.png" width="700"></p>
+<p>We can look at the clonal relationships relative to a single cluster
+using the <strong>filter.identity</strong> parameter.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">#Examining Cluster 2 only</span></span>
+<code class="sourceCode R"><span><span class="co">#Examining Cluster 3 only</span></span>
 <span><span class="fu"><a href="../reference/clonalNetwork.html">clonalNetwork</a></span><span class="op">(</span><span class="va">scRep_example</span>, </span>
 <span>              reduction <span class="op">=</span> <span class="st">"umap"</span>, </span>
 <span>              group.by <span class="op">=</span> <span class="st">"seurat_clusters"</span>,</span>
 <span>              filter.identity <span class="op">=</span> <span class="fl">3</span>,</span>
 <span>              cloneCall <span class="op">=</span> <span class="st">"aa"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="SC_Visualizations_files/figure-html/unnamed-chunk-2-2.png" width="700"></p>
-<p>We can also use <strong>exportClones</strong> to quickly get clones
-that are shared across multiple identity groups, along with the total
-number of clones in the data set.</p>
+<p><img src="SC_Visualizations_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
+<p>We can also use <strong>exportClones</strong> parameter to quickly
+get clones that are shared across multiple identity groups, along with
+the total number of clones in the data set.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">shared.clones</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/clonalNetwork.html">clonalNetwork</a></span><span class="op">(</span><span class="va">scRep_example</span>, </span>
 <span>                               reduction <span class="op">=</span> <span class="st">"umap"</span>, </span>
@@ -221,22 +245,22 @@ number of clones in the data set.</p>
 <pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 6 × 2</span></span></span>
 <span><span class="co">##   clone                                sum</span></span>
 <span><span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                              <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">1</span> CAERGSGGSYIPTF_CASSDPSGRQGPRWDTQYF   140</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">2</span> CAVRDDGNTGFQKLVF_CASSQDFNDGGLNIQYF   119</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">3</span> CARKVRDSSYKLIF_CASSDSGYNEQFF         106</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">4</span> CVVSDFGNEKLTF_CASSLGSGGTGNEQFF       100</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">5</span> CAVAPPQGNTDKLIF_CSMGVQSYEQYF          98</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">6</span> CAETPTGTASKLTF_CASSPGTSSTDTQYF        88</span></span></code></pre>
+<span><span class="co">## <span style="color: #BCBCBC;">1</span> CVVSDNTGGFKTIF_CASSVRRERANTGELFF     906</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">2</span> CAERGSGGSYIPTF_CASSDPSGRQGPRWDTQYF   140</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">3</span> CAVTFHYNTDKLIF_CASSQDRTGLDYEQYF      122</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">4</span> CAVRDDGNTGFQKLVF_CASSQDFNDGGLNIQYF   119</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">5</span> CARKVRDSSYKLIF_CASSDSGYNEQFF         106</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">6</span> CAVGAQQGGKLIF_CASSLSLSDGRHGYTF       101</span></span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="highlightclones">highlightClones<a class="anchor" aria-label="anchor" href="#highlightclones"></a>
 </h2>
-<p>We can also look at the clonotypes by calling specific sequences in
-the <code>highlightClonotypes()</code> below. In order to highlight the
-clonotypes, we first need to use the <strong>cloneCall</strong>, the
-type of sequence we will be using, and then the specific sequences
-themselves using <strong>sequence</strong>. Below, we can see the steps
-to highlight the most prominent sequences
+<p>We can also look at the clones by calling specific sequences in the
+<code>highlightclones()</code> below. In order to highlight the clones,
+we first need to use the <strong>cloneCall</strong>, the type of
+sequence we will be using, and then the specific sequences themselves
+using <strong>sequence</strong>. Below, we can see the steps to
+highlight the most prominent sequences
 <em>CAERGSGGSYIPTF_CASSDPSGRQGPRWDTQYF</em>, and
 <em>CARKVRDSSYKLIF_CASSDSGYNEQFF</em>.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
@@ -247,7 +271,7 @@ to highlight the most prominent sequences
 <span></span>
 <span><span class="fu">Seurat</span><span class="fu">::</span><span class="fu"><a href="https://satijalab.org/seurat/reference/DimPlot.html" class="external-link">DimPlot</a></span><span class="op">(</span><span class="va">scRep_example</span>, group.by <span class="op">=</span> <span class="st">"highlight"</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="SC_Visualizations_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
+<p><img src="SC_Visualizations_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
 </div>
 <div class="section level2">
 <h2 id="clonaloccupy">clonalOccupy<a class="anchor" aria-label="anchor" href="#clonaloccupy"></a>
@@ -256,25 +280,24 @@ to highlight the most prominent sequences
 specific frequency ranges by using the <code><a href="../reference/clonalOccupy.html">clonalOccupy()</a></code>
 function and selecting the <strong>x.axis</strong> to display cluster or
 other variables in the meta data of the single cell object.</p>
+<p><strong>proportion</strong></p>
 <ul>
-<li>
-<strong>proportion</strong> can be used to look at relative level
-groupings<br>
-</li>
-<li>
-<strong>label</strong> will still return the absolute number of
-clonotypes</li>
+<li>can be used to look at relative level groupings</li>
+</ul>
+<p><strong>label</strong></p>
+<ul>
+<li>will still return the absolute number of clones</li>
 </ul>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/clonalOccupy.html">clonalOccupy</a></span><span class="op">(</span><span class="va">scRep_example</span>, </span>
-<span>                     x.axis <span class="op">=</span> <span class="st">"seurat_clusters"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="SC_Visualizations_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
+<span>              x.axis <span class="op">=</span> <span class="st">"seurat_clusters"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="SC_Visualizations_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/clonalOccupy.html">clonalOccupy</a></span><span class="op">(</span><span class="va">scRep_example</span>, </span>
 <span>                     x.axis <span class="op">=</span> <span class="st">"ident"</span>, </span>
 <span>                     proportion <span class="op">=</span> <span class="cn">TRUE</span>, </span>
 <span>                     label <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
-<p><img src="SC_Visualizations_files/figure-html/unnamed-chunk-5-2.png" width="700"></p>
+<p><img src="SC_Visualizations_files/figure-html/unnamed-chunk-6-2.png" width="700"></p>
 </div>
 <div class="section level2">
 <h2 id="alluvialclones">alluvialClones<a class="anchor" aria-label="anchor" href="#alluvialclones"></a>
@@ -282,11 +305,11 @@ clonotypes</li>
 <p>After the metadata has been modified, we can look at clones across
 multiple categories using the <code><a href="../reference/alluvialClones.html">alluvialClones()</a></code> function. We
 are able to use the plots to examine the interchange of categorical
-variables. Because this function will produce a graph with each
-clonotype arranged by called stratification, this will take some time
-depending on the size of the repertoire.</p>
-<p>To understand the basic concepts of this graphing method, I’d highly
-recommend reading <a href="https://cran.r-project.org/web/packages/ggalluvial/vignettes/ggalluvial.html" class="external-link">this
+variables. Because this function will produce a graph with each clone
+arranged by called stratification, this will take some time depending on
+the size of the repertoire.</p>
+<p>To understand the basic concepts of this graphing method and the
+ggalluvial R package, we recommend reading <a href="https://cran.r-project.org/web/packages/ggalluvial/vignettes/ggalluvial.html" class="external-link">this
 post</a>.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/alluvialClones.html">alluvialClones</a></span><span class="op">(</span><span class="va">scRep_example</span>, </span>
@@ -294,13 +317,13 @@ post</a>.</p>
 <span>               y.axes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Patient"</span>, <span class="st">"ident"</span>, <span class="st">"Type"</span><span class="op">)</span>, </span>
 <span>               color <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"CVVSDNTGGFKTIF_CASSVRRERANTGELFF"</span>, <span class="st">"NA_CASSVRRERANTGELFF"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_fill_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"grey"</span>, <span class="va">colorblind_vector</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="SC_Visualizations_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
+<p><img src="SC_Visualizations_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/alluvialClones.html">alluvialClones</a></span><span class="op">(</span><span class="va">scRep_example</span>, </span>
 <span>                   cloneCall <span class="op">=</span> <span class="st">"gene"</span>, </span>
 <span>                   y.axes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Patient"</span>, <span class="st">"ident"</span>, <span class="st">"Type"</span><span class="op">)</span>, </span>
 <span>                   color <span class="op">=</span> <span class="st">"ident"</span><span class="op">)</span> </span></code></pre></div>
-<p><img src="SC_Visualizations_files/figure-html/unnamed-chunk-6-2.png" width="700"></p>
+<p><img src="SC_Visualizations_files/figure-html/unnamed-chunk-7-2.png" width="700"></p>
 </div>
 <div class="section level2">
 <h2 id="getcirclize">getCirclize<a class="anchor" aria-label="anchor" href="#getcirclize"></a>
@@ -311,8 +334,8 @@ package</a>.</p>
 <p>The first step is getting the data frame output to feed into the
 <code><a href="https://rdrr.io/pkg/circlize/man/chordDiagram.html" class="external-link">chordDiagram()</a></code> function in circlize, which can be done
 using <code><a href="../reference/getCirclize.html">getCirclize()</a></code>.</p>
-<p>This will calculate the relative number of clonotypes shared based on
-the <strong>group.by</strong> variable using the product of
+<p>This will calculate the relative number of clones shared based on the
+<strong>group.by</strong> variable using the product of
 <code><a href="../reference/combineExpression.html">combineExpression()</a></code>. It is important to note
 <code><a href="../reference/getCirclize.html">getCirclize()</a></code> will create a matrix the size of the
 <strong>group.by</strong> variable and then simplify into instructions
@@ -326,12 +349,27 @@ unique and shared clones by the <strong>group.by</strong> variable.</p>
 <span>                       group.by <span class="op">=</span> <span class="st">"seurat_clusters"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co">#Just assigning the normal colors to each cluster</span></span>
-<span><span class="va">grid.cols</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://scales.r-lib.org/reference/hue_pal.html" class="external-link">hue_pal</a></span><span class="op">(</span><span class="op">)</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">scRep_example</span><span class="op">$</span><span class="va">seurat_clusters</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">grid.cols</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://scales.r-lib.org/reference/pal_hue.html" class="external-link">hue_pal</a></span><span class="op">(</span><span class="op">)</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">scRep_example</span><span class="op">$</span><span class="va">seurat_clusters</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">grid.cols</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">scRep_example</span><span class="op">$</span><span class="va">seurat_clusters</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co">#Graphing the chord diagram</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/circlize/man/chordDiagram.html" class="external-link">chordDiagram</a></span><span class="op">(</span><span class="va">circles</span>, self.link <span class="op">=</span> <span class="fl">1</span>, grid.col <span class="op">=</span> <span class="va">grid.cols</span><span class="op">)</span></span></code></pre></div>
-<p><img src="SC_Visualizations_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
+<p><img src="SC_Visualizations_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
+<p>This can also be used if we want to explore just the lung-specific T
+cells by just subsetting the single-cell object. For the sake of this
+vignette, we can also look at setting <strong>proportion</strong> = TRUE
+to get a scaled output.</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">subset</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">scRep_example</span>, <span class="va">Type</span> <span class="op">==</span> <span class="st">"L"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">circles</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getCirclize.html">getCirclize</a></span><span class="op">(</span><span class="va">subset</span>, group.by <span class="op">=</span> <span class="st">"ident"</span>, proportion <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">grid.cols</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/pal_hue.html" class="external-link">hue_pal</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">subset</span><span class="op">@</span><span class="va">active.ident</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">grid.cols</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">subset</span><span class="op">@</span><span class="va">active.ident</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/circlize/man/chordDiagram.html" class="external-link">chordDiagram</a></span><span class="op">(</span><span class="va">circles</span>, self.link <span class="op">=</span> <span class="fl">1</span>, grid.col <span class="op">=</span> <span class="va">grid.cols</span>, directional <span class="op">=</span> <span class="fl">1</span>, direction.type <span class="op">=</span> <span class="st">"arrows"</span>,</span>
+<span>    link.arr.type <span class="op">=</span> <span class="st">"big.arrow"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="SC_Visualizations_files/figure-html/unnamed-chunk-9-1.png" width="700"></p>
 </div>
   </div>
 
@@ -347,7 +385,7 @@ unique and shared clones by the <strong>group.by</strong> variable.</p>
 
       <footer><div class="copyright">
   <p></p>
-<p>Developed by Nick Borcherding, Qile Yang.</p>
+<p>Developed by Nick Borcherding, Qile Yang, Ksenia Safina.</p>
 </div>
 
 <div class="pkgdown">

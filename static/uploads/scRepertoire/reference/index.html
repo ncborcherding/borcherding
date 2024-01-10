@@ -105,15 +105,15 @@
       </tr></tbody><tbody><tr><td>
           <p><code><a href="addVariable.html">addVariable()</a></code> </p>
         </td>
-        <td><p>Adding variables after the combination of clonotypes.</p></td>
+        <td><p>Adding variables after combineTCR() or combineBCR()</p></td>
       </tr><tr><td>
           <p><code><a href="combineBCR.html">combineBCR()</a></code> </p>
         </td>
-        <td><p>Combining the list of B cell receptor contigs into clonotypes</p></td>
+        <td><p>Combining the list of B cell receptor contigs into clones</p></td>
       </tr><tr><td>
           <p><code><a href="combineTCR.html">combineTCR()</a></code> </p>
         </td>
-        <td><p>Combining the list of T cell receptor contigs into clonotypes</p></td>
+        <td><p>Combining the list of T cell receptor contigs into clones</p></td>
       </tr><tr><td>
           <p><code><a href="createHTOContigList.html">createHTOContigList()</a></code> </p>
         </td>
@@ -121,7 +121,7 @@
       </tr><tr><td>
           <p><code><a href="exportClones.html">exportClones()</a></code> </p>
         </td>
-        <td><p>Exporting clonotypes</p></td>
+        <td><p>Exporting clones</p></td>
       </tr><tr><td>
           <p><code><a href="loadContigs.html">loadContigs()</a></code> </p>
         </td>
@@ -137,11 +137,11 @@
       </tr></tbody><tbody><tr><td>
           <p><code><a href="clonalAbundance.html">clonalAbundance()</a></code> </p>
         </td>
-        <td><p>Demonstrate the relative abundance of clonotypes by group or sample.</p></td>
+        <td><p>Demonstrate the relative abundance of clones by group or sample</p></td>
       </tr><tr><td>
           <p><code><a href="clonalCluster.html">clonalCluster()</a></code> </p>
         </td>
-        <td><p>Clustering adaptive receptor sequences</p></td>
+        <td><p>Clustering adaptive receptor sequences by edit distance</p></td>
       </tr><tr><td>
           <p><code><a href="clonalCompare.html">clonalCompare()</a></code> </p>
         </td>
@@ -149,15 +149,15 @@
       </tr><tr><td>
           <p><code><a href="clonalDiversity.html">clonalDiversity()</a></code> </p>
         </td>
-        <td><p>Examine the clonal diversity of samples</p></td>
+        <td><p>Calculate the clonal diversity for samples or groupings</p></td>
       </tr><tr><td>
           <p><code><a href="clonalHomeostasis.html">clonalHomeostasis()</a></code> </p>
         </td>
-        <td><p>Examining the clonal homeostasis</p></td>
+        <td><p>Examining the clonal homeostasis of the repertoire</p></td>
       </tr><tr><td>
           <p><code><a href="clonalLength.html">clonalLength()</a></code> </p>
         </td>
-        <td><p>Demonstrate the distribution of lengths filtered clones</p></td>
+        <td><p>Demonstrate the distribution of clonal length</p></td>
       </tr><tr><td>
           <p><code><a href="clonalOverlap.html">clonalOverlap()</a></code> </p>
         </td>
@@ -165,11 +165,11 @@
       </tr><tr><td>
           <p><code><a href="clonalProportion.html">clonalProportion()</a></code> </p>
         </td>
-        <td><p>Examining the clonal space occupied by specific clonotypes</p></td>
+        <td><p>Examining the clonal space occupied by specific clones</p></td>
       </tr><tr><td>
           <p><code><a href="clonalQuant.html">clonalQuant()</a></code> </p>
         </td>
-        <td><p>Quantify the unique clonotypes</p></td>
+        <td><p>Quantify the unique clones by group or sample</p></td>
       </tr><tr><td>
           <p><code><a href="clonalRarefaction.html">clonalRarefaction()</a></code> </p>
         </td>
@@ -177,7 +177,7 @@
       </tr><tr><td>
           <p><code><a href="clonalScatter.html">clonalScatter()</a></code> </p>
         </td>
-        <td><p>Scatter plot comparing the expansion of two samples</p></td>
+        <td><p>Scatter plot comparing the clonal expansion of two samples</p></td>
       </tr><tr><td>
           <p><code><a href="clonalSizeDistribution.html">clonalSizeDistribution()</a></code> </p>
         </td>
@@ -197,15 +197,15 @@
       </tr><tr><td>
           <p><code><a href="percentGenes.html">percentGenes()</a></code> </p>
         </td>
-        <td><p>Examining the V or J gene usage across groupings</p></td>
+        <td><p>Examining the VDJ gene usage across clones</p></td>
       </tr><tr><td>
           <p><code><a href="percentKmer.html">percentKmer()</a></code> </p>
         </td>
-        <td><p>Examining the relative composition of kmer motifs</p></td>
+        <td><p>Examining the relative composition of kmer motifs in clones.</p></td>
       </tr><tr><td>
           <p><code><a href="percentVJ.html">percentVJ()</a></code> </p>
         </td>
-        <td><p>Examining the V or J gene usage across groupings</p></td>
+        <td><p>Quantifying the V and J gene usage across clones</p></td>
       </tr></tbody><tbody><tr><th colspan="2">
           <h2 id="single-cell-object-processing-and-visualizations">Single-Cell Object Processing and Visualizations <a href="#single-cell-object-processing-and-visualizations" class="anchor" aria-hidden="true"></a></h2>
           <p class="section-desc"></p><p>Functions to add or visualize clonal information along a single-cell object.</p>
@@ -213,11 +213,11 @@
       </tr></tbody><tbody><tr><td>
           <p><code><a href="alluvialClones.html">alluvialClones()</a></code> </p>
         </td>
-        <td><p>Exploring interaction of clonotypes by single-cell object dynamics</p></td>
+        <td><p>Alluvial plotting for single-cell object meta data</p></td>
       </tr><tr><td>
           <p><code><a href="clonalBias.html">clonalBias()</a></code> </p>
         </td>
-        <td><p>Examine clonotype bias</p></td>
+        <td><p>Examine skew of clones towards a cluster or compartment</p></td>
       </tr><tr><td>
           <p><code><a href="clonalNetwork.html">clonalNetwork()</a></code> </p>
         </td>
@@ -233,16 +233,16 @@
       </tr><tr><td>
           <p><code><a href="combineExpression.html">combineExpression()</a></code> </p>
         </td>
-        <td><p>Adding clonotype information to a single-cell object</p></td>
+        <td><p>Adding clone information to a single-cell object</p></td>
       </tr><tr><td>
           <p><code><a href="getCirclize.html">getCirclize()</a></code> </p>
         </td>
         <td><p>Generate data frame to be used with circlize R package to visualize
-clonotypes as a chord diagram.</p></td>
+clones as a chord diagram.</p></td>
       </tr><tr><td>
           <p><code><a href="highlightClones.html">highlightClones()</a></code> </p>
         </td>
-        <td><p>Highlighting specific clonotypes in Seurat</p></td>
+        <td><p>Highlighting specific clones in Seurat</p></td>
       </tr><tr><td>
           <p><code><a href="StartracDiversity.html">StartracDiversity()</a></code> </p>
         </td>
@@ -272,7 +272,7 @@ clonotypes as a chord diagram.</p></td>
 
 
       <footer><div class="copyright">
-  <p></p><p>Developed by Nick Borcherding, Qile Yang.</p>
+  <p></p><p>Developed by Nick Borcherding, Qile Yang, Ksenia Safina.</p>
 </div>
 
 <div class="pkgdown">

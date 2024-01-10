@@ -5,13 +5,13 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Combining Contigs into Clones • scRepertoire</title>
+<title>Combining Clones and Single-Cell Objects • scRepertoire</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="Combining Contigs into Clones">
+<script src="../pkgdown.js"></script><meta property="og:title" content="Combining Clones and Single-Cell Objects">
 <meta property="og:description" content="scRepertoire">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -122,10 +122,10 @@
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1 data-toc-skip>Combining Contigs into Clones</h1>
+      <h1 data-toc-skip>Combining Clones and Single-Cell Objects</h1>
             
-            <h4 data-toc-skip class="date">Compiled: December 13,
-2023</h4>
+            <h4 data-toc-skip class="date">Compiled: January 10,
+2024</h4>
       
       
       <div class="hidden name"><code>Attaching_SC.Rmd</code></div>
@@ -143,12 +143,12 @@ p.caption {
 respiratory stress disorder in the context of bacterial and COVID-19
 infections. The internal single cell data (<code><a href="../reference/scRep_example.html">scRep_example()</a></code>)
 built in to scRepertoire is randomly sampled 500 cells from the fully
-integrated Seurat object to minimize the package size. However for the
+integrated Seurat object to minimize the package size. However, for the
 purpose of the vignette we will use the full single-cell object with
-almost 13,000 cells. We will use both Seurat and Single Cell Experiment
-(SCE) with scater to perform further visualizations in tandem.</p>
+30,000 cells. We will use both Seurat and Single-Cell Experiment (SCE)
+with scater to perform further visualizations in tandem.</p>
 <div class="section level2">
-<h2 id="quick-pre-processing-of-the-single-cell-object">Quick Pre-processing of the Single-Cell Object<a class="anchor" aria-label="anchor" href="#quick-pre-processing-of-the-single-cell-object"></a>
+<h2 id="preprocessed-single-cell-object">Preprocessed Single-Cell Object<a class="anchor" aria-label="anchor" href="#preprocessed-single-cell-object"></a>
 </h2>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">scRep_example</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="st">"scRep_example_full.rds"</span><span class="op">)</span></span>
@@ -176,16 +176,17 @@ frequency and proportion, placing each clone into groups called
 <strong>cloneSize</strong>. The default <strong>cloneSize</strong>
 argument uses the following bins: c(Rare = 1e-4, Small = 0.001, Medium =
 0.01, Large = 0.1, Hyperexpanded = 1), which can be modified to include
-more/less bins or different names. Clonal frequency and proportion is
-dependent on the repertoires being compared, which we can modify the
-calculation using the <strong>group.by</strong> parameter, such as
-grouping by the <em>Patient</em> variable from above. If
-<strong>group.by</strong> is not set, <code><a href="../reference/combineExpression.html">combineExpression()</a></code>
-will calculate clonal frequency, proportion, and
-<strong>cloneSize</strong> as a function of individual sequencing runs.
-In addition, <strong>cloneSize</strong> can use the frequency of clones
-when <strong>proportion</strong> = FALSE.</p>
-<p>We can check the default cloneSize groupings using the Single-Cell
+more/less bins or different names.</p>
+<p>Clonal frequency and proportion is dependent on the repertoires being
+compared, which we can modify the calculation using the
+<strong>group.by</strong> parameter, such as grouping by the
+<em>Patient</em> variable from above. If <strong>group.by</strong> is
+not set, <code><a href="../reference/combineExpression.html">combineExpression()</a></code> will calculate clonal
+frequency, proportion, and <strong>cloneSize</strong> as a function of
+individual sequencing runs. In addition, <strong>cloneSize</strong> can
+use the frequency of clones when <strong>proportion</strong> =
+FALSE.</p>
+<p>We can look at the default cloneSize groupings using the Single-Cell
 Experiment object we just created above with using
 <strong>group.by</strong> set to the <em>sample</em> variable used in
 <code><a href="../reference/combineTCR.html">combineTCR()</a></code> :</p>
@@ -232,7 +233,8 @@ alpha-beta T cells, we can make a single list and use
 cell has both Ig and TCR), the immune receptor information will not be
 added. It might be worth checking cluster identities and removing
 incongruent barcodes in the products of <code><a href="../reference/combineTCR.html">combineTCR()</a></code> and
-<code><a href="../reference/combineBCR.html">combineBCR()</a></code>. As an anecdote, the <a href="https://support.10xgenomics.com/single-cell-vdj/datasets/6.0.1/SC5v2_Melanoma_5Kcells_Connect_single_channel_SC5v2_Melanoma_5Kcells_Connect_single_channel" class="external-link">testing
+<code><a href="../reference/combineBCR.html">combineBCR()</a></code>.</p>
+<p>As an anecdote, the <a href="https://support.10xgenomics.com/single-cell-vdj/datasets/6.0.1/SC5v2_Melanoma_5Kcells_Connect_single_channel_SC5v2_Melanoma_5Kcells_Connect_single_channel" class="external-link">testing
 data</a> we used to improve this function had 5-6% of barcode
 overlap.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
@@ -262,7 +264,7 @@ overlap.</p>
 
       <footer><div class="copyright">
   <p></p>
-<p>Developed by Nick Borcherding, Qile Yang.</p>
+<p>Developed by Nick Borcherding, Qile Yang, Ksenia Safina.</p>
 </div>
 
 <div class="pkgdown">

@@ -124,8 +124,8 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Basic Clonal Visualizations</h1>
             
-            <h4 data-toc-skip class="date">Compiled: December 13,
-2023</h4>
+            <h4 data-toc-skip class="date">Compiled: January 10,
+2024</h4>
       
       
       <div class="hidden name"><code>Clonal_Visualizations.Rmd</code></div>
@@ -142,16 +142,23 @@ p.caption {
 <div class="section level2">
 <h2 id="clonalquant">clonalQuant<a class="anchor" aria-label="anchor" href="#clonalquant"></a>
 </h2>
-<p>The first function to explore the clonotypes is
+<p>The first function to explore the clones is
 <code><a href="../reference/clonalQuant.html">clonalQuant()</a></code> to return the total or relative numbers of
-unique clonotypes.</p>
-<p><strong>scale</strong><br>
-* TRUE - relative percent of unique clonotypes scaled by the total size
-of the clonal repertoire<br>
-* FALSE - Report the total number of unique clonotypes</p>
-<p><strong>chain</strong><br>
-+ “both” for combined chain visualization<br>
-+ “TRA”, “TRB”, “TRD”, “TRG”, “IGH” or “IGL” to select single chain</p>
+unique clones.</p>
+<p><strong>scale</strong></p>
+<ul>
+<li>TRUE - relative percent of unique clones scaled by the total size of
+the clonal repertoire.</li>
+<li>FALSE - Report the total number of unique clones
+<strong>(default)</strong>.</li>
+</ul>
+<p><strong>chain</strong></p>
+<ul>
+<li>“both” for combined chain visualization<br>
+</li>
+<li>“TRA”, “TRB”, “TRD”, “TRG”, “IGH” or “IGL” to select single
+chain</li>
+</ul>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/clonalQuant.html">clonalQuant</a></span><span class="op">(</span><span class="va">combined.TCR</span>, </span>
 <span>            cloneCall<span class="op">=</span><span class="st">"strict"</span>, </span>
@@ -170,22 +177,22 @@ data set to organize the visualization.</p>
 <div class="section level2">
 <h2 id="clonalabundance">clonalAbundance<a class="anchor" aria-label="anchor" href="#clonalabundance"></a>
 </h2>
-<p>We can also examine the relative distribution of clonotypes by
-abundance. Here <code><a href="../reference/clonalAbundance.html">clonalAbundance()</a></code> will produce a line graph
-with a total number of clonotypes by the number of instances within the
-sample or run. Like above, we can also group.by this by vectors within
-the contig object using the <strong>group.by</strong> variable in the
-function.</p>
+<p>We can also examine the relative distribution of clones by abundance.
+Here <code><a href="../reference/clonalAbundance.html">clonalAbundance()</a></code> will produce a line graph with a
+total number of clones by the number of instances within the sample or
+run. Like above, we can also group.by this by vectors within the contig
+object using the <strong>group.by</strong> variable in the function.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/clonalAbundance.html">clonalAbundance</a></span><span class="op">(</span><span class="va">combined.TCR</span>, </span>
 <span>                cloneCall <span class="op">=</span> <span class="st">"gene"</span>, </span>
 <span>                scale <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Clonal_Visualizations_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
+<p><code><a href="../reference/clonalAbundance.html">clonalAbundance()</a></code> output can also be converted into a
+density plot, which may allow for better comparisons between different
+repertoire sizes, by setting <strong>scale</strong> = TRUE.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/clonalAbundance.html">clonalAbundance</a></span><span class="op">(</span><span class="va">combined.TCR</span>, </span>
-<span>                group.by <span class="op">=</span> <span class="st">"Type"</span>, </span>
-<span>                scale <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Clonal_Visualizations_files/figure-html/unnamed-chunk-3-2.png" width="700"></p>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/clonalAbundance.html">clonalAbundance</a></span><span class="op">(</span><span class="va">combined.TCR</span>, cloneCall <span class="op">=</span> <span class="st">"gene"</span>, scale <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<p><img src="Clonal_Visualizations_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
 </div>
 <div class="section level2">
 <h2 id="clonallength">clonalLength<a class="anchor" aria-label="anchor" href="#clonallength"></a>
@@ -193,59 +200,79 @@ function.</p>
 <p>We can look at the length distribution of the CDR3 sequences by
 calling the <code>lengtheContig()</code> function. Importantly, unlike
 the other basic visualizations, the <strong>cloneCall</strong> can only
-be “nt” or “aa”. Due to the method of calling clonotypes as outlined
-above, the length should reveal a multimodal curve, this is a product of
-using the <strong>NA</strong> for the unreturned chain sequence and
-multiple chains within a single barcode.</p>
-<p><em>chain</em><br>
-+ “both” for combined chain visualization<br>
-+ “TRA”, “TRB”, “TRD”, “TRG”, “IGH” or “IGL” to select single chain</p>
+be <strong>“nt”</strong> or <strong>“aa”</strong>. Due to the method of
+calling clones as outlined above, the length should reveal a multimodal
+curve, this is a product of using the <strong>NA</strong> for the
+unreturned chain sequence and multiple chains within a single
+barcode.</p>
+<p><strong>chain</strong></p>
+<ul>
+<li>“both” for combined chain visualization<br>
+</li>
+<li>“TRA”, “TRB”, “TRD”, “TRG”, “IGH” or “IGL” to select single
+chain</li>
+</ul>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/clonalLength.html">clonalLength</a></span><span class="op">(</span><span class="va">combined.TCR</span>, </span>
 <span>             cloneCall<span class="op">=</span><span class="st">"aa"</span>, </span>
 <span>             chain <span class="op">=</span> <span class="st">"both"</span><span class="op">)</span> </span></code></pre></div>
-<p><img src="Clonal_Visualizations_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
+<p><img src="Clonal_Visualizations_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/clonalLength.html">clonalLength</a></span><span class="op">(</span><span class="va">combined.TCR</span>, </span>
 <span>             cloneCall<span class="op">=</span><span class="st">"aa"</span>, </span>
 <span>             chain <span class="op">=</span> <span class="st">"TRA"</span>, </span>
 <span>             scale <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> </span></code></pre></div>
-<p><img src="Clonal_Visualizations_files/figure-html/unnamed-chunk-4-2.png" width="700"></p>
+<p><img src="Clonal_Visualizations_files/figure-html/unnamed-chunk-5-2.png" width="700"></p>
 </div>
 <div class="section level2">
 <h2 id="clonalcompare">clonalCompare<a class="anchor" aria-label="anchor" href="#clonalcompare"></a>
 </h2>
-<p>We can also look at clonotypes between samples and changes in
-dynamics by using the <code><a href="../reference/clonalCompare.html">clonalCompare()</a></code> function.</p>
-<p><strong>samples</strong><br>
-* Can be used to isolate specific samples based on the name of the list
-element</p>
-<p><strong>graph</strong><br>
-* “alluvial” - graph imaged below<br>
-* “area” - graph by area of the respective clonotype</p>
-<p><strong>top.clones</strong><br>
-* The top number of clonotypes to graph, this will be calculated based
-on the frequency of the individual sample. This can also be left
-blank.</p>
-<p><strong>clonotypes</strong><br>
-* Can be used to isolate specific clonotype sequences, ensure the call
-matches the sequences you would like to visualize.</p>
-<p><strong>highlight.clones</strong><br>
-* Specifically color certain clonotypes, other clones will be greyed
-out.</p>
-<p><strong>relabel.clones</strong><br>
-* Simplify the isolated clonotypes to numerical designations to allow
-for a tidier visualization</p>
+<p>We can also look at clones between samples and changes in dynamics by
+using the <code><a href="../reference/clonalCompare.html">clonalCompare()</a></code> function.</p>
+<p><strong>samples</strong></p>
+<ul>
+<li>Can be used to isolate specific samples based on the name of the
+list element</li>
+</ul>
+<p><strong>graph</strong></p>
+<ul>
+<li>“alluvial” - graph imaged below<br>
+</li>
+<li>“area” - graph by area of the respective clone</li>
+</ul>
+<p><strong>top.clones</strong></p>
+<ul>
+<li>The top number of clones to graph, this will be calculated based on
+the frequency of the individual sample. This can also be left
+blank.</li>
+</ul>
+<p><strong>clones</strong></p>
+<ul>
+<li>Can be used to isolate specific clone sequences, ensure the call
+matches the sequences you would like to visualize.</li>
+</ul>
+<p><strong>highlight.clones</strong></p>
+<ul>
+<li>Specifically color certain clones, other clones will be greyed
+out.</li>
+</ul>
+<p><strong>relabel.clones</strong></p>
+<ul>
+<li>Simplify the isolated clones to numerical designations to allow for
+a tidier visualization</li>
+</ul>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/clonalCompare.html">clonalCompare</a></span><span class="op">(</span><span class="va">combined.TCR</span>, </span>
 <span>                  top.clones <span class="op">=</span> <span class="fl">10</span>, </span>
 <span>                  samples <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"P17B"</span>, <span class="st">"P17L"</span><span class="op">)</span>, </span>
 <span>                  cloneCall<span class="op">=</span><span class="st">"aa"</span>, </span>
 <span>                  graph <span class="op">=</span> <span class="st">"alluvial"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Clonal_Visualizations_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
-<p>We can also choose to highlight specific clonotypes, such as in the
-case of <em>“CVVSDNTGGFKTIF_CASSVRRERANTGELFF”</em> and
-<em>“NA_CASSVRRERANTGELFF”</em>:</p>
+<p><img src="Clonal_Visualizations_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
+<p>We can also choose to highlight specific clones, such as in the case
+of <em>“CVVSDNTGGFKTIF_CASSVRRERANTGELFF”</em> and
+<em>“NA_CASSVRRERANTGELFF”</em> using the
+<strong>highlight.clones</strong> parameter. In addition, we can
+simplify the plot to label the clones as clones 1:19.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/clonalCompare.html">clonalCompare</a></span><span class="op">(</span><span class="va">combined.TCR</span>, </span>
 <span>              top.clones <span class="op">=</span> <span class="fl">10</span>,</span>
@@ -254,7 +281,13 @@ case of <em>“CVVSDNTGGFKTIF_CASSVRRERANTGELFF”</em> and
 <span>              samples <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"P17B"</span>, <span class="st">"P17L"</span><span class="op">)</span>, </span>
 <span>              cloneCall<span class="op">=</span><span class="st">"aa"</span>, </span>
 <span>              graph <span class="op">=</span> <span class="st">"alluvial"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Clonal_Visualizations_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
+<p><img src="Clonal_Visualizations_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
+<p>Alternatively, if we only want to show specific clones, we can use
+the <strong>clones</strong> parameter.</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/clonalCompare.html">clonalCompare</a></span><span class="op">(</span><span class="va">combined.TCR</span>, clones <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"CVVSDNTGGFKTIF_CASSVRRERANTGELFF"</span>, <span class="st">"NA_CASSVRRERANTGELFF"</span><span class="op">)</span>,</span>
+<span>    relabel.clones <span class="op">=</span> <span class="cn">TRUE</span>, samples <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"P17B"</span>, <span class="st">"P17L"</span><span class="op">)</span>, cloneCall <span class="op">=</span> <span class="st">"aa"</span>, graph <span class="op">=</span> <span class="st">"alluvial"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="Clonal_Visualizations_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
 </div>
 <div class="section level2">
 <h2 id="clonalscatter">clonalScatter<a class="anchor" aria-label="anchor" href="#clonalscatter"></a>
@@ -262,25 +295,34 @@ case of <em>“CVVSDNTGGFKTIF_CASSVRRERANTGELFF”</em> and
 <p><code><a href="../reference/clonalScatter.html">clonalScatter()</a></code> will organize two repertoires, quantify
 the relative clone sizes, and produce a scatter plot comparing the two
 samples.</p>
-<p><strong>x.axis</strong> and <strong>y.axis</strong><br>
-* Names of the list element to place on the x-axis and y-axis - so for
-example <em>“P18L”</em> and <em>“P18B” </em></p>
-<p><strong>dot.size</strong><br>
-* “total” to display the total number of clones between the x- and
+<p><strong>x.axis</strong> and <strong>y.axis</strong></p>
+<ul>
+<li>Names of the list element to place on the x-axis and y-axis - so for
+example <em>“P18B”</em> and <em>“P18L”</em>
+</li>
+</ul>
+<p><strong>dot.size</strong></p>
+<ul>
+<li>“total” to display the total number of clones between the x- and
 y-axis<br>
-* Name of the list element to use for size calculation</p>
-<p><strong>graph</strong><br>
-* “proportion” for the relative proportion the clonotype represents
-across all clonotypes<br>
-* “count” for the total count of clonotypes by sample</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+</li>
+<li>Name of the list element to use for size calculation</li>
+</ul>
+<p><strong>graph</strong></p>
+<ul>
+<li>“proportion” for the relative proportion the clone represents across
+all clones<br>
+</li>
+<li>“count” for the total count of clones by sample</li>
+</ul>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/clonalScatter.html">clonalScatter</a></span><span class="op">(</span><span class="va">combined.TCR</span>, </span>
 <span>              cloneCall <span class="op">=</span><span class="st">"gene"</span>, </span>
 <span>              x.axis <span class="op">=</span> <span class="st">"P18B"</span>, </span>
 <span>              y.axis <span class="op">=</span> <span class="st">"P18L"</span>,</span>
 <span>              dot.size <span class="op">=</span> <span class="st">"total"</span>,</span>
 <span>              graph <span class="op">=</span> <span class="st">"proportion"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Clonal_Visualizations_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
+<p><img src="Clonal_Visualizations_files/figure-html/unnamed-chunk-9-1.png" width="700"></p>
 </div>
   </div>
 
@@ -296,7 +338,7 @@ across all clonotypes<br>
 
       <footer><div class="copyright">
   <p></p>
-<p>Developed by Nick Borcherding, Qile Yang.</p>
+<p>Developed by Nick Borcherding, Qile Yang, Ksenia Safina.</p>
 </div>
 
 <div class="pkgdown">

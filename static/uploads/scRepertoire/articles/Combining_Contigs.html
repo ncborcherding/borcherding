@@ -124,8 +124,8 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Combining Contigs into Clones</h1>
             
-            <h4 data-toc-skip class="date">Compiled: December 13,
-2023</h4>
+            <h4 data-toc-skip class="date">Compiled: January 10,
+2024</h4>
       
       
       <div class="hidden name"><code>Combining_Contigs.Rmd</code></div>
@@ -139,13 +139,13 @@ p.caption {
   font-size: 0.9em;
 }
 </style>
-<p>There are varying definitions of clones or clonotypes in the
-literature. For the purposes of scRepertoire, we will use
-<strong>clone</strong> and define this as the cells with
-shared/trackable complementarity-determining region 3 (CDR3) sequences.
-Within this definition, one might use amino acid (<strong>aa</strong>)
-sequences of one or both chains to define a clone. Alternatively, we
-could use nucleotide (<strong>nt</strong>) or the V(D)JC genes
+<p>There are varying definitions of clones or clones in the literature.
+For the purposes of scRepertoire, we will use <strong>clone</strong> and
+define this as the cells with shared/trackable
+complementarity-determining region 3 (CDR3) sequences. Within this
+definition, one might use amino acid (<strong>aa</strong>) sequences of
+one or both chains to define a clone. Alternatively, we could use
+nucleotide (<strong>nt</strong>) or the V(D)JC genes
 (<strong>genes</strong>) to define a clone. The latter
 <strong>genes</strong> would be a more permissive definition of
 <em>“clones”</em>, as multiple amino acid or nucleotide sequences can
@@ -159,32 +159,46 @@ to organize cells into paired sequences. This is accomplished using
 <div class="section level2">
 <h2 id="combinetcr">combineTCR<a class="anchor" aria-label="anchor" href="#combinetcr"></a>
 </h2>
-<p><strong>input.data</strong><br>
-* List of <em>filtered_contig_annotations.csv</em> data frames from the
-10x Cell Ranger.<br>
-* List of data processed using <code><a href="../reference/loadContigs.html">loadContigs()</a></code>.</p>
-<p><strong>samples</strong> and <strong>ID</strong><br>
-* Grouping variables for downstream analysis and will be added as
+<p><strong>input.data</strong></p>
+<ul>
+<li>List of <em>filtered_contig_annotations.csv</em> data frames from
+the 10x Cell Ranger.<br>
+</li>
+<li>List of data processed using <code><a href="../reference/loadContigs.html">loadContigs()</a></code>.</li>
+</ul>
+<p><strong>samples</strong> and <strong>ID</strong></p>
+<ul>
+<li>Grouping variables for downstream analysis and will be added as
 prefixes to prevent issues with duplicate barcodes
-<strong>(optional)</strong>.</p>
-<p><strong>removeNA</strong><br>
-* TRUE - Filter to remove any cell barcode with an NA value in at least
-one of the chains.<br>
-* FALSE - Include and incorporate cells with 1 NA value
-<strong>(default)</strong>.</p>
-<p><strong>removeMulti</strong><br>
-* TRUE - Filter to remove any cell barcode with more than 2 immune
+<strong>(optional)</strong>.</li>
+</ul>
+<p><strong>removeNA</strong></p>
+<ul>
+<li>TRUE - Filter to remove any cell barcode with an NA value in at
+least one of the chains.<br>
+</li>
+<li>FALSE - Include and incorporate cells with 1 NA value
+<strong>(default)</strong>.</li>
+</ul>
+<p><strong>removeMulti</strong></p>
+<ul>
+<li>TRUE - Filter to remove any cell barcode with more than 2 immune
 receptor chains.<br>
-* FALSE - Include and incorporate cells with &gt; 2 chains
-<strong>(default)</strong>.</p>
-<p><strong>filterMulti</strong><br>
-* TRUE - Isolate the top 2 expressed chains in cell barcodes with
+</li>
+<li>FALSE - Include and incorporate cells with &gt; 2 chains
+<strong>(default)</strong>.</li>
+</ul>
+<p><strong>filterMulti</strong></p>
+<ul>
+<li>TRUE - Isolate the top 2 expressed chains in cell barcodes with
 multiple chains.<br>
-* FALSE - Include and incorporate cells with &gt; 2 chains
-<strong>(default)</strong>.</p>
+</li>
+<li>FALSE - Include and incorporate cells with &gt; 2 chains
+<strong>(default)</strong>.</li>
+</ul>
 <p>The output of <code><a href="../reference/combineTCR.html">combineTCR()</a></code> will be a list of contig data
 frames that will be reduced to the reads associated with a single cell
-barcode. It will also combine the multiple reads into clonotype calls by
+barcode. It will also combine the multiple reads into clone calls by
 either the nucleotide sequence (<strong>CTnt</strong>), amino acid
 sequence (<strong>CTaa</strong>), the VDJC gene sequence
 (<strong>CTgene</strong>), or the combination of the nucleotide and gene
@@ -217,14 +231,14 @@ sequence (<strong>CTstrict</strong>).</p>
 <span><span class="co">## 3  TRBV10-3.None.TRBJ2-2.TRBC2     CAISEQGKGELFF</span></span>
 <span><span class="co">## 5     TRBV9.None.TRBJ2-2.TRBC2 CASSVRRERANTGELFF</span></span>
 <span><span class="co">## 7     TRBV9.None.TRBJ2-2.TRBC2 CASSVRRERANTGELFF</span></span>
-<span><span class="co">## 9                           NA                NA</span></span>
+<span><span class="co">## 9                         &lt;NA&gt;              &lt;NA&gt;</span></span>
 <span><span class="co">## 10    TRBV9.None.TRBJ2-2.TRBC2 CASSVRRERANTGELFF</span></span>
 <span><span class="co">##                                               cdr3_nt2</span></span>
 <span><span class="co">## 1           TGCGCCAGCAGCTTGACCGACAGGACCTACGAGCAGTACTTC</span></span>
 <span><span class="co">## 3              TGTGCCATCAGTGAACAGGGGAAAGGGGAGCTGTTTTTT</span></span>
 <span><span class="co">## 5  TGTGCCAGCAGCGTAAGGAGGGAAAGGGCGAACACCGGGGAGCTGTTTTTT</span></span>
 <span><span class="co">## 7  TGTGCCAGCAGCGTAAGGAGGGAAAGGGCGAACACCGGGGAGCTGTTTTTT</span></span>
-<span><span class="co">## 9                                                   NA</span></span>
+<span><span class="co">## 9                                                 &lt;NA&gt;</span></span>
 <span><span class="co">## 10 TGTGCCAGCAGCGTAAGGAGGGAAAGGGCGAACACCGGGGAGCTGTTTTTT</span></span>
 <span><span class="co">##                                                  CTgene</span></span>
 <span><span class="co">## 1         TRAV25.TRAJ20.TRAC_TRBV5-1.None.TRBJ2-7.TRBC2</span></span>
@@ -351,7 +365,7 @@ but is not recommended.</p>
 
       <footer><div class="copyright">
   <p></p>
-<p>Developed by Nick Borcherding, Qile Yang.</p>
+<p>Developed by Nick Borcherding, Qile Yang, Ksenia Safina.</p>
 </div>
 
 <div class="pkgdown">

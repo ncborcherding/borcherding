@@ -124,8 +124,8 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Visualizing Clonal Dynamics</h1>
             
-            <h4 data-toc-skip class="date">Compiled: December 13,
-2023</h4>
+            <h4 data-toc-skip class="date">Compiled: January 10,
+2024</h4>
       
       
       <div class="hidden name"><code>Clonal_Dynamics.Rmd</code></div>
@@ -139,9 +139,6 @@ p.caption {
   font-size: 0.9em;
 }
 </style>
-<p>After completing the basic processing and summary functions in
-scRepertoire, we can explore the clonotypes of the single-cell data in
-more detail.</p>
 <div class="section level2">
 <h2 id="clonalhomeostasis">clonalHomeostasis<a class="anchor" aria-label="anchor" href="#clonalhomeostasis"></a>
 </h2>
@@ -155,22 +152,42 @@ distinct proportions (or liquids of different viscosity, to extend the
 analogy). The proportional cut points are set under the
 <strong>cloneSize</strong> variable in the function and can be
 adjusted.</p>
-<p><strong>cloneSize</strong><br>
-* Rare = 0.0001<br>
-* Small = 0.001<br>
-* Medium = 0.01<br>
-* Large = 0.1<br>
-* Hyperexpanded = 1</p>
+<p><strong>cloneSize</strong></p>
+<ul>
+<li>Rare = 0.0001<br>
+</li>
+<li>Small = 0.001<br>
+</li>
+<li>Medium = 0.01<br>
+</li>
+<li>Large = 0.1<br>
+</li>
+<li>Hyperexpanded = 1</li>
+</ul>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/clonalHomeostasis.html">clonalHomeostasis</a></span><span class="op">(</span><span class="va">combined.TCR</span>, </span>
 <span>                  cloneCall <span class="op">=</span> <span class="st">"gene"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Clonal_Dynamics_files/figure-html/unnamed-chunk-1-1.png" width="700"></p>
+<p>We can reassign the proportional cut points for cloneSize, which can
+drastically alter the visualization and analysis.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/clonalHomeostasis.html">clonalHomeostasis</a></span><span class="op">(</span><span class="va">combined.TCR</span>, </span>
 <span>                  cloneCall <span class="op">=</span> <span class="st">"gene"</span>,</span>
 <span>                  cloneSize <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>Rare <span class="op">=</span> <span class="fl">0.001</span>, Small <span class="op">=</span> <span class="fl">0.01</span>, Medium <span class="op">=</span> <span class="fl">0.1</span>, Large <span class="op">=</span> <span class="fl">0.3</span>, Hyperexpanded <span class="op">=</span></span>
 <span>    <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Clonal_Dynamics_files/figure-html/unnamed-chunk-1-2.png" width="700"></p>
+<p><img src="Clonal_Dynamics_files/figure-html/unnamed-chunk-2-1.png" width="700"></p>
+<p>In addition, we can use the <strong>group.by</strong> parameter to
+look at the relative proportion of clones between groups - such as
+tissue.</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">combined.TCR</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/addVariable.html">addVariable</a></span><span class="op">(</span><span class="va">combined.TCR</span>, </span>
+<span>                            variable.name <span class="op">=</span> <span class="st">"Type"</span>, </span>
+<span>                            variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"B"</span>, <span class="st">"L"</span><span class="op">)</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="../reference/clonalHomeostasis.html">clonalHomeostasis</a></span><span class="op">(</span><span class="va">combined.TCR</span>, </span>
+<span>                  group.by <span class="op">=</span> <span class="st">"Type"</span>,</span>
+<span>                  cloneCall <span class="op">=</span> <span class="st">"gene"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="Clonal_Dynamics_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
 </div>
 <div class="section level2">
 <h2 id="clonalproportion">clonalProportion<a class="anchor" aria-label="anchor" href="#clonalproportion"></a>
@@ -185,20 +202,27 @@ by copy or frequency of occurrence, meaning 1:10 are the top 10
 clonotypes in each sample. The default bins are under the
 <strong>clonalSplit</strong> variable in the function and can be
 adjusted, but they are as follows at baseline.</p>
-<p><strong>clonalSplit</strong><br>
-* 10<br>
-* 100<br>
-* 1000<br>
-* 10000 * 30000 * 100000</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<p><strong>clonalSplit</strong></p>
+<ul>
+<li>10<br>
+</li>
+<li>100<br>
+</li>
+<li>1000<br>
+</li>
+<li>10000</li>
+<li>30000</li>
+<li>100000</li>
+</ul>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/clonalProportion.html">clonalProportion</a></span><span class="op">(</span><span class="va">combined.TCR</span>, </span>
 <span>                 cloneCall <span class="op">=</span> <span class="st">"gene"</span><span class="op">)</span> </span></code></pre></div>
-<p><img src="Clonal_Dynamics_files/figure-html/unnamed-chunk-2-1.png" width="700"></p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<p><img src="Clonal_Dynamics_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/clonalProportion.html">clonalProportion</a></span><span class="op">(</span><span class="va">combined.TCR</span>, </span>
 <span>                 cloneCall <span class="op">=</span> <span class="st">"nt"</span>,</span>
 <span>                 clonalSplit <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">5</span>, <span class="fl">10</span>, <span class="fl">100</span>, <span class="fl">1000</span>, <span class="fl">10000</span><span class="op">)</span><span class="op">)</span> </span></code></pre></div>
-<p><img src="Clonal_Dynamics_files/figure-html/unnamed-chunk-2-2.png" width="700"></p>
+<p><img src="Clonal_Dynamics_files/figure-html/unnamed-chunk-4-2.png" width="700"></p>
 </div>
   </div>
 
@@ -214,7 +238,7 @@ adjusted, but they are as follows at baseline.</p>
 
       <footer><div class="copyright">
   <p></p>
-<p>Developed by Nick Borcherding, Qile Yang.</p>
+<p>Developed by Nick Borcherding, Qile Yang, Ksenia Safina.</p>
 </div>
 
 <div class="pkgdown">

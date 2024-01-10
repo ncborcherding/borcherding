@@ -124,8 +124,8 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Summarizing Repertoires</h1>
             
-            <h4 data-toc-skip class="date">Compiled: December 13,
-2023</h4>
+            <h4 data-toc-skip class="date">Compiled: January 10,
+2024</h4>
       
       
       <div class="hidden name"><code>Repertoire_Summary.Rmd</code></div>
@@ -148,21 +148,35 @@ between <code><a href="../reference/vizGenes.html">vizGenes()</a></code> and two
 <code><a href="../reference/percentGenes.html">percentGenes()</a></code> and <code><a href="../reference/percentVJ.html">percentVJ()</a></code>. But
 <code><a href="../reference/vizGenes.html">vizGenes()</a></code> is more adaptable to allow for comparisons
 across chains, scaling, etc.</p>
-<p><strong>x.axis</strong><br>
-+ Gene segment to separate the x-axis, such as “TRAV”, “TRBD”,
-“IGKJ”</p>
-<p><strong>y.axis</strong><br>
-+ Gene segment or categorical variable to visualize along the y-axis</p>
-<p><strong>plot</strong><br>
-+ “barplot” for a bar chart<br>
-+ “heatmap” for a heatmap</p>
-<p><strong>scale</strong><br>
-+ TRUE to scale the graph by number of genes per sample<br>
-+ FALSE to report raw numbers</p>
-<p><strong>order</strong><br>
-+ “gene” to order by gene name<br>
-+ “variance” to order by variance between the separate variable
-categories</p>
+<p><strong>x.axis</strong></p>
+<ul>
+<li>Gene segment to separate the x-axis, such as “TRAV”, “TRBD”,
+“IGKJ”</li>
+</ul>
+<p><strong>y.axis</strong></p>
+<ul>
+<li>Gene segment or categorical variable to visualize along the
+y-axis</li>
+</ul>
+<p><strong>plot</strong></p>
+<ul>
+<li>“barplot” for a bar chart<br>
+</li>
+<li>“heatmap” for a heatmap</li>
+</ul>
+<p><strong>scale</strong></p>
+<ul>
+<li>TRUE to scale the graph by number of genes per sample<br>
+</li>
+<li>FALSE to report raw numbers</li>
+</ul>
+<p><strong>order</strong></p>
+<ul>
+<li>“gene” to order by gene name<br>
+</li>
+<li>“variance” to order by variance between the separate variable
+categories</li>
+</ul>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/vizGenes.html">vizGenes</a></span><span class="op">(</span><span class="va">combined.TCR</span>, </span>
 <span>         x.axis <span class="op">=</span> <span class="st">"TRBV"</span>,</span>
@@ -209,7 +223,7 @@ inputs to <strong>x.axis</strong> and <strong>y.axis</strong>.</p>
 <code><a href="../reference/percentAA.html">percentAA()</a></code>. By default, the function will pad the
 sequences with NAs up to the maximum of <strong>aa.length</strong>.
 Sequences longer than <strong>aa.length</strong> will be removed before
-visualization.</p>
+visualization <strong>(default aa.length = 20)</strong>.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/percentAA.html">percentAA</a></span><span class="op">(</span><span class="va">combined.TCR</span>, </span>
 <span>          chain <span class="op">=</span> <span class="st">"TRB"</span>, </span>
@@ -296,11 +310,15 @@ as input for further dimensional reduction.</p>
 <p>Another quantification of the composition of the CDR3 sequence is to
 define motifs by sliding across the amino acid or nucleotide sequences
 at set intervals resulting in substrings or kmers.</p>
-<p><strong>motif.length</strong><br>
-Numerical value for the length of the kmer.</p>
-<p><strong>top.motifs</strong><br>
-Display the most variable genes determined by mean absolute
-deviation.</p>
+<p><strong>motif.length</strong></p>
+<ul>
+<li>Numerical value for the length of the kmer.</li>
+</ul>
+<p><strong>top.motifs</strong></p>
+<ul>
+<li>Display the most variable genes determined by mean absolute
+deviation (MAD).</li>
+</ul>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/percentKmer.html">percentKmer</a></span><span class="op">(</span><span class="va">combined.TCR</span>, </span>
 <span>            cloneCall <span class="op">=</span> <span class="st">"aa"</span>,</span>
@@ -330,7 +348,7 @@ deviation.</p>
 
       <footer><div class="copyright">
   <p></p>
-<p>Developed by Nick Borcherding, Qile Yang.</p>
+<p>Developed by Nick Borcherding, Qile Yang, Ksenia Safina.</p>
 </div>
 
 <div class="pkgdown">

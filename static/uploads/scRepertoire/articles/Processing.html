@@ -124,8 +124,8 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Additional Processing Steps</h1>
             
-            <h4 data-toc-skip class="date">Compiled: December 13,
-2023</h4>
+            <h4 data-toc-skip class="date">Compiled: January 10,
+2024</h4>
       
       
       <div class="hidden name"><code>Processing.Rmd</code></div>
@@ -174,14 +174,14 @@ sequenced.</p>
 <span><span class="co">## 3  TRBV10-3.None.TRBJ2-2.TRBC2     CAISEQGKGELFF</span></span>
 <span><span class="co">## 5     TRBV9.None.TRBJ2-2.TRBC2 CASSVRRERANTGELFF</span></span>
 <span><span class="co">## 7     TRBV9.None.TRBJ2-2.TRBC2 CASSVRRERANTGELFF</span></span>
-<span><span class="co">## 9                           NA                NA</span></span>
+<span><span class="co">## 9                         &lt;NA&gt;              &lt;NA&gt;</span></span>
 <span><span class="co">## 10    TRBV9.None.TRBJ2-2.TRBC2 CASSVRRERANTGELFF</span></span>
 <span><span class="co">##                                               cdr3_nt2</span></span>
 <span><span class="co">## 1           TGCGCCAGCAGCTTGACCGACAGGACCTACGAGCAGTACTTC</span></span>
 <span><span class="co">## 3              TGTGCCATCAGTGAACAGGGGAAAGGGGAGCTGTTTTTT</span></span>
 <span><span class="co">## 5  TGTGCCAGCAGCGTAAGGAGGGAAAGGGCGAACACCGGGGAGCTGTTTTTT</span></span>
 <span><span class="co">## 7  TGTGCCAGCAGCGTAAGGAGGGAAAGGGCGAACACCGGGGAGCTGTTTTTT</span></span>
-<span><span class="co">## 9                                                   NA</span></span>
+<span><span class="co">## 9                                                 &lt;NA&gt;</span></span>
 <span><span class="co">## 10 TGTGCCAGCAGCGTAAGGAGGGAAAGGGCGAACACCGGGGAGCTGTTTTTT</span></span>
 <span><span class="co">##                                                  CTgene</span></span>
 <span><span class="co">## 1         TRAV25.TRAJ20.TRAC_TRBV5-1.None.TRBJ2-7.TRBC2</span></span>
@@ -228,29 +228,24 @@ function. In order to subset, we need to identify the vector we would
 like to use for subsetting (<strong>name</strong>) and the variable
 values to subset (<strong>variables</strong>). Below, we isolate just
 the 2 sequencing results from P18L and P18B.</p>
-<p>Alternatively, we can also just select the list elements after
-<code><a href="../reference/combineTCR.html">combineTCR()</a></code> or <code><a href="../reference/combineBCR.html">combineBCR()</a></code>.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">subset1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/subsetClones.html">subsetClones</a></span><span class="op">(</span><span class="va">combined.TCR</span>, </span>
 <span>                        name <span class="op">=</span> <span class="st">"sample"</span>, </span>
 <span>                        variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"P18L"</span>, <span class="st">"P18B"</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co">#Subset using list elements</span></span>
-<span><span class="va">subset2</span> <span class="op">&lt;-</span> <span class="va">combined.TCR</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">4</span><span class="op">)</span><span class="op">]</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">subset1</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##                    barcode sample                 TCR1         cdr3_aa1</span></span>
 <span><span class="co">## 1  P18B_AAACCTGAGGCTCAGA-1   P18B TRAV26-1.TRAJ37.TRAC  CIVRGGSSNTGKLIF</span></span>
 <span><span class="co">## 3  P18B_AAACCTGCATGACATC-1   P18B    TRAV3.TRAJ20.TRAC    CAVQRSNDYKLSF</span></span>
 <span><span class="co">## 5  P18B_AAACCTGGTATGCTTG-1   P18B TRAV26-1.TRAJ53.TRAC   CIGSSGGSNYKLTF</span></span>
-<span><span class="co">## 8  P18B_AAACGGGCAGATGGGT-1   P18B                   NA               NA</span></span>
+<span><span class="co">## 8  P18B_AAACGGGCAGATGGGT-1   P18B                 &lt;NA&gt;             &lt;NA&gt;</span></span>
 <span><span class="co">## 9  P18B_AAACGGGTCTTACCGC-1   P18B    TRAV20.TRAJ9.TRAC CAVQAKRYTGGFKTIF</span></span>
 <span><span class="co">## 12 P18B_AAAGATGAGTTACGGG-1   P18B   TRAV8-3.TRAJ8.TRAC   CAVGGDTGFQKLVF</span></span>
 <span><span class="co">##                                            cdr3_nt1</span></span>
 <span><span class="co">## 1     TGCATCGTCAGGGGCGGCTCTAGCAACACAGGCAAACTAATCTTT</span></span>
 <span><span class="co">## 3           TGTGCTGTGCAACGTTCTAACGACTACAAGCTCAGCTTT</span></span>
 <span><span class="co">## 5        TGCATCGGCTCAAGTGGAGGTAGCAACTATAAACTGACATTT</span></span>
-<span><span class="co">## 8                                                NA</span></span>
+<span><span class="co">## 8                                              &lt;NA&gt;</span></span>
 <span><span class="co">## 9  TGTGCTGTGCAGGCCAAGCGGTATACTGGAGGCTTCAAAACTATCTTT</span></span>
 <span><span class="co">## 12       TGTGCTGTGGGTGGTGACACAGGCTTTCAGAAACTTGTATTT</span></span>
 <span><span class="co">##                                                     TCR2</span></span>
@@ -309,20 +304,23 @@ the 2 sequencing results from P18L and P18B.</p>
 <span><span class="co">## 8     B</span></span>
 <span><span class="co">## 9     B</span></span>
 <span><span class="co">## 12    B</span></span></code></pre>
+<p>Alternatively, we can also just select the list elements after
+<code><a href="../reference/combineTCR.html">combineTCR()</a></code> or <code><a href="../reference/combineBCR.html">combineBCR()</a></code>.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">subset2</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">subset2</span> <span class="op">&lt;-</span> <span class="va">combined.TCR</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">4</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">subset2</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##                    barcode sample                 TCR1         cdr3_aa1</span></span>
 <span><span class="co">## 1  P18B_AAACCTGAGGCTCAGA-1   P18B TRAV26-1.TRAJ37.TRAC  CIVRGGSSNTGKLIF</span></span>
 <span><span class="co">## 3  P18B_AAACCTGCATGACATC-1   P18B    TRAV3.TRAJ20.TRAC    CAVQRSNDYKLSF</span></span>
 <span><span class="co">## 5  P18B_AAACCTGGTATGCTTG-1   P18B TRAV26-1.TRAJ53.TRAC   CIGSSGGSNYKLTF</span></span>
-<span><span class="co">## 8  P18B_AAACGGGCAGATGGGT-1   P18B                   NA               NA</span></span>
+<span><span class="co">## 8  P18B_AAACGGGCAGATGGGT-1   P18B                 &lt;NA&gt;             &lt;NA&gt;</span></span>
 <span><span class="co">## 9  P18B_AAACGGGTCTTACCGC-1   P18B    TRAV20.TRAJ9.TRAC CAVQAKRYTGGFKTIF</span></span>
 <span><span class="co">## 12 P18B_AAAGATGAGTTACGGG-1   P18B   TRAV8-3.TRAJ8.TRAC   CAVGGDTGFQKLVF</span></span>
 <span><span class="co">##                                            cdr3_nt1</span></span>
 <span><span class="co">## 1     TGCATCGTCAGGGGCGGCTCTAGCAACACAGGCAAACTAATCTTT</span></span>
 <span><span class="co">## 3           TGTGCTGTGCAACGTTCTAACGACTACAAGCTCAGCTTT</span></span>
 <span><span class="co">## 5        TGCATCGGCTCAAGTGGAGGTAGCAACTATAAACTGACATTT</span></span>
-<span><span class="co">## 8                                                NA</span></span>
+<span><span class="co">## 8                                              &lt;NA&gt;</span></span>
 <span><span class="co">## 9  TGTGCTGTGCAGGCCAAGCGGTATACTGGAGGCTTCAAAACTATCTTT</span></span>
 <span><span class="co">## 12       TGTGCTGTGGGTGGTGACACAGGCTTTCAGAAACTTGTATTT</span></span>
 <span><span class="co">##                                                     TCR2</span></span>
@@ -388,9 +386,21 @@ the 2 sequencing results from P18L and P18B.</p>
 <p>After assigning the clone by barcode, we can export the paired
 clonotypes using <code><a href="../reference/exportClones.html">exportClones()</a></code> to save for later use or to
 use in other pipelines.</p>
-<p><strong>write.file</strong><br>
-* TRUE, save the file.<br>
-* FALSE, return a data.frame.</p>
+<p><strong>format</strong></p>
+<ul>
+<li>“paired” - Export the paired sequences
+<strong>(default)</strong>.<br>
+</li>
+<li>“airr” - Export data in an AIRR-compliant format.<br>
+</li>
+<li>“TCRMatch” - Export TCRB chain information.</li>
+</ul>
+<p><strong>write.file</strong></p>
+<ul>
+<li>TRUE, save the file.<br>
+</li>
+<li>FALSE, return a data.frame.</li>
+</ul>
 <p><strong>dir</strong><br>
 directory location to save the csv</p>
 <p><strong>file.name</strong><br>
@@ -414,7 +424,7 @@ the csv file name</p>
 
       <footer><div class="copyright">
   <p></p>
-<p>Developed by Nick Borcherding, Qile Yang.</p>
+<p>Developed by Nick Borcherding, Qile Yang, Ksenia Safina.</p>
 </div>
 
 <div class="pkgdown">

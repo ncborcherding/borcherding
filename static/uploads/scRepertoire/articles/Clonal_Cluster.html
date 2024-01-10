@@ -124,8 +124,8 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Clustering by Edit Distance</h1>
             
-            <h4 data-toc-skip class="date">Compiled: December 13,
-2023</h4>
+            <h4 data-toc-skip class="date">Compiled: January 10,
+2024</h4>
       
       
       <div class="hidden name"><code>Clonal_Cluster.Rmd</code></div>
@@ -146,20 +146,22 @@ p.caption {
 cluster clonotypes by examining the edit distance of the sequences. This
 approach is underlying the <code><a href="../reference/combineBCR.html">combineBCR()</a></code> function but now
 can be applied to the B or T cell receptors at the level of nucleotides
-(<strong>sequence</strong> = “nt) or amino acids
-(<strong>sequence</strong> =”aa). It will add a cluster to the end of
-each list element by generating a network connected by the similarity in
-sequence. This network is directed by the threshold variable, where 0.85
-is the normalized mean edit distance.</p>
-<p>Edit-distance based clusters will have the following format:<br>
-* [chain:] + :Cluster + [number] [e.g., TRA:Cluster.1]</p>
-<p><em>Cluster</em> denotes if the cluster was called using the
+(<strong>sequence = “nt”</strong>) or amino acids (<strong>sequence =
+“aa”</strong>). It will add a cluster to the end of each list element by
+generating a network connected by the similarity in sequence. This
+network is directed by the <strong>threshold</strong> variable, where
+0.85 is the normalized mean edit distance.</p>
+<p>Edit-distance based clusters will have the following format:</p>
+<ul>
+<li>[chain:] + :Cluster + [number] e.g., TRA:Cluster.1</li>
+</ul>
+<p><strong>Cluster</strong> denotes if the cluster was called using the
 normalized Levenshtein distance, which takes the edit distance
 calculated between 2 sequences and divides that by the mean of the
 sequence lengths. Unconnected sequences will have <em>NA</em>
 values.</p>
 <div class="section level3">
-<h3 id="basic-use">Basic use:<a class="anchor" aria-label="anchor" href="#basic-use"></a>
+<h3 id="basic-use">Basic use<a class="anchor" aria-label="anchor" href="#basic-use"></a>
 </h3>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sub_combined</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/clonalCluster.html">clonalCluster</a></span><span class="op">(</span><span class="va">combined.TCR</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span>, </span>
@@ -176,16 +178,16 @@ values.</p>
 <span><span class="co">## 4 P17L_AAACCTGGTTCGCTAA-1   P17L           &lt;NA&gt;</span></span>
 <span><span class="co">## 5 P17L_AAACCTGTCAGCACAT-1   P17L TRA:Cluster.21</span></span>
 <span><span class="co">## 6 P17L_AAACCTGTCCGGCACA-1   P17L           &lt;NA&gt;</span></span></code></pre>
+</div>
+<div class="section level3">
+<h3 id="clustering-with-a-single-cell-object">Clustering with a single-cell object<a class="anchor" aria-label="anchor" href="#clustering-with-a-single-cell-object"></a>
+</h3>
 <p>If performed over the number of samples, such as the list elements,
 <strong>group.by</strong> can used to calculate only the clusters on the
 setting of patient sample (<strong>group.by</strong> = “Patient”) or
 tissue type (<strong>group.by</strong> = “Type”). This will add the
 selected group to the beginning of the cluster designation. We can also
 call <code><a href="../reference/clonalCluster.html">clonalCluster()</a></code> directly on a Single-Cell Object.</p>
-</div>
-<div class="section level3">
-<h3 id="clustering-with-attached-data">Clustering with attached data:<a class="anchor" aria-label="anchor" href="#clustering-with-attached-data"></a>
-</h3>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#Adding patient information</span></span>
 <span><span class="va">scRep_example</span><span class="op">$</span><span class="va">Patient</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/substr.html" class="external-link">substr</a></span><span class="op">(</span><span class="va">scRep_example</span><span class="op">$</span><span class="va">orig.ident</span>, <span class="fl">1</span>,<span class="fl">3</span><span class="op">)</span></span>
@@ -211,7 +213,7 @@ object of all the related sequences using <strong>exportGraph</strong> =
 TRUE. The returned igraph object contains only the sequences that have
 at least one connection with another sequence. The igraph can then be
 directly visualized (below) or used for downstream analysis (see the
-igraph <a href="https://r.igraph.org/" class="external-link">website</a>.</p>
+igraph <a href="https://r.igraph.org/" class="external-link">website</a>).</p>
 </div>
 <div class="section level3">
 <h3 id="returning-an-igraph-object">Returning an igraph object:<a class="anchor" aria-label="anchor" href="#returning-an-igraph-object"></a>
@@ -256,7 +258,7 @@ igraph <a href="https://r.igraph.org/" class="external-link">website</a>.</p>
 
       <footer><div class="copyright">
   <p></p>
-<p>Developed by Nick Borcherding, Qile Yang.</p>
+<p>Developed by Nick Borcherding, Qile Yang, Ksenia Safina.</p>
 </div>
 
 <div class="pkgdown">

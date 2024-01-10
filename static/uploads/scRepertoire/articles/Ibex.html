@@ -124,8 +124,8 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Combining Deep Learning and BCRs with Ibex</h1>
             
-            <h4 data-toc-skip class="date">Compiled: December 13,
-2023</h4>
+            <h4 data-toc-skip class="date">Compiled: January 10,
+2024</h4>
       
       
       <div class="hidden name"><code>Ibex.Rmd</code></div>
@@ -139,6 +139,9 @@ p.caption {
   font-size: 0.9em;
 }
 </style>
+<div class="section level2">
+<h2 id="getting-started">Getting Started<a class="anchor" aria-label="anchor" href="#getting-started"></a>
+</h2>
 <p>The idea behind Ibex is to combine BCR CDR3 amino acid information
 with phenotypic RNA/protein data to direct the use of single-cell
 sequencing towards antigen-specific discoveries. This is a growing field
@@ -159,13 +162,17 @@ approach to this combined approach using R.</p>
 </h3>
 <p>To show the multiple options of Ibex, the example data is derived
 from <a href="https://pubmed.ncbi.nlm.nih.gov/33891889/" class="external-link">this
-manuscript</a> - multimodal single-cell characterization of
+manuscript</a>, multimodal single-cell characterization of
 COVID19-associated multisystem inflammatory syndrome in children. The
-data example built into the package (ibex_example) is derived from
-randomly sampling cells from Patient 1.</p>
+data example built into the package (<strong>ibex_example</strong>) is
+derived from randomly sampling cells from Patient 1.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">SeuratObj</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/connections.html" class="external-link">url</a></span><span class="op">(</span><span class="st">"https://www.borch.dev/uploads/data/Ibex_FullExample.rds"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </div>
+</div>
+<div class="section level2">
+<h2 id="running-ibex">Running Ibex<a class="anchor" aria-label="anchor" href="#running-ibex"></a>
+</h2>
 <div class="section level3">
 <h3 id="ibex-matrix-function">Ibex.matrix Function<a class="anchor" aria-label="anchor" href="#ibex-matrix-function"></a>
 </h3>
@@ -178,20 +185,34 @@ the input for only B cells with attached BCR data. In addition,
 <code><a href="../reference/combineBCR.html">combineBCR()</a></code> function from the <a href="https://github.com/ncborcherding/scRepertoire" class="external-link">scRepertoire</a> R
 package, while <code>runIbex()</code> must be performed on a single-cell
 object.</p>
-<p><strong>chains</strong><br>
-* “Heavy” for Ig Heavy Chain<br>
-* “Light” for Ig Light Chain</p>
-<p><strong>method</strong><br>
-* “encoder” for a convolution neural network (CNN) based encoding.<br>
-* “geometric” for a geometric transformation.</p>
-<p><strong>encoder.model</strong><br>
-* “VAE” for a variational autoencoder<br>
-* “AE” for a traditional autoencoder</p>
-<p><strong>encoder.input</strong><br>
-* “AF” to use Atchley factors<br>
-* “KF” to use Kidera factors<br>
-* “both” to use both<br>
-* “OHE” for a One Hot Autoencoder</p>
+<p><strong>chains</strong></p>
+<ul>
+<li>“Heavy” for Ig Heavy Chain<br>
+</li>
+<li>“Light” for Ig Light Chain</li>
+</ul>
+<p><strong>method</strong></p>
+<ul>
+<li>“encoder” for a convolution neural network (CNN) based
+encoding.<br>
+</li>
+<li>“geometric” for a geometric transformation.</li>
+</ul>
+<p><strong>encoder.model</strong></p>
+<ul>
+<li>“VAE” for a variational autoencoder<br>
+</li>
+<li>“AE” for a traditional autoencoder</li>
+</ul>
+<p><strong>encoder.input</strong></p>
+<ul>
+<li>“AF” to use Atchley factors<br>
+</li>
+<li>“KF” to use Kidera factors<br>
+</li>
+<li>“both” to use both Atchley and Kidera factors</li>
+<li>“OHE” for a One Hot Autoencoder</li>
+</ul>
 <p><strong>theta</strong><br>
 If choosing the geometric transformation, what value of theta to use
 (default is pi)</p>
@@ -303,12 +324,13 @@ nearest neighbors calculated above.</p>
 <span><span class="va">plot5</span> <span class="op">+</span> <span class="va">plot6</span> <span class="op">+</span> <span class="va">plot7</span></span></code></pre></div>
 <p><img src="Ibex_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
 </div>
+</div>
 <div class="section level2">
 <h2 id="conga-reduction">CoNGA Reduction<a class="anchor" aria-label="anchor" href="#conga-reduction"></a>
 </h2>
 <p>Recent <a href="https://pubmed.ncbi.nlm.nih.gov/34426704/" class="external-link">work</a>
 has proposed using representative cells for the characterization of
-clonotype and gene expression relationships. In order to generate these
+clone and gene expression relationships. In order to generate these
 representative cells, either a mean expression across a clone or using
 the PCA dimensional space to identify a single cell that has the minimum
 euclidean distance across a clone.</p>
@@ -362,7 +384,7 @@ the above reduction strategies.</p>
 
       <footer><div class="copyright">
   <p></p>
-<p>Developed by Nick Borcherding, Qile Yang.</p>
+<p>Developed by Nick Borcherding, Qile Yang, Ksenia Safina.</p>
 </div>
 
 <div class="pkgdown">
