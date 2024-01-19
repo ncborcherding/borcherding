@@ -87,7 +87,7 @@
       <a href="../articles/SC_Visualizations.html">Visualizations for Single-Cell Objects</a>
     </li>
     <li>
-      <a href="../articles/Clonal_Bias.html">Clonal Bias</a>
+      <a href="../articles/Clonal_Bias.html">Quantifying Clonal Bias</a>
     </li>
     <li class="divider">
     </li>
@@ -109,7 +109,14 @@
   <a href="../articles/FAQ.html">FAQ</a>
 </li>
       </ul>
-<ul class="nav navbar-nav navbar-right"></ul>
+<ul class="nav navbar-nav navbar-right">
+<li>
+  <a href="https://github.com/ncborcherding/scRepertoire/" class="external-link">
+    <span class="fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
 </div>
 <!--/.nav-collapse -->
   </div>
@@ -124,10 +131,10 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Summarizing Repertoires</h1>
             
-            <h4 data-toc-skip class="date">Compiled: January 10,
+            <h4 data-toc-skip class="date">Compiled: January 19,
 2024</h4>
       
-      
+      <small class="dont-index">Source: <a href="https://github.com/ncborcherding/scRepertoire/blob/HEAD/vignettes/articles/Repertoire_Summary.Rmd" class="external-link"><code>vignettes/articles/Repertoire_Summary.Rmd</code></a></small>
       <div class="hidden name"><code>Repertoire_Summary.Rmd</code></div>
 
     </div>
@@ -231,6 +238,28 @@ visualization <strong>(default aa.length = 20)</strong>.</p>
 <p><img src="Repertoire_Summary_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
 </div>
 <div class="section level2">
+<h2 id="positionalentropy">positionalEntropy<a class="anchor" aria-label="anchor" href="#positionalentropy"></a>
+</h2>
+<p>We can also quantify the level of entropy/diversity across amino acid
+residues along the cdr3 sequence. <code><a href="../reference/positionalEntropy.html">positionalEntropy()</a></code>
+combines the quantification by residue of <code><a href="../reference/percentAA.html">percentAA()</a></code> with
+the diversity calls in <code><a href="../reference/clonalDiversity.html">clonalDiversity()</a></code>. Importantly,
+because diversity can be affected by size of sample, similar to
+<code><a href="../reference/clonalDiversity.html">clonalDiversity()</a></code>, <code><a href="../reference/positionalEntropy.html">positionalEntropy()</a></code> will
+also downsample/bootstrap the calculation. Positions without variance
+will have a value reported as 0 for the purposes of comparison.</p>
+<p><strong>method</strong></p>
+<ul>
+<li>“shannon” - Shannon Diversity<br>
+</li>
+<li>“inv.simpson” - Inverse Simpson Diversity</li>
+<li>“norm.entropy” - Normalized Entropy</li>
+</ul>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/positionalEntropy.html">positionalEntropy</a></span><span class="op">(</span><span class="va">combined.TCR</span>, chain <span class="op">=</span> <span class="st">"TRB"</span>, aa.length <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></span></code></pre></div>
+<p><img src="Repertoire_Summary_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
+</div>
+<div class="section level2">
 <h2 id="percentgenes">percentGenes<a class="anchor" aria-label="anchor" href="#percentgenes"></a>
 </h2>
 <p>Quantify the proportion of V or J gene usage with
@@ -240,16 +269,16 @@ the chain of interest and then indicate the gene of interest with the
 <code><a href="../reference/percentGenes.html">percentGenes()</a></code> are, 1) the function quantifies only V or J
 genes, and 2) the quantification of the genes are limited to all the V
 or J genes seen across the samples, not all possible V or J genes.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/percentGenes.html">percentGenes</a></span><span class="op">(</span><span class="va">combined.TCR</span>, </span>
 <span>             chain <span class="op">=</span> <span class="st">"TRB"</span>, </span>
 <span>             gene <span class="op">=</span> <span class="st">"Vgene"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Repertoire_Summary_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
+<p><img src="Repertoire_Summary_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
 <p>We can also use the output <code><a href="../reference/percentGenes.html">percentGenes()</a></code> for
 dimensional reduction to summarise the gene usage by sample. This can be
 done with a simple principal component analysis (below) or even more
 complex reductions.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df.genes</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/percentGenes.html">percentGenes</a></span><span class="op">(</span><span class="va">combined.TCR</span>, </span>
 <span>                         chain <span class="op">=</span> <span class="st">"TRB"</span>, </span>
 <span>                         gene <span class="op">=</span> <span class="st">"Vgene"</span>, </span>
@@ -269,7 +298,7 @@ complex reductions.</p>
 <span>  <span class="fu">guides</span><span class="op">(</span>fill<span class="op">=</span><span class="fu">guide_legend</span><span class="op">(</span>title<span class="op">=</span><span class="st">"Samples"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">scale_fill_manual</span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/palettes.html" class="external-link">hcl.colors</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span>, <span class="st">"inferno"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">theme_classic</span><span class="op">(</span><span class="op">)</span> </span></code></pre></div>
-<p><img src="Repertoire_Summary_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
+<p><img src="Repertoire_Summary_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
 </div>
 <div class="section level2">
 <h2 id="percentvj">percentVJ<a class="anchor" aria-label="anchor" href="#percentvj"></a>
@@ -279,11 +308,11 @@ complex reductions.</p>
 function will quantify the percentage of V and J paired together across
 individual repertoires. The output can be visualized using a heatmap or
 as input for further dimensional reduction.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/percentVJ.html">percentVJ</a></span><span class="op">(</span><span class="va">combined.TCR</span>, </span>
 <span>          chain <span class="op">=</span> <span class="st">"TRB"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Repertoire_Summary_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<p><img src="Repertoire_Summary_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df.genes</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/percentVJ.html">percentVJ</a></span><span class="op">(</span><span class="va">combined.TCR</span>, </span>
 <span>                      chain <span class="op">=</span> <span class="st">"TRB"</span>, </span>
 <span>                      exportTable <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
@@ -302,7 +331,7 @@ as input for further dimensional reduction.</p>
 <span>  <span class="fu">guides</span><span class="op">(</span>fill<span class="op">=</span><span class="fu">guide_legend</span><span class="op">(</span>title<span class="op">=</span><span class="st">"Samples"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">scale_fill_manual</span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/palettes.html" class="external-link">hcl.colors</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span>, <span class="st">"inferno"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">theme_classic</span><span class="op">(</span><span class="op">)</span> </span></code></pre></div>
-<p><img src="Repertoire_Summary_files/figure-html/unnamed-chunk-7-2.png" width="700"></p>
+<p><img src="Repertoire_Summary_files/figure-html/unnamed-chunk-8-2.png" width="700"></p>
 </div>
 <div class="section level2">
 <h2 id="percentkmer">percentKmer<a class="anchor" aria-label="anchor" href="#percentkmer"></a>
@@ -319,20 +348,20 @@ at set intervals resulting in substrings or kmers.</p>
 <li>Display the most variable genes determined by mean absolute
 deviation (MAD).</li>
 </ul>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/percentKmer.html">percentKmer</a></span><span class="op">(</span><span class="va">combined.TCR</span>, </span>
 <span>            cloneCall <span class="op">=</span> <span class="st">"aa"</span>,</span>
 <span>            chain <span class="op">=</span> <span class="st">"TRB"</span>, </span>
 <span>            motif.length <span class="op">=</span> <span class="fl">3</span>, </span>
 <span>            top.motifs <span class="op">=</span> <span class="fl">25</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Repertoire_Summary_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<p><img src="Repertoire_Summary_files/figure-html/unnamed-chunk-9-1.png" width="700"></p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/percentKmer.html">percentKmer</a></span><span class="op">(</span><span class="va">combined.TCR</span>, </span>
 <span>            cloneCall <span class="op">=</span> <span class="st">"nt"</span>,</span>
 <span>            chain <span class="op">=</span> <span class="st">"TRB"</span>, </span>
 <span>            motif.length <span class="op">=</span> <span class="fl">3</span>, </span>
 <span>            top.motifs <span class="op">=</span> <span class="fl">25</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Repertoire_Summary_files/figure-html/unnamed-chunk-8-2.png" width="700"></p>
+<p><img src="Repertoire_Summary_files/figure-html/unnamed-chunk-9-2.png" width="700"></p>
 </div>
   </div>
 
