@@ -67,7 +67,7 @@
       <a href="../articles/SC_Visualizations.html">Visualizations for Single-Cell Objects</a>
     </li>
     <li>
-      <a href="../articles/Clonal_Bias.html">Clonal Bias</a>
+      <a href="../articles/Clonal_Bias.html">Quantifying Clonal Bias</a>
     </li>
     <li class="divider">
     <li>
@@ -86,7 +86,13 @@
 <li>
   <a href="../articles/FAQ.html">FAQ</a>
 </li>
-      </ul><ul class="nav navbar-nav navbar-right"></ul></div><!--/.nav-collapse -->
+      </ul><ul class="nav navbar-nav navbar-right"><li>
+  <a href="https://github.com/ncborcherding/scRepertoire/" class="external-link">
+    <span class="fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul></div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
 
@@ -96,7 +102,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
       <h1 data-toc-skip>Changelog <small></small></h1>
-      
+      <small>Source: <a href="https://github.com/ncborcherding/scRepertoire/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
     <div class="section level2">
@@ -155,7 +161,11 @@
 <li>Added testthat for all exported and internal functions</li>
 <li>Fixed issue with <code><a href="../reference/clonalQuant.html">clonalQuant()</a></code> for instance of <strong>scale</strong> = FALSE and <strong>group.by</strong> being set.</li>
 <li>
-<code><a href="../reference/clonalDiversity.html">clonalDiversity()</a></code> no longer automatically orders samples</li>
+<code><a href="../reference/clonalDiversity.html">clonalDiversity()</a></code> no longer automatically orders samples.</li>
+<li>Remove <strong>order</strong> parameter from <code><a href="../reference/clonalQuant.html">clonalQuant()</a></code>, <code><a href="../reference/clonalLength.html">clonalLength()</a></code>, and <code><a href="../reference/clonalAbundance.html">clonalAbundance()</a></code>
+</li>
+<li>
+<strong>x.axis</strong> parameter in <code><a href="../reference/clonalDiversity.html">clonalDiversity()</a></code> separated from <strong>group.by</strong> parameter</li>
 </ul></div>
 <div class="section level3">
 <h3 id="deprecated-and-defunct-2-0-0">DEPRECATED AND DEFUNCT<a class="anchor" aria-label="anchor" href="#deprecated-and-defunct-2-0-0"></a></h3>
@@ -448,7 +458,7 @@
 
 
       <footer><div class="copyright">
-  <p></p><p>Developed by Nick Borcherding, Qile Yang.</p>
+  <p></p><p>Developed by Nick Borcherding, Qile Yang, Ksenia Safina.</p>
 </div>
 
 <div class="pkgdown">

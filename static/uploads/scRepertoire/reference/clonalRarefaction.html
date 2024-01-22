@@ -5,7 +5,8 @@ diversity (q = 2, the inverse of Simpson concentration) to compute diversity
 estimates for rarefaction and extrapolation. The function relies on the
 iNEXT R package. Please read and cite the 
 manuscript 
-if using this function."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
+if using this function. The input into the iNEXT calculation is abundance, 
+incidence-based calculations are not supported."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]--></head><body data-spy="scroll" data-target="#toc">
@@ -73,7 +74,7 @@ if using this function."><!-- mathjax --><script src="https://cdnjs.cloudflare.c
       <a href="../articles/SC_Visualizations.html">Visualizations for Single-Cell Objects</a>
     </li>
     <li>
-      <a href="../articles/Clonal_Bias.html">Clonal Bias</a>
+      <a href="../articles/Clonal_Bias.html">Quantifying Clonal Bias</a>
     </li>
     <li class="divider">
     <li>
@@ -92,7 +93,13 @@ if using this function."><!-- mathjax --><script src="https://cdnjs.cloudflare.c
 <li>
   <a href="../articles/FAQ.html">FAQ</a>
 </li>
-      </ul><ul class="nav navbar-nav navbar-right"></ul></div><!--/.nav-collapse -->
+      </ul><ul class="nav navbar-nav navbar-right"><li>
+  <a href="https://github.com/ncborcherding/scRepertoire/" class="external-link">
+    <span class="fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul></div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
 
@@ -102,7 +109,7 @@ if using this function."><!-- mathjax --><script src="https://cdnjs.cloudflare.c
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Calculate rarefaction based on the abundance of clones</h1>
-    
+    <small class="dont-index">Source: <a href="https://github.com/ncborcherding/scRepertoire/blob/HEAD/R/clonalRarefaction.R" class="external-link"><code>R/clonalRarefaction.R</code></a></small>
     <div class="hidden name"><code>clonalRarefaction.Rd</code></div>
     </div>
 
@@ -113,7 +120,8 @@ diversity (<strong>q = 2</strong>, the inverse of Simpson concentration) to comp
 estimates for rarefaction and extrapolation. The function relies on the
 <code><a href="https://rdrr.io/pkg/iNEXT/man/iNEXT.html" class="external-link">iNEXT</a></code> R package. Please read and cite the 
 <a href="https://besjournals.onlinelibrary.wiley.com/doi/10.1111/2041-210X.12613" class="external-link">manuscript</a> 
-if using this function.</p>
+if using this function. The input into the iNEXT calculation is abundance, 
+incidence-based calculations are not supported.</p>
     </div>
 
     <div id="ref-usage">

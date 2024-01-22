@@ -87,7 +87,7 @@
       <a href="../articles/SC_Visualizations.html">Visualizations for Single-Cell Objects</a>
     </li>
     <li>
-      <a href="../articles/Clonal_Bias.html">Clonal Bias</a>
+      <a href="../articles/Clonal_Bias.html">Quantifying Clonal Bias</a>
     </li>
     <li class="divider">
     </li>
@@ -109,7 +109,14 @@
   <a href="../articles/FAQ.html">FAQ</a>
 </li>
       </ul>
-<ul class="nav navbar-nav navbar-right"></ul>
+<ul class="nav navbar-nav navbar-right">
+<li>
+  <a href="https://github.com/ncborcherding/scRepertoire/" class="external-link">
+    <span class="fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
 </div>
 <!--/.nav-collapse -->
   </div>
@@ -124,10 +131,10 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Clustering by Edit Distance</h1>
             
-            <h4 data-toc-skip class="date">Compiled: January 10,
+            <h4 data-toc-skip class="date">Compiled: January 22,
 2024</h4>
       
-      
+      <small class="dont-index">Source: <a href="https://github.com/ncborcherding/scRepertoire/blob/HEAD/vignettes/articles/Clonal_Cluster.Rmd" class="external-link"><code>vignettes/articles/Clonal_Cluster.Rmd</code></a></small>
       <div class="hidden name"><code>Clonal_Cluster.Rmd</code></div>
 
     </div>
@@ -187,7 +194,9 @@ values.</p>
 setting of patient sample (<strong>group.by</strong> = “Patient”) or
 tissue type (<strong>group.by</strong> = “Type”). This will add the
 selected group to the beginning of the cluster designation. We can also
-call <code><a href="../reference/clonalCluster.html">clonalCluster()</a></code> directly on a Single-Cell Object.</p>
+call <code><a href="../reference/clonalCluster.html">clonalCluster()</a></code> directly on a Single-Cell Object. If
+<strong>group.by</strong> = NULL (<strong>default</strong>), the
+clusters will be calculated across all samples.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#Adding patient information</span></span>
 <span><span class="va">scRep_example</span><span class="op">$</span><span class="va">Patient</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/substr.html" class="external-link">substr</a></span><span class="op">(</span><span class="va">scRep_example</span><span class="op">$</span><span class="va">orig.ident</span>, <span class="fl">1</span>,<span class="fl">3</span><span class="op">)</span></span>

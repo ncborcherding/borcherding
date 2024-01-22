@@ -72,7 +72,7 @@ to TRUE, the function returns an igraph object of the connected sequences."><!--
       <a href="../articles/SC_Visualizations.html">Visualizations for Single-Cell Objects</a>
     </li>
     <li>
-      <a href="../articles/Clonal_Bias.html">Clonal Bias</a>
+      <a href="../articles/Clonal_Bias.html">Quantifying Clonal Bias</a>
     </li>
     <li class="divider">
     <li>
@@ -91,7 +91,13 @@ to TRUE, the function returns an igraph object of the connected sequences."><!--
 <li>
   <a href="../articles/FAQ.html">FAQ</a>
 </li>
-      </ul><ul class="nav navbar-nav navbar-right"></ul></div><!--/.nav-collapse -->
+      </ul><ul class="nav navbar-nav navbar-right"><li>
+  <a href="https://github.com/ncborcherding/scRepertoire/" class="external-link">
+    <span class="fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul></div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
 
@@ -101,7 +107,7 @@ to TRUE, the function returns an igraph object of the connected sequences."><!--
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Clustering adaptive receptor sequences by edit distance</h1>
-    
+    <small class="dont-index">Source: <a href="https://github.com/ncborcherding/scRepertoire/blob/HEAD/R/clonalCluster.R" class="external-link"><code>R/clonalCluster.R</code></a></small>
     <div class="hidden name"><code>clonalCluster.Rd</code></div>
     </div>
 
@@ -154,7 +160,8 @@ used for clustering.</p></dd>
 
 
 <dt>group.by</dt>
-<dd><p>The column header used for to group contigs.</p></dd>
+<dd><p>The column header used for to group contigs.
+If (<strong>NULL</strong>), clusters will be calculated across samples.</p></dd>
 
 
 <dt>exportGraph</dt>
