@@ -97,6 +97,9 @@
     <li>
       <a href="../articles/Ibex.html">Combining Deep Learning and BCRs with Ibex</a>
     </li>
+    <li>
+      <a href="../articles/Running_Escape.html">Single-cell Gene Set Enrichment Analysis</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -131,7 +134,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Combining Deep Learning and BCRs with Ibex</h1>
             
-            <h4 data-toc-skip class="date">Compiled: January 22,
+            <h4 data-toc-skip class="date">Compiled: February 24,
 2024</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ncborcherding/scRepertoire/blob/HEAD/vignettes/articles/Ibex.Rmd" class="external-link"><code>vignettes/articles/Ibex.Rmd</code></a></small>
@@ -361,11 +364,11 @@ the above reduction strategies.</p>
 <pre><code><span><span class="co">## Modularity Optimizer version 1.3.0 by Ludo Waltman and Nees Jan van Eck</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## Number of nodes: 1012</span></span>
-<span><span class="co">## Number of edges: 37175</span></span>
+<span><span class="co">## Number of edges: 35549</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## Running smart local moving algorithm...</span></span>
-<span><span class="co">## Maximum modularity in 10 random starts: 0.5048</span></span>
-<span><span class="co">## Number of communities: 5</span></span>
+<span><span class="co">## Maximum modularity in 10 random starts: 0.5521</span></span>
+<span><span class="co">## Number of communities: 7</span></span>
 <span><span class="co">## Elapsed time: 0 seconds</span></span></code></pre>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">CoNGA.seurat</span> <span class="op">&lt;-</span> <span class="fu">RunUMAP</span><span class="op">(</span><span class="va">CoNGA.seurat</span>, </span>
