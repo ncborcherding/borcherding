@@ -134,7 +134,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Single-cell Gene Set Enrichment Analysis</h1>
             
-            <h4 data-toc-skip class="date">Compiled: February 24,
+            <h4 data-toc-skip class="date">Compiled: February 25,
 2024</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ncborcherding/scRepertoire/blob/HEAD/vignettes/articles/Running_Escape.Rmd" class="external-link"><code>vignettes/articles/Running_Escape.Rmd</code></a></small>
@@ -463,7 +463,7 @@ visualizations.</li>
 <strong>TRUE</strong> - z-transform the enrichment values.</li>
 <li>
 <strong>FALSE</strong> - leave raw values
-(<strong>DEFAULT</strong>).</li>
+(<strong>default</strong>).</li>
 </ul>
 <p>In addition, <code>heatmapEnrichment()</code> allows for the
 reclustering of rows and columns using Euclidean distance of the
@@ -478,9 +478,9 @@ enrichment scores and the Ward2 methods for clustering using
 <span>                  cluster.rows <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>                  cluster.columns <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Running_Escape_files/figure-html/unnamed-chunk-14-1.png" width="700"></p>
-<p>Each visualization has an additional argument called **palette that
-supplies the coloring scheme to be used - available color palettes can
-be viewed with <code><a href="https://rdrr.io/r/grDevices/palettes.html" class="external-link">hcl.pals()</a></code>.</p>
+<p>Each visualization has an additional argument called
+<strong>palette</strong> that supplies the coloring scheme to be used -
+available color palettes can be viewed with <code><a href="https://rdrr.io/r/grDevices/palettes.html" class="external-link">hcl.pals()</a></code>.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/grDevices/palettes.html" class="external-link">hcl.pals</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##   [1] "Pastel 1"      "Dark 2"        "Dark 3"        "Set 2"        </span></span>
