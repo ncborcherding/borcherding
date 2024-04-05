@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scRepertoire</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.0.2</span>
       </span>
     </div>
 
@@ -134,8 +134,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Combining Deep Learning and TCRs with Trex</h1>
             
-            <h4 data-toc-skip class="date">Compiled: February 24,
-2024</h4>
+            <h4 data-toc-skip class="date">Compiled: April 05, 2024</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ncborcherding/scRepertoire/blob/HEAD/vignettes/articles/Trex.Rmd" class="external-link"><code>vignettes/articles/Trex.Rmd</code></a></small>
       <div class="hidden name"><code>Trex.Rmd</code></div>
@@ -174,11 +173,80 @@ customizable approach to this combined approach using R.</p>
 from <a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE167118" class="external-link">GSE167118</a>,
 a cohort of CITE-seq data derived from severe COVID-19 patients. More
 information is available in the <a href="https://pubmed.ncbi.nlm.nih.gov/33622974/" class="external-link">corresponding
-manuscript</a>. The data example built into the package
-(<strong>trex_example</strong>) is derived from randomly sampling T
-cells from patient 17.</p>
+manuscript</a>.</p>
+<div class="section level4">
+<h4 id="formation-of-the-single-cell-object">Formation of the Single-cell Object<a class="anchor" aria-label="anchor" href="#formation-of-the-single-cell-object"></a>
+</h4>
+<p>Here is the basic workflow that was used to make the single-cell
+object to use in the vignette. Notice there is a removal of TCR-related
+CITE-seq data and RNA features (using the <strong>Trex</strong> function
+<code>quietTCRgenes()</code>). As we are going to combine multimodal
+data, both the GEX and CITE probes may cause bias in the weighted
+output.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">##################################</span></span>
+<span><span class="co">#scRNA/ADT loading and processing</span></span>
+<span><span class="co">#################################</span></span>
+<span><span class="va">tmp</span> <span class="op">&lt;-</span>  <span class="fu">Read10X</span><span class="op">(</span><span class="st">"~/Patient17/filtered_feature_bc_matrix"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">Pt17</span> <span class="op">&lt;-</span> <span class="fu">CreateSeuratObject</span><span class="op">(</span>counts <span class="op">=</span> <span class="va">tmp</span><span class="op">$</span><span class="va">`Gene Expression`</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">#Removing TCR-specific antibody</span></span>
+<span><span class="va">adt_assay</span> <span class="op">&lt;-</span> <span class="fu">CreateAssayObject</span><span class="op">(</span>counts <span class="op">=</span> <span class="va">tmp</span><span class="op">$</span><span class="va">`Antibody Capture`</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">37</span>,<span class="op">]</span><span class="op">)</span></span>
+<span><span class="va">Pt17</span><span class="op">[[</span><span class="st">"ADT"</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">adt_assay</span></span>
+<span><span class="va">Pt17</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">Pt17</span>, subset <span class="op">=</span> <span class="va">nFeature_RNA</span> <span class="op">&gt;</span> <span class="fl">100</span><span class="op">)</span> </span>
+<span><span class="va">Pt17</span>  <span class="op">&lt;-</span> <span class="fu">RenameCells</span><span class="op">(</span>object <span class="op">=</span> <span class="va">Pt17</span> , new.names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"Pt17_"</span>, <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">Pt17</span><span class="op">[[</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">Pt17</span><span class="op">[[</span><span class="st">"mito.genes"</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu">PercentageFeatureSet</span><span class="op">(</span><span class="va">Pt17</span>, pattern <span class="op">=</span> <span class="st">"^MT-"</span><span class="op">)</span></span>
+<span>    </span>
+<span><span class="co">#Filtering step</span></span>
+<span><span class="va">standev</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html" class="external-link">sd</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">Pt17</span><span class="op">$</span><span class="va">nFeature_RNA</span><span class="op">)</span><span class="op">)</span><span class="op">*</span><span class="fl">2.5</span> <span class="co">#cutting off above standard deviation of 2.5</span></span>
+<span><span class="va">mean</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">Pt17</span><span class="op">$</span><span class="va">nFeature_RNA</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">cut</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="va">standev</span><span class="op">+</span><span class="va">mean</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">Pt17</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">Pt17</span>, subset <span class="op">=</span> <span class="va">mito.genes</span> <span class="op">&lt;</span> <span class="fl">10</span> <span class="op">&amp;</span> <span class="va">nFeature_RNA</span> <span class="op">&lt;</span> <span class="va">cut</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">#Processing RNA</span></span>
+<span><span class="fu">DefaultAssay</span><span class="op">(</span><span class="va">Pt17</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">'RNA'</span></span>
+<span><span class="va">Pt17</span> <span class="op">&lt;-</span> <span class="fu">NormalizeData</span><span class="op">(</span><span class="va">Pt17</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
+<span>  <span class="fu">FindVariableFeatures</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
+<span>  <span class="fu">quietTCRgenes</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
+<span>  <span class="fu">ScaleData</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
+<span>  <span class="fu">RunPCA</span><span class="op">(</span>verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">#Processing ADT</span></span>
+<span><span class="fu">DefaultAssay</span><span class="op">(</span><span class="va">Pt17</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">'ADT'</span></span>
+<span><span class="fu">VariableFeatures</span><span class="op">(</span><span class="va">Pt17</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">Pt17</span><span class="op">[[</span><span class="st">"ADT"</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="va">Pt17</span> <span class="op">&lt;-</span> <span class="fu">NormalizeData</span><span class="op">(</span><span class="va">Pt17</span>, normalization.method <span class="op">=</span> <span class="st">'CLR'</span>, margin <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
+<span>  <span class="fu">ScaleData</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
+<span>  <span class="fu">RunPCA</span><span class="op">(</span>reduction.name <span class="op">=</span> <span class="st">'apca'</span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="co">##################################</span></span>
+<span><span class="co">#Processing and Adding Contig Info</span></span>
+<span><span class="co">##################################</span></span>
+<span></span>
+<span><span class="va">contigs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="st">"~/Patient17/filtered_contig_annotations.csv"</span><span class="op">)</span></span>
+<span><span class="va">clones</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/combineTCR.html">combineTCR</a></span><span class="op">(</span><span class="va">contigs</span>, samples <span class="op">=</span> <span class="st">"Pt17"</span>, cells <span class="op">=</span> <span class="st">"T-AB"</span>, filterMulti <span class="op">=</span> <span class="cn">TRUE</span>, removeNA <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="va">Pt17</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/combineExpression.html">combineExpression</a></span><span class="op">(</span><span class="va">clones</span>, <span class="va">Pt17</span>, cloneCall<span class="op">=</span><span class="st">"aa"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">saveRDS</a></span><span class="op">(</span><span class="va">Pt17</span>, file <span class="op">=</span> <span class="st">"Trex_FullExample.rds"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">###################################</span></span>
+<span><span class="co">#Making Example Data Set for Trex</span></span>
+<span><span class="co">#################################</span></span>
+<span><span class="va">meta</span> <span class="op">&lt;-</span> <span class="va">Pt17</span><span class="op">[[</span><span class="op">]</span><span class="op">]</span></span>
+<span><span class="va">meta</span> <span class="op">&lt;-</span> <span class="va">meta</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">meta</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">meta</span><span class="op">)</span><span class="op">*</span><span class="fl">0.1</span><span class="op">)</span>,<span class="op">]</span></span>
+<span><span class="va">trex_example</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">Pt17</span>, cells <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">meta</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/save.html" class="external-link">save</a></span><span class="op">(</span><span class="va">trex_example</span>, file <span class="op">=</span> <span class="st">"trex_example.rda"</span>, compress <span class="op">=</span> <span class="st">"xz"</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level4">
+<h4 id="loading-the-data-object">Loading the Data Object<a class="anchor" aria-label="anchor" href="#loading-the-data-object"></a>
+</h4>
+<p>For the purpose of the vignette, we will load the full object. The
+data example built into the package (<strong>trex_example</strong>) is
+derived from randomly sampling T cells from patient 17 (see above
+workflow).</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">SeuratObj</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/connections.html" class="external-link">url</a></span><span class="op">(</span><span class="st">"https://www.borch.dev/uploads/data/Trex_FullExample.rds"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+</div>
 </div>
 </div>
 <div class="section level2">
@@ -225,28 +293,28 @@ encoding.</li>
 <p><strong>theta</strong><br>
 If choosing the geometric transformation, what value of theta to use
 (default is pi)</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">Trex_vectors</span> <span class="op">&lt;-</span> <span class="fu">maTrex</span><span class="op">(</span><span class="va">SeuratObj</span>, </span>
 <span>                       chains <span class="op">=</span> <span class="st">"TRA"</span>,</span>
 <span>                       encoder.model <span class="op">=</span> <span class="st">"VAE"</span>, </span>
 <span>                       encoder.input <span class="op">=</span> <span class="st">"AF"</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] "Calculating the encoding values..."</span></span></code></pre>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">Trex_vectors</span><span class="op">)</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Trex_1</span>, <span class="va">Trex_2</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_classic</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Trex_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">Trex_vectors</span><span class="op">)</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">Trex_1</span>, <span class="va">Trex_2</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu">theme_classic</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="Trex_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">Trex_vectors2</span> <span class="op">&lt;-</span> <span class="fu">maTrex</span><span class="op">(</span><span class="va">SeuratObj</span>, </span>
 <span>                       chains <span class="op">=</span> <span class="st">"TRB"</span>,</span>
 <span>                       method <span class="op">=</span> <span class="st">"geometric"</span>,</span>
 <span>                       theta <span class="op">=</span> <span class="va">pi</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] "Performing geometric transformation..."</span></span></code></pre>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">Trex_vectors2</span><span class="op">)</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Trex_1</span>, y <span class="op">=</span> <span class="va">Trex_2</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_classic</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Trex_files/figure-html/unnamed-chunk-3-2.png" width="700"></p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">Trex_vectors2</span><span class="op">)</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">Trex_1</span>, y <span class="op">=</span> <span class="va">Trex_2</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu">theme_classic</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="Trex_files/figure-html/unnamed-chunk-4-2.png" width="700"></p>
 </div>
 <div class="section level3">
 <h3 id="runtrex">runTrex<a class="anchor" aria-label="anchor" href="#runtrex"></a>
@@ -256,7 +324,7 @@ or Single-cell Experiment object with the Trex vectors and allow for
 further analysis. Importantly, <code>runTrex()</code> will remove single
 cells that do not have recovered TCR data in the metadata of the
 object.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">SeuratObj</span> <span class="op">&lt;-</span> <span class="fu">runTrex</span><span class="op">(</span><span class="va">SeuratObj</span>, </span>
 <span>                    chains <span class="op">=</span> <span class="st">"TRB"</span>,</span>
 <span>                    encoder.model <span class="op">=</span> <span class="st">"VAE"</span>, </span>
@@ -272,7 +340,7 @@ object.</p>
 <strong>“Trex…”</strong>. Using the Trex reduction stored in Seurat, we
 can calculate the nearest neighbor and shared nearest neighbor indexes
 and generate a UMAP.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#Generating UMAP from Trex Neighbors</span></span>
 <span><span class="va">SeuratObj</span> <span class="op">&lt;-</span> <span class="fu">RunUMAP</span><span class="op">(</span><span class="va">SeuratObj</span>, </span>
 <span>                     reduction <span class="op">=</span> <span class="st">"Trex.KF"</span>,</span>
@@ -287,18 +355,18 @@ and generate a UMAP.</p>
 <span><span class="va">plot2</span> <span class="op">&lt;-</span> <span class="fu">DimPlot</span><span class="op">(</span><span class="va">SeuratObj</span>, </span>
 <span>                 group.by <span class="op">=</span> <span class="st">"CTaa"</span>, </span>
 <span>                 reduction <span class="op">=</span> <span class="st">"Trex.umap"</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>          <span class="fu"><a href="https://sjmgarnier.github.io/viridis/reference/scale_viridis.html" class="external-link">scale_color_viridis</a></span><span class="op">(</span>discrete <span class="op">=</span> <span class="cn">TRUE</span>, option <span class="op">=</span> <span class="st">"B"</span><span class="op">)</span>  <span class="op">+</span> </span>
-<span>          <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>          <span class="fu">scale_color_viridis</span><span class="op">(</span>discrete <span class="op">=</span> <span class="cn">TRUE</span>, option <span class="op">=</span> <span class="st">"B"</span><span class="op">)</span>  <span class="op">+</span> </span>
+<span>          <span class="fu">theme</span><span class="op">(</span>plot.title <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>          <span class="fu">NoLegend</span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">plot1</span> <span class="op">+</span> <span class="va">plot2</span></span></code></pre></div>
-<p><img src="Trex_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
+<p><img src="Trex_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
 <p>We now can use this in a similar way as other single-cell modalities
 and calculate weighted nearest neighbor (WNN). To check out more on WNN,
 please read the Satija’s group <a href="https://pubmed.ncbi.nlm.nih.gov/34062119/" class="external-link">paper</a>. We will use
 the RNA, ADT protein levels, and Trex vectors for the WNN
 calculations.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">SeuratObj</span> <span class="op">&lt;-</span> <span class="fu">FindMultiModalNeighbors</span><span class="op">(</span></span>
 <span>                    <span class="va">SeuratObj</span>, </span>
 <span>                    reduction.list <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"pca"</span>, <span class="st">"apca"</span>, <span class="st">"Trex.KF"</span><span class="op">)</span>, </span>
@@ -321,12 +389,12 @@ calculations.</p>
 <span><span class="va">plot4</span> <span class="op">&lt;-</span> <span class="fu">DimPlot</span><span class="op">(</span><span class="va">SeuratObj</span>, </span>
 <span>                 reduction <span class="op">=</span> <span class="st">"wnn.umap"</span>, </span>
 <span>                 group.by <span class="op">=</span> <span class="st">"CTaa"</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>          <span class="fu"><a href="https://sjmgarnier.github.io/viridis/reference/scale_viridis.html" class="external-link">scale_color_viridis</a></span><span class="op">(</span>discrete <span class="op">=</span> <span class="cn">TRUE</span>, option <span class="op">=</span> <span class="st">"B"</span><span class="op">)</span>  <span class="op">+</span> </span>
-<span>          <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>          <span class="fu">scale_color_viridis</span><span class="op">(</span>discrete <span class="op">=</span> <span class="cn">TRUE</span>, option <span class="op">=</span> <span class="st">"B"</span><span class="op">)</span>  <span class="op">+</span> </span>
+<span>          <span class="fu">theme</span><span class="op">(</span>plot.title <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>          <span class="fu">NoLegend</span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">plot3</span> <span class="op">+</span> <span class="va">plot4</span></span></code></pre></div>
-<p><img src="Trex_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
+<p><img src="Trex_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
 <div class="section level3">
 <h3 id="comparing-the-outcome-to-just-one-modality">Comparing the outcome to just one modality<a class="anchor" aria-label="anchor" href="#comparing-the-outcome-to-just-one-modality"></a>
 </h3>
@@ -334,7 +402,7 @@ calculations.</p>
 ADT, or Trex as individual components. Remember, the clusters that we
 are displaying in UMAP are based on clusters defined by the weighted
 nearest neighbors calculated above.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">SeuratObj</span> <span class="op">&lt;-</span> <span class="fu">RunUMAP</span><span class="op">(</span><span class="va">SeuratObj</span>, </span>
 <span>                     reduction <span class="op">=</span> <span class="st">'pca'</span>, </span>
 <span>                     dims <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">30</span>, </span>
@@ -354,7 +422,7 @@ nearest neighbors calculated above.</p>
 <span><span class="va">plot7</span> <span class="op">&lt;-</span> <span class="fu">DimPlot</span><span class="op">(</span><span class="va">SeuratObj</span>, reduction <span class="op">=</span> <span class="st">"Trex.umap"</span><span class="op">)</span> <span class="op">+</span> <span class="fu">NoLegend</span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">plot5</span> <span class="op">+</span> <span class="va">plot6</span> <span class="op">+</span> <span class="va">plot7</span></span></code></pre></div>
-<p><img src="Trex_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
+<p><img src="Trex_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
 </div>
 </div>
 <div class="section level2">
@@ -371,7 +439,7 @@ approach, Trex offers the function <code>CoNGAfy()</code>. For
 <strong>method</strong>, select either “mean” or “dist” as described
 above. After performing <code>CoNGAfy()</code>, the user can use any of
 the above reduction strategies.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span>, include.only <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"%&gt;%"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">CoNGA.seurat</span> <span class="op">&lt;-</span> <span class="fu">CoNGAfy</span><span class="op">(</span><span class="va">SeuratObj</span>, </span>
@@ -383,7 +451,7 @@ the above reduction strategies.</p>
 <span>                        encoder.input <span class="op">=</span> <span class="st">"KF"</span>,</span>
 <span>                        reduction.name <span class="op">=</span> <span class="st">"Trex.KF"</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] "Calculating the encoding values..."</span></span></code></pre>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">CoNGA.seurat</span> <span class="op">&lt;-</span> <span class="va">CoNGA.seurat</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>                  <span class="fu">FindNeighbors</span><span class="op">(</span>reduction <span class="op">=</span> <span class="st">"Trex.KF"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>                  <span class="fu">FindClusters</span><span class="op">(</span>algorithm <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></code></pre></div>
@@ -396,7 +464,7 @@ the above reduction strategies.</p>
 <span><span class="co">## Maximum modularity in 10 random starts: 0.6491</span></span>
 <span><span class="co">## Number of communities: 7</span></span>
 <span><span class="co">## Elapsed time: 0 seconds</span></span></code></pre>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">CoNGA.seurat</span> <span class="op">&lt;-</span> <span class="fu">RunUMAP</span><span class="op">(</span><span class="va">CoNGA.seurat</span>, </span>
 <span>                     reduction <span class="op">=</span> <span class="st">"Trex.KF"</span>, </span>
 <span>                     dims <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">20</span>, </span>
@@ -404,7 +472,7 @@ the above reduction strategies.</p>
 <span>                     reduction.key <span class="op">=</span> <span class="st">'trexUMAP_'</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">DimPlot</span><span class="op">(</span><span class="va">CoNGA.seurat</span>, reduction <span class="op">=</span> <span class="st">"Trex.umap"</span><span class="op">)</span> <span class="op">+</span> <span class="fu">NoLegend</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Trex_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
+<p><img src="Trex_files/figure-html/unnamed-chunk-9-1.png" width="700"></p>
 </div>
 <div class="section level2">
 <h2 id="annotating-possible-epitopes">Annotating possible epitopes<a class="anchor" aria-label="anchor" href="#annotating-possible-epitopes"></a>
@@ -431,27 +499,27 @@ deal of effort from these sources:</p>
 <a href="https://pubmed.ncbi.nlm.nih.gov/31373607/" class="external-link">citation</a>
 </li>
 </ol>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">CoNGA.seurat</span> <span class="op">&lt;-</span> <span class="fu">annotateDB</span><span class="op">(</span><span class="va">CoNGA.seurat</span>, </span>
 <span>                           chains <span class="op">=</span> <span class="st">"TRB"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">DimPlot</span><span class="op">(</span><span class="va">CoNGA.seurat</span>, </span>
 <span>        reduction <span class="op">=</span> <span class="st">"Trex.umap"</span>, </span>
 <span>        group.by <span class="op">=</span> <span class="st">"TRB_Epitope.species"</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Trex_files/figure-html/unnamed-chunk-9-1.png" width="700"></p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<span>  <span class="fu">theme</span><span class="op">(</span>plot.title <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p><img src="Trex_files/figure-html/unnamed-chunk-10-1.png" width="700"></p>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">DimPlot</span><span class="op">(</span><span class="va">CoNGA.seurat</span>, </span>
 <span>        reduction <span class="op">=</span> <span class="st">"Trex.umap"</span>, </span>
 <span>        group.by <span class="op">=</span> <span class="st">"TRB_Epitope.sequence"</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Trex_files/figure-html/unnamed-chunk-9-2.png" width="700"></p>
+<span>  <span class="fu">theme</span><span class="op">(</span>plot.title <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p><img src="Trex_files/figure-html/unnamed-chunk-10-2.png" width="700"></p>
 <p>Or <code>annotateDB()</code> can be used on the full single-cell
 object and examine the sequence information along the RNA-based UMAP. An
 added feature to the function allows the annotations to be extended to
 CDR3 sequences that are within defined edit distances from the reference
 using <strong>edit.distance</strong>.</p>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">SeuratObj</span> <span class="op">&lt;-</span> <span class="fu">annotateDB</span><span class="op">(</span><span class="va">SeuratObj</span>,</span>
 <span>                        chains <span class="op">=</span> <span class="st">"TRB"</span>, </span>
 <span>                        edit.distance <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
@@ -459,8 +527,8 @@ using <strong>edit.distance</strong>.</p>
 <span><span class="fu">DimPlot</span><span class="op">(</span><span class="va">SeuratObj</span>, </span>
 <span>        reduction <span class="op">=</span> <span class="st">"rna.umap"</span>, </span>
 <span>        group.by <span class="op">=</span> <span class="st">"TRB_Epitope.species"</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Trex_files/figure-html/unnamed-chunk-10-1.png" width="700"></p>
+<span>  <span class="fu">theme</span><span class="op">(</span>plot.title <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p><img src="Trex_files/figure-html/unnamed-chunk-11-1.png" width="700"></p>
 </div>
   </div>
 

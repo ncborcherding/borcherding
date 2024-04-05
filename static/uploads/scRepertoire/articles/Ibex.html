@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scRepertoire</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.0.2</span>
       </span>
     </div>
 
@@ -134,8 +134,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Combining Deep Learning and BCRs with Ibex</h1>
             
-            <h4 data-toc-skip class="date">Compiled: February 24,
-2024</h4>
+            <h4 data-toc-skip class="date">Compiled: April 05, 2024</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ncborcherding/scRepertoire/blob/HEAD/vignettes/articles/Ibex.Rmd" class="external-link"><code>vignettes/articles/Ibex.Rmd</code></a></small>
       <div class="hidden name"><code>Ibex.Rmd</code></div>
@@ -173,11 +172,79 @@ approach to this combined approach using R.</p>
 <p>To show the multiple options of Ibex, the example data is derived
 from <a href="https://pubmed.ncbi.nlm.nih.gov/33891889/" class="external-link">this
 manuscript</a>, multimodal single-cell characterization of
-COVID19-associated multisystem inflammatory syndrome in children. The
-data example built into the package (<strong>ibex_example</strong>) is
-derived from randomly sampling cells from Patient 1.</p>
+COVID19-associated multisystem inflammatory syndrome in children.</p>
+<div class="section level4">
+<h4 id="formation-of-the-single-cell-object">Formation of the Single-cell Object<a class="anchor" aria-label="anchor" href="#formation-of-the-single-cell-object"></a>
+</h4>
+<p>Here is the basic workflow that was used to make the single-cell
+object to use in the vignette. Notice there is a removal of BCR-related
+RNA features (using the <strong>Ibex</strong> function
+<code>quietBCRgenes()</code>). As we are going to combine multimodal
+data, both the GEX and CITE probes may cause bias in the weighted
+output.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">##################################</span></span>
+<span><span class="co">#scRNA/ADT loading and processing</span></span>
+<span><span class="co">#################################</span></span>
+<span><span class="va">tmp</span> <span class="op">&lt;-</span>  <span class="fu">Read10X</span><span class="op">(</span><span class="st">"~/data/GSM5073055_P1.1_filtered_feature_bc_matrix"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">MIS.sample</span> <span class="op">&lt;-</span> <span class="fu">CreateSeuratObject</span><span class="op">(</span>counts <span class="op">=</span> <span class="va">tmp</span><span class="op">$</span><span class="va">`Gene Expression`</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">tmp</span><span class="op">$</span><span class="va">`Antibody Capture`</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_remove.html" class="external-link">str_remove_all</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">tmp</span><span class="op">$</span><span class="va">`Antibody Capture`</span><span class="op">)</span>, <span class="st">"anti_human_"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">tmp</span><span class="op">$</span><span class="va">`Antibody Capture`</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_remove.html" class="external-link">str_remove_all</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">tmp</span><span class="op">$</span><span class="va">`Antibody Capture`</span><span class="op">)</span>, <span class="st">"anti_mousehuman_"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">tmp</span><span class="op">$</span><span class="va">`Antibody Capture`</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/substr.html" class="external-link">substr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">tmp</span><span class="op">$</span><span class="va">`Antibody Capture`</span><span class="op">)</span>, <span class="fl">6</span>, <span class="fu"><a href="https://rdrr.io/r/base/nchar.html" class="external-link">nchar</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">tmp</span><span class="op">$</span><span class="va">`Antibody Capture`</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">adt_assay</span> <span class="op">&lt;-</span> <span class="fu">CreateAssayObject</span><span class="op">(</span>counts <span class="op">=</span> <span class="va">tmp</span><span class="op">$</span><span class="va">`Antibody Capture`</span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="va">MIS.sample</span><span class="op">[[</span><span class="st">"ADT"</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">adt_assay</span></span>
+<span><span class="va">MIS.sample</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">MIS.sample</span>, subset <span class="op">=</span> <span class="va">nFeature_RNA</span> <span class="op">&gt;</span> <span class="fl">100</span><span class="op">)</span> </span>
+<span><span class="va">MIS.sample</span>  <span class="op">&lt;-</span> <span class="fu">RenameCells</span><span class="op">(</span>object <span class="op">=</span> <span class="va">MIS.sample</span> , new.names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"MIS.sample_"</span>, <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">MIS.sample</span><span class="op">[[</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">MIS.sample</span><span class="op">[[</span><span class="st">"mito.genes"</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu">PercentageFeatureSet</span><span class="op">(</span><span class="va">MIS.sample</span>, pattern <span class="op">=</span> <span class="st">"^MT-"</span><span class="op">)</span></span>
+<span>    </span>
+<span><span class="co">#Filtering step</span></span>
+<span><span class="va">standev</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html" class="external-link">sd</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">MIS.sample</span><span class="op">$</span><span class="va">nFeature_RNA</span><span class="op">)</span><span class="op">)</span><span class="op">*</span><span class="fl">2.5</span> <span class="co">#cutting off above standard deviation of 2.5</span></span>
+<span><span class="va">mean</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">MIS.sample</span><span class="op">$</span><span class="va">nFeature_RNA</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">cut</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="va">standev</span><span class="op">+</span><span class="va">mean</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">MIS.sample</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">MIS.sample</span>, subset <span class="op">=</span> <span class="va">mito.genes</span> <span class="op">&lt;</span> <span class="fl">10</span> <span class="op">&amp;</span> <span class="va">nFeature_RNA</span> <span class="op">&lt;</span> <span class="va">cut</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">#Processing and Adding Contig Info</span></span>
+<span><span class="va">contigs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="st">"~/data/GSM5073091_PBMC_P1.1_MIS-C_Severe_BCR_filtered_contig_annotations.csv.gz"</span><span class="op">)</span></span>
+<span><span class="va">clones</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/combineBCR.html">combineBCR</a></span><span class="op">(</span><span class="va">contigs</span>, samples <span class="op">=</span> <span class="st">"MIS.sample"</span>, removeNA <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="va">MIS.sample</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/combineExpression.html">combineExpression</a></span><span class="op">(</span><span class="va">clones</span>, <span class="va">MIS.sample</span>, cloneCall<span class="op">=</span><span class="st">"aa"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">#Subset only B cells (by contigs)</span></span>
+<span><span class="va">MIS.sample</span><span class="op">$</span><span class="va">BCR.recoverd</span> <span class="op">&lt;-</span> <span class="st">"No"</span></span>
+<span><span class="va">MIS.sample</span><span class="op">$</span><span class="va">BCR.recoverd</span><span class="op">[</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">MIS.sample</span><span class="op">$</span><span class="va">CTaa</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"Yes"</span></span>
+<span><span class="va">MIS.sample</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">MIS.sample</span>, <span class="va">BCR.recoverd</span> <span class="op">==</span> <span class="st">"Yes"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">#Processing RNA</span></span>
+<span><span class="fu">DefaultAssay</span><span class="op">(</span><span class="va">MIS.sample</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">'RNA'</span></span>
+<span><span class="va">MIS.sample</span> <span class="op">&lt;-</span> <span class="fu">NormalizeData</span><span class="op">(</span><span class="va">MIS.sample</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">FindVariableFeatures</span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu">quietBCRgenes</span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">ScaleData</span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">RunPCA</span><span class="op">(</span>verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">#Processing ADT</span></span>
+<span><span class="fu">DefaultAssay</span><span class="op">(</span><span class="va">MIS.sample</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">'ADT'</span></span>
+<span><span class="fu">VariableFeatures</span><span class="op">(</span><span class="va">MIS.sample</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">MIS.sample</span><span class="op">[[</span><span class="st">"ADT"</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="va">MIS.sample</span> <span class="op">&lt;-</span> <span class="fu">NormalizeData</span><span class="op">(</span><span class="va">MIS.sample</span>, normalization.method <span class="op">=</span> <span class="st">'CLR'</span>, margin <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu">ScaleData</span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">RunPCA</span><span class="op">(</span>reduction.name <span class="op">=</span> <span class="st">'apca'</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">###################################</span></span>
+<span><span class="co">#Making Example Data Set for Trex</span></span>
+<span><span class="co">#################################</span></span>
+<span><span class="va">meta</span> <span class="op">&lt;-</span> <span class="va">MIS.sample</span><span class="op">[[</span><span class="op">]</span><span class="op">]</span></span>
+<span><span class="va">meta</span> <span class="op">&lt;-</span> <span class="va">meta</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">meta</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">meta</span><span class="op">)</span><span class="op">*</span><span class="fl">0.33</span><span class="op">)</span>,<span class="op">]</span></span>
+<span><span class="va">ibex_example</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">MIS.sample</span>, cells <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">meta</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/save.html" class="external-link">save</a></span><span class="op">(</span><span class="va">ibex_example</span>, file <span class="op">=</span> <span class="st">"ibex_example.rda"</span>, compress <span class="op">=</span> <span class="st">"xz"</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level4">
+<h4 id="loading-the-data-object">Loading the Data Object<a class="anchor" aria-label="anchor" href="#loading-the-data-object"></a>
+</h4>
+<p>For the purpose of the vignette, we will load the full object. The
+data example built into the package (<strong>ibex_example</strong>) is
+derived from randomly sampling cells from Patient 1 (see above).</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">SeuratObj</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/connections.html" class="external-link">url</a></span><span class="op">(</span><span class="st">"https://www.borch.dev/uploads/data/Ibex_FullExample.rds"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+</div>
 </div>
 </div>
 <div class="section level2">
@@ -226,14 +293,14 @@ encoding.<br>
 <p><strong>theta</strong><br>
 If choosing the geometric transformation, what value of theta to use
 (default is pi)</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ibex_vectors</span> <span class="op">&lt;-</span> <span class="fu">Ibex.matrix</span><span class="op">(</span><span class="va">SeuratObj</span>, </span>
 <span>                            chains <span class="op">=</span> <span class="st">"Light"</span>,</span>
 <span>                            encoder.input <span class="op">=</span> <span class="st">"OHE"</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] "Calculating the encoding values..."</span></span></code></pre>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">qplot</span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">ibex_vectors</span><span class="op">)</span>, <span class="va">Ibex_2</span>, <span class="va">Ibex_3</span><span class="op">)</span> <span class="op">+</span> <span class="fu">theme_classic</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Ibex_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
+<p><img src="Ibex_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
 </div>
 <div class="section level3">
 <h3 id="runibex">runIbex<a class="anchor" aria-label="anchor" href="#runibex"></a>
@@ -243,7 +310,7 @@ or Single-cell Experiment object with the Ibex vectors and allow for
 further analysis. Importantly, <code>runIbex()</code> will remove single
 cells that do not have recovered BCR data in the metadata of the
 object.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">SeuratObj</span> <span class="op">&lt;-</span> <span class="fu">runIbex</span><span class="op">(</span><span class="va">SeuratObj</span>, </span>
 <span>                     chains <span class="op">=</span> <span class="st">"Heavy"</span>,</span>
 <span>                     encoder.input <span class="op">=</span> <span class="st">"KF"</span>, </span>
@@ -257,7 +324,7 @@ object.</p>
 <strong>“Ibex…”</strong>. Using the Ibex reduction stored in Seurat, we
 can calculate the nearest neighbor and shared nearest neighbor indexes
 and generate a UMAP.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#Generating UMAP from ibex Neighbors</span></span>
 <span><span class="va">SeuratObj</span> <span class="op">&lt;-</span> <span class="fu">RunUMAP</span><span class="op">(</span><span class="va">SeuratObj</span>, </span>
 <span>                     reduction <span class="op">=</span> <span class="st">"ibex.KF"</span>,</span>
@@ -273,13 +340,13 @@ and generate a UMAP.</p>
 <span>  <span class="fu">NoLegend</span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">plot1</span> <span class="op">+</span> <span class="va">plot2</span></span></code></pre></div>
-<p><img src="Ibex_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
+<p><img src="Ibex_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
 <p>We now can use this in a similar way as other single-cell modalities
 and calculate weighted nearest neighbor (WNN). To check out more on WNN,
 please read the Satija’s group <a href="https://pubmed.ncbi.nlm.nih.gov/34062119/" class="external-link">paper</a>. We will use
 the RNA, ADT protein levels, and ibex vectors for the WNN
 calculations.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">SeuratObj</span> <span class="op">&lt;-</span> <span class="fu">FindMultiModalNeighbors</span><span class="op">(</span></span>
 <span>                    <span class="va">SeuratObj</span>, </span>
 <span>                    reduction.list <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"pca"</span>, <span class="st">"apca"</span>, <span class="st">"ibex.KF"</span><span class="op">)</span>, </span>
@@ -303,7 +370,7 @@ calculations.</p>
 <span>  <span class="fu">NoLegend</span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">plot3</span> <span class="op">+</span> <span class="va">plot4</span></span></code></pre></div>
-<p><img src="Ibex_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
+<p><img src="Ibex_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
 </div>
 <div class="section level3">
 <h3 id="comparing-the-outcome-to-just-one-modality">Comparing the outcome to just one modality<a class="anchor" aria-label="anchor" href="#comparing-the-outcome-to-just-one-modality"></a>
@@ -312,7 +379,7 @@ calculations.</p>
 ADT, or Ibex as individual components. Remember, the clusters that we
 are displaying in UMAP are based on clusters defined by the weighted
 nearest neighbors calculated above.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">SeuratObj</span> <span class="op">&lt;-</span> <span class="fu">RunUMAP</span><span class="op">(</span><span class="va">SeuratObj</span>, </span>
 <span>                     reduction <span class="op">=</span> <span class="st">'pca'</span>, </span>
 <span>                     dims <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">30</span>, </span>
@@ -332,7 +399,7 @@ nearest neighbors calculated above.</p>
 <span><span class="va">plot7</span> <span class="op">&lt;-</span> <span class="fu">DimPlot</span><span class="op">(</span><span class="va">SeuratObj</span>, reduction <span class="op">=</span> <span class="st">"ibex.umap"</span><span class="op">)</span> <span class="op">+</span> <span class="fu">NoLegend</span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">plot5</span> <span class="op">+</span> <span class="va">plot6</span> <span class="op">+</span> <span class="va">plot7</span></span></code></pre></div>
-<p><img src="Ibex_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
+<p><img src="Ibex_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
 </div>
 </div>
 <div class="section level2">
@@ -349,7 +416,7 @@ approach, Ibex offers the function <code>CoNGAfy()</code>. For
 <strong>method</strong>, select either “mean” or “dist” as described
 above. After performing <code>CoNGAfy()</code>, the user can use any of
 the above reduction strategies.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">CoNGA.seurat</span> <span class="op">&lt;-</span> <span class="fu">CoNGAfy</span><span class="op">(</span><span class="va">SeuratObj</span>, </span>
 <span>                         method <span class="op">=</span> <span class="st">"dist"</span><span class="op">)</span></span>
 <span></span>
@@ -357,9 +424,9 @@ the above reduction strategies.</p>
 <span>                        encoder.input <span class="op">=</span> <span class="st">"KF"</span>, </span>
 <span>                        reduction.name <span class="op">=</span> <span class="st">"ibex.KF"</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] "Calculating the encoding values..."</span></span></code></pre>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">CoNGA.seurat</span> <span class="op">&lt;-</span> <span class="va">CoNGA.seurat</span> <span class="op">%&gt;%</span></span>
-<span>                  <span class="fu">FindNeighbors</span><span class="op">(</span>reduction <span class="op">=</span> <span class="st">"ibex.KF"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">CoNGA.seurat</span> <span class="op">&lt;-</span> <span class="va">CoNGA.seurat</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>                  <span class="fu">FindNeighbors</span><span class="op">(</span>reduction <span class="op">=</span> <span class="st">"ibex.KF"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>                  <span class="fu">FindClusters</span><span class="op">(</span>algorithm <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Modularity Optimizer version 1.3.0 by Ludo Waltman and Nees Jan van Eck</span></span>
 <span><span class="co">## </span></span>
@@ -370,7 +437,7 @@ the above reduction strategies.</p>
 <span><span class="co">## Maximum modularity in 10 random starts: 0.5521</span></span>
 <span><span class="co">## Number of communities: 7</span></span>
 <span><span class="co">## Elapsed time: 0 seconds</span></span></code></pre>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">CoNGA.seurat</span> <span class="op">&lt;-</span> <span class="fu">RunUMAP</span><span class="op">(</span><span class="va">CoNGA.seurat</span>, </span>
 <span>                        reduction <span class="op">=</span> <span class="st">"ibex.KF"</span>, </span>
 <span>                        dims <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">20</span>, </span>
@@ -378,7 +445,7 @@ the above reduction strategies.</p>
 <span>                        reduction.key <span class="op">=</span> <span class="st">'ibexUMAP_'</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">DimPlot</span><span class="op">(</span><span class="va">CoNGA.seurat</span>, reduction <span class="op">=</span> <span class="st">"ibex.umap"</span><span class="op">)</span> <span class="op">+</span> <span class="fu">NoLegend</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Ibex_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
+<p><img src="Ibex_files/figure-html/unnamed-chunk-9-1.png" width="700"></p>
 </div>
   </div>
 
