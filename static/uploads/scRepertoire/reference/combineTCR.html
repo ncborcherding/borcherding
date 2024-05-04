@@ -25,7 +25,7 @@ recovered."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scRepertoire</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.0.3</span>
       </span>
     </div>
 
@@ -136,7 +136,8 @@ recovered.</p>
 <span>  ID <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  removeNA <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  removeMulti <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  filterMulti <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  filterMulti <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  filterNonproductive <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -166,6 +167,12 @@ outputs from <code><a href="loadContigs.html">loadContigs</a></code>.</p></dd>
 <dt>filterMulti</dt>
 <dd><p>This option will allow for the selection of the 2 
 corresponding chains with the highest expression for a single barcode.</p></dd>
+
+
+<dt>filterNonproductive</dt>
+<dd><p>This option will allow for the removal of 
+nonproductive chains if the variable exists in the contig data. Default
+is set to TRUE to remove nonproductive contigs.</p></dd>
 
 </dl></div>
     <div id="value">

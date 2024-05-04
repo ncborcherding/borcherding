@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scRepertoire</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.0.3</span>
       </span>
     </div>
 
@@ -134,8 +134,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Visualizations for Single-Cell Objects</h1>
             
-            <h4 data-toc-skip class="date">Compiled: February 24,
-2024</h4>
+            <h4 data-toc-skip class="date">Compiled: May 04, 2024</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ncborcherding/scRepertoire/blob/HEAD/vignettes/articles/SC_Visualizations.Rmd" class="external-link"><code>vignettes/articles/SC_Visualizations.Rmd</code></a></small>
       <div class="hidden name"><code>SC_Visualizations.Rmd</code></div>
@@ -161,7 +160,12 @@ generate an overlay of the position of clonally-expanded cells using
 “pca”)</strong>
 </li>
 </ul>
-<p><strong>freq.cutpoint</strong></p>
+<p><strong>cut.category</strong></p>
+<ul>
+<li>Use of “clonalFrequency” or “clonalProportion” to filter the
+overlay</li>
+</ul>
+<p><strong>cutpoint</strong></p>
 <ul>
 <li>lowest clonal frequency or proportion to generate the contour
 plot</li>
@@ -182,7 +186,7 @@ a great pipeline to annotated T cell subtypes.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/clonalOverlay.html">clonalOverlay</a></span><span class="op">(</span><span class="va">scRep_example</span>, </span>
 <span>              reduction <span class="op">=</span> <span class="st">"umap"</span>, </span>
-<span>              freq.cutpoint <span class="op">=</span> <span class="fl">1</span>, </span>
+<span>              cutpoint <span class="op">=</span> <span class="fl">1</span>, </span>
 <span>              bins <span class="op">=</span> <span class="fl">10</span>, </span>
 <span>              facet.by <span class="op">=</span> <span class="st">"Patient"</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>              <span class="fu">guides</span><span class="op">(</span>color <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span></code></pre></div>
@@ -304,9 +308,9 @@ other variables in the meta data of the single cell object.</p>
 <p><img src="SC_Visualizations_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/clonalOccupy.html">clonalOccupy</a></span><span class="op">(</span><span class="va">scRep_example</span>, </span>
-<span>                     x.axis <span class="op">=</span> <span class="st">"ident"</span>, </span>
-<span>                     proportion <span class="op">=</span> <span class="cn">TRUE</span>, </span>
-<span>                     label <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+<span>             x.axis <span class="op">=</span> <span class="st">"ident"</span>, </span>
+<span>             proportion <span class="op">=</span> <span class="cn">TRUE</span>, </span>
+<span>             label <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <p><img src="SC_Visualizations_files/figure-html/unnamed-chunk-6-2.png" width="700"></p>
 </div>
 <div class="section level2">

@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scRepertoire</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.0.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.0.3</span>
       </span>
     </div>
 
@@ -109,18 +109,41 @@
     </div>
 
     <div class="section level2">
+<h2 class="page-header" data-toc-text="2.0.3" id="screpertoire-version-203">scRepertoire VERSION 2.0.3<a class="anchor" aria-label="anchor" href="#screpertoire-version-203"></a></h2>
+<div class="section level3">
+<h3 id="underlying-changes-2-0-3">UNDERLYING CHANGES<a class="anchor" aria-label="anchor" href="#underlying-changes-2-0-3"></a></h3>
+<ul><li>Modified support for Omniscope format to allow for dual chains</li>
+<li>Added ParseBio support int <code><a href="../reference/loadContigs.html">loadContigs()</a></code> and testthat</li>
+<li>Added support for productive variable to <code><a href="../reference/loadContigs.html">loadContigs()</a></code> for BD, Omniscope, and Immcantation formats</li>
+<li>Replace numerical indexing with name indexing for <code><a href="../reference/loadContigs.html">loadContigs()</a></code>
+</li>
+<li>
+<code><a href="../reference/combineBCR.html">combineBCR()</a></code> and <code><a href="../reference/combineTCR.html">combineTCR()</a></code> no allow for unproductive contig inclusions with new <strong>filterNonproductive</strong> parameter.</li>
+<li>
+<code><a href="../reference/combineBCR.html">combineBCR()</a></code> will now prompt user if <strong>samples</strong> is not included instead of erroring.</li>
+<li>Added base threshold by length for internal <code>.lvCompare()</code>
+</li>
+<li>Ensured internal <code>.lvCompare()</code> only looks at first set of sequences in multi-sequence chain.</li>
+<li>Fixed bug in exporting graph for <code>clonaCluster()</code>
+</li>
+<li>Fixed conflict in functions between igraph and dplyr packages</li>
+</ul></div>
+</div>
+    <div class="section level2">
 <h2 class="page-header" data-toc-text="2.0.2" id="screpertoire-version-202">scRepertoire VERSION 2.0.2<a class="anchor" aria-label="anchor" href="#screpertoire-version-202"></a></h2>
 <div class="section level3">
 <h3 id="underlying-changes-2-0-2">UNDERLYING CHANGES<a class="anchor" aria-label="anchor" href="#underlying-changes-2-0-2"></a></h3>
-<p>*<code><a href="../reference/clonalOccupy.html">clonalOccupy()</a></code> rewrite counting and NA handling</p>
-</div>
+<ul><li>
+<code><a href="../reference/clonalOccupy.html">clonalOccupy()</a></code> rewrite counting and NA handling</li>
+</ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="2.0.1" id="screpertoire-version-201">scRepertoire VERSION 2.0.1<a class="anchor" aria-label="anchor" href="#screpertoire-version-201"></a></h2>
 <div class="section level3">
 <h3 id="underlying-changes-2-0-1">UNDERLYING CHANGES<a class="anchor" aria-label="anchor" href="#underlying-changes-2-0-1"></a></h3>
-<p>*<code><a href="../reference/clonalOverlay.html">clonalOverlay()</a></code> arguments now cutpoint and use cut.category to select either clonalProportion or clonalFrequency</p>
-</div>
+<ul><li>
+<code><a href="../reference/clonalOverlay.html">clonalOverlay()</a></code> arguments now cutpoint and use cut.category to select either clonalProportion or clonalFrequency</li>
+</ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="2.0.0" id="screpertoire-version-200-2024-01-10">scRepertoire VERSION 2.0.0 (2024-01-10)<a class="anchor" aria-label="anchor" href="#screpertoire-version-200-2024-01-10"></a></h2>

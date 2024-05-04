@@ -20,7 +20,7 @@ ProjectTIL."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scRepertoire</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.0.3</span>
       </span>
     </div>
 
@@ -123,7 +123,8 @@ Credit to the idea goes to Drs Andreatta and Carmona and their work with
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">clonalOverlay</span><span class="op">(</span></span>
 <span>  <span class="va">sc.data</span>,</span>
 <span>  reduction <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  freq.cutpoint <span class="op">=</span> <span class="fl">30</span>,</span>
+<span>  cut.category <span class="op">=</span> <span class="st">"clonalFrequency"</span>,</span>
+<span>  cutpoint <span class="op">=</span> <span class="fl">30</span>,</span>
 <span>  bins <span class="op">=</span> <span class="fl">25</span>,</span>
 <span>  facet.by <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -136,12 +137,17 @@ Credit to the idea goes to Drs Andreatta and Carmona and their work with
 
 
 <dt>reduction</dt>
-<dd><p>The dimensional reduction to visualize</p></dd>
+<dd><p>The dimensional reduction to visualize.</p></dd>
 
 
-<dt>freq.cutpoint</dt>
+<dt>cut.category</dt>
+<dd><p>Meta data variable of the single-cell object to use for 
+filtering.</p></dd>
+
+
+<dt>cutpoint</dt>
 <dd><p>The overlay cut point to include, this corresponds to the 
-Frequency variable in the single-cell object</p></dd>
+cut.category variable in the meta data of the single-cell object.</p></dd>
 
 
 <dt>bins</dt>
@@ -179,7 +185,7 @@ Frequency variable in the single-cell object</p></dd>
 <span class="r-in"><span><span class="co">#Using clonalOverlay()</span></span></span>
 <span class="r-in"><span><span class="fu">clonalOverlay</span><span class="op">(</span><span class="va">scRep_example</span>, </span></span>
 <span class="r-in"><span>              reduction <span class="op">=</span> <span class="st">"umap"</span>, </span></span>
-<span class="r-in"><span>              freq.cutpoint <span class="op">=</span> <span class="fl">0.3</span>, </span></span>
+<span class="r-in"><span>              cutpoint <span class="op">=</span> <span class="fl">3</span>, </span></span>
 <span class="r-in"><span>              bins <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> </span></span>
 <span class="r-plt img"><img src="clonalOverlay-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>

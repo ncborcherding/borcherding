@@ -4,7 +4,9 @@ sequences of the CDR3 and V genes to cluster similar TCR/BCRs together.
 As a default, the function takes the input from combineTCR, 
 combineBCR or combineExpression and amends a 
 cluster to the data frame or meta data. If exportGraph is set 
-to TRUE, the function returns an igraph object of the connected sequences."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
+to TRUE, the function returns an igraph object of the connected sequences. 
+If multiple sequences per chain are present, this function only compares
+the first sequence."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]--></head><body data-spy="scroll" data-target="#toc">
@@ -22,7 +24,7 @@ to TRUE, the function returns an igraph object of the connected sequences."><!--
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scRepertoire</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.0.3</span>
       </span>
     </div>
 
@@ -120,7 +122,9 @@ sequences of the CDR3 and V genes to cluster similar TCR/BCRs together.
 As a default, the function takes the input from <code><a href="combineTCR.html">combineTCR</a></code>, 
 <code><a href="combineBCR.html">combineBCR</a></code> or <code><a href="combineExpression.html">combineExpression</a></code> and amends a 
 cluster to the data frame or meta data. If <strong>exportGraph</strong> is set 
-to TRUE, the function returns an igraph object of the connected sequences.</p>
+to TRUE, the function returns an igraph object of the connected sequences. 
+If multiple sequences per chain are present, this function only compares
+the first sequence.</p>
     </div>
 
     <div id="ref-usage">

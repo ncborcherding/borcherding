@@ -30,7 +30,7 @@ CTstrict header.'><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scRepertoire</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.0.3</span>
       </span>
     </div>
 
@@ -148,7 +148,8 @@ CTstrict header.</p>
 <span>  threshold <span class="op">=</span> <span class="fl">0.85</span>,</span>
 <span>  removeNA <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  removeMulti <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  filterMulti <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  filterMulti <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  filterNonproductive <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -160,7 +161,7 @@ CTstrict header.</p>
 
 
 <dt>samples</dt>
-<dd><p>The labels of samples</p></dd>
+<dd><p>The labels of samples (required).</p></dd>
 
 
 <dt>ID</dt>
@@ -189,6 +190,12 @@ the number the more similarity of sequence will be used for clustering.</p></dd>
 <dt>filterMulti</dt>
 <dd><p>This option will allow for the selection of the 
 highest-expressing light and heavy chains, if not calling related clones.</p></dd>
+
+
+<dt>filterNonproductive</dt>
+<dd><p>This option will allow for the removal of 
+nonproductive chains if the variable exists in the contig data. Default
+is set to TRUE to remove nonproductive contigs.</p></dd>
 
 </dl></div>
     <div id="value">

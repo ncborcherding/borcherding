@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scRepertoire</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.0.3</span>
       </span>
     </div>
 
@@ -134,8 +134,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Combining Contigs into Clones</h1>
             
-            <h4 data-toc-skip class="date">Compiled: February 24,
-2024</h4>
+            <h4 data-toc-skip class="date">Compiled: May 04, 2024</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ncborcherding/scRepertoire/blob/HEAD/vignettes/articles/Combining_Contigs.Rmd" class="external-link"><code>vignettes/articles/Combining_Contigs.Rmd</code></a></small>
       <div class="hidden name"><code>Combining_Contigs.Rmd</code></div>
@@ -311,55 +310,62 @@ but is not recommended.</p>
 <span>                           threshold <span class="op">=</span> <span class="fl">0.85</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">combined.BCR</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##                 barcode sample                          IGH</span></span>
-<span><span class="co">## 1 P1_CGGGTCAAGTACGACG-1     P1        None.None.IGHJ1.IGHA2</span></span>
-<span><span class="co">## 2 P1_TCAATCTTCGATAGAA-1     P1                         &lt;NA&gt;</span></span>
-<span><span class="co">## 3 P1_AAACGGGAGCTTATCG-1     P1      IGHV3-23.None.None.None</span></span>
-<span><span class="co">## 4 P1_GTTCATTTCTTTAGGG-1     P1                         &lt;NA&gt;</span></span>
-<span><span class="co">## 5 P1_AGTGAGGGTAAATACG-1     P1 IGHV1-2.IGHD2-21.IGHJ4.IGHG1</span></span>
-<span><span class="co">## 6 P1_TCTGAGATCCCTCTTT-1     P1      IGHV3-15.None.None.None</span></span>
-<span><span class="co">##                 cdr3_aa1</span></span>
-<span><span class="co">## 1                   None</span></span>
-<span><span class="co">## 2                   &lt;NA&gt;</span></span>
-<span><span class="co">## 3                   None</span></span>
-<span><span class="co">## 4                   &lt;NA&gt;</span></span>
-<span><span class="co">## 5 CATTSPHVVVVPVADPPPFGHW</span></span>
-<span><span class="co">## 6                   None</span></span>
-<span><span class="co">##                                                             cdr3_nt1</span></span>
-<span><span class="co">## 1                                                               None</span></span>
-<span><span class="co">## 2                                                               &lt;NA&gt;</span></span>
-<span><span class="co">## 3                                                               None</span></span>
-<span><span class="co">## 4                                                               &lt;NA&gt;</span></span>
-<span><span class="co">## 5 TGTGCGACTACGTCTCCACATGTTGTTGTGGTGCCAGTTGCCGATCCCCCCCCCTTTGGCCACTGG</span></span>
-<span><span class="co">## 6                                                               None</span></span>
-<span><span class="co">##                   IGLC cdr3_aa2 cdr3_nt2</span></span>
-<span><span class="co">## 1   IGLV1-44.None.None     None     None</span></span>
-<span><span class="co">## 2 IGLV2-11.IGLJ1.IGLC2     None     None</span></span>
-<span><span class="co">## 3   IGLV1-47.None.None     None     None</span></span>
-<span><span class="co">## 4 IGLV2-11.IGLJ1.IGLC1     None     None</span></span>
-<span><span class="co">## 5   IGLV1-47.None.None     None     None</span></span>
-<span><span class="co">## 6  IGKV2D-28.None.None     None     None</span></span>
-<span><span class="co">##                                            CTgene</span></span>
-<span><span class="co">## 1        None.None.IGHJ1.IGHA2_IGLV1-44.None.None</span></span>
-<span><span class="co">## 2                         NA_IGLV2-11.IGLJ1.IGLC2</span></span>
-<span><span class="co">## 3      IGHV3-23.None.None.None_IGLV1-47.None.None</span></span>
-<span><span class="co">## 4                         NA_IGLV2-11.IGLJ1.IGLC1</span></span>
-<span><span class="co">## 5 IGHV1-2.IGHD2-21.IGHJ4.IGHG1_IGLV1-47.None.None</span></span>
-<span><span class="co">## 6     IGHV3-15.None.None.None_IGKV2D-28.None.None</span></span>
-<span><span class="co">##                                                                      CTnt</span></span>
-<span><span class="co">## 1                                                               None_None</span></span>
-<span><span class="co">## 2                                                                 NA_None</span></span>
-<span><span class="co">## 3                                                               None_None</span></span>
-<span><span class="co">## 4                                                                 NA_None</span></span>
-<span><span class="co">## 5 TGTGCGACTACGTCTCCACATGTTGTTGTGGTGCCAGTTGCCGATCCCCCCCCCTTTGGCCACTGG_None</span></span>
-<span><span class="co">## 6                                                               None_None</span></span>
-<span><span class="co">##                          CTaa                          CTstrict</span></span>
-<span><span class="co">## 1                   None_None               NA.None_NA.IGLV1-44</span></span>
-<span><span class="co">## 2                     NA_None                 NA.NA_NA.IGLV2-11</span></span>
-<span><span class="co">## 3                   None_None           NA.IGHV3-23_NA.IGLV1-47</span></span>
-<span><span class="co">## 4                     NA_None                 NA.NA_NA.IGLV2-11</span></span>
-<span><span class="co">## 5 CATTSPHVVVVPVADPPPFGHW_None IGH:Cluster.6.IGHV1-2_NA.IGLV1-47</span></span>
-<span><span class="co">## 6                   None_None          NA.IGHV3-15_NA.IGKV2D-28</span></span></code></pre>
+<pre><code><span><span class="co">##                 barcode sample                             IGH</span></span>
+<span><span class="co">## 1 P1_CGAACATTCCCTTGTG-1     P1                            &lt;NA&gt;</span></span>
+<span><span class="co">## 2 P1_CCTTCGAAGACGCTTT-1     P1                            &lt;NA&gt;</span></span>
+<span><span class="co">## 3 P1_CAGCTAACAGCTTAAC-1     P1                            &lt;NA&gt;</span></span>
+<span><span class="co">## 4 P1_CCCAATCAGAGGGCTT-1     P1 IGHV1-69-2.IGHD5-12.IGHJ6.IGHG1</span></span>
+<span><span class="co">## 5 P1_TACAGTGGTAAGGGCT-1     P1   IGHV1-18.IGHD3-10.IGHJ5.IGHA1</span></span>
+<span><span class="co">## 6 P1_GACAGAGGTTGGTAAA-1     P1   IGHV1-18.IGHD3-10.IGHJ5.IGHA1</span></span>
+<span><span class="co">##                cdr3_aa1</span></span>
+<span><span class="co">## 1                  &lt;NA&gt;</span></span>
+<span><span class="co">## 2                  &lt;NA&gt;</span></span>
+<span><span class="co">## 3                  &lt;NA&gt;</span></span>
+<span><span class="co">## 4  CASGGLVAIRHYYYYGMDVW</span></span>
+<span><span class="co">## 5 CARVTYHHGSGSLVGGWFDPW</span></span>
+<span><span class="co">## 6 CARVTYHHGSGSLVGGWFDPW</span></span>
+<span><span class="co">##                                                          cdr3_nt1</span></span>
+<span><span class="co">## 1                                                            &lt;NA&gt;</span></span>
+<span><span class="co">## 2                                                            &lt;NA&gt;</span></span>
+<span><span class="co">## 3                                                            &lt;NA&gt;</span></span>
+<span><span class="co">## 4    TGTGCGAGCGGGGGATTAGTGGCTATTAGGCACTACTACTACTACGGTATGGACGTCTGG</span></span>
+<span><span class="co">## 5 TGTGCGAGAGTGACATATCACCATGGTTCGGGGAGCCTTGTCGGGGGCTGGTTCGACCCCTGG</span></span>
+<span><span class="co">## 6 TGTGCGAGAGTGACATATCACCATGGTTCGGGGAGCCTTGTCGGGGGCTGGTTCGACCCCTGG</span></span>
+<span><span class="co">##                   IGLC      cdr3_aa2                                cdr3_nt2</span></span>
+<span><span class="co">## 1 IGLV2-14.IGLJ6.IGLC2  CNSKGAGGTAVF    TGCAACTCAAAAGGAGCCGGAGGCACTGCGGTTTTC</span></span>
+<span><span class="co">## 2 IGLV2-14.IGLJ6.IGLC2  CNSKGAGGTAVF    TGCAACTCAAAAGGAGCCGGAGGCACTGCGGTTTTC</span></span>
+<span><span class="co">## 3 IGLV2-14.IGLJ2.IGLC2 CNSYTTSGTLWVF TGCAACTCATACACAACCAGCGGCACTCTCTGGGTATTC</span></span>
+<span><span class="co">## 4 IGLV2-14.IGLJ2.IGLC2  CNSYTSSSTLVF    TGCAACTCATATACAAGCAGCAGCACTCTGGTCTTC</span></span>
+<span><span class="co">## 5 IGLV2-14.IGLJ1.IGLC1  CNSYTSFGTSVF    TGCAACTCATATACAAGCTTCGGCACCTCGGTCTTC</span></span>
+<span><span class="co">## 6 IGLV2-14.IGLJ1.IGLC1  CNSYTSFGTSVF    TGCAACTCATATACAAGCTTCGGCACCTCGGTCTTC</span></span>
+<span><span class="co">##                                                 CTgene</span></span>
+<span><span class="co">## 1                              NA_IGLV2-14.IGLJ6.IGLC2</span></span>
+<span><span class="co">## 2                              NA_IGLV2-14.IGLJ6.IGLC2</span></span>
+<span><span class="co">## 3                              NA_IGLV2-14.IGLJ2.IGLC2</span></span>
+<span><span class="co">## 4 IGHV1-69-2.IGHD5-12.IGHJ6.IGHG1_IGLV2-14.IGLJ2.IGLC2</span></span>
+<span><span class="co">## 5   IGHV1-18.IGHD3-10.IGHJ5.IGHA1_IGLV2-14.IGLJ1.IGLC1</span></span>
+<span><span class="co">## 6   IGHV1-18.IGHD3-10.IGHJ5.IGHA1_IGLV2-14.IGLJ1.IGLC1</span></span>
+<span><span class="co">##                                                                                                   CTnt</span></span>
+<span><span class="co">## 1                                                              NA_TGCAACTCAAAAGGAGCCGGAGGCACTGCGGTTTTC</span></span>
+<span><span class="co">## 2                                                              NA_TGCAACTCAAAAGGAGCCGGAGGCACTGCGGTTTTC</span></span>
+<span><span class="co">## 3                                                           NA_TGCAACTCATACACAACCAGCGGCACTCTCTGGGTATTC</span></span>
+<span><span class="co">## 4    TGTGCGAGCGGGGGATTAGTGGCTATTAGGCACTACTACTACTACGGTATGGACGTCTGG_TGCAACTCATATACAAGCAGCAGCACTCTGGTCTTC</span></span>
+<span><span class="co">## 5 TGTGCGAGAGTGACATATCACCATGGTTCGGGGAGCCTTGTCGGGGGCTGGTTCGACCCCTGG_TGCAACTCATATACAAGCTTCGGCACCTCGGTCTTC</span></span>
+<span><span class="co">## 6 TGTGCGAGAGTGACATATCACCATGGTTCGGGGAGCCTTGTCGGGGGCTGGTTCGACCCCTGG_TGCAACTCATATACAAGCTTCGGCACCTCGGTCTTC</span></span>
+<span><span class="co">##                                 CTaa</span></span>
+<span><span class="co">## 1                    NA_CNSKGAGGTAVF</span></span>
+<span><span class="co">## 2                    NA_CNSKGAGGTAVF</span></span>
+<span><span class="co">## 3                   NA_CNSYTTSGTLWVF</span></span>
+<span><span class="co">## 4  CASGGLVAIRHYYYYGMDVW_CNSYTSSSTLVF</span></span>
+<span><span class="co">## 5 CARVTYHHGSGSLVGGWFDPW_CNSYTSFGTSVF</span></span>
+<span><span class="co">## 6 CARVTYHHGSGSLVGGWFDPW_CNSYTSFGTSVF</span></span>
+<span><span class="co">##                                      CTstrict</span></span>
+<span><span class="co">## 1                     NA.NA_IGLC.549.IGLV2-14</span></span>
+<span><span class="co">## 2                     NA.NA_IGLC.549.IGLV2-14</span></span>
+<span><span class="co">## 3                     NA.NA_IGLC.535.IGLV2-14</span></span>
+<span><span class="co">## 4 IGH.481.IGHV1-69-2_IGLC:Cluster.56.IGLV2-14</span></span>
+<span><span class="co">## 5   IGH.781.IGHV1-18_IGLC:Cluster.56.IGLV2-14</span></span>
+<span><span class="co">## 6   IGH.781.IGHV1-18_IGLC:Cluster.56.IGLV2-14</span></span></code></pre>
 </div>
   </div>
 
