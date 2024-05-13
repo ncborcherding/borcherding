@@ -18,23 +18,6 @@ org_name: ''
 description: ''
 twitter: ''
 
-# Contact (edit or remove options as required)
-
-email: ncborch@gmail.com
-address:
-  street: 660 Euclid Avenue
-  city: St Louis
-  region: MO
-  postcode: '63110'
-  country: United States
-  country_code: US
-
-contact_links:
-  - icon: twitter
-    icon_pack: fab
-    name: DM Me
-    link: 'https://twitter.com/theHumanBorch'
-
 # Site header
 
 main_menu:

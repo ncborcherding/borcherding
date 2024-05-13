@@ -132,9 +132,3 @@ plot1 + plot2
 ```
 
 <img align="center" src="https://www.borch.dev/post/tcrpheno/joint.jpg">
-
-
-# Conclusion
-
-If you have any questions, comments, or suggestions, feel free to [email me](mailto:ncborch@gmail.com) or reach out to me on [twitter](https://twitter.com/theHumanBorch).
-

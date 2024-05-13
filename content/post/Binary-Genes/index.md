@@ -118,7 +118,3 @@ ggplot(subset(df, !is.na(plot)), aes(x=column, y = row)) +
 ```
 <img align="center" src="https://www.borch.dev/post/Binary-Genes/featured.jpg">
 
-# Conclusion
-
-If you have any questions, comments, or suggestions, feel free to [email me](mailto:ncborch@gmail.com) or reach out to me on [twitter](https://twitter.com/theHumanBorch).
-
