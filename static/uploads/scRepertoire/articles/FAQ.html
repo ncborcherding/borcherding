@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scRepertoire</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.0.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.0.4</span>
       </span>
     </div>
 
@@ -134,7 +134,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Frequently Asked Questions</h1>
             
-            <h4 data-toc-skip class="date">Compiled: May 04, 2024</h4>
+            <h4 data-toc-skip class="date">Compiled: May 20, 2024</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ncborcherding/scRepertoire/blob/HEAD/vignettes/articles/FAQ.Rmd" class="external-link"><code>vignettes/articles/FAQ.Rmd</code></a></small>
       <div class="hidden name"><code>FAQ.Rmd</code></div>
@@ -202,13 +202,30 @@ access the list of color schemes using <code><a href="https://rdrr.io/r/grDevice
 <p><img src="FAQ_files/figure-html/unnamed-chunk-2-2.png" width="700"></p>
 </div>
 <div class="section level3">
+<h3 id="adjusting-order-of-plotting">Adjusting Order of Plotting<a class="anchor" aria-label="anchor" href="#adjusting-order-of-plotting"></a>
+</h3>
+<p>The order of the group plotting (whether along an axis or in color)
+can be directly ordered using the <strong>order.by</strong> parameter in
+functions. Here we can place a vector of strings that will set the exact
+plotting order. If using <strong>order.by</strong> it is important to
+make sure your vectors match the <strong>group.by</strong> strings
+exactly.</p>
+<p>Alternatively, we can set <strong>order.by</strong> = “alphanumeric”,
+if we would like the plots sorted in order of the
+<strong>group.by</strong> variable.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/clonalQuant.html">clonalQuant</a></span><span class="op">(</span><span class="va">combined.TCR</span>, cloneCall <span class="op">=</span> <span class="st">"strict"</span>, chain <span class="op">=</span> <span class="st">"both"</span>, scale <span class="op">=</span> <span class="cn">TRUE</span>, order.by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"P17B"</span>,</span>
+<span>    <span class="st">"P18B"</span>, <span class="st">"P19B"</span>, <span class="st">"P20B"</span>, <span class="st">"P17L"</span>, <span class="st">"P18L"</span>, <span class="st">"P19L"</span>, <span class="st">"P20L"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p><img src="FAQ_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
+</div>
+<div class="section level3">
 <h3 id="getting-data-used-in-plots">Getting Data Used in Plots<a class="anchor" aria-label="anchor" href="#getting-data-used-in-plots"></a>
 </h3>
 <p>Within each of the general analysis functions, there is the ability
 to export the data frame used to create the visualization. To get the
 exported values, use <strong>exportTable</strong> = TRUE. It will return
 the data frame used to make the graph instead of the visual output.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">clonalQuant_output</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/clonalQuant.html">clonalQuant</a></span><span class="op">(</span><span class="va">combined.TCR</span>, </span>
 <span>                                  cloneCall<span class="op">=</span><span class="st">"strict"</span>, </span>
 <span>                                  scale <span class="op">=</span> <span class="cn">TRUE</span>, </span>

@@ -22,7 +22,7 @@ n clones by proportion to be visualized."><!-- mathjax --><script src="https://c
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scRepertoire</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.0.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.0.4</span>
       </span>
     </div>
 
@@ -134,6 +134,7 @@ n clones by proportion to be visualized.</p>
 <span>  highlight.clones <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  relabel.clones <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  group.by <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  order.by <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  graph <span class="op">=</span> <span class="st">"alluvial"</span>,</span>
 <span>  exportTable <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  palette <span class="op">=</span> <span class="st">"inferno"</span></span>
@@ -151,12 +152,12 @@ n clones by proportion to be visualized.</p>
 <dd><p>How to call the clone - VDJC gene (<strong>gene</strong>), 
 CDR3 nucleotide (<strong>nt</strong>), CDR3 amino acid (<strong>aa</strong>),
 VDJC gene + CDR3 nucleotide (<strong>strict</strong>) or a custom variable 
-in the data.</p></dd>
+in the data</p></dd>
 
 
 <dt>chain</dt>
 <dd><p>indicate if both or a specific chain should be used - 
-e.g. "both", "TRA", "TRG", "IGH", "IGL".</p></dd>
+e.g. "both", "TRA", "TRG", "IGH", "IGL"</p></dd>
 
 
 <dt>samples</dt>
@@ -164,7 +165,7 @@ e.g. "both", "TRA", "TRG", "IGH", "IGL".</p></dd>
 
 
 <dt>clones</dt>
-<dd><p>The specific clonal sequences of interest.</p></dd>
+<dd><p>The specific clonal sequences of interest</p></dd>
 
 
 <dt>top.clones</dt>
@@ -174,32 +175,37 @@ e.g. "both", "TRA", "TRG", "IGH", "IGL".</p></dd>
 
 <dt>highlight.clones</dt>
 <dd><p>Clonal sequences to highlight, if present, 
-all other clones returned will be grey.</p></dd>
+all other clones returned will be grey</p></dd>
 
 
 <dt>relabel.clones</dt>
 <dd><p>Simplify the legend of the graph by returning
-clones that are numerically indexed.</p></dd>
+clones that are numerically indexed</p></dd>
 
 
 <dt>group.by</dt>
 <dd><p>If using a single-cell object, the column header
 to group the new list. <strong>NULL</strong> will return the active 
-identity or cluster.</p></dd>
+identity or cluster</p></dd>
+
+
+<dt>order.by</dt>
+<dd><p>A vector of specific plotting order or "alphanumeric"
+to plot groups in order</p></dd>
 
 
 <dt>graph</dt>
 <dd><p>The type of graph produced, either <strong>"alluvial"</strong> 
-or <strong>"area"</strong>.</p></dd>
+or <strong>"area"</strong></p></dd>
 
 
 <dt>exportTable</dt>
-<dd><p>Returns the data frame used for forming the graph.</p></dd>
+<dd><p>Returns the data frame used for forming the graph</p></dd>
 
 
 <dt>palette</dt>
 <dd><p>Colors to use in visualization - input any 
-<a href="https://rdrr.io/r/grDevices/palettes.html" class="external-link">hcl.pals</a>.</p></dd>
+<a href="https://rdrr.io/r/grDevices/palettes.html" class="external-link">hcl.pals</a></p></dd>
 
 </dl></div>
     <div id="value">

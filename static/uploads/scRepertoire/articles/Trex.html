@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scRepertoire</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.0.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.0.4</span>
       </span>
     </div>
 
@@ -134,7 +134,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Combining Deep Learning and TCRs with Trex</h1>
             
-            <h4 data-toc-skip class="date">Compiled: April 05, 2024</h4>
+            <h4 data-toc-skip class="date">Compiled: May 20, 2024</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ncborcherding/scRepertoire/blob/HEAD/vignettes/articles/Trex.Rmd" class="external-link"><code>vignettes/articles/Trex.Rmd</code></a></small>
       <div class="hidden name"><code>Trex.Rmd</code></div>
@@ -225,7 +225,7 @@ output.</p>
 <span><span class="co">##################################</span></span>
 <span></span>
 <span><span class="va">contigs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="st">"~/Patient17/filtered_contig_annotations.csv"</span><span class="op">)</span></span>
-<span><span class="va">clones</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/combineTCR.html">combineTCR</a></span><span class="op">(</span><span class="va">contigs</span>, samples <span class="op">=</span> <span class="st">"Pt17"</span>, cells <span class="op">=</span> <span class="st">"T-AB"</span>, filterMulti <span class="op">=</span> <span class="cn">TRUE</span>, removeNA <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="va">clones</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/combineTCR.html">combineTCR</a></span><span class="op">(</span><span class="va">contigs</span>, samples <span class="op">=</span> <span class="st">"Pt17"</span>, filterMulti <span class="op">=</span> <span class="cn">TRUE</span>, removeNA <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="va">Pt17</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/combineExpression.html">combineExpression</a></span><span class="op">(</span><span class="va">clones</span>, <span class="va">Pt17</span>, cloneCall<span class="op">=</span><span class="st">"aa"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">saveRDS</a></span><span class="op">(</span><span class="va">Pt17</span>, file <span class="op">=</span> <span class="st">"Trex_FullExample.rds"</span><span class="op">)</span></span>
 <span></span>
@@ -300,9 +300,9 @@ If choosing the geometric transformation, what value of theta to use
 <span>                       encoder.input <span class="op">=</span> <span class="st">"AF"</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] "Calculating the encoding values..."</span></span></code></pre>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">Trex_vectors</span><span class="op">)</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">Trex_1</span>, <span class="va">Trex_2</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu">theme_classic</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">Trex_vectors</span><span class="op">)</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Trex_1</span>, <span class="va">Trex_2</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_classic</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Trex_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">Trex_vectors2</span> <span class="op">&lt;-</span> <span class="fu">maTrex</span><span class="op">(</span><span class="va">SeuratObj</span>, </span>
@@ -311,9 +311,9 @@ If choosing the geometric transformation, what value of theta to use
 <span>                       theta <span class="op">=</span> <span class="va">pi</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] "Performing geometric transformation..."</span></span></code></pre>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">Trex_vectors2</span><span class="op">)</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">Trex_1</span>, y <span class="op">=</span> <span class="va">Trex_2</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu">theme_classic</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">Trex_vectors2</span><span class="op">)</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Trex_1</span>, y <span class="op">=</span> <span class="va">Trex_2</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_classic</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Trex_files/figure-html/unnamed-chunk-4-2.png" width="700"></p>
 </div>
 <div class="section level3">
@@ -355,8 +355,8 @@ and generate a UMAP.</p>
 <span><span class="va">plot2</span> <span class="op">&lt;-</span> <span class="fu">DimPlot</span><span class="op">(</span><span class="va">SeuratObj</span>, </span>
 <span>                 group.by <span class="op">=</span> <span class="st">"CTaa"</span>, </span>
 <span>                 reduction <span class="op">=</span> <span class="st">"Trex.umap"</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>          <span class="fu">scale_color_viridis</span><span class="op">(</span>discrete <span class="op">=</span> <span class="cn">TRUE</span>, option <span class="op">=</span> <span class="st">"B"</span><span class="op">)</span>  <span class="op">+</span> </span>
-<span>          <span class="fu">theme</span><span class="op">(</span>plot.title <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>          <span class="fu"><a href="https://sjmgarnier.github.io/viridis/reference/scale_viridis.html" class="external-link">scale_color_viridis</a></span><span class="op">(</span>discrete <span class="op">=</span> <span class="cn">TRUE</span>, option <span class="op">=</span> <span class="st">"B"</span><span class="op">)</span>  <span class="op">+</span> </span>
+<span>          <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>          <span class="fu">NoLegend</span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">plot1</span> <span class="op">+</span> <span class="va">plot2</span></span></code></pre></div>
@@ -389,8 +389,8 @@ calculations.</p>
 <span><span class="va">plot4</span> <span class="op">&lt;-</span> <span class="fu">DimPlot</span><span class="op">(</span><span class="va">SeuratObj</span>, </span>
 <span>                 reduction <span class="op">=</span> <span class="st">"wnn.umap"</span>, </span>
 <span>                 group.by <span class="op">=</span> <span class="st">"CTaa"</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>          <span class="fu">scale_color_viridis</span><span class="op">(</span>discrete <span class="op">=</span> <span class="cn">TRUE</span>, option <span class="op">=</span> <span class="st">"B"</span><span class="op">)</span>  <span class="op">+</span> </span>
-<span>          <span class="fu">theme</span><span class="op">(</span>plot.title <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>          <span class="fu"><a href="https://sjmgarnier.github.io/viridis/reference/scale_viridis.html" class="external-link">scale_color_viridis</a></span><span class="op">(</span>discrete <span class="op">=</span> <span class="cn">TRUE</span>, option <span class="op">=</span> <span class="st">"B"</span><span class="op">)</span>  <span class="op">+</span> </span>
+<span>          <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>          <span class="fu">NoLegend</span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">plot3</span> <span class="op">+</span> <span class="va">plot4</span></span></code></pre></div>
@@ -506,13 +506,13 @@ deal of effort from these sources:</p>
 <span><span class="fu">DimPlot</span><span class="op">(</span><span class="va">CoNGA.seurat</span>, </span>
 <span>        reduction <span class="op">=</span> <span class="st">"Trex.umap"</span>, </span>
 <span>        group.by <span class="op">=</span> <span class="st">"TRB_Epitope.species"</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu">theme</span><span class="op">(</span>plot.title <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Trex_files/figure-html/unnamed-chunk-10-1.png" width="700"></p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">DimPlot</span><span class="op">(</span><span class="va">CoNGA.seurat</span>, </span>
 <span>        reduction <span class="op">=</span> <span class="st">"Trex.umap"</span>, </span>
 <span>        group.by <span class="op">=</span> <span class="st">"TRB_Epitope.sequence"</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu">theme</span><span class="op">(</span>plot.title <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Trex_files/figure-html/unnamed-chunk-10-2.png" width="700"></p>
 <p>Or <code>annotateDB()</code> can be used on the full single-cell
 object and examine the sequence information along the RNA-based UMAP. An
@@ -527,7 +527,7 @@ using <strong>edit.distance</strong>.</p>
 <span><span class="fu">DimPlot</span><span class="op">(</span><span class="va">SeuratObj</span>, </span>
 <span>        reduction <span class="op">=</span> <span class="st">"rna.umap"</span>, </span>
 <span>        group.by <span class="op">=</span> <span class="st">"TRB_Epitope.species"</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu">theme</span><span class="op">(</span>plot.title <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Trex_files/figure-html/unnamed-chunk-11-1.png" width="700"></p>
 </div>
   </div>

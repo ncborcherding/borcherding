@@ -20,7 +20,7 @@ examining VJ pairing, please see percentVJ."><!-- mathjax --><script src="https:
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scRepertoire</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.0.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.0.4</span>
       </span>
     </div>
 
@@ -125,6 +125,7 @@ examining VJ pairing, please see <code><a href="percentVJ.html">percentVJ</a></c
 <span>  chain <span class="op">=</span> <span class="st">"TRB"</span>,</span>
 <span>  gene <span class="op">=</span> <span class="st">"Vgene"</span>,</span>
 <span>  group.by <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  order.by <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  exportTable <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  palette <span class="op">=</span> <span class="st">"inferno"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -142,11 +143,16 @@ examining VJ pairing, please see <code><a href="percentVJ.html">percentVJ</a></c
 
 
 <dt>gene</dt>
-<dd><p>"V", "D" or "J".</p></dd>
+<dd><p>"V", "D" or "J"</p></dd>
 
 
 <dt>group.by</dt>
-<dd><p>The variable to use for grouping.</p></dd>
+<dd><p>The variable to use for grouping</p></dd>
+
+
+<dt>order.by</dt>
+<dd><p>A vector of specific plotting order or "alphanumeric"
+to plot groups in order</p></dd>
 
 
 <dt>exportTable</dt>

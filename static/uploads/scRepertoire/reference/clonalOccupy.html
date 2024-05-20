@@ -22,7 +22,7 @@ and Andreatta and their work with ProjectTIL.'><!-- mathjax --><script src="http
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scRepertoire</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.0.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.0.4</span>
       </span>
     </div>
 
@@ -129,6 +129,7 @@ and Andreatta and their work with <a href="https://github.com/carmonalab/ProjecT
 <span>  x.axis <span class="op">=</span> <span class="st">"ident"</span>,</span>
 <span>  label <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  facet.by <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  order.by <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  proportion <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  na.include <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  exportTable <span class="op">=</span> <span class="cn">FALSE</span>,</span>
@@ -139,7 +140,7 @@ and Andreatta and their work with <a href="https://github.com/carmonalab/ProjecT
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>sc.data</dt>
-<dd><p>The single-cell object after <code><a href="combineExpression.html">combineExpression</a></code>.</p></dd>
+<dd><p>The single-cell object after <code><a href="combineExpression.html">combineExpression</a></code></p></dd>
 
 
 <dt>x.axis</dt>
@@ -147,29 +148,34 @@ and Andreatta and their work with <a href="https://github.com/carmonalab/ProjecT
 
 
 <dt>label</dt>
-<dd><p>Include the number of clone in each category by x.axis variable.</p></dd>
+<dd><p>Include the number of clone in each category by x.axis variable</p></dd>
 
 
 <dt>facet.by</dt>
-<dd><p>The column header used for faceting the graph.</p></dd>
+<dd><p>The column header used for faceting the graph</p></dd>
+
+
+<dt>order.by</dt>
+<dd><p>A vector of specific plotting order or "alphanumeric"
+to plot groups in order description</p></dd>
 
 
 <dt>proportion</dt>
-<dd><p>Convert the stacked bars into relative proportion.</p></dd>
+<dd><p>Convert the stacked bars into relative proportion</p></dd>
 
 
 <dt>na.include</dt>
-<dd><p>Visualize NA values or not.</p></dd>
+<dd><p>Visualize NA values or not</p></dd>
 
 
 <dt>exportTable</dt>
 <dd><p>Exports a table of the data into the global 
-environment in addition to the visualization.</p></dd>
+environment in addition to the visualization</p></dd>
 
 
 <dt>palette</dt>
 <dd><p>Colors to use in visualization - input any 
-<a href="https://rdrr.io/r/grDevices/palettes.html" class="external-link">hcl.pals</a>.</p></dd>
+<a href="https://rdrr.io/r/grDevices/palettes.html" class="external-link">hcl.pals</a></p></dd>
 
 </dl></div>
     <div id="value">

@@ -27,7 +27,7 @@ for the circlize package."><!-- mathjax --><script src="https://cdnjs.cloudflare
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scRepertoire</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.0.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.0.4</span>
       </span>
     </div>
 
@@ -133,7 +133,13 @@ for the circlize package.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">getCirclize</span><span class="op">(</span><span class="va">sc.data</span>, cloneCall <span class="op">=</span> <span class="st">"strict"</span>, group.by <span class="op">=</span> <span class="cn">NULL</span>, proportion <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">getCirclize</span><span class="op">(</span></span>
+<span>  <span class="va">sc.data</span>,</span>
+<span>  cloneCall <span class="op">=</span> <span class="st">"strict"</span>,</span>
+<span>  group.by <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  proportion <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  include.self <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -143,9 +149,10 @@ for the circlize package.</p>
 
 
 <dt>cloneCall</dt>
-<dd><p>How to call the clone - VDJC gene (gene), 
-CDR3 nucleotide (nt), CDR3 amino acid (aa),
-VDJC gene + CDR3 nucleotide (strict) or a custom variable in the data.</p></dd>
+<dd><p>How to call the clone - VDJC gene (<strong>gene</strong>), 
+CDR3 nucleotide (<strong>nt</strong>), CDR3 amino acid (<strong>aa</strong>),
+VDJC gene + CDR3 nucleotide (<strong>strict</strong>) or a custom variable 
+in the data.</p></dd>
 
 
 <dt>group.by</dt>
@@ -157,6 +164,11 @@ the data.</p></dd>
 <dd><p>Calculate the relationship unique 
 clones (proportion = FALSE) or normalized by 
 proportion (proportion = TRUE)</p></dd>
+
+
+<dt>include.self</dt>
+<dd><p>Include counting the clones within a single group.by
+comparison</p></dd>
 
 </dl></div>
     <div id="value">

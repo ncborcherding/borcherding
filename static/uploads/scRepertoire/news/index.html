@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scRepertoire</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.0.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.0.4</span>
       </span>
     </div>
 
@@ -109,11 +109,30 @@
     </div>
 
     <div class="section level2">
+<h2 class="page-header" data-toc-text="2.0.4" id="screpertoire-version-204">scRepertoire VERSION 2.0.4<a class="anchor" aria-label="anchor" href="#screpertoire-version-204"></a></h2>
+<div class="section level3">
+<h3 id="underlying-changes-2-0-4">UNDERLYING CHANGES<a class="anchor" aria-label="anchor" href="#underlying-changes-2-0-4"></a></h3>
+<ul><li>
+<code><a href="../reference/getCirclize.html">getCirclize()</a></code> refactored to prevent assumptions and added <strong>include.self</strong> argument</li>
+<li>Added <code>.count.clones()</code> internal function for <code><a href="../reference/getCirclize.html">getCirclize()</a></code> and <code><a href="../reference/clonalNetwork.html">clonalNetwork()</a></code>
+</li>
+<li>Added <strong>order.by</strong> parameter to visualizations to specifically call order of plotting using a vector or can use “alphanumeric” to plot things in order</li>
+<li>Fix issue with <code><a href="../reference/clonalLength.html">clonalLength()</a></code> and NA handling</li>
+<li>
+<code><a href="../reference/clonalCompare.html">clonalCompare()</a></code> now retains the original clonal info if using <strong>relabel.clones</strong>
+</li>
+<li>Add Dandelion support in to <code><a href="../reference/loadContigs.html">loadContigs()</a></code> and testthat</li>
+<li>Fixed issue with <code><a href="../reference/positionalProperty.html">positionalProperty()</a></code> assumption that the clones will all have 20 amino acids.</li>
+<li>Fixed IGH/K/L mistaking gene issue in <code><a href="../reference/vizGenes.html">vizGenes()</a></code>
+</li>
+</ul></div>
+</div>
+    <div class="section level2">
 <h2 class="page-header" data-toc-text="2.0.3" id="screpertoire-version-203">scRepertoire VERSION 2.0.3<a class="anchor" aria-label="anchor" href="#screpertoire-version-203"></a></h2>
 <div class="section level3">
 <h3 id="underlying-changes-2-0-3">UNDERLYING CHANGES<a class="anchor" aria-label="anchor" href="#underlying-changes-2-0-3"></a></h3>
 <ul><li>Modified support for Omniscope format to allow for dual chains</li>
-<li>Added ParseBio support int <code><a href="../reference/loadContigs.html">loadContigs()</a></code> and testthat</li>
+<li>Added ParseBio support in to <code><a href="../reference/loadContigs.html">loadContigs()</a></code> and testthat</li>
 <li>Added support for productive variable to <code><a href="../reference/loadContigs.html">loadContigs()</a></code> for BD, Omniscope, and Immcantation formats</li>
 <li>Replace numerical indexing with name indexing for <code><a href="../reference/loadContigs.html">loadContigs()</a></code>
 </li>

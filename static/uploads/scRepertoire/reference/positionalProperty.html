@@ -20,7 +20,7 @@ confidence interval."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scRepertoire</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.0.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.0.4</span>
       </span>
     </div>
 
@@ -124,6 +124,7 @@ confidence interval.</p>
 <span>  <span class="va">input.data</span>,</span>
 <span>  chain <span class="op">=</span> <span class="st">"TRB"</span>,</span>
 <span>  group.by <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  order.by <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  aa.length <span class="op">=</span> <span class="fl">20</span>,</span>
 <span>  method <span class="op">=</span> <span class="st">"Atchley"</span>,</span>
 <span>  exportTable <span class="op">=</span> <span class="cn">FALSE</span>,</span>
@@ -135,15 +136,20 @@ confidence interval.</p>
     <h2>Arguments</h2>
     <dl><dt>input.data</dt>
 <dd><p>The product of <code><a href="combineTCR.html">combineTCR</a></code>, 
-<code><a href="combineBCR.html">combineBCR</a></code>, or <code><a href="combineExpression.html">combineExpression</a></code>.</p></dd>
+<code><a href="combineBCR.html">combineBCR</a></code>, or <code><a href="combineExpression.html">combineExpression</a></code></p></dd>
 
 
 <dt>chain</dt>
-<dd><p>"TRA", "TRB", "TRG", "TRG", "IGH", "IGL".</p></dd>
+<dd><p>"TRA", "TRB", "TRG", "TRG", "IGH", "IGL"</p></dd>
 
 
 <dt>group.by</dt>
-<dd><p>The variable to use for grouping.</p></dd>
+<dd><p>The variable to use for grouping</p></dd>
+
+
+<dt>order.by</dt>
+<dd><p>A vector of specific plotting order or "alphanumeric"
+to plot groups in order</p></dd>
 
 
 <dt>aa.length</dt>
@@ -152,15 +158,15 @@ confidence interval.</p>
 
 <dt>method</dt>
 <dd><p>The method to calculate the property - "Atchley", "Kidera",
-"stScales", "tScales", or "VHSE".</p></dd>
+"stScales", "tScales", or "VHSE"</p></dd>
 
 
 <dt>exportTable</dt>
-<dd><p>Returns the data frame used for forming the graph.</p></dd>
+<dd><p>Returns the data frame used for forming the graph</p></dd>
 
 
 <dt>palette</dt>
-<dd><p>Colors to use in visualization - input any <a href="https://rdrr.io/r/grDevices/palettes.html" class="external-link">hcl.pals</a>.</p></dd>
+<dd><p>Colors to use in visualization - input any <a href="https://rdrr.io/r/grDevices/palettes.html" class="external-link">hcl.pals</a></p></dd>
 
 </dl></div>
     <div id="value">
@@ -189,13 +195,6 @@ confidence interval.</p>
 <span class="r-in"><span>                   chain <span class="op">=</span> <span class="st">"TRB"</span>,</span></span>
 <span class="r-in"><span>                   method <span class="op">=</span> <span class="st">"Atchley"</span>, </span></span>
 <span class="r-in"><span>                   aa.length <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>There were 10 warnings in `summarise()`.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> The first warning was:</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> In argument: `ci_lower = mean - qt(0.975, n - 1) * se`.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> In group 1: `group = "AF1"`.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> Caused by warning in `qt()`:</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> NaNs produced</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Run `dplyr::last_dplyr_warnings()` to see the 9 remaining warnings.</span>
 <span class="r-plt img"><img src="positionalProperty-1.png" alt="" width="700" height="433"></span>
 </code></pre></div>
     </div>
