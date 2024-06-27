@@ -17,13 +17,21 @@ subtitle:
 date_format: Jan 2006
 
 experience:
+  - title: Assistant Professor
+    company: Washington University
+    company_url: 'https://pathology.wustl.edu/'
+    company_logo: WUSTLseal
+    location: Missouri
+    date_start: '2024-07-01'
+    date_end: ''
+
   - title: Head of Computational Biology
     company: Omniscope
     company_url: 'https://www.omniscope.ai/'
     company_logo: omniscope
     location: Barcelona
     date_start: '2023-07-01'
-    date_end: ''
+    date_end: '2024-06-30'
     
   - title: Computational Biology Advisor
     company: Omniscope
