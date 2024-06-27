@@ -33,7 +33,7 @@ tags:
 - Single-Cell
 - TCR
 - CTCL
-featured: true
+featured: false
 
 links:
 - name: Pubmed

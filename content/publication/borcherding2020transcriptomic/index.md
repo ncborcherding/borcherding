@@ -28,10 +28,10 @@ abstract: Alopecia areata (AA) is a common autoimmune condition, presenting init
 
 tags:
 - Single-Cell
-- Alopecia
-- Autoimmune
+- alopecia
+- autoimmune
 - TCR
-featured: true
+featured: false
 
 links:
 - name: Pubmed

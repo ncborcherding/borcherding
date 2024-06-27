@@ -53,11 +53,11 @@ abstract: The induction of proinflammatory T cells by dendritic cell (DC) subtyp
 
 tags:
 - cancer
-- Microenvironment
+- microenvironment
 - Single-Cell
 - TCR
 - Immunotherapy
-featured: true
+featured: false
 
 links:
 - name: Pubmed
