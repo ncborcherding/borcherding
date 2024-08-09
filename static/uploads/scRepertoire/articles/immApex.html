@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Making Deep Learning Models with immApex • scRepertoire</title>
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scRepertoire</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.0.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.0.5</span>
       </span>
     </div>
 
@@ -137,7 +137,8 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Making Deep Learning Models with immApex</h1>
             
-            <h4 data-toc-skip class="date">Compiled: July 15, 2024</h4>
+            <h4 data-toc-skip class="date">Compiled: August 09,
+2024</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ncborcherding/scRepertoire/blob/HEAD/vignettes/articles/immApex.Rmd" class="external-link"><code>vignettes/articles/immApex.Rmd</code></a></small>
       <div class="hidden name"><code>immApex.Rmd</code></div>
@@ -202,8 +203,8 @@ generation (default are all amino acids)</li>
 <span>                               min.length <span class="op">=</span> <span class="fl">8</span>,</span>
 <span>                               max.length <span class="op">=</span> <span class="fl">16</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">sequences</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] "CASAKKERRVQVYF"   "CASGKYASVVFYF"    "CASNHRLYPQRTYF"   "CASYKWMMDECHWYF" </span></span>
-<span><span class="co">## [5] "CASPIYNFNFQAQRYF" "CASNENAVMQLSYF"</span></span></code></pre>
+<pre><code><span><span class="co">## [1] "CASFKRRPLNFYF"    "CASDGLNSMSFTKYF"  "CASVVDNYVKHHFKYF" "CASMEHTRMYDRTYF" </span></span>
+<span><span class="co">## [5] "CASPFWKERYRYF"    "CASMRIGYMRAGYF"</span></span></code></pre>
 <p>If we want to generate nucleotide sequences instead of amino acids,
 we just need to change the <strong>sequence.dictionary</strong>.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
@@ -212,8 +213,8 @@ we just need to change the <strong>sequence.dictionary</strong>.</p>
 <span>                                          max.length <span class="op">=</span> <span class="fl">16</span>, </span>
 <span>                                          sequence.dictionary <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="st">"C"</span>, <span class="st">"T"</span>, <span class="st">"G"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">nucleotide.sequences</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] "TTCTGCTTACTT"   "CGGCTCAGCTGAT"  "CCGTAACGGGGA"   "CTCGGTTCG"     </span></span>
-<span><span class="co">## [5] "GTCGGCCCTGCCTG" "TACCGACGGCCGC"</span></span></code></pre>
+<pre><code><span><span class="co">## [1] "ACCGTTCGCCCGGCCC" "GATGGTACTGTATCC"  "CGACCGTGTGA"      "CTCACGGCTGGATAAT"</span></span>
+<span><span class="co">## [5] "TCCTTTAGGTG"      "CGAGTTGACGCTCG"</span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="variationalsequences">variationalSequences<a class="anchor" aria-label="anchor" href="#variationalsequences"></a>
@@ -290,11 +291,11 @@ mutation (default are all amino acids)</li>
 <span><span class="co">## [1] "Preparing a matrix..."</span></span>
 <span><span class="co">## [1] "Fitting Model...."</span></span>
 <span><span class="co">## [1] "Generating New Sequences...."</span></span>
-<span><span class="co">## 4/4 - 0s - 34ms/epoch - 9ms/step</span></span></code></pre>
+<span><span class="co">## 4/4 - 0s - 36ms/epoch - 9ms/step</span></span></code></pre>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">variational.sequences</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] "CASLIKDPKWFYF"   "CAS.PIFWIKQYF"   "CASILPVPTYWDMYF" "CASVKGMR.S.YF"  </span></span>
-<span><span class="co">## [5] "CASYRGHDYPY..YF" "CASGR.HMTAQYF"</span></span></code></pre>
+<pre><code><span><span class="co">## [1] "CASNSHSGHRRQYF"   "CASCMMWQEEWYF"    "CASNRLTTKNRQYF"   "CASEDAKGDQ.MQYF" </span></span>
+<span><span class="co">## [5] "CASAKVKGPVFM.YF"  "CASEKGDMPVGYF..F"</span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="mutatesequences">mutateSequences<a class="anchor" aria-label="anchor" href="#mutatesequences"></a>
@@ -334,12 +335,12 @@ mutation (default are all amino acids)</li>
 <span>                                     position.start <span class="op">=</span> <span class="fl">3</span>,                                  </span>
 <span>                                     position.end <span class="op">=</span> <span class="fl">8</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">sequences</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] "CASAKKERRVQVYF"   "CASGKYASVVFYF"    "CASNHRLYPQRTYF"   "CASYKWMMDECHWYF" </span></span>
-<span><span class="co">## [5] "CASPIYNFNFQAQRYF" "CASNENAVMQLSYF"</span></span></code></pre>
+<pre><code><span><span class="co">## [1] "CASFKRRPLNFYF"    "CASDGLNSMSFTKYF"  "CASVVDNYVKHHFKYF" "CASMEHTRMYDRTYF" </span></span>
+<span><span class="co">## [5] "CASPFWKERYRYF"    "CASMRIGYMRAGYF"</span></span></code></pre>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">mutated.sequences</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] "CAKAKKERRVQVYF"   "CASGKYQSVVFYF"    "CASNHALYPQRTYF"   "CASYKWMLDECHWYF" </span></span>
-<span><span class="co">## [5] "CASPPYNFNFQAQRYF" "CASNENRVMQLSYF"</span></span></code></pre>
+<pre><code><span><span class="co">## [1] "CAKFKRRPLNFYF"    "CASDGLQSMSFTKYF"  "CASVVANYVKHHFKYF" "CASMEHTKMYDRTYF" </span></span>
+<span><span class="co">## [5] "CASPPWKERYRYF"    "CASMRIAYMRAGYF"</span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="formatgenes">formatGenes<a class="anchor" aria-label="anchor" href="#formatgenes"></a>
@@ -594,13 +595,13 @@ approach (links to original work below). <strong>Important to note:
 <span><span class="co">## [4,] 0.8428057 0.1736913 0.8702309 0.2374043 0.2587973 0.3064239 0.3803715</span></span>
 <span><span class="co">## [5,] 0.8428057 0.1736913 0.8702309 0.2374043 0.2587973 0.3064239 0.3803715</span></span>
 <span><span class="co">## [6,] 0.8428057 0.1736913 0.8702309 0.2374043 0.2587973 0.3064239 0.3803715</span></span>
-<span><span class="co">##       Pos.3_F3  Pos.3_F4  Pos.3_F5  Pos.3_F6  Pos.4_F1   Pos.4_F2</span></span>
-<span><span class="co">## [1,] 0.1548993 0.6681727 0.2317614 0.3772829 0.5475782 0.84280566</span></span>
-<span><span class="co">## [2,] 0.1548993 0.6681727 0.2317614 0.3772829 0.4060460 0.00000000</span></span>
-<span><span class="co">## [3,] 0.1548993 0.6681727 0.2317614 0.3772829 0.1298523 0.35486554</span></span>
-<span><span class="co">## [4,] 0.1548993 0.6681727 0.2317614 0.3772829 0.5894881 0.37732187</span></span>
-<span><span class="co">## [5,] 0.1548993 0.6681727 0.2317614 0.3772829 0.3366541 0.05018021</span></span>
-<span><span class="co">## [6,] 0.1548993 0.6681727 0.2317614 0.3772829 0.1298523 0.35486554</span></span></code></pre>
+<span><span class="co">##       Pos.3_F3  Pos.3_F4  Pos.3_F5  Pos.3_F6   Pos.4_F1   Pos.4_F2</span></span>
+<span><span class="co">## [1,] 0.1548993 0.6681727 0.2317614 0.3772829 0.90484370 0.69642362</span></span>
+<span><span class="co">## [2,] 0.1548993 0.6681727 0.2317614 0.3772829 0.03057369 0.49209870</span></span>
+<span><span class="co">## [3,] 0.1548993 0.6681727 0.2317614 0.3772829 0.01889385 0.76628777</span></span>
+<span><span class="co">## [4,] 0.1548993 0.6681727 0.2317614 0.3772829 0.78083133 0.98835597</span></span>
+<span><span class="co">## [5,] 0.1548993 0.6681727 0.2317614 0.3772829 0.33665407 0.05018021</span></span>
+<span><span class="co">## [6,] 0.1548993 0.6681727 0.2317614 0.3772829 0.78083133 0.98835597</span></span></code></pre>
 <p><code>propertyEncoder()</code> also allows us to use multiple
 approaches simultaneously by setting <strong>method.to.use</strong> as a
 vector.</p>
@@ -648,12 +649,12 @@ can use <strong>summary.function</strong> and select “median”, “mean”,
 <div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">median.property.matrix</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##         PP1    PP2    PP3</span></span>
-<span><span class="co">## [1,] 0.4400 0.2850 0.5125</span></span>
-<span><span class="co">## [2,] 0.0675 0.1925 0.4300</span></span>
-<span><span class="co">## [3,] 0.6550 0.3250 0.4875</span></span>
-<span><span class="co">## [4,] 0.5300 0.4800 0.4300</span></span>
-<span><span class="co">## [5,] 0.4400 0.3500 0.4375</span></span>
-<span><span class="co">## [6,] 0.1575 0.2225 0.4450</span></span></code></pre>
+<span><span class="co">## [1,] 0.0850 0.4075 0.4325</span></span>
+<span><span class="co">## [2,] 0.4400 0.1975 0.5525</span></span>
+<span><span class="co">## [3,] 0.6550 0.3650 0.4700</span></span>
+<span><span class="co">## [4,] 0.6775 0.3550 0.5275</span></span>
+<span><span class="co">## [5,] 0.3775 0.4250 0.4000</span></span>
+<span><span class="co">## [6,] 0.0825 0.3700 0.5275</span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="geometricencoder">geometricEncoder<a class="anchor" aria-label="anchor" href="#geometricencoder"></a>
@@ -677,34 +678,34 @@ matrix</li>
 <pre><code><span><span class="co">## [1] "Performing geometric transformation..."</span></span></code></pre>
 <div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">geometric.matrix</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##            [,1]         [,2]      [,3]       [,4]       [,5]        [,6]</span></span>
-<span><span class="co">## [1,] -0.1594322 -0.009569614 -2.029899  0.2301737 -0.7308608  0.98017370</span></span>
-<span><span class="co">## [2,] -1.4937373 -0.951232723 -2.606360  0.3605026 -1.5452659 -0.09275164</span></span>
-<span><span class="co">## [3,] -0.7282966  0.404303860 -1.806044 -0.3004122 -1.0140109  0.89917552</span></span>
-<span><span class="co">## [4,] -1.8279056  0.099358737 -2.243376  0.5523073 -1.0172220  0.02854688</span></span>
-<span><span class="co">## [5,] -1.2326520  0.010015877 -1.782291 -0.1629809 -1.1433893  0.85540834</span></span>
-<span><span class="co">## [6,] -1.1230308 -0.483424942 -1.389606 -0.3074177 -0.8354395  0.58988073</span></span>
-<span><span class="co">##           [,7]        [,8]      [,9]      [,10]      [,11]     [,12]      [,13]</span></span>
-<span><span class="co">## [1,] -1.884478 -0.59313197 -1.649176  0.2850272 -0.4834249 1.1230308 -1.4967488</span></span>
-<span><span class="co">## [2,] -1.940187  0.74511796 -1.281558  0.6812620 -1.5658774 0.2506408 -0.3461538</span></span>
-<span><span class="co">## [3,] -2.267765 -0.07211564 -1.458470 -0.7595696 -1.3233057 0.7206041 -1.2327379</span></span>
-<span><span class="co">## [4,] -2.447521 -0.02743618 -1.594572 -0.3047865 -1.6725638 0.4969655 -0.4309401</span></span>
-<span><span class="co">## [5,] -2.217548  0.09090517 -1.449158 -0.1149841 -1.5992786 0.5200318 -0.5373798</span></span>
-<span><span class="co">## [6,] -1.815613 -0.14098004 -1.366025  0.3660254 -1.2327379 0.2780218 -1.0088825</span></span>
-<span><span class="co">##           [,14]      [,15]    [,16]      [,17]        [,18]      [,19]</span></span>
-<span><span class="co">## [1,] -0.1218408 -1.2021519 1.367903 -2.2747705 -0.488553283 -1.0733057</span></span>
-<span><span class="co">## [2,]  0.5995560 -1.2767751 1.749901 -1.6503448 -0.064595843 -0.2843194</span></span>
-<span><span class="co">## [3,]  0.2780218 -1.1211537 1.084752 -1.8321882 -0.397985484 -1.2990381</span></span>
-<span><span class="co">## [4,]  0.2130768 -1.8594870 1.620726 -0.4267949  1.139230485 -1.0124356</span></span>
-<span><span class="co">## [5,]  0.5557691 -1.2538861 1.296794 -1.8760413 -0.000601184 -0.9887818</span></span>
-<span><span class="co">## [6,] -0.2525642 -0.8405678 1.741620 -2.1057687 -0.638415870 -1.0375914</span></span>
-<span><span class="co">##           [,20]</span></span>
-<span><span class="co">## [1,]  0.2875914</span></span>
-<span><span class="co">## [2,] -0.4306212</span></span>
-<span><span class="co">## [3,] -0.7500000</span></span>
-<span><span class="co">## [4,] -1.0464102</span></span>
-<span><span class="co">## [5,] -0.7873798</span></span>
-<span><span class="co">## [6,]  0.2257324</span></span></code></pre>
+<pre><code><span><span class="co">##            [,1]        [,2]      [,3]        [,4]      [,5]      [,6]      [,7]</span></span>
+<span><span class="co">## [1,] -0.9175541  0.35848108 -2.270512 -0.06735726 -1.548027 0.5274159 -2.529437</span></span>
+<span><span class="co">## [2,] -1.4124356 -0.35358984 -1.248162 -0.10478645 -1.366025 0.3660254 -1.639230</span></span>
+<span><span class="co">## [3,] -1.5970349  0.01614564 -1.682412  0.03902223 -1.522275 0.6366583 -2.317427</span></span>
+<span><span class="co">## [4,] -0.7952135  0.31068360 -1.530299  0.11722202 -1.004145 0.8058972 -2.156453</span></span>
+<span><span class="co">## [5,] -0.9560156  0.42509842 -2.434664  0.37080831 -1.358481 0.8144967 -2.298668</span></span>
+<span><span class="co">## [6,] -0.8137361 -0.30485351 -2.631913  0.13003629 -1.392170 0.2684522 -1.723168</span></span>
+<span><span class="co">##            [,8]       [,9]      [,10]     [,11]     [,12]      [,13]</span></span>
+<span><span class="co">## [1,]  0.2272679 -1.6606506  0.1071004 -1.099556 0.5198716 -0.4127712</span></span>
+<span><span class="co">## [2,]  0.4392305 -1.7547005  0.3725638 -1.374957 0.5148288 -0.8196152</span></span>
+<span><span class="co">## [3,] -0.1110980 -0.7806488 -0.5228766 -1.328646 0.6762818 -0.6768829</span></span>
+<span><span class="co">## [4,] -0.3982480 -1.3457689 -0.4690599 -1.292820 0.6392305 -0.8350853</span></span>
+<span><span class="co">## [5,] -0.1724361 -1.9449700 -0.3235209 -1.302169 1.0246545 -0.6998520</span></span>
+<span><span class="co">## [6,]  0.9846150 -1.4993129  0.4540290 -1.515888 0.1970236 -0.6020145</span></span>
+<span><span class="co">##            [,14]      [,15]    [,16]     [,17]       [,18]      [,19]</span></span>
+<span><span class="co">## [1,]  0.56109451 -1.4175541 1.224506 -1.965581  0.01987156 -1.3426525</span></span>
+<span><span class="co">## [2,]  0.21961524 -0.7113249 1.898717 -1.783247 -0.64465820 -1.4636322</span></span>
+<span><span class="co">## [3,]  0.54739564 -1.6578925 1.496554 -2.038421 -0.09435118 -0.4078925</span></span>
+<span><span class="co">## [4,] -0.02025651 -1.2553418 1.507649 -1.518974 -0.56905989 -1.1058972</span></span>
+<span><span class="co">## [5,]  0.75064079 -1.5123272 1.080966 -1.043244  0.73002931 -1.2732738</span></span>
+<span><span class="co">## [6,] -0.10013741 -1.5401556 1.667628 -1.834752  0.17788436 -0.9470236</span></span>
+<span><span class="co">##             [,20]</span></span>
+<span><span class="co">## [1,] -0.597534553</span></span>
+<span><span class="co">## [2,]  0.001751963</span></span>
+<span><span class="co">## [3,] -0.668509526</span></span>
+<span><span class="co">## [4,] -0.484529946</span></span>
+<span><span class="co">## [5,] -1.179240540</span></span>
+<span><span class="co">## [6,] -0.216849885</span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="tokenizesequences">tokenizeSequences<a class="anchor" aria-label="anchor" href="#tokenizesequences"></a>
@@ -745,19 +746,19 @@ sequences to the max length of input.sequences</li>
 <div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">token.matrix</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">18</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##                  [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12]</span></span>
-<span><span class="co">## CASAKKERRVQVYF      1    6    2   17    2   13   13    8    3     3    21     7</span></span>
-<span><span class="co">## CASGKYASVVFYF       1    6    2   17    9   13   20    2   17    21    21    15</span></span>
-<span><span class="co">## CASNHRLYPQRTYF      1    6    2   17    4   10    3   12   20    16     7     3</span></span>
-<span><span class="co">## CASYKWMMDECHWYF     1    6    2   17   20   13   19   14   14     5     8     6</span></span>
-<span><span class="co">## CASPIYNFNFQAQRYF    1    6    2   17   16   11   20    4   15     4    15     7</span></span>
-<span><span class="co">## CASNENAVMQLSYF      1    6    2   17    4    8    4    2   21    14     7    12</span></span>
+<span><span class="co">## CASFKRRPLNFYF       1    6    2   17   15   13    3    3   16    12     4    15</span></span>
+<span><span class="co">## CASDGLNSMSFTKYF     1    6    2   17    5    9   12    4   17    14    17    15</span></span>
+<span><span class="co">## CASVVDNYVKHHFKYF    1    6    2   17   21   21    5    4   20    21    13    10</span></span>
+<span><span class="co">## CASMEHTRMYDRTYF     1    6    2   17   14    8   10   18    3    14    20     5</span></span>
+<span><span class="co">## CASPFWKERYRYF       1    6    2   17   16   15   19   13    8     3    20     3</span></span>
+<span><span class="co">## CASMRIGYMRAGYF      1    6    2   17   14    3   11    9   20    14     3     2</span></span>
 <span><span class="co">##                  [,13] [,14] [,15] [,16] [,17] [,18]</span></span>
-<span><span class="co">## CASAKKERRVQVYF      21    20    15    23    24    24</span></span>
-<span><span class="co">## CASGKYASVVFYF       20    15    23    24    24    24</span></span>
-<span><span class="co">## CASNHRLYPQRTYF      18    20    15    23    24    24</span></span>
-<span><span class="co">## CASYKWMMDECHWYF     10    19    20    15    23    24</span></span>
-<span><span class="co">## CASPIYNFNFQAQRYF     2     7     3    20    15    23</span></span>
-<span><span class="co">## CASNENAVMQLSYF      17    20    15    23    24    24</span></span></code></pre>
+<span><span class="co">## CASFKRRPLNFYF       20    15    23    24    24    24</span></span>
+<span><span class="co">## CASDGLNSMSFTKYF     18    13    20    15    23    24</span></span>
+<span><span class="co">## CASVVDNYVKHHFKYF    10    15    13    20    15    23</span></span>
+<span><span class="co">## CASMEHTRMYDRTYF      3    18    20    15    23    24</span></span>
+<span><span class="co">## CASPFWKERYRYF       20    15    23    24    24    24</span></span>
+<span><span class="co">## CASMRIGYMRAGYF       9    20    15    23    24    24</span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="probabilitymatrix">probabilityMatrix<a class="anchor" aria-label="anchor" href="#probabilitymatrix"></a>
@@ -774,19 +775,19 @@ total repertoire.</p>
 <div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">ppm.matrix</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##   Pos.1 Pos.2 Pos.3 Pos.4 Pos.5 Pos.6 Pos.7 Pos.8 Pos.9 Pos.10 Pos.11 Pos.12</span></span>
-<span><span class="co">## A     0     1     0 0.046 0.044 0.050 0.056 0.041 0.051  0.053  0.059  0.036</span></span>
-<span><span class="co">## R     0     0     0 0.061 0.076 0.058 0.040 0.054 0.050  0.055  0.060  0.047</span></span>
-<span><span class="co">## N     0     0     0 0.060 0.056 0.051 0.064 0.055 0.042  0.058  0.053  0.032</span></span>
-<span><span class="co">## D     0     0     0 0.054 0.052 0.039 0.046 0.043 0.054  0.036  0.052  0.035</span></span>
-<span><span class="co">## C     1     0     0 0.050 0.037 0.056 0.045 0.048 0.058  0.036  0.048  0.035</span></span>
-<span><span class="co">## Q     0     0     0 0.041 0.064 0.052 0.044 0.047 0.038  0.052  0.063  0.043</span></span>
+<span><span class="co">## A     0     1     0 0.055 0.048 0.044 0.040 0.041 0.042  0.043  0.048  0.029</span></span>
+<span><span class="co">## R     0     0     0 0.041 0.046 0.062 0.044 0.052 0.054  0.056  0.042  0.042</span></span>
+<span><span class="co">## N     0     0     0 0.055 0.037 0.042 0.041 0.045 0.036  0.063  0.056  0.027</span></span>
+<span><span class="co">## D     0     0     0 0.057 0.047 0.042 0.042 0.051 0.051  0.048  0.047  0.037</span></span>
+<span><span class="co">## C     1     0     0 0.054 0.050 0.053 0.060 0.054 0.039  0.044  0.048  0.037</span></span>
+<span><span class="co">## Q     0     0     0 0.052 0.040 0.057 0.056 0.063 0.055  0.050  0.057  0.037</span></span>
 <span><span class="co">##   Pos.13 Pos.14 Pos.15 Pos.16</span></span>
-<span><span class="co">## A  0.024  0.020      0      0</span></span>
-<span><span class="co">## R  0.018  0.032      0      0</span></span>
-<span><span class="co">## N  0.023  0.006      0      0</span></span>
-<span><span class="co">## D  0.020  0.016      0      0</span></span>
-<span><span class="co">## C  0.022  0.015      0      0</span></span>
-<span><span class="co">## Q  0.023  0.007      0      0</span></span></code></pre>
+<span><span class="co">## A  0.020  0.011      0      0</span></span>
+<span><span class="co">## R  0.027  0.009      0      0</span></span>
+<span><span class="co">## N  0.020  0.016      0      0</span></span>
+<span><span class="co">## D  0.027  0.009      0      0</span></span>
+<span><span class="co">## C  0.026  0.013      0      0</span></span>
+<span><span class="co">## Q  0.028  0.011      0      0</span></span></code></pre>
 <p>In addition, <code>probabilityMatrix()</code> can convert the
 positional probability matrix into a positional weight matrix using
 log-likelihood using the argument <strong>convert.PWM</strong> = TRUE.
@@ -808,20 +809,20 @@ example background.</p>
 <span><span class="co">## [1] "Converting to Liklihoods for a PWM..."</span></span></code></pre>
 <div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">pwm.matrix</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##       Pos.1     Pos.2     Pos.3      Pos.4      Pos.5      Pos.6      Pos.7</span></span>
-<span><span class="co">## A -6.157338  3.809888 -6.157338 -0.6027496 -0.6654853 -0.4849131 -0.3244484</span></span>
-<span><span class="co">## R -6.986931 -6.986931 -6.986931 -1.0327349 -0.7201446 -1.1042881 -1.6293792</span></span>
-<span><span class="co">## N -5.351911 -5.351911 -5.351911  0.5788264  0.4809791  0.3485288  0.6704569</span></span>
-<span><span class="co">## D -4.282869 -4.282869 -4.282869  1.4984904  1.4450511  1.0390588  1.2717195</span></span>
-<span><span class="co">## C  6.732291 -3.234935 -3.234935  2.4374905  2.0129927  2.5979552  2.2886271</span></span>
-<span><span class="co">## Q -4.858371 -4.858371 -4.858371  0.5339459  1.1639963  0.8695490  0.6334816</span></span>
-<span><span class="co">##       Pos.8       Pos.9     Pos.10     Pos.11     Pos.12     Pos.13     Pos.14</span></span>
-<span><span class="co">## A -0.765021 -0.45689872 -0.4024509 -0.2504478 -0.9478851 -1.5134822 -1.7650210</span></span>
-<span><span class="co">## R -1.205571 -1.31450583 -1.1795762 -1.0561938 -1.4019687 -2.7390037 -1.9425370</span></span>
-<span><span class="co">## N  0.455444  0.07435379  0.5307321  0.4029765 -0.3075168 -0.7669485 -2.5445560</span></span>
-<span><span class="co">## D  1.176562  1.49849040  0.9265840  1.4450511  0.8870557  0.1094481 -0.1954065</span></span>
-<span><span class="co">## C  2.379775  2.64770821  1.9745185  2.3797750  1.9349902  1.2886271  0.7650652</span></span>
-<span><span class="co">## Q  0.726591  0.42703073  0.8695490  1.1416285  0.6010601 -0.2734090 -1.8583715</span></span>
+<pre><code><span><span class="co">##       Pos.1     Pos.2     Pos.3      Pos.4      Pos.5       Pos.6       Pos.7</span></span>
+<span><span class="co">## A -6.157338  3.809888 -6.157338 -0.3499835 -0.5426286 -0.66548534 -0.79978643</span></span>
+<span><span class="co">## R -6.986931 -6.986931 -6.986931 -1.5946137 -1.4323423 -1.00965124 -1.49507807</span></span>
+<span><span class="co">## N -5.351911 -5.351911 -5.351911  0.4554440 -0.1039834  0.07435379  0.04040646</span></span>
+<span><span class="co">## D -4.282869 -4.282869 -4.282869  1.5751117  1.3020932  1.14339544  1.14339544</span></span>
+<span><span class="co">## C  6.732291 -3.234935 -3.234935  2.5464249  2.4374905  2.51995266  2.69580250</span></span>
+<span><span class="co">## Q -4.858371 -4.858371 -4.858371  0.8695490  0.4991805  0.99960951  0.97451853</span></span>
+<span><span class="co">##       Pos.8      Pos.9     Pos.10     Pos.11     Pos.12       Pos.13     Pos.14</span></span>
+<span><span class="co">## A -0.765021 -0.7310737 -0.6979068 -0.5426286 -1.2504478 -1.765021012 -2.5723759</span></span>
+<span><span class="co">## R -1.259011 -1.2055715 -1.1540412 -1.5606664 -1.5606664 -2.179576246 -3.6650031</span></span>
+<span><span class="co">## N  0.171651 -0.1424576  0.6480890  0.4809791 -0.5445560 -0.959593538 -1.2644481</span></span>
+<span><span class="co">## D  1.417570  1.4175704  1.3318405  1.3020932  0.9650582  0.524485605 -0.9609412</span></span>
+<span><span class="co">## C  2.546425  2.0869933  2.2569183  2.3797750  2.0129927  1.519952663  0.5724201</span></span>
+<span><span class="co">## Q  1.141629  0.9489834  0.8140539  0.9996095  0.3895560 -0.000390493 -1.2734090</span></span>
 <span><span class="co">##      Pos.15    Pos.16    Pos.17    Pos.18    Pos.19    Pos.20</span></span>
 <span><span class="co">## A -6.157338 -6.157338 -6.157338 -6.157338 -6.157338 -6.157338</span></span>
 <span><span class="co">## R -6.986931 -6.986931 -6.986931 -6.986931 -6.986931 -6.986931</span></span>
@@ -845,27 +846,27 @@ evaluated.</p>
 <code class="sourceCode R"><span><span class="va">adj.matrix</span> <span class="op">&lt;-</span> <span class="fu">adjacencyMatrix</span><span class="op">(</span><span class="va">sequences</span>, </span>
 <span>                              normalize <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="va">adj.matrix</span></span></code></pre></div>
-<pre><code><span><span class="co">##      A   R   N  D    C  Q   E  G  H  I  L  K  M    F  P    S   T  W    Y  V</span></span>
-<span><span class="co">## A   32  45  65 33 1040 45  53 46 50 35 35 39 41   51 48 1075  36 56   97 38</span></span>
-<span><span class="co">## R   45  48  53 35   39 54  55 48 53 54 42 51 53   50 42  112  45 52  122 49</span></span>
-<span><span class="co">## N   65  53  48 52   43 43  44 38 46 39 36 48 36   44 53  103  49 33   86 41</span></span>
-<span><span class="co">## D   33  35  52 34   47 26  39 43 44 51 34 32 47   44 46   85  43 44   83 32</span></span>
-<span><span class="co">## C 1040  39  43 47   38 43  48 43 41 51 42 36 34   33 36   96  34 31   83 42</span></span>
-<span><span class="co">## Q   45  54  43 26   43 38  46 25 55 48 42 40 48   47 28   89  39 54   90 48</span></span>
-<span><span class="co">## E   53  55  44 39   48 46  32 43 45 35 48 45 47   27 42  106  45 33  100 39</span></span>
-<span><span class="co">## G   46  48  38 43   43 25  43 42 34 41 44 42 38   37 40   84  49 50   97 56</span></span>
-<span><span class="co">## H   50  53  46 44   41 55  45 34 34 38 45 43 38   42 53   82  47 49   72 51</span></span>
-<span><span class="co">## I   35  54  39 51   51 48  35 41 38 52 57 46 34   40 44   83  58 41   89 46</span></span>
-<span><span class="co">## L   35  42  36 34   42 42  48 44 45 57 26 45 46   50 46   90  43 40   90 47</span></span>
-<span><span class="co">## K   39  51  48 32   36 40  45 42 43 46 45 40 31   33 37   73  35 53   95 46</span></span>
-<span><span class="co">## M   41  53  36 47   34 48  47 38 38 34 46 31 44   43 36   82  30 38   90 40</span></span>
-<span><span class="co">## F   51  50  44 44   33 47  27 37 42 40 50 33 43   56 42   81  57 33 1097 43</span></span>
-<span><span class="co">## P   48  42  53 46   36 28  42 40 53 44 46 37 36   42 28   85  34 39   79 42</span></span>
-<span><span class="co">## S 1075 112 103 85   96 89 106 84 82 83 90 73 82   81 85  124 100 95  136 91</span></span>
-<span><span class="co">## T   36  45  49 43   34 39  45 49 47 58 43 35 30   57 34  100  52 42   95 39</span></span>
-<span><span class="co">## W   56  52  33 44   31 54  33 50 49 41 40 53 38   33 39   95  42 44   85 40</span></span>
-<span><span class="co">## Y   97 122  86 83   83 90 100 97 72 89 90 95 90 1097 79  136  95 85  148 94</span></span>
-<span><span class="co">## V   38  49  41 32   42 48  39 56 51 46 47 46 40   43 42   91  39 40   94 54</span></span></code></pre>
+<pre><code><span><span class="co">##      A  R  N  D    C   Q   E   G  H  I   L  K  M    F   P    S   T   W    Y  V</span></span>
+<span><span class="co">## A   32 39 35 24 1029  49  38  36 31 40  43 40 36   35  31 1090  40  40   89 45</span></span>
+<span><span class="co">## R   39 36 39 38   54  46  42  58 41 35  64 52 39   36  41   89  45  39   80 37</span></span>
+<span><span class="co">## N   35 39 54 42   37  29  33  27 35 31  48 40 38   52  44   95  32  36   83 46</span></span>
+<span><span class="co">## D   24 38 42 42   47  38  37  48 44 47  44 42 36   42  40   97  36  50   81 41</span></span>
+<span><span class="co">## C 1029 54 37 47   38  58  43  45 38 45  25 38 47   56  42   88  41  48  101 36</span></span>
+<span><span class="co">## Q   49 46 29 38   58  40  42  48 46 30  49 47 48   45  45   88  51  47  119 47</span></span>
+<span><span class="co">## E   38 42 33 37   43  42  46  40 43 47  46 52 49   37  49  109  46  41   85 35</span></span>
+<span><span class="co">## G   36 58 27 48   45  48  40  42 48 38  43 52 46   44  37   79  54  36  117 56</span></span>
+<span><span class="co">## H   31 41 35 44   38  46  43  48 34 45  43 43 31   48  51   83  56  35   81 36</span></span>
+<span><span class="co">## I   40 35 31 47   45  30  47  38 45 38  36 50 55   44  50   99  52  41   97 30</span></span>
+<span><span class="co">## L   43 64 48 44   25  49  46  43 43 36  60 32 46   41  60  115  38  37   96 52</span></span>
+<span><span class="co">## K   40 52 40 42   38  47  52  52 43 50  32 40 36   53  44   86  42  37   88 44</span></span>
+<span><span class="co">## M   36 39 38 36   47  48  49  46 31 55  46 36 36   36  39   89  39  35   87 44</span></span>
+<span><span class="co">## F   35 36 52 42   56  45  37  44 48 44  41 53 36   36  41  101  41  39 1079 42</span></span>
+<span><span class="co">## P   31 41 44 40   42  45  49  37 51 50  60 44 39   41  36  109  48  44   94 45</span></span>
+<span><span class="co">## S 1090 89 95 97   88  88 109  79 83 99 115 86 89  101 109  122  96 105  135 69</span></span>
+<span><span class="co">## T   40 45 32 36   41  51  46  54 56 52  38 42 39   41  48   96  54  45  107 39</span></span>
+<span><span class="co">## W   40 39 36 50   48  47  41  36 35 41  37 37 35   39  44  105  45  48   88 53</span></span>
+<span><span class="co">## Y   89 80 83 81  101 119  85 117 81 97  96 88 87 1079  94  135 107  88  128 85</span></span>
+<span><span class="co">## V   45 37 46 41   36  47  35  56 36 30  52 44 44   42  45   69  39  53   85 56</span></span></code></pre>
 </div>
 </div>
 <div class="section level2">
@@ -882,7 +883,7 @@ generation.</p>
 <ul>
 <li>
 <strong>sequence.matrix</strong> The encoded sequences to decode in
-an array opr matrix</li>
+an array or matrix</li>
 <li>
 <strong>encoder</strong> The method to prepare the sequencing
 information - “onehotEncoder” or “propertyEncoder”</li>
@@ -905,12 +906,12 @@ calling with higher values being more stringent</li>
 <code class="sourceCode R"><span><span class="va">property.sequences</span> <span class="op">&lt;-</span> <span class="fu">sequenceDecoder</span><span class="op">(</span><span class="va">property.matrix</span>, encoder <span class="op">=</span> <span class="st">"propertyEncoder"</span>, aa.method.to.use <span class="op">=</span> <span class="st">"FASGAI"</span>,</span>
 <span>    call.threshold <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">sequences</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] "CASAKKERRVQVYF"   "CASGKYASVVFYF"    "CASNHRLYPQRTYF"   "CASYKWMMDECHWYF" </span></span>
-<span><span class="co">## [5] "CASPIYNFNFQAQRYF" "CASNENAVMQLSYF"</span></span></code></pre>
+<pre><code><span><span class="co">## [1] "CASFKRRPLNFYF"    "CASDGLNSMSFTKYF"  "CASVVDNYVKHHFKYF" "CASMEHTRMYDRTYF" </span></span>
+<span><span class="co">## [5] "CASPFWKERYRYF"    "CASMRIGYMRAGYF"</span></span></code></pre>
 <div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">property.sequences</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] "CASAKKERRVQVYF"   "CASGKYASVVFYF"    "CASNHRLYPQRTYF"   "CASYKWMMDECHWYF" </span></span>
-<span><span class="co">## [5] "CASPIYNFNFQAQRYF" "CASNENAVMQLSYF"</span></span></code></pre>
+<pre><code><span><span class="co">## [1] "CASFKRRPLNFYF"    "CASDGLNSMSFTKYF"  "CASVVDNYVKHHFKYF" "CASMEHTRMYDRTYF" </span></span>
+<span><span class="co">## [5] "CASPFWKERYRYF"    "CASMRIGYMRAGYF"</span></span></code></pre>
 <p>A similar approach can be applied when using matrices or arrays
 derived from one-hot encoding:</p>
 <div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
@@ -922,8 +923,8 @@ derived from one-hot encoding:</p>
 <code class="sourceCode R"><span><span class="va">OHE.sequences</span> <span class="op">&lt;-</span> <span class="fu">sequenceDecoder</span><span class="op">(</span><span class="va">sequence.matrix</span>, encoder <span class="op">=</span> <span class="st">"onehotEncoder"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">OHE.sequences</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] "CASAKKERRVQVYF"   "CASGKYASVVFYF"    "CASNHRLYPQRTYF"   "CASYKWMMDECHWYF" </span></span>
-<span><span class="co">## [5] "CASPIYNFNFQAQRYF" "CASNENAVMQLSYF"</span></span></code></pre>
+<pre><code><span><span class="co">## [1] "CASFKRRPLNFYF"    "CASDGLNSMSFTKYF"  "CASVVDNYVKHHFKYF" "CASMEHTRMYDRTYF" </span></span>
+<span><span class="co">## [5] "CASPFWKERYRYF"    "CASMRIGYMRAGYF"</span></span></code></pre>
 </div>
 </div>
 <div class="section level2">
@@ -1128,57 +1129,57 @@ repository</a>.</p>
 <span><span class="co">## [1] stats     graphics  grDevices utils     datasets  methods   base     </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## other attached packages:</span></span>
-<span><span class="co">## [1] dplyr_1.1.4       viridis_0.6.5     viridisLite_0.4.2 ggplot2_3.5.0    </span></span>
-<span><span class="co">## [5] keras_2.13.0      immApex_0.99.0   </span></span>
+<span><span class="co">## [1] dplyr_1.1.4       viridis_0.6.5     viridisLite_0.4.2 ggplot2_3.5.1    </span></span>
+<span><span class="co">## [5] keras_2.15.0      immApex_0.99.0   </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## loaded via a namespace (and not attached):</span></span>
-<span><span class="co">##  [1] tidyselect_1.2.0            farver_2.1.1               </span></span>
-<span><span class="co">##  [3] tensorflow_2.15.0           bitops_1.0-7               </span></span>
-<span><span class="co">##  [5] fastmap_1.1.1               SingleCellExperiment_1.24.0</span></span>
-<span><span class="co">##  [7] RCurl_1.98-1.14             digest_0.6.34              </span></span>
+<span><span class="co">##  [1] tidyselect_1.2.1            farver_2.1.2               </span></span>
+<span><span class="co">##  [3] tensorflow_2.16.0           bitops_1.0-8               </span></span>
+<span><span class="co">##  [5] fastmap_1.2.0               SingleCellExperiment_1.24.0</span></span>
+<span><span class="co">##  [7] RCurl_1.98-1.16             digest_0.6.36              </span></span>
 <span><span class="co">##  [9] lifecycle_1.0.4             magrittr_2.0.3             </span></span>
-<span><span class="co">## [11] compiler_4.3.0              rlang_1.1.3                </span></span>
-<span><span class="co">## [13] sass_0.4.8                  tools_4.3.0                </span></span>
-<span><span class="co">## [15] utf8_1.2.4                  yaml_2.3.8                 </span></span>
-<span><span class="co">## [17] knitr_1.45                  labeling_0.4.3             </span></span>
-<span><span class="co">## [19] S4Arrays_1.2.0              curl_5.2.0                 </span></span>
-<span><span class="co">## [21] reticulate_1.35.0           here_1.0.1                 </span></span>
-<span><span class="co">## [23] DelayedArray_0.28.0         xml2_1.3.6                 </span></span>
-<span><span class="co">## [25] abind_1.4-5                 withr_3.0.0                </span></span>
-<span><span class="co">## [27] purrr_1.0.2                 BiocGenerics_0.48.1        </span></span>
-<span><span class="co">## [29] desc_1.4.3                  grid_4.3.0                 </span></span>
-<span><span class="co">## [31] hash_2.2.6.3                stats4_4.3.0               </span></span>
-<span><span class="co">## [33] fansi_1.0.6                 colorspace_2.1-0           </span></span>
-<span><span class="co">## [35] scales_1.3.0                zeallot_0.1.0              </span></span>
-<span><span class="co">## [37] SummarizedExperiment_1.32.0 cli_3.6.2                  </span></span>
-<span><span class="co">## [39] rmarkdown_2.25              crayon_1.5.2               </span></span>
-<span><span class="co">## [41] ragg_1.2.7                  generics_0.1.3             </span></span>
-<span><span class="co">## [43] rstudioapi_0.15.0           httr_1.4.7                 </span></span>
-<span><span class="co">## [45] tfruns_1.5.2                cachem_1.0.8               </span></span>
-<span><span class="co">## [47] stringr_1.5.1               splines_4.3.0              </span></span>
-<span><span class="co">## [49] zlibbioc_1.48.0             rvest_1.0.4                </span></span>
-<span><span class="co">## [51] formatR_1.14                selectr_0.4-2              </span></span>
-<span><span class="co">## [53] XVector_0.42.0              matrixStats_1.2.0          </span></span>
-<span><span class="co">## [55] base64enc_0.1-3             vctrs_0.6.5                </span></span>
-<span><span class="co">## [57] Matrix_1.6-5                jsonlite_1.8.8             </span></span>
-<span><span class="co">## [59] IRanges_2.36.0              S4Vectors_0.40.2           </span></span>
-<span><span class="co">## [61] systemfonts_1.0.5           jquerylib_0.1.4            </span></span>
-<span><span class="co">## [63] glue_1.7.0                  pkgdown_2.0.7              </span></span>
-<span><span class="co">## [65] stringi_1.8.3               gtable_0.3.4               </span></span>
-<span><span class="co">## [67] GenomeInfoDb_1.38.6         GenomicRanges_1.54.1       </span></span>
-<span><span class="co">## [69] munsell_0.5.0               tibble_3.2.1               </span></span>
-<span><span class="co">## [71] pillar_1.9.0                htmltools_0.5.7            </span></span>
-<span><span class="co">## [73] GenomeInfoDbData_1.2.11     R6_2.5.1                   </span></span>
-<span><span class="co">## [75] textshaping_0.3.7           rprojroot_2.0.4            </span></span>
-<span><span class="co">## [77] evaluate_0.23               lattice_0.22-5             </span></span>
-<span><span class="co">## [79] Biobase_2.62.0              highr_0.10                 </span></span>
-<span><span class="co">## [81] png_0.1-8                   memoise_2.0.1              </span></span>
-<span><span class="co">## [83] bslib_0.6.1                 Rcpp_1.0.12                </span></span>
-<span><span class="co">## [85] nlme_3.1-164                gridExtra_2.3              </span></span>
-<span><span class="co">## [87] SparseArray_1.2.4           mgcv_1.9-1                 </span></span>
-<span><span class="co">## [89] whisker_0.4.1               xfun_0.42                  </span></span>
-<span><span class="co">## [91] fs_1.6.3                    MatrixGenerics_1.14.0      </span></span>
-<span><span class="co">## [93] pkgconfig_2.0.3</span></span></code></pre>
+<span><span class="co">## [11] compiler_4.3.0              rlang_1.1.4                </span></span>
+<span><span class="co">## [13] sass_0.4.9                  tools_4.3.0                </span></span>
+<span><span class="co">## [15] utf8_1.2.4                  yaml_2.3.10                </span></span>
+<span><span class="co">## [17] knitr_1.48                  labeling_0.4.3             </span></span>
+<span><span class="co">## [19] S4Arrays_1.2.0              htmlwidgets_1.6.4          </span></span>
+<span><span class="co">## [21] curl_5.2.1                  reticulate_1.37.0          </span></span>
+<span><span class="co">## [23] here_1.0.1                  DelayedArray_0.28.0        </span></span>
+<span><span class="co">## [25] xml2_1.3.6                  abind_1.4-5                </span></span>
+<span><span class="co">## [27] withr_3.0.1                 purrr_1.0.2                </span></span>
+<span><span class="co">## [29] BiocGenerics_0.48.1         desc_1.4.3                 </span></span>
+<span><span class="co">## [31] grid_4.3.0                  hash_2.2.6.3               </span></span>
+<span><span class="co">## [33] stats4_4.3.0                fansi_1.0.6                </span></span>
+<span><span class="co">## [35] colorspace_2.1-1            scales_1.3.0               </span></span>
+<span><span class="co">## [37] zeallot_0.1.0               SummarizedExperiment_1.32.0</span></span>
+<span><span class="co">## [39] cli_3.6.3                   rmarkdown_2.27             </span></span>
+<span><span class="co">## [41] crayon_1.5.3                ragg_1.3.2                 </span></span>
+<span><span class="co">## [43] generics_0.1.3              rstudioapi_0.16.0          </span></span>
+<span><span class="co">## [45] httr_1.4.7                  tfruns_1.5.3               </span></span>
+<span><span class="co">## [47] cachem_1.1.0                stringr_1.5.1              </span></span>
+<span><span class="co">## [49] splines_4.3.0               zlibbioc_1.48.0            </span></span>
+<span><span class="co">## [51] rvest_1.0.4                 formatR_1.14               </span></span>
+<span><span class="co">## [53] selectr_0.4-2               XVector_0.42.0             </span></span>
+<span><span class="co">## [55] matrixStats_1.3.0           base64enc_0.1-3            </span></span>
+<span><span class="co">## [57] vctrs_0.6.5                 Matrix_1.6-5               </span></span>
+<span><span class="co">## [59] jsonlite_1.8.8              IRanges_2.36.0             </span></span>
+<span><span class="co">## [61] S4Vectors_0.40.2            systemfonts_1.1.0          </span></span>
+<span><span class="co">## [63] jquerylib_0.1.4             glue_1.7.0                 </span></span>
+<span><span class="co">## [65] pkgdown_2.0.9               stringi_1.8.4              </span></span>
+<span><span class="co">## [67] gtable_0.3.5                GenomeInfoDb_1.38.6        </span></span>
+<span><span class="co">## [69] GenomicRanges_1.54.1        munsell_0.5.1              </span></span>
+<span><span class="co">## [71] tibble_3.2.1                pillar_1.9.0               </span></span>
+<span><span class="co">## [73] htmltools_0.5.8.1           GenomeInfoDbData_1.2.11    </span></span>
+<span><span class="co">## [75] R6_2.5.1                    textshaping_0.4.0          </span></span>
+<span><span class="co">## [77] rprojroot_2.0.4             evaluate_0.24.0            </span></span>
+<span><span class="co">## [79] lattice_0.22-6              Biobase_2.62.0             </span></span>
+<span><span class="co">## [81] highr_0.11                  png_0.1-8                  </span></span>
+<span><span class="co">## [83] memoise_2.0.1               bslib_0.8.0                </span></span>
+<span><span class="co">## [85] Rcpp_1.0.13                 nlme_3.1-165               </span></span>
+<span><span class="co">## [87] gridExtra_2.3               SparseArray_1.2.4          </span></span>
+<span><span class="co">## [89] mgcv_1.9-1                  whisker_0.4.1              </span></span>
+<span><span class="co">## [91] xfun_0.46                   fs_1.6.4                   </span></span>
+<span><span class="co">## [93] MatrixGenerics_1.14.0       pkgconfig_2.0.3</span></span></code></pre>
 </div>
 </div>
   </div>
@@ -1200,7 +1201,7 @@ repository</a>.</p>
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
 </div>
 
       </footer>
