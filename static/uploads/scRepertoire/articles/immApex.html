@@ -12,14 +12,13 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><meta property="og:title" content="Making Deep Learning Models with immApex">
-<meta property="og:description" content="scRepertoire">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
-    
+
 
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -33,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scRepertoire</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.0.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.0.8</span>
       </span>
     </div>
 
@@ -48,7 +47,7 @@
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Vignettes
-     
+
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
@@ -119,7 +118,7 @@
 <li>
   <a href="https://github.com/ncborcherding/scRepertoire/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
-     
+
   </a>
 </li>
       </ul>
@@ -130,14 +129,14 @@
 </div>
 <!--/.navbar -->
 
-      
+
 
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Making Deep Learning Models with immApex</h1>
             
-            <h4 data-toc-skip class="date">Compiled: August 09,
+            <h4 data-toc-skip class="date">Compiled: October 18,
 2024</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ncborcherding/scRepertoire/blob/HEAD/vignettes/articles/immApex.Rmd" class="external-link"><code>vignettes/articles/immApex.Rmd</code></a></small>
@@ -162,11 +161,22 @@ prepare them for deep learning tasks through <a href="https://tensorflow.rstudio
 <strong>immApex</strong> is the underlying structure for the BCR models
 in <a href="https://github.com/ncborcherding/Ibex" class="external-link">Ibex</a> and TCR
 models in <a href="https://github.com/ncborcherding/Trex" class="external-link">Trex</a>. It
-should be noted, although the tools here are created for immune receptor
-sequences, they will work more generally for nucleotide or amino acid
-sequences.</p>
+should be noted that the tools here are created for immune receptor
+sequences; they will work more generally for nucleotide or amino acid
+sequences. The package itself supports AIRR, Adaptive, and 10x formats
+and interacts with the <strong>scRepertoire</strong> R package.</p>
 <p>More information is available at the <a href="https://github.com/ncborcherding/immApex" class="external-link">immApex GitHub
 Repo</a>.</p>
+<div class="section level3">
+<h3 id="loading-libraries">Loading Libraries<a class="anchor" aria-label="anchor" href="#loading-libraries"></a>
+</h3>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">suppressMessages</a></span><span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/ncborcherding/immApex/" class="external-link">immApex</a></span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">suppressMessages</a></span><span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tensorflow.rstudio.com/" class="external-link">keras</a></span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">suppressMessages</a></span><span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">suppressMessages</a></span><span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://sjmgarnier.github.io/viridis/" class="external-link">viridis</a></span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">suppressMessages</a></span><span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+</div>
 </div>
 <div class="section level2">
 <h2 id="getting-and-manipulating-sequences">Getting and Manipulating Sequences<a class="anchor" aria-label="anchor" href="#getting-and-manipulating-sequences"></a>
@@ -175,9 +185,9 @@ Repo</a>.</p>
 <h3 id="generatesequences">generateSequences<a class="anchor" aria-label="anchor" href="#generatesequences"></a>
 </h3>
 <p>Generating synthetic sequences is a quick way to start testing the
-model code. <code>generateSequences()</code> can also generate realistic
+model code. <code><a href="https://rdrr.io/pkg/immApex/man/generateSequences.html" class="external-link">generateSequences()</a></code> can also generate realistic
 noise for generative adversarial networks.</p>
-<p>Parameters for <code>generateSequences()</code></p>
+<p>Parameters for <code><a href="https://rdrr.io/pkg/immApex/man/generateSequences.html" class="external-link">generateSequences()</a></code></p>
 <ul>
 <li>
 <strong>prefix.motif</strong> Add a defined sequence to the start of
@@ -196,41 +206,41 @@ sequence</li>
 <strong>sequence.dictionary</strong> The letters to use in sequence
 generation (default are all amino acids)</li>
 </ul>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">sequences</span> <span class="op">&lt;-</span> <span class="fu">generateSequences</span><span class="op">(</span>prefix.motif <span class="op">=</span> <span class="st">"CAS"</span>,</span>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">sequences</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/immApex/man/generateSequences.html" class="external-link">generateSequences</a></span><span class="op">(</span>prefix.motif <span class="op">=</span> <span class="st">"CAS"</span>,</span>
 <span>                               suffix.motif <span class="op">=</span> <span class="st">"YF"</span>,</span>
 <span>                               number.of.sequences <span class="op">=</span> <span class="fl">1000</span>,</span>
 <span>                               min.length <span class="op">=</span> <span class="fl">8</span>,</span>
 <span>                               max.length <span class="op">=</span> <span class="fl">16</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">sequences</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] "CASFKRRPLNFYF"    "CASDGLNSMSFTKYF"  "CASVVDNYVKHHFKYF" "CASMEHTRMYDRTYF" </span></span>
-<span><span class="co">## [5] "CASPFWKERYRYF"    "CASMRIGYMRAGYF"</span></span></code></pre>
+<pre><code><span><span class="co">## [1] "CASTCTMLANRYF"    "CASFTKNEEETYF"    "CASDGSGVAHHYF"    "CASDILAYWYEYF"   </span></span>
+<span><span class="co">## [5] "CASADIMWPLCWYF"   "CASHIPRENTYATFYF"</span></span></code></pre>
 <p>If we want to generate nucleotide sequences instead of amino acids,
-we just need to change the <strong>sequence.dictionary</strong>.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">nucleotide.sequences</span> <span class="op">&lt;-</span> <span class="fu">generateSequences</span><span class="op">(</span>number.of.sequences <span class="op">=</span> <span class="fl">1000</span>,</span>
+we must to change the <strong>sequence.dictionary</strong>.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">nucleotide.sequences</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/immApex/man/generateSequences.html" class="external-link">generateSequences</a></span><span class="op">(</span>number.of.sequences <span class="op">=</span> <span class="fl">1000</span>,</span>
 <span>                                          min.length <span class="op">=</span> <span class="fl">8</span>,</span>
 <span>                                          max.length <span class="op">=</span> <span class="fl">16</span>, </span>
 <span>                                          sequence.dictionary <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="st">"C"</span>, <span class="st">"T"</span>, <span class="st">"G"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">nucleotide.sequences</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] "ACCGTTCGCCCGGCCC" "GATGGTACTGTATCC"  "CGACCGTGTGA"      "CTCACGGCTGGATAAT"</span></span>
-<span><span class="co">## [5] "TCCTTTAGGTG"      "CGAGTTGACGCTCG"</span></span></code></pre>
+<pre><code><span><span class="co">## [1] "TGGTAGTG"         "TGTTGTTTGGGGTACG" "GACCCTCCTG"       "GGTCCCATGTCGCAT" </span></span>
+<span><span class="co">## [5] "CAAGAATTAGGCTC"   "AGCTCGTGCTATCT"</span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="variationalsequences">variationalSequences<a class="anchor" aria-label="anchor" href="#variationalsequences"></a>
 </h3>
 <p>In addition to making random sequences with
-<code>generateSequences()</code>, we can also use generative deep
+<code><a href="https://rdrr.io/pkg/immApex/man/generateSequences.html" class="external-link">generateSequences()</a></code>, we can also use generative deep
 learning to simulate similar, de novo sequences with
-<code>variationalSequences()</code>. <code>variationalSequences()</code>
+<code><a href="https://rdrr.io/pkg/immApex/man/variationalSequences.html" class="external-link">variationalSequences()</a></code>. <code><a href="https://rdrr.io/pkg/immApex/man/variationalSequences.html" class="external-link">variationalSequences()</a></code>
 uses a variational autoencoder that allows for sampling and generation
 of sequences similar to the input sequences.</p>
 <p>It should be noted that the success of this approach is highly
 dependent on the number of sequences used as input and the
 hyperparameters of the model. As such,
-<code>variationalSequences()</code> has a number of arguments to modify
+<code><a href="https://rdrr.io/pkg/immApex/man/variationalSequences.html" class="external-link">variationalSequences()</a></code> has a number of arguments to modify
 to allow for optimization.</p>
-<p>Parameters for `<code>variationalSequences()</code></p>
+<p>Parameters for `<code><a href="https://rdrr.io/pkg/immApex/man/variationalSequences.html" class="external-link">variationalSequences()</a></code></p>
 <ul>
 <li>
 <strong>input.sequences</strong> The amino acid or nucleotide
@@ -242,7 +252,7 @@ sequencing information - <strong>“onehotEncoder”</strong> or
 </li>
 <li>
 <strong>aa.method.to.use</strong> The method or approach to use for
-the conversion, see <code>propertyEncoder()</code>
+the conversion, see <code><a href="https://rdrr.io/pkg/immApex/man/propertyEncoder.html" class="external-link">propertyEncoder()</a></code>
 </li>
 <li>
 <strong>number.of.sequences</strong> Number of sequences to
@@ -282,31 +292,25 @@ parameter for tensorflow.</li>
 <strong>sequence.dictionary</strong> The letters to use in sequence
 mutation (default are all amino acids)</li>
 </ul>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">variational.sequences</span> <span class="op">&lt;-</span> <span class="fu">variationalSequences</span><span class="op">(</span><span class="va">sequences</span>, encoder <span class="op">=</span> <span class="st">"onehotEncoder"</span>, number.of.sequences <span class="op">=</span> <span class="fl">100</span>,</span>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">variational.sequences</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/immApex/man/variationalSequences.html" class="external-link">variationalSequences</a></span><span class="op">(</span><span class="va">sequences</span>, encoder <span class="op">=</span> <span class="st">"onehotEncoder"</span>, number.of.sequences <span class="op">=</span> <span class="fl">100</span>,</span>
 <span>    encoder.hidden.dim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">256</span>, <span class="fl">128</span><span class="op">)</span>, latent.dim <span class="op">=</span> <span class="fl">16</span>, batch.size <span class="op">=</span> <span class="fl">16</span>, call.threshold <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] "Converting to matrix...."</span></span>
-<span><span class="co">## [1] "Padding sequences..."</span></span>
-<span><span class="co">## [1] "One Hot Encoding sequences..."</span></span>
-<span><span class="co">## [1] "Preparing a matrix..."</span></span>
-<span><span class="co">## [1] "Fitting Model...."</span></span>
-<span><span class="co">## [1] "Generating New Sequences...."</span></span>
-<span><span class="co">## 4/4 - 0s - 36ms/epoch - 9ms/step</span></span></code></pre>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<pre><code><span><span class="co">## 4/4 - 0s - 44ms/epoch - 11ms/step</span></span></code></pre>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">variational.sequences</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] "CASNSHSGHRRQYF"   "CASCMMWQEEWYF"    "CASNRLTTKNRQYF"   "CASEDAKGDQ.MQYF" </span></span>
-<span><span class="co">## [5] "CASAKVKGPVFM.YF"  "CASEKGDMPVGYF..F"</span></span></code></pre>
+<pre><code><span><span class="co">## [1] "CASPD.DV.KTNYFY"  "CASADKDVDNP.AYF"  "CAS.VQNL.GLDY.YF" "CAST.TGWQ.TIYF"  </span></span>
+<span><span class="co">## [5] "CASH..VKGLEHYF"   "CASVDC.AGNLYN"</span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="mutatesequences">mutateSequences<a class="anchor" aria-label="anchor" href="#mutatesequences"></a>
 </h3>
 <p>A common approach is to mutate sequences randomly or at specific
 intervals. This can be particularly helpful if we have fewer sequences
-or want to test a model for accuracy given new, altered
-sequences. mutateSequences() allows us to tune the type of mutation,
+or want to test a model for accuracy given new, altered sequences.
+<code><a href="https://rdrr.io/pkg/immApex/man/mutateSequences.html" class="external-link">mutateSequences()</a></code> allows us to tune the type of mutation,
 where along the sequences to introduce the mutation and the overall
 number of mutations.</p>
-<p>Parameters for <code>mutateSequences()</code></p>
+<p>Parameters for <code><a href="https://rdrr.io/pkg/immApex/man/mutateSequences.html" class="external-link">mutateSequences()</a></code></p>
 <ul>
 <li>
 <strong>input.sequences</strong> The amino acid or nucleotide
@@ -329,27 +333,27 @@ position.</li>
 <strong>sequence.dictionary</strong> The letters to use in sequence
 mutation (default are all amino acids)</li>
 </ul>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">mutated.sequences</span> <span class="op">&lt;-</span> <span class="fu">mutateSequences</span><span class="op">(</span><span class="va">sequences</span>, </span>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">mutated.sequences</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/immApex/man/mutateSequences.html" class="external-link">mutateSequences</a></span><span class="op">(</span><span class="va">sequences</span>, </span>
 <span>                                     n.sequence <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>                                     position.start <span class="op">=</span> <span class="fl">3</span>,                                  </span>
 <span>                                     position.end <span class="op">=</span> <span class="fl">8</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">sequences</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] "CASFKRRPLNFYF"    "CASDGLNSMSFTKYF"  "CASVVDNYVKHHFKYF" "CASMEHTRMYDRTYF" </span></span>
-<span><span class="co">## [5] "CASPFWKERYRYF"    "CASMRIGYMRAGYF"</span></span></code></pre>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<pre><code><span><span class="co">## [1] "CASTCTMLANRYF"    "CASFTKNEEETYF"    "CASDGSGVAHHYF"    "CASDILAYWYEYF"   </span></span>
+<span><span class="co">## [5] "CASADIMWPLCWYF"   "CASHIPRENTYATFYF"</span></span></code></pre>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">mutated.sequences</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] "CAKFKRRPLNFYF"    "CASDGLQSMSFTKYF"  "CASVVANYVKHHFKYF" "CASMEHTKMYDRTYF" </span></span>
-<span><span class="co">## [5] "CASPPWKERYRYF"    "CASMRIAYMRAGYF"</span></span></code></pre>
+<pre><code><span><span class="co">## [1] "CAKTCTMLANRYF"    "CASFTKQEEETYF"    "CASDGAGVAHHYF"    "CASDILALWYEYF"   </span></span>
+<span><span class="co">## [5] "CASAPIMWPLCWYF"   "CASHIPAENTYATFYF"</span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="formatgenes">formatGenes<a class="anchor" aria-label="anchor" href="#formatgenes"></a>
 </h3>
 <p>Immune receptor nomenclature can be highly variable across sequencing
 platforms. When preparing data for models, we can use
-`<code>formatGenes()</code> to universalize the gene formats into IMGT
+`<code><a href="https://rdrr.io/pkg/immApex/man/formatGenes.html" class="external-link">formatGenes()</a></code> to universalize the gene formats into IMGT
 nomenclature.</p>
-<p>Parameters for <code>formatGenes()</code></p>
+<p>Parameters for <code><a href="https://rdrr.io/pkg/immApex/man/formatGenes.html" class="external-link">formatGenes()</a></code></p>
 <ul>
 <li>
 <strong>input.data</strong> Data frame of sequencing data or
@@ -359,7 +363,7 @@ scRepertoire outputs</li>
 ‘j’, ‘c’ or a combination using c(‘v’, ‘d’, ‘j’)</li>
 <li>
 <strong>technology</strong> The sequencing technology employed -
-‘TenX’, “Adaptive’, ‘AIRR’, or ‘Omniscope’.</li>
+‘TenX’, “Adaptive’, or ‘AIRR’</li>
 <li>
 <strong>species</strong> One or two word designation of species.
 Currently supporting: “human”, “mouse”, “rat”, “rabbit”, “rhesus
@@ -371,25 +375,25 @@ designation (TRUE) or retain all information (FALSE)</li>
 </ul>
 <p>Here, we will use the built-in example from Adaptive Biotechnologies
 and reformat and simplify the <strong>v</strong> region.
-<code>formatGenes()</code> will add 2 columns to the end of the data
+<code><a href="https://rdrr.io/pkg/immApex/man/formatGenes.html" class="external-link">formatGenes()</a></code> will add 2 columns to the end of the data
 frame per region selected - 1) <strong>v_IMGT</strong> will be the
 formatted gene calls and 2) <strong>v_IMGT.check</strong> is a binary
 for if the formatted region appears in the IMGT database. In the example
 below, “TRBV2-1” is not recognized as a designation within IMGT.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">Adaptive_example</span> <span class="op">&lt;-</span> <span class="fu">formatGenes</span><span class="op">(</span><span class="va">immapex_example.data</span><span class="op">[[</span><span class="st">"Adaptive"</span><span class="op">]</span><span class="op">]</span>,</span>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">Adaptive_example</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/immApex/man/formatGenes.html" class="external-link">formatGenes</a></span><span class="op">(</span><span class="va">immapex_example.data</span><span class="op">[[</span><span class="st">"Adaptive"</span><span class="op">]</span><span class="op">]</span>,</span>
 <span>                                region <span class="op">=</span> <span class="st">"v"</span>,</span>
 <span>                                technology <span class="op">=</span> <span class="st">"Adaptive"</span>, </span>
 <span>                                simplify.format <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> </span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">Adaptive_example</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"aminoAcid"</span>,<span class="st">"vGeneName"</span>, <span class="st">"v_IMGT"</span>, <span class="st">"v_IMGT.check"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##            aminoAcid  vGeneName   v_IMGT v_IMGT.check</span></span>
-<span><span class="co">## 1     CASSAGEYGYEQYF TCRBV12-03 TRBV12-3            1</span></span>
-<span><span class="co">## 2 CASRNPGLASTGSYGQYF TCRBV06-02  TRBV6-2            1</span></span>
-<span><span class="co">## 3   CATSDLGDVGGETQYF TCRBV24-01 TRBV24-1            1</span></span>
-<span><span class="co">## 5    CASSPSAGRINTIYF TCRBV06-05  TRBV6-5            1</span></span>
-<span><span class="co">## 6     CASRDGGATGELFF TCRBV06-02  TRBV6-2            1</span></span>
-<span><span class="co">## 7    CASPSPSGRRETQYF TCRBV02-01  TRBV2-1            0</span></span></code></pre>
+<pre><code><span><span class="co">##              aminoAcid  vGeneName   v_IMGT v_IMGT.check</span></span>
+<span><span class="co">## 4490  CASSQDGPSGIETQYF TCRBV04-02  TRBV4-2            1</span></span>
+<span><span class="co">## 18266    CASSEGSNQPQHF TCRBV02-01  TRBV2-1            0</span></span>
+<span><span class="co">## 22061   CSASAGDMVTEAFF TCRBV20-01 TRBV20-1            1</span></span>
+<span><span class="co">## 22174  CASSQDPGETDTQYF TCRBV03-01  TRBV3-1            1</span></span>
+<span><span class="co">## 19117     CATSAWTGELFF TCRBV24-01 TRBV24-1            1</span></span>
+<span><span class="co">## 2659     CATSVPGQETQYF TCRBV24-01 TRBV24-1            1</span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="getimgt">getIMGT<a class="anchor" aria-label="anchor" href="#getimgt"></a>
@@ -397,9 +401,12 @@ below, “TRBV2-1” is not recognized as a designation within IMGT.</p>
 <p>Depending on the sequencing technology and the version, we might want
 to expand the length of our sequence embedding approach. The first step
 in the process is pulling the reference sequences from the
-ImMunoGeneTics (IMGT) system using <code>getIMGT()</code>. More
-information for IMGT can be found at <a href="https://www.imgt.org/" class="external-link">imgt.org</a>.</p>
-<p>Parameters for <code>getIMGT()</code></p>
+ImMunoGeneTics (IMGT) system using <code><a href="https://rdrr.io/pkg/immApex/man/getIMGT.html" class="external-link">getIMGT()</a></code>. More
+information for IMGT can be found at <a href="https://www.imgt.org/" class="external-link">imgt.org</a>. Data from IMGT is under a CC
+BY-NC-ND 4.0 license. Please be aware that attribution is required for
+usage and should not be used to create commercial or derivative
+work.</p>
+<p>Parameters for <code><a href="https://rdrr.io/pkg/immApex/man/getIMGT.html" class="external-link">getIMGT()</a></code></p>
 <ul>
 <li>
 <strong>species</strong> One or two word designation of species.
@@ -417,28 +424,26 @@ monkey”, “sheep”, “pig”, “platypus”, “alpaca”, “dog”, “c
 <strong>sequence.type</strong> Type of sequence - “aa” for amino
 acid or “nt” for nucleotide</li>
 </ul>
-<p>Here, we will use the <code>getIMGT()</code> function to get the
+<p>Here, we will use the <code><a href="https://rdrr.io/pkg/immApex/man/getIMGT.html" class="external-link">getIMGT()</a></code> function to get the
 amino acid sequences for the TRBV region to get all the sequences by V
 gene allele.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">TRBV_aa</span> <span class="op">&lt;-</span> <span class="fu">getIMGT</span><span class="op">(</span>species <span class="op">=</span> <span class="st">"human"</span>,</span>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">TRBV_aa</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/immApex/man/getIMGT.html" class="external-link">getIMGT</a></span><span class="op">(</span>species <span class="op">=</span> <span class="st">"human"</span>,</span>
 <span>                   chain <span class="op">=</span> <span class="st">"TRB"</span>,</span>
 <span>                   frame <span class="op">=</span> <span class="st">"inframe"</span>,</span>
 <span>                   region <span class="op">=</span> <span class="st">"v"</span>,</span>
-<span>                   sequence.type <span class="op">=</span> <span class="st">"aa"</span><span class="op">)</span> </span></code></pre></div>
-<pre><code><span><span class="co">## [1] "Getting the sequences from IMGT..."</span></span>
-<span><span class="co">## [1] "Formatting IMGT sequences..."</span></span></code></pre>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">TRBV_aa</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span></code></pre></div>
+<span>                   sequence.type <span class="op">=</span> <span class="st">"aa"</span><span class="op">)</span> </span>
+<span></span>
+<span><span class="va">TRBV_aa</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span></code></pre></div>
 <pre><code><span><span class="co">## $`TRBV1*01`</span></span>
 <span><span class="co">## [1] "HPVREGIONAADTGITQTPKYLVTAMGSKRTMKREHLGHDSMYWYRQKAKKSLEFMFYYNCKEFIENKTVPNHFTPECPDSSRLYLHVVALQQEDSAAYLCTSSQ"</span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="infercdr">inferCDR<a class="anchor" aria-label="anchor" href="#infercdr"></a>
 </h3>
-<p>We can now use <code>inferCDR()</code> to add additional sequence
+<p>We can now use <code><a href="https://rdrr.io/pkg/immApex/man/inferCDR.html" class="external-link">inferCDR()</a></code> to add additional sequence
 elements to our example data using the outputs of
-<code>formatGenes()</code> and <code>getIMGT()</code>. Here, we will use
+<code><a href="https://rdrr.io/pkg/immApex/man/formatGenes.html" class="external-link">formatGenes()</a></code> and <code><a href="https://rdrr.io/pkg/immApex/man/getIMGT.html" class="external-link">getIMGT()</a></code>. Here, we will use
 the function to isolate the complementarity-determining regions (CDR) 1
 and 2. If the gene nomenclature does not match the IMGT the result will
 be NA for the given sequences. Likewise, if the IMGT nomenclature has
@@ -451,11 +456,11 @@ extraction.</p>
 from formatGenes().</li>
 <li>
 <strong>reference</strong> IMGT sequences from
-<code>getIMGT()</code>
+<code><a href="https://rdrr.io/pkg/immApex/man/getIMGT.html" class="external-link">getIMGT()</a></code>
 </li>
 <li>
 <strong>technology</strong> The sequencing technology employed -
-‘TenX’, “Adaptive’, ‘AIRR’, or ‘Omniscope’</li>
+‘TenX’, “Adaptive’, or ‘AIRR’,</li>
 <li>
 <strong>sequence.type</strong> Type of sequence - “aa” for amino
 acid or “nt” for nucleotide</li>
@@ -463,8 +468,8 @@ acid or “nt” for nucleotide</li>
 <strong>sequences</strong> The specific regions of the CDR loop to
 get from the data.</li>
 </ul>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">Adaptive_example</span> <span class="op">&lt;-</span> <span class="fu">inferCDR</span><span class="op">(</span><span class="va">Adaptive_example</span>,</span>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">Adaptive_example</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/immApex/man/inferCDR.html" class="external-link">inferCDR</a></span><span class="op">(</span><span class="va">Adaptive_example</span>,</span>
 <span>                             chain <span class="op">=</span> <span class="st">"TRB"</span>, </span>
 <span>                             reference <span class="op">=</span> <span class="va">TRBV_aa</span>,</span>
 <span>                             technology <span class="op">=</span> <span class="st">"Adaptive"</span>, </span>
@@ -473,17 +478,17 @@ get from the data.</li>
 <span></span>
 <span><span class="va">Adaptive_example</span><span class="op">[</span><span class="fl">200</span><span class="op">:</span><span class="fl">210</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"CDR1_IMGT"</span>, <span class="st">"CDR2_IMGT"</span><span class="op">)</span><span class="op">]</span></span></code></pre></div>
 <pre><code><span><span class="co">##        CDR1_IMGT  CDR2_IMGT</span></span>
-<span><span class="co">## 200 GRQVTLMCHQTW LIYYSAAADI</span></span>
-<span><span class="co">## 201 GRQVTLMCHQTW LIYYSAAADI</span></span>
-<span><span class="co">## 202 GRQVTLMCHQTW LIYYSAAADI</span></span>
-<span><span class="co">## 203 GRQVTLMCHQTW LIYYSAAADI</span></span>
-<span><span class="co">## 204 GRQVTLMCHQTW LIYYSAAADI</span></span>
-<span><span class="co">## 205 GRQVTLMCHQTW LIYYSAAADI</span></span>
-<span><span class="co">## 206 GRQVTLMCHQTW LIYYSAAADI</span></span>
-<span><span class="co">## 207 GRQVTLMCHQTW LIYYSAAADI</span></span>
-<span><span class="co">## 208 GRQVTLMCHQTW LIYYSAAADI</span></span>
-<span><span class="co">## 209 GRQVTLMCHQTW LIYYSAAADI</span></span>
-<span><span class="co">## 210 GRQVTLMCHQTW LIYYSAAADI</span></span></code></pre>
+<span><span class="co">## 200 RQSVAFWCNPIS LLIQFQNNGV</span></span>
+<span><span class="co">## 201 RQSVAFWCNPIS LLIQFQNNGV</span></span>
+<span><span class="co">## 202 RQSVAFWCNPIS LLIQFQNNGV</span></span>
+<span><span class="co">## 203 RQSVAFWCNPIS LLIQFQNNGV</span></span>
+<span><span class="co">## 204 RQSVAFWCNPIS LLIQFQNNGV</span></span>
+<span><span class="co">## 205 RQSVAFWCNPIS LLIQFQNNGV</span></span>
+<span><span class="co">## 206 RQSVAFWCNPIS LLIQFQNNGV</span></span>
+<span><span class="co">## 207 RQSVAFWCNPIS LLIQFQNNGV</span></span>
+<span><span class="co">## 208 RQSVAFWCNPIS LLIQFQNNGV</span></span>
+<span><span class="co">## 209 RQSVAFWCNPIS LLIQFQNNGV</span></span>
+<span><span class="co">## 210 RQSVAFWCNPIS LLIQFQNNGV</span></span></code></pre>
 </div>
 </div>
 <div class="section level2">
@@ -495,7 +500,7 @@ get from the data.</li>
 <p>One hot encoding of amino acid or nucleotide sequences is a common
 method for transforming sequences into numeric matrices compatible with
 Keras (or other workflows).</p>
-<p>Parameters for <code>onehotEncoder()</code></p>
+<p>Parameters for <code><a href="https://rdrr.io/pkg/immApex/man/onehotEncoder.html" class="external-link">onehotEncoder()</a></code></p>
 <ul>
 <li>
 <strong>input.sequences</strong> The amino acid or nucleotide
@@ -510,14 +515,10 @@ sequences to the max length of input.sequences</li>
 <strong>sequence.dictionary</strong> The letters to use in encoding
 (default are all amino acids + NA value)</li>
 </ul>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">sequence.matrix</span> <span class="op">&lt;-</span> <span class="fu">onehotEncoder</span><span class="op">(</span>input.sequences <span class="op">=</span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">sequences</span>, <span class="va">mutated.sequences</span><span class="op">)</span>, </span>
-<span>                                 convert.to.matrix <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] "Padding sequences..."</span></span>
-<span><span class="co">## [1] "One Hot Encoding sequences..."</span></span>
-<span><span class="co">## [1] "Preparing a matrix..."</span></span></code></pre>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">sequence.matrix</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">20</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">sequence.matrix</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/immApex/man/onehotEncoder.html" class="external-link">onehotEncoder</a></span><span class="op">(</span>input.sequences <span class="op">=</span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">sequences</span>, <span class="va">mutated.sequences</span><span class="op">)</span>, </span>
+<span>                                 convert.to.matrix <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">sequence.matrix</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">20</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##      Pos.1_A Pos.1_R Pos.1_N Pos.1_D Pos.1_C Pos.1_Q Pos.1_E Pos.1_G Pos.1_H</span></span>
 <span><span class="co">## [1,]       0       0       0       0       1       0       0       0       0</span></span>
 <span><span class="co">## [2,]       0       0       0       0       1       0       0       0       0</span></span>
@@ -572,15 +573,12 @@ approach (links to original work below). <strong>Important to note:
 <li>zScales - <a href="https://pubmed.ncbi.nlm.nih.gov/9651153/" class="external-link">citation</a>
 </li>
 </ul>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">property.matrix</span> <span class="op">&lt;-</span> <span class="fu">propertyEncoder</span><span class="op">(</span>input.sequences <span class="op">=</span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">sequences</span>, <span class="va">mutated.sequences</span><span class="op">)</span>, </span>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">property.matrix</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/immApex/man/propertyEncoder.html" class="external-link">propertyEncoder</a></span><span class="op">(</span>input.sequences <span class="op">=</span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">sequences</span>, <span class="va">mutated.sequences</span><span class="op">)</span>, </span>
 <span>                                   method.to.use <span class="op">=</span> <span class="st">"FASGAI"</span>,</span>
-<span>                                   convert.to.matrix <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] "Padding sequences..."</span></span>
-<span><span class="co">## [1] "Property-based Encoding sequences..."</span></span>
-<span><span class="co">## [1] "Preparing a matrix..."</span></span></code></pre>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">property.matrix</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">20</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
+<span>                                   convert.to.matrix <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">property.matrix</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">20</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##       Pos.1_F1  Pos.1_F2   Pos.1_F3 Pos.1_F4 Pos.1_F5  Pos.1_F6  Pos.2_F1</span></span>
 <span><span class="co">## [1,] 0.8189626 0.6210147 0.06362416        0 0.063684 0.5042316 0.5475782</span></span>
 <span><span class="co">## [2,] 0.8189626 0.6210147 0.06362416        0 0.063684 0.5042316 0.5475782</span></span>
@@ -595,25 +593,22 @@ approach (links to original work below). <strong>Important to note:
 <span><span class="co">## [4,] 0.8428057 0.1736913 0.8702309 0.2374043 0.2587973 0.3064239 0.3803715</span></span>
 <span><span class="co">## [5,] 0.8428057 0.1736913 0.8702309 0.2374043 0.2587973 0.3064239 0.3803715</span></span>
 <span><span class="co">## [6,] 0.8428057 0.1736913 0.8702309 0.2374043 0.2587973 0.3064239 0.3803715</span></span>
-<span><span class="co">##       Pos.3_F3  Pos.3_F4  Pos.3_F5  Pos.3_F6   Pos.4_F1   Pos.4_F2</span></span>
-<span><span class="co">## [1,] 0.1548993 0.6681727 0.2317614 0.3772829 0.90484370 0.69642362</span></span>
-<span><span class="co">## [2,] 0.1548993 0.6681727 0.2317614 0.3772829 0.03057369 0.49209870</span></span>
-<span><span class="co">## [3,] 0.1548993 0.6681727 0.2317614 0.3772829 0.01889385 0.76628777</span></span>
-<span><span class="co">## [4,] 0.1548993 0.6681727 0.2317614 0.3772829 0.78083133 0.98835597</span></span>
-<span><span class="co">## [5,] 0.1548993 0.6681727 0.2317614 0.3772829 0.33665407 0.05018021</span></span>
-<span><span class="co">## [6,] 0.1548993 0.6681727 0.2317614 0.3772829 0.78083133 0.98835597</span></span></code></pre>
-<p><code>propertyEncoder()</code> also allows us to use multiple
+<span><span class="co">##       Pos.3_F3  Pos.3_F4  Pos.3_F5  Pos.3_F6   Pos.4_F1  Pos.4_F2</span></span>
+<span><span class="co">## [1,] 0.1548993 0.6681727 0.2317614 0.3772829 0.46547578 0.4904353</span></span>
+<span><span class="co">## [2,] 0.1548993 0.6681727 0.2317614 0.3772829 0.90484370 0.6964236</span></span>
+<span><span class="co">## [3,] 0.1548993 0.6681727 0.2317614 0.3772829 0.03057369 0.4920987</span></span>
+<span><span class="co">## [4,] 0.1548993 0.6681727 0.2317614 0.3772829 0.03057369 0.4920987</span></span>
+<span><span class="co">## [5,] 0.1548993 0.6681727 0.2317614 0.3772829 0.54757815 0.8428057</span></span>
+<span><span class="co">## [6,] 0.1548993 0.6681727 0.2317614 0.3772829 0.38371694 0.7429997</span></span></code></pre>
+<p><code><a href="https://rdrr.io/pkg/immApex/man/propertyEncoder.html" class="external-link">propertyEncoder()</a></code> also allows us to use multiple
 approaches simultaneously by setting <strong>method.to.use</strong> as a
 vector.</p>
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">mulit.property.matrix</span> <span class="op">&lt;-</span> <span class="fu">propertyEncoder</span><span class="op">(</span>input.sequences <span class="op">=</span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">sequences</span>, <span class="va">mutated.sequences</span><span class="op">)</span>, </span>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">mulit.property.matrix</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/immApex/man/propertyEncoder.html" class="external-link">propertyEncoder</a></span><span class="op">(</span>input.sequences <span class="op">=</span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">sequences</span>, <span class="va">mutated.sequences</span><span class="op">)</span>, </span>
 <span>                                         method.to.use <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"atchleyFactors"</span>, <span class="st">"kideraFactors"</span><span class="op">)</span>,</span>
-<span>                                         convert.to.matrix <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] "Padding sequences..."</span></span>
-<span><span class="co">## [1] "Property-based Encoding sequences..."</span></span>
-<span><span class="co">## [1] "Preparing a matrix..."</span></span></code></pre>
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">mulit.property.matrix</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">20</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
+<span>                                         convert.to.matrix <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">mulit.property.matrix</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">20</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##      Pos.1_AF1 Pos.1_AF2 Pos.1_AF3 Pos.1_AF4 Pos.1_AF5 Pos.1_KF1 Pos.1_KF2</span></span>
 <span><span class="co">## [1,]         0  0.551818 0.4960678 0.2994783 0.4864792 0.4640884 0.2635468</span></span>
 <span><span class="co">## [2,]         0  0.551818 0.4960678 0.2994783 0.4864792 0.4640884 0.2635468</span></span>
@@ -639,29 +634,26 @@ vector.</p>
 all amino acid residues for a given <strong>method.to.use</strong>, we
 can use <strong>summary.function</strong> and select “median”, “mean”,
 “sum”, variance (“vars”), or Median Absolute Deviation (“mads”).</p>
-<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">median.property.matrix</span> <span class="op">&lt;-</span> <span class="fu">propertyEncoder</span><span class="op">(</span>input.sequences <span class="op">=</span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">sequences</span>, <span class="va">mutated.sequences</span><span class="op">)</span>, </span>
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">median.property.matrix</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/immApex/man/propertyEncoder.html" class="external-link">propertyEncoder</a></span><span class="op">(</span>input.sequences <span class="op">=</span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">sequences</span>, <span class="va">mutated.sequences</span><span class="op">)</span>, </span>
 <span>                                          method.to.use <span class="op">=</span> <span class="st">"crucianiProperties"</span>,</span>
-<span>                                          summary.function <span class="op">=</span> <span class="st">"median"</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] "Padding sequences..."</span></span>
-<span><span class="co">## [1] "Property-based Encoding sequences..."</span></span>
-<span><span class="co">## [1] "Summarising properties using median..."</span></span></code></pre>
-<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">median.property.matrix</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
+<span>                                          summary.function <span class="op">=</span> <span class="st">"median"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">median.property.matrix</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##         PP1    PP2    PP3</span></span>
-<span><span class="co">## [1,] 0.0850 0.4075 0.4325</span></span>
-<span><span class="co">## [2,] 0.4400 0.1975 0.5525</span></span>
-<span><span class="co">## [3,] 0.6550 0.3650 0.4700</span></span>
-<span><span class="co">## [4,] 0.6775 0.3550 0.5275</span></span>
-<span><span class="co">## [5,] 0.3775 0.4250 0.4000</span></span>
-<span><span class="co">## [6,] 0.0825 0.3700 0.5275</span></span></code></pre>
+<span><span class="co">## [1,] 0.1575 0.1975 0.5525</span></span>
+<span><span class="co">## [2,] 0.6775 0.2225 0.3050</span></span>
+<span><span class="co">## [3,] 0.0675 0.1050 0.6250</span></span>
+<span><span class="co">## [4,] 0.1500 0.2475 0.3900</span></span>
+<span><span class="co">## [5,] 0.0925 0.2825 0.4050</span></span>
+<span><span class="co">## [6,] 0.6550 0.2825 0.5525</span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="geometricencoder">geometricEncoder<a class="anchor" aria-label="anchor" href="#geometricencoder"></a>
 </h3>
-<p>One approach to encode amino acid sequences is geometric isometry,
+<p>One approach to encoding amino acid sequences is geometric isometry,
 such as <a href="https://pubmed.ncbi.nlm.nih.gov/34349111/" class="external-link">GIANA</a>.</p>
-<p>Parameters for <code>geometricEncoder()</code></p>
+<p>Parameters for <code><a href="https://rdrr.io/pkg/immApex/man/geometricEncoder.html" class="external-link">geometricEncoder()</a></code></p>
 <ul>
 <li>
 <strong>method.to.use</strong> Select the following substitution
@@ -671,41 +663,39 @@ matrices: “BLOSUM45”, “BLOSUM50”, “BLOSUM62”, “BLOSUM80”, “BLO
 <strong>theta</strong> The angle in which to create the rotation
 matrix</li>
 </ul>
-<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">geometric.matrix</span> <span class="op">&lt;-</span> <span class="fu">geometricEncoder</span><span class="op">(</span><span class="va">sequences</span>, </span>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">geometric.matrix</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/immApex/man/geometricEncoder.html" class="external-link">geometricEncoder</a></span><span class="op">(</span><span class="va">sequences</span>, </span>
 <span>                                     method.to.use <span class="op">=</span> <span class="st">"BLOSUM62"</span>,</span>
-<span>                                     theta <span class="op">=</span> <span class="va">pi</span><span class="op">/</span><span class="fl">3</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] "Performing geometric transformation..."</span></span></code></pre>
-<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">geometric.matrix</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##            [,1]        [,2]      [,3]        [,4]      [,5]      [,6]      [,7]</span></span>
-<span><span class="co">## [1,] -0.9175541  0.35848108 -2.270512 -0.06735726 -1.548027 0.5274159 -2.529437</span></span>
-<span><span class="co">## [2,] -1.4124356 -0.35358984 -1.248162 -0.10478645 -1.366025 0.3660254 -1.639230</span></span>
-<span><span class="co">## [3,] -1.5970349  0.01614564 -1.682412  0.03902223 -1.522275 0.6366583 -2.317427</span></span>
-<span><span class="co">## [4,] -0.7952135  0.31068360 -1.530299  0.11722202 -1.004145 0.8058972 -2.156453</span></span>
-<span><span class="co">## [5,] -0.9560156  0.42509842 -2.434664  0.37080831 -1.358481 0.8144967 -2.298668</span></span>
-<span><span class="co">## [6,] -0.8137361 -0.30485351 -2.631913  0.13003629 -1.392170 0.2684522 -1.723168</span></span>
-<span><span class="co">##            [,8]       [,9]      [,10]     [,11]     [,12]      [,13]</span></span>
-<span><span class="co">## [1,]  0.2272679 -1.6606506  0.1071004 -1.099556 0.5198716 -0.4127712</span></span>
-<span><span class="co">## [2,]  0.4392305 -1.7547005  0.3725638 -1.374957 0.5148288 -0.8196152</span></span>
-<span><span class="co">## [3,] -0.1110980 -0.7806488 -0.5228766 -1.328646 0.6762818 -0.6768829</span></span>
-<span><span class="co">## [4,] -0.3982480 -1.3457689 -0.4690599 -1.292820 0.6392305 -0.8350853</span></span>
-<span><span class="co">## [5,] -0.1724361 -1.9449700 -0.3235209 -1.302169 1.0246545 -0.6998520</span></span>
-<span><span class="co">## [6,]  0.9846150 -1.4993129  0.4540290 -1.515888 0.1970236 -0.6020145</span></span>
-<span><span class="co">##            [,14]      [,15]    [,16]     [,17]       [,18]      [,19]</span></span>
-<span><span class="co">## [1,]  0.56109451 -1.4175541 1.224506 -1.965581  0.01987156 -1.3426525</span></span>
-<span><span class="co">## [2,]  0.21961524 -0.7113249 1.898717 -1.783247 -0.64465820 -1.4636322</span></span>
-<span><span class="co">## [3,]  0.54739564 -1.6578925 1.496554 -2.038421 -0.09435118 -0.4078925</span></span>
-<span><span class="co">## [4,] -0.02025651 -1.2553418 1.507649 -1.518974 -0.56905989 -1.1058972</span></span>
-<span><span class="co">## [5,]  0.75064079 -1.5123272 1.080966 -1.043244  0.73002931 -1.2732738</span></span>
-<span><span class="co">## [6,] -0.10013741 -1.5401556 1.667628 -1.834752  0.17788436 -0.9470236</span></span>
-<span><span class="co">##             [,20]</span></span>
-<span><span class="co">## [1,] -0.597534553</span></span>
-<span><span class="co">## [2,]  0.001751963</span></span>
-<span><span class="co">## [3,] -0.668509526</span></span>
-<span><span class="co">## [4,] -0.484529946</span></span>
-<span><span class="co">## [5,] -1.179240540</span></span>
-<span><span class="co">## [6,] -0.216849885</span></span></code></pre>
+<span>                                     theta <span class="op">=</span> <span class="va">pi</span><span class="op">/</span><span class="fl">3</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">geometric.matrix</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##            [,1]        [,2]       [,3]        [,4]       [,5]       [,6]</span></span>
+<span><span class="co">## [1,] -0.9326427 -0.53846154 -2.2320508 -0.13397460 -0.8838755 -0.7767751</span></span>
+<span><span class="co">## [2,] -1.1352562 -0.03367863 -0.8969426  0.01508865 -1.0920117  0.9683429</span></span>
+<span><span class="co">## [3,] -1.3989641 -0.80769231 -1.3172581  0.12771185 -1.4992601  0.2891023</span></span>
+<span><span class="co">## [4,] -1.9346642 -0.49521709 -2.3886584  0.75266228 -1.4889543  0.1174061</span></span>
+<span><span class="co">## [5,] -2.1057687 -0.63841587 -2.9010526  0.88191339 -1.3608971 -0.7857143</span></span>
+<span><span class="co">## [6,] -1.1930286 -0.18361389 -1.7906647 -0.02347777 -1.4597754  0.5284052</span></span>
+<span><span class="co">##            [,7]        [,8]      [,9]      [,10]     [,11]       [,12]</span></span>
+<span><span class="co">## [1,] -2.5115873  0.50404299 -1.491716  0.7375736 -1.373570 -0.08244591</span></span>
+<span><span class="co">## [2,] -1.5603546 -0.98969426 -1.850197 -0.1799805 -1.207396  1.16819488</span></span>
+<span><span class="co">## [3,] -0.9100098  0.80695239 -1.465581 -0.8461538 -2.227268  0.93466424</span></span>
+<span><span class="co">## [4,] -2.5191316  0.05557168 -1.194329  0.3763311 -1.888658 -0.11336312</span></span>
+<span><span class="co">## [5,] -2.8557687  0.66062224 -1.635165  1.1179025 -2.027335 -0.34569614</span></span>
+<span><span class="co">## [6,] -2.2091742 -0.04859801 -1.270032 -0.3002405 -1.684655  0.54290834</span></span>
+<span><span class="co">##           [,13]       [,14]      [,15]    [,16]      [,17]      [,18]</span></span>
+<span><span class="co">## [1,] -0.8866369 -0.15660757 -1.1050789 1.760207 -1.5218931 -1.0563116</span></span>
+<span><span class="co">## [2,] -1.2430965  0.61464470 -0.8564596 1.637278 -1.5988161 -0.9230769</span></span>
+<span><span class="co">## [3,] -1.5583331  0.69911210 -0.8949211 1.703895 -2.1935893 -0.2005919</span></span>
+<span><span class="co">## [4,] -0.2513807  0.74309646 -1.8584811 1.680522 -0.8715482  0.7403351</span></span>
+<span><span class="co">## [5,] -0.5497252  0.09500907 -1.6708789 1.179761 -0.6237179  0.7945968</span></span>
+<span><span class="co">## [6,] -0.9330127  0.61602540 -1.0518829 1.196915 -1.6405445 -0.6584936</span></span>
+<span><span class="co">##           [,19]      [,20]</span></span>
+<span><span class="co">## [1,] -1.0507888  0.2815580</span></span>
+<span><span class="co">## [2,] -1.4017255 -0.1875248</span></span>
+<span><span class="co">## [3,] -1.4298813 -0.2926037</span></span>
+<span><span class="co">## [4,] -0.3097138 -1.1558676</span></span>
+<span><span class="co">## [5,] -0.9208789 -0.1192766</span></span>
+<span><span class="co">## [6,] -0.9201520 -0.5312500</span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="tokenizesequences">tokenizeSequences<a class="anchor" aria-label="anchor" href="#tokenizesequences"></a>
@@ -713,9 +703,9 @@ matrix</li>
 <p>Another approach to transforming a sequence into numerical values is
 tokenizing it into numbers. This is a common approach for recurrent
 neural networks where one letter corresponds to a single integer. In
-addition, we can add a start and stop tokens to our original sequences
-to differentiate between the beginning and end of the sequences.</p>
-<p>Parameters for <code>tokenizeSequences()</code></p>
+addition, we can add start and stop tokens to our original sequences to
+differentiate between the beginning and end of the sequences.</p>
+<p>Parameters for <code><a href="https://rdrr.io/pkg/immApex/man/tokenizeSequences.html" class="external-link">tokenizeSequences()</a></code></p>
 <ul>
 <li>
 <strong>add.startstop</strong> Add start and stop tokens to the
@@ -733,32 +723,27 @@ sequences to the max length of input.sequences</li>
 <strong>convert.to.matrix</strong> Return a matrix
 (<strong>TRUE</strong>) or a vector (<strong>FALSE</strong>)</li>
 </ul>
-<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">token.matrix</span> <span class="op">&lt;-</span> <span class="fu">tokenizeSequences</span><span class="op">(</span>input.sequences <span class="op">=</span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">sequences</span>, <span class="va">mutated.sequences</span><span class="op">)</span>, </span>
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">token.matrix</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/immApex/man/tokenizeSequences.html" class="external-link">tokenizeSequences</a></span><span class="op">(</span>input.sequences <span class="op">=</span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">sequences</span>, <span class="va">mutated.sequences</span><span class="op">)</span>, </span>
 <span>                                  add.startstop <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>                                  start.token <span class="op">=</span> <span class="st">"!"</span>,</span>
 <span>                                  stop.token <span class="op">=</span> <span class="st">"^"</span>, </span>
-<span>                                  convert.to.matrix <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] "Adding start and stop tokens..."</span></span>
-<span><span class="co">## [1] "Tokenizing sequences..."</span></span>
-<span><span class="co">## [1] "Padding sequences..."</span></span>
-<span><span class="co">## [1] "Preparing a tokenized matrix..."</span></span></code></pre>
-<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">token.matrix</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">18</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
+<span>                                  convert.to.matrix <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">token.matrix</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">18</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##                  [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12]</span></span>
-<span><span class="co">## CASFKRRPLNFYF       1    6    2   17   15   13    3    3   16    12     4    15</span></span>
-<span><span class="co">## CASDGLNSMSFTKYF     1    6    2   17    5    9   12    4   17    14    17    15</span></span>
-<span><span class="co">## CASVVDNYVKHHFKYF    1    6    2   17   21   21    5    4   20    21    13    10</span></span>
-<span><span class="co">## CASMEHTRMYDRTYF     1    6    2   17   14    8   10   18    3    14    20     5</span></span>
-<span><span class="co">## CASPFWKERYRYF       1    6    2   17   16   15   19   13    8     3    20     3</span></span>
-<span><span class="co">## CASMRIGYMRAGYF      1    6    2   17   14    3   11    9   20    14     3     2</span></span>
+<span><span class="co">## CASTCTMLANRYF       1    6    2   17   18    6   18   14   12     2     4     3</span></span>
+<span><span class="co">## CASFTKNEEETYF       1    6    2   17   15   18   13    4    8     8     8    18</span></span>
+<span><span class="co">## CASDGSGVAHHYF       1    6    2   17    5    9   17    9   21     2    10    10</span></span>
+<span><span class="co">## CASDILAYWYEYF       1    6    2   17    5   11   12    2   20    19    20     8</span></span>
+<span><span class="co">## CASADIMWPLCWYF      1    6    2   17    2    5   11   14   19    16    12     6</span></span>
+<span><span class="co">## CASHIPRENTYATFYF    1    6    2   17   10   11   16    3    8     4    18    20</span></span>
 <span><span class="co">##                  [,13] [,14] [,15] [,16] [,17] [,18]</span></span>
-<span><span class="co">## CASFKRRPLNFYF       20    15    23    24    24    24</span></span>
-<span><span class="co">## CASDGLNSMSFTKYF     18    13    20    15    23    24</span></span>
-<span><span class="co">## CASVVDNYVKHHFKYF    10    15    13    20    15    23</span></span>
-<span><span class="co">## CASMEHTRMYDRTYF      3    18    20    15    23    24</span></span>
-<span><span class="co">## CASPFWKERYRYF       20    15    23    24    24    24</span></span>
-<span><span class="co">## CASMRIGYMRAGYF       9    20    15    23    24    24</span></span></code></pre>
+<span><span class="co">## CASTCTMLANRYF       20    15    22    23    23    23</span></span>
+<span><span class="co">## CASFTKNEEETYF       20    15    22    23    23    23</span></span>
+<span><span class="co">## CASDGSGVAHHYF       20    15    22    23    23    23</span></span>
+<span><span class="co">## CASDILAYWYEYF       20    15    22    23    23    23</span></span>
+<span><span class="co">## CASADIMWPLCWYF      19    20    15    22    23    23</span></span>
+<span><span class="co">## CASHIPRENTYATFYF     2    18    15    20    15    22</span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="probabilitymatrix">probabilityMatrix<a class="anchor" aria-label="anchor" href="#probabilitymatrix"></a>
@@ -768,61 +753,54 @@ positional probability of sequences using
 <code>probabilityMatrixs()</code>. This function could represent a
 collection of antigen-specific sequences or even work on embedding a
 total repertoire.</p>
-<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">ppm.matrix</span> <span class="op">&lt;-</span> <span class="fu">probabilityMatrix</span><span class="op">(</span><span class="va">sequences</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] "Padding sequences..."</span></span>
-<span><span class="co">## [1] "Calculating Positional Probabilites for sequences..."</span></span></code></pre>
-<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">ppm.matrix</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">ppm.matrix</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/immApex/man/probabilityMatrix.html" class="external-link">probabilityMatrix</a></span><span class="op">(</span><span class="va">sequences</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">ppm.matrix</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##   Pos.1 Pos.2 Pos.3 Pos.4 Pos.5 Pos.6 Pos.7 Pos.8 Pos.9 Pos.10 Pos.11 Pos.12</span></span>
-<span><span class="co">## A     0     1     0 0.055 0.048 0.044 0.040 0.041 0.042  0.043  0.048  0.029</span></span>
-<span><span class="co">## R     0     0     0 0.041 0.046 0.062 0.044 0.052 0.054  0.056  0.042  0.042</span></span>
-<span><span class="co">## N     0     0     0 0.055 0.037 0.042 0.041 0.045 0.036  0.063  0.056  0.027</span></span>
-<span><span class="co">## D     0     0     0 0.057 0.047 0.042 0.042 0.051 0.051  0.048  0.047  0.037</span></span>
-<span><span class="co">## C     1     0     0 0.054 0.050 0.053 0.060 0.054 0.039  0.044  0.048  0.037</span></span>
-<span><span class="co">## Q     0     0     0 0.052 0.040 0.057 0.056 0.063 0.055  0.050  0.057  0.037</span></span>
+<span><span class="co">## A     0     1     0 0.055 0.063 0.054 0.041 0.042 0.051  0.059  0.060  0.044</span></span>
+<span><span class="co">## R     0     0     0 0.050 0.053 0.045 0.044 0.059 0.058  0.052  0.057  0.035</span></span>
+<span><span class="co">## N     0     0     0 0.057 0.058 0.043 0.054 0.050 0.044  0.065  0.046  0.029</span></span>
+<span><span class="co">## D     0     0     0 0.062 0.057 0.049 0.056 0.055 0.054  0.049  0.054  0.045</span></span>
+<span><span class="co">## C     1     0     0 0.048 0.042 0.054 0.056 0.049 0.050  0.035  0.050  0.042</span></span>
+<span><span class="co">## Q     0     0     0 0.051 0.049 0.057 0.046 0.050 0.056  0.049  0.048  0.030</span></span>
 <span><span class="co">##   Pos.13 Pos.14 Pos.15 Pos.16</span></span>
-<span><span class="co">## A  0.020  0.011      0      0</span></span>
-<span><span class="co">## R  0.027  0.009      0      0</span></span>
-<span><span class="co">## N  0.020  0.016      0      0</span></span>
-<span><span class="co">## D  0.027  0.009      0      0</span></span>
-<span><span class="co">## C  0.026  0.013      0      0</span></span>
-<span><span class="co">## Q  0.028  0.011      0      0</span></span></code></pre>
-<p>In addition, <code>probabilityMatrix()</code> can convert the
+<span><span class="co">## A  0.023  0.011      0      0</span></span>
+<span><span class="co">## R  0.022  0.013      0      0</span></span>
+<span><span class="co">## N  0.027  0.014      0      0</span></span>
+<span><span class="co">## D  0.020  0.014      0      0</span></span>
+<span><span class="co">## C  0.025  0.014      0      0</span></span>
+<span><span class="co">## Q  0.020  0.013      0      0</span></span></code></pre>
+<p>In addition, <code><a href="https://rdrr.io/pkg/immApex/man/probabilityMatrix.html" class="external-link">probabilityMatrix()</a></code> can convert the
 positional probability matrix into a positional weight matrix using
 log-likelihood using the argument <strong>convert.PWM</strong> = TRUE.
 We can provide a set of background frequencies for the amino acids with
 <strong>background.frequencies</strong> or leave this blank to assume a
 uniform distribution for all amino acids. Here, we are going to use an
 example background.</p>
-<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span></span>
 <span><span class="va">back.freq</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">1000</span>, <span class="fl">20</span><span class="op">)</span></span>
 <span><span class="va">back.freq</span> <span class="op">&lt;-</span> <span class="va">back.freq</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">back.freq</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">pwm.matrix</span> <span class="op">&lt;-</span> <span class="fu">probabilityMatrix</span><span class="op">(</span><span class="va">sequences</span>,</span>
+<span><span class="va">pwm.matrix</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/immApex/man/probabilityMatrix.html" class="external-link">probabilityMatrix</a></span><span class="op">(</span><span class="va">sequences</span>,</span>
 <span>                                max.length <span class="op">=</span> <span class="fl">20</span>,</span>
 <span>                                convert.PWM <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>                                background.frequencies <span class="op">=</span> <span class="va">back.freq</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] "Padding sequences..."</span></span>
-<span><span class="co">## [1] "Calculating Positional Probabilites for sequences..."</span></span>
-<span><span class="co">## [1] "Converting to Liklihoods for a PWM..."</span></span></code></pre>
-<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">pwm.matrix</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##       Pos.1     Pos.2     Pos.3      Pos.4      Pos.5       Pos.6       Pos.7</span></span>
-<span><span class="co">## A -6.157338  3.809888 -6.157338 -0.3499835 -0.5426286 -0.66548534 -0.79978643</span></span>
-<span><span class="co">## R -6.986931 -6.986931 -6.986931 -1.5946137 -1.4323423 -1.00965124 -1.49507807</span></span>
-<span><span class="co">## N -5.351911 -5.351911 -5.351911  0.4554440 -0.1039834  0.07435379  0.04040646</span></span>
-<span><span class="co">## D -4.282869 -4.282869 -4.282869  1.5751117  1.3020932  1.14339544  1.14339544</span></span>
-<span><span class="co">## C  6.732291 -3.234935 -3.234935  2.5464249  2.4374905  2.51995266  2.69580250</span></span>
-<span><span class="co">## Q -4.858371 -4.858371 -4.858371  0.8695490  0.4991805  0.99960951  0.97451853</span></span>
-<span><span class="co">##       Pos.8      Pos.9     Pos.10     Pos.11     Pos.12       Pos.13     Pos.14</span></span>
-<span><span class="co">## A -0.765021 -0.7310737 -0.6979068 -0.5426286 -1.2504478 -1.765021012 -2.5723759</span></span>
-<span><span class="co">## R -1.259011 -1.2055715 -1.1540412 -1.5606664 -1.5606664 -2.179576246 -3.6650031</span></span>
-<span><span class="co">## N  0.171651 -0.1424576  0.6480890  0.4809791 -0.5445560 -0.959593538 -1.2644481</span></span>
-<span><span class="co">## D  1.417570  1.4175704  1.3318405  1.3020932  0.9650582  0.524485605 -0.9609412</span></span>
-<span><span class="co">## C  2.546425  2.0869933  2.2569183  2.3797750  2.0129927  1.519952663  0.5724201</span></span>
-<span><span class="co">## Q  1.141629  0.9489834  0.8140539  0.9996095  0.3895560 -0.000390493 -1.2734090</span></span>
+<span>                                background.frequencies <span class="op">=</span> <span class="va">back.freq</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">pwm.matrix</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##       Pos.1     Pos.2     Pos.3      Pos.4      Pos.5      Pos.6      Pos.7</span></span>
+<span><span class="co">## A -6.157338  3.809888 -6.157338 -0.3499835 -0.1573384 -0.3759787 -0.7650210</span></span>
+<span><span class="co">## R -6.986931 -6.986931 -6.986931 -1.3145058 -1.2320437 -1.4633692 -1.4950781</span></span>
+<span><span class="co">## N -5.351911 -5.351911 -5.351911  0.5060700  0.5307321  0.1075207  0.4294488</span></span>
+<span><span class="co">## D -4.282869 -4.282869 -4.282869  1.6944106  1.5751117  1.3609869  1.5500207</span></span>
+<span><span class="co">## C  6.732291 -3.234935 -3.234935  2.3797750  2.1913299  2.5464249  2.5979552</span></span>
+<span><span class="co">## Q -4.858371 -4.858371 -4.858371  0.8420682  0.7854847  0.9996095  0.6962174</span></span>
+<span><span class="co">##        Pos.8      Pos.9     Pos.10     Pos.11      Pos.12     Pos.13     Pos.14</span></span>
+<span><span class="co">## A -0.7310737 -0.4568987 -0.2504478 -0.2266011 -0.66548534 -1.5723759 -2.5723759</span></span>
+<span><span class="co">## R -1.0800406 -1.1042881 -1.2590107 -1.1289502 -1.81700617 -2.4633692 -3.1795762</span></span>
+<span><span class="co">## N  0.3205144  0.1399421  0.6924832  0.2026779 -0.44502037 -0.5445560 -1.4450204</span></span>
+<span><span class="co">## D  1.5244856  1.4984904  1.3609869  1.4984904  1.24069264  0.1094481 -0.3759787</span></span>
+<span><span class="co">## C  2.4089214  2.4374905  1.9349902  2.4374905  2.19132992  1.4655049  0.6719558</span></span>
+<span><span class="co">## Q  0.8140539  0.9745185  0.7854847  0.7563384  0.09582482 -0.4660541 -1.0510166</span></span>
 <span><span class="co">##      Pos.15    Pos.16    Pos.17    Pos.18    Pos.19    Pos.20</span></span>
 <span><span class="co">## A -6.157338 -6.157338 -6.157338 -6.157338 -6.157338 -6.157338</span></span>
 <span><span class="co">## R -6.986931 -6.986931 -6.986931 -6.986931 -6.986931 -6.986931</span></span>
@@ -836,37 +814,37 @@ example background.</p>
 </h3>
 <p>Similar to the positional probability, we can also summarize a given
 set of sequences by the frequency of adjacency for a given set of amino
-acid or nucleotide residues using <code>adjacencyMatrix()</code>. For
+acid or nucleotide residues using <code><a href="https://rdrr.io/pkg/immApex/man/adjacencyMatrix.html" class="external-link">adjacencyMatrix()</a></code>. For
 this function, a matrix of n x n (defined by the length of
 <strong>sequence.dictionary</strong>) is created and the number of times
 a residue is adjacent to one another is calculated. We can
 <strong>normalize</strong> the values using the total number of residues
 evaluated.</p>
-<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">adj.matrix</span> <span class="op">&lt;-</span> <span class="fu">adjacencyMatrix</span><span class="op">(</span><span class="va">sequences</span>, </span>
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">adj.matrix</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/immApex/man/adjacencyMatrix.html" class="external-link">adjacencyMatrix</a></span><span class="op">(</span><span class="va">sequences</span>, </span>
 <span>                              normalize <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="va">adj.matrix</span></span></code></pre></div>
-<pre><code><span><span class="co">##      A  R  N  D    C   Q   E   G  H  I   L  K  M    F   P    S   T   W    Y  V</span></span>
-<span><span class="co">## A   32 39 35 24 1029  49  38  36 31 40  43 40 36   35  31 1090  40  40   89 45</span></span>
-<span><span class="co">## R   39 36 39 38   54  46  42  58 41 35  64 52 39   36  41   89  45  39   80 37</span></span>
-<span><span class="co">## N   35 39 54 42   37  29  33  27 35 31  48 40 38   52  44   95  32  36   83 46</span></span>
-<span><span class="co">## D   24 38 42 42   47  38  37  48 44 47  44 42 36   42  40   97  36  50   81 41</span></span>
-<span><span class="co">## C 1029 54 37 47   38  58  43  45 38 45  25 38 47   56  42   88  41  48  101 36</span></span>
-<span><span class="co">## Q   49 46 29 38   58  40  42  48 46 30  49 47 48   45  45   88  51  47  119 47</span></span>
-<span><span class="co">## E   38 42 33 37   43  42  46  40 43 47  46 52 49   37  49  109  46  41   85 35</span></span>
-<span><span class="co">## G   36 58 27 48   45  48  40  42 48 38  43 52 46   44  37   79  54  36  117 56</span></span>
-<span><span class="co">## H   31 41 35 44   38  46  43  48 34 45  43 43 31   48  51   83  56  35   81 36</span></span>
-<span><span class="co">## I   40 35 31 47   45  30  47  38 45 38  36 50 55   44  50   99  52  41   97 30</span></span>
-<span><span class="co">## L   43 64 48 44   25  49  46  43 43 36  60 32 46   41  60  115  38  37   96 52</span></span>
-<span><span class="co">## K   40 52 40 42   38  47  52  52 43 50  32 40 36   53  44   86  42  37   88 44</span></span>
-<span><span class="co">## M   36 39 38 36   47  48  49  46 31 55  46 36 36   36  39   89  39  35   87 44</span></span>
-<span><span class="co">## F   35 36 52 42   56  45  37  44 48 44  41 53 36   36  41  101  41  39 1079 42</span></span>
-<span><span class="co">## P   31 41 44 40   42  45  49  37 51 50  60 44 39   41  36  109  48  44   94 45</span></span>
-<span><span class="co">## S 1090 89 95 97   88  88 109  79 83 99 115 86 89  101 109  122  96 105  135 69</span></span>
-<span><span class="co">## T   40 45 32 36   41  51  46  54 56 52  38 42 39   41  48   96  54  45  107 39</span></span>
-<span><span class="co">## W   40 39 36 50   48  47  41  36 35 41  37 37 35   39  44  105  45  48   88 53</span></span>
-<span><span class="co">## Y   89 80 83 81  101 119  85 117 81 97  96 88 87 1079  94  135 107  88  128 85</span></span>
-<span><span class="co">## V   45 37 46 41   36  47  35  56 36 30  52 44 44   42  45   69  39  53   85 56</span></span></code></pre>
+<pre><code><span><span class="co">##      A  R   N   D    C  Q   E   G  H  I  L   K  M    F   P    S   T   W    Y  V</span></span>
+<span><span class="co">## A   34 56  40  37 1052 51  47  51 48 47 39  50 42   38  47 1089  37  49  113 39</span></span>
+<span><span class="co">## R   56 56  54  52   39 36  34  36 42 42 52  41 41   28  50   97  50  39   90 41</span></span>
+<span><span class="co">## N   40 54  44  48   37 52  45  48 31 40 43  42 43   34  44  100  49  50   92 38</span></span>
+<span><span class="co">## D   37 52  48  34   36 50  47  47 40 41 44  46 36   41  42  116  61  45  110 57</span></span>
+<span><span class="co">## C 1052 39  37  36   44 43  46  41 40 40 49  48 38   32  44   87  42  39   84 49</span></span>
+<span><span class="co">## Q   51 36  52  50   43 34  47  43 48 48 38  42 38   31  43   96  34  43   77 44</span></span>
+<span><span class="co">## E   47 34  45  47   46 47  52  48 38 41 37  33 44   36  41   92  50  45  111 36</span></span>
+<span><span class="co">## G   51 36  48  47   41 43  48  42 38 32 30  42 50   37  49  102  40  57   80 29</span></span>
+<span><span class="co">## H   48 42  31  40   40 48  38  38 28 39 42  48 35   45  47   99  52  34   72 46</span></span>
+<span><span class="co">## I   47 42  40  41   40 48  41  32 39 44 39  40 43   35  43   71  32  49   90 38</span></span>
+<span><span class="co">## L   39 52  43  44   49 38  37  30 42 39 36  43 36   39  47   82  42  51   97 36</span></span>
+<span><span class="co">## K   50 41  42  46   48 42  33  42 48 40 43  38 38   45  36   82  40  42  100 40</span></span>
+<span><span class="co">## M   42 41  43  36   38 38  44  50 35 43 36  38 38   32  35   86  40  40   78 45</span></span>
+<span><span class="co">## F   38 28  34  41   32 31  36  37 45 35 39  45 32   34  40   78  41  32 1082 34</span></span>
+<span><span class="co">## P   47 50  44  42   44 43  41  49 47 43 47  36 35   40  52  113  38  47  110 34</span></span>
+<span><span class="co">## S 1089 97 100 116   87 96  92 102 99 71 82  82 86   78 113  166  88  88  131 95</span></span>
+<span><span class="co">## T   37 50  49  61   42 34  50  40 52 32 42  40 40   41  38   88  50  43  106 39</span></span>
+<span><span class="co">## W   49 39  50  45   39 43  45  57 34 49 51  42 40   32  47   88  43  56  105 36</span></span>
+<span><span class="co">## Y  113 90  92 110   84 77 111  80 72 90 97 100 78 1082 110  131 106 105  146 66</span></span>
+<span><span class="co">## V   39 41  38  57   49 44  36  29 46 38 36  40 45   34  34   95  39  36   66 38</span></span></code></pre>
 </div>
 </div>
 <div class="section level2">
@@ -875,11 +853,11 @@ evaluated.</p>
 <div class="section level3">
 <h3 id="sequencedecoder">sequenceDecoder<a class="anchor" aria-label="anchor" href="#sequencedecoder"></a>
 </h3>
-<p>We have a function called <code>sequenceDecoder()</code> that
+<p>We have a function called <code><a href="https://rdrr.io/pkg/immApex/man/sequenceDecoder.html" class="external-link">sequenceDecoder()</a></code> that
 extracts sequences from one-hot or property-encoded matrices or arrays.
 This function can be applied to any generative approach to sequence
 generation.</p>
-<p>Parameters for <code>sequenceDecoder()</code></p>
+<p>Parameters for <code><a href="https://rdrr.io/pkg/immApex/man/sequenceDecoder.html" class="external-link">sequenceDecoder()</a></code></p>
 <ul>
 <li>
 <strong>sequence.matrix</strong> The encoded sequences to decode in
@@ -890,41 +868,35 @@ information - “onehotEncoder” or “propertyEncoder”</li>
 <li>
 <strong>aa.method.to.use</strong> The method or approach to use for
 the conversion corresponding to the input to
-<code>propertyEncoder()</code>. This will be ignored if
+<code><a href="https://rdrr.io/pkg/immApex/man/propertyEncoder.html" class="external-link">propertyEncoder()</a></code>. This will be ignored if
 <strong>encoder</strong> = “onehotEncoder”</li>
 <li>
 <strong>call.threshold</strong> The relative strictness of sequence
 calling with higher values being more stringent</li>
 </ul>
-<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">property.matrix</span> <span class="op">&lt;-</span> <span class="fu">propertyEncoder</span><span class="op">(</span>input.sequences <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">sequences</span>, <span class="va">mutated.sequences</span><span class="op">)</span>, method.to.use <span class="op">=</span> <span class="st">"FASGAI"</span>,</span>
-<span>    convert.to.matrix <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] "Padding sequences..."</span></span>
-<span><span class="co">## [1] "Property-based Encoding sequences..."</span></span>
-<span><span class="co">## [1] "Preparing a matrix..."</span></span></code></pre>
-<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">property.sequences</span> <span class="op">&lt;-</span> <span class="fu">sequenceDecoder</span><span class="op">(</span><span class="va">property.matrix</span>, encoder <span class="op">=</span> <span class="st">"propertyEncoder"</span>, aa.method.to.use <span class="op">=</span> <span class="st">"FASGAI"</span>,</span>
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">property.matrix</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/immApex/man/propertyEncoder.html" class="external-link">propertyEncoder</a></span><span class="op">(</span>input.sequences <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">sequences</span>, <span class="va">mutated.sequences</span><span class="op">)</span>, method.to.use <span class="op">=</span> <span class="st">"FASGAI"</span>,</span>
+<span>    convert.to.matrix <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">property.sequences</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/immApex/man/sequenceDecoder.html" class="external-link">sequenceDecoder</a></span><span class="op">(</span><span class="va">property.matrix</span>, encoder <span class="op">=</span> <span class="st">"propertyEncoder"</span>, aa.method.to.use <span class="op">=</span> <span class="st">"FASGAI"</span>,</span>
 <span>    call.threshold <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">sequences</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] "CASFKRRPLNFYF"    "CASDGLNSMSFTKYF"  "CASVVDNYVKHHFKYF" "CASMEHTRMYDRTYF" </span></span>
-<span><span class="co">## [5] "CASPFWKERYRYF"    "CASMRIGYMRAGYF"</span></span></code></pre>
-<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
+<pre><code><span><span class="co">## [1] "CASTCTMLANRYF"    "CASFTKNEEETYF"    "CASDGSGVAHHYF"    "CASDILAYWYEYF"   </span></span>
+<span><span class="co">## [5] "CASADIMWPLCWYF"   "CASHIPRENTYATFYF"</span></span></code></pre>
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">property.sequences</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] "CASFKRRPLNFYF"    "CASDGLNSMSFTKYF"  "CASVVDNYVKHHFKYF" "CASMEHTRMYDRTYF" </span></span>
-<span><span class="co">## [5] "CASPFWKERYRYF"    "CASMRIGYMRAGYF"</span></span></code></pre>
+<pre><code><span><span class="co">## [1] "CASTCTMLANRYF"    "CASFTKNEEETYF"    "CASDGSGVAHHYF"    "CASDILAYWYEYF"   </span></span>
+<span><span class="co">## [5] "CASADIMWPLCWYF"   "CASHIPRENTYATFYF"</span></span></code></pre>
 <p>A similar approach can be applied when using matrices or arrays
 derived from one-hot encoding:</p>
-<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">sequence.matrix</span> <span class="op">&lt;-</span> <span class="fu">onehotEncoder</span><span class="op">(</span>input.sequences <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">sequences</span>, <span class="va">mutated.sequences</span><span class="op">)</span>, convert.to.matrix <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] "Padding sequences..."</span></span>
-<span><span class="co">## [1] "One Hot Encoding sequences..."</span></span>
-<span><span class="co">## [1] "Preparing a matrix..."</span></span></code></pre>
-<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">OHE.sequences</span> <span class="op">&lt;-</span> <span class="fu">sequenceDecoder</span><span class="op">(</span><span class="va">sequence.matrix</span>, encoder <span class="op">=</span> <span class="st">"onehotEncoder"</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">sequence.matrix</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/immApex/man/onehotEncoder.html" class="external-link">onehotEncoder</a></span><span class="op">(</span>input.sequences <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">sequences</span>, <span class="va">mutated.sequences</span><span class="op">)</span>, convert.to.matrix <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">OHE.sequences</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/immApex/man/sequenceDecoder.html" class="external-link">sequenceDecoder</a></span><span class="op">(</span><span class="va">sequence.matrix</span>, encoder <span class="op">=</span> <span class="st">"onehotEncoder"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">OHE.sequences</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] "CASFKRRPLNFYF"    "CASDGLNSMSFTKYF"  "CASVVDNYVKHHFKYF" "CASMEHTRMYDRTYF" </span></span>
-<span><span class="co">## [5] "CASPFWKERYRYF"    "CASMRIGYMRAGYF"</span></span></code></pre>
+<pre><code><span><span class="co">## [1] "CASTCTMLANRYF"    "CASFTKNEEETYF"    "CASDGSGVAHHYF"    "CASDILAYWYEYF"   </span></span>
+<span><span class="co">## [5] "CASADIMWPLCWYF"   "CASHIPRENTYATFYF"</span></span></code></pre>
 </div>
 </div>
 <div class="section level2">
@@ -938,7 +910,7 @@ The code below is based on the <a href="https://github.com/ncborcherding/Trex" c
 overall structure of the autoencoder is the same. However, some of the
 parameters are modified for the sake of the vignette. We will use the
 <strong>sequence.matrix</strong> we generated above from the
-<code>onehotEncoder()</code>.</p>
+<code><a href="https://rdrr.io/pkg/immApex/man/onehotEncoder.html" class="external-link">onehotEncoder()</a></code>.</p>
 <p>The steps to train the model include:</p>
 <ol style="list-style-type: decimal">
 <li>Subsetting sequences</li>
@@ -946,13 +918,13 @@ parameters are modified for the sake of the vignette. We will use the
 <li>Forming the autoencoder structure - encoder and decoder</li>
 <li>Fitting the model</li>
 </ol>
-<div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">#Sampling to make Training/Valid Data</span></span>
+<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#Sampling to make Training/Validation Data Cohorts</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span></span>
 <span><span class="va">num_sequences</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">sequence.matrix</span><span class="op">)</span></span>
 <span><span class="va">indices</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">:</span><span class="va">num_sequences</span></span>
 <span><span class="va">train_indices</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="va">indices</span>, size <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">floor</a></span><span class="op">(</span><span class="fl">0.8</span> <span class="op">*</span> <span class="va">num_sequences</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">val_indices</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sets.html" class="external-link">setdiff</a></span><span class="op">(</span><span class="va">indices</span>, <span class="va">train_indices</span><span class="op">)</span></span>
+<span><span class="va">val_indices</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://generics.r-lib.org/reference/setops.html" class="external-link">setdiff</a></span><span class="op">(</span><span class="va">indices</span>, <span class="va">train_indices</span><span class="op">)</span></span>
 <span>    </span>
 <span><span class="va">x_train</span> <span class="op">&lt;-</span> <span class="va">sequence.matrix</span><span class="op">[</span><span class="va">train_indices</span>,<span class="op">]</span></span>
 <span><span class="va">x_val</span> <span class="op">&lt;-</span> <span class="va">sequence.matrix</span><span class="op">[</span><span class="va">val_indices</span>,<span class="op">]</span></span>
@@ -965,42 +937,42 @@ parameters are modified for the sake of the vignette. We will use the
 <span><span class="va">hidden_dim1</span> <span class="op">&lt;-</span> <span class="fl">256</span> <span class="co"># Hidden layer 1 size</span></span>
 <span><span class="va">hidden_dim2</span> <span class="op">&lt;-</span> <span class="fl">128</span>  <span class="co"># Hidden layer 2 size</span></span>
 <span>    </span>
-<span><span class="va">es</span> <span class="op">=</span> <span class="fu">callback_early_stopping</span><span class="op">(</span>monitor <span class="op">=</span> <span class="st">"val_loss"</span>,</span>
-<span>                             min_delta <span class="op">=</span> <span class="fl">0</span>,</span>
-<span>                             patience <span class="op">=</span> <span class="fl">4</span>,</span>
-<span>                             verbose <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>                             mode <span class="op">=</span> <span class="st">"min"</span><span class="op">)</span></span>
+<span><span class="va">es</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/callback_early_stopping.html" class="external-link">callback_early_stopping</a></span><span class="op">(</span>monitor <span class="op">=</span> <span class="st">"val_loss"</span>,</span>
+<span>                              min_delta <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>                              patience <span class="op">=</span> <span class="fl">4</span>,</span>
+<span>                              verbose <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>                              mode <span class="op">=</span> <span class="st">"min"</span><span class="op">)</span></span>
 <span>                    </span>
 <span><span class="co"># Define the Model</span></span>
-<span><span class="va">input_seq</span> <span class="op">&lt;-</span> <span class="fu">layer_input</span><span class="op">(</span>shape <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">input_shape</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">input_seq</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_input.html" class="external-link">layer_input</a></span><span class="op">(</span>shape <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">input_shape</span><span class="op">)</span><span class="op">)</span></span>
 <span>        </span>
 <span><span class="co"># Encoder Layers</span></span>
-<span><span class="va">encoded</span> <span class="op">&lt;-</span> <span class="va">input_seq</span> <span class="op">%&gt;%</span></span>
-<span>          <span class="fu">layer_dense</span><span class="op">(</span>units <span class="op">=</span> <span class="va">hidden_dim1</span>, name <span class="op">=</span> <span class="st">"e.1"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>          <span class="fu">layer_batch_normalization</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"bn.1"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>          <span class="fu">layer_activation</span><span class="op">(</span><span class="st">'leaky_relu'</span>, name <span class="op">=</span> <span class="st">"act.1"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>          <span class="fu">layer_dense</span><span class="op">(</span>units <span class="op">=</span> <span class="va">hidden_dim2</span>, name <span class="op">=</span> <span class="st">"e.2"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>          <span class="fu">layer_batch_normalization</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"bn.2"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>          <span class="fu">layer_activation</span><span class="op">(</span><span class="st">'leaky_relu'</span>, name <span class="op">=</span> <span class="st">"act.2"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>          <span class="fu">layer_dense</span><span class="op">(</span>units <span class="op">=</span> <span class="va">encoding_dim</span>, activation <span class="op">=</span> <span class="st">'selu'</span>, name <span class="op">=</span> <span class="st">"latent"</span><span class="op">)</span></span>
+<span><span class="va">encoded</span> <span class="op">&lt;-</span> <span class="va">input_seq</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>          <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_dense.html" class="external-link">layer_dense</a></span><span class="op">(</span>units <span class="op">=</span> <span class="va">hidden_dim1</span>, name <span class="op">=</span> <span class="st">"e.1"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>          <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_batch_normalization.html" class="external-link">layer_batch_normalization</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"bn.1"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>          <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_activation.html" class="external-link">layer_activation</a></span><span class="op">(</span><span class="st">'leaky_relu'</span>, name <span class="op">=</span> <span class="st">"act.1"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>          <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_dense.html" class="external-link">layer_dense</a></span><span class="op">(</span>units <span class="op">=</span> <span class="va">hidden_dim2</span>, name <span class="op">=</span> <span class="st">"e.2"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>          <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_batch_normalization.html" class="external-link">layer_batch_normalization</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"bn.2"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>          <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_activation.html" class="external-link">layer_activation</a></span><span class="op">(</span><span class="st">'leaky_relu'</span>, name <span class="op">=</span> <span class="st">"act.2"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>          <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_dense.html" class="external-link">layer_dense</a></span><span class="op">(</span>units <span class="op">=</span> <span class="va">encoding_dim</span>, activation <span class="op">=</span> <span class="st">'selu'</span>, name <span class="op">=</span> <span class="st">"latent"</span><span class="op">)</span></span>
 <span>                </span>
 <span><span class="co"># Decoder Layers</span></span>
-<span><span class="va">decoded</span> <span class="op">&lt;-</span> <span class="va">encoded</span> <span class="op">%&gt;%</span></span>
-<span>          <span class="fu">layer_dense</span><span class="op">(</span>units <span class="op">=</span> <span class="va">hidden_dim2</span>, name <span class="op">=</span> <span class="st">"d.2"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>          <span class="fu">layer_batch_normalization</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"bn.3"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>          <span class="fu">layer_activation</span><span class="op">(</span><span class="st">'leaky_relu'</span>, name <span class="op">=</span> <span class="st">"act.3"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>          <span class="fu">layer_dense</span><span class="op">(</span>units <span class="op">=</span> <span class="va">hidden_dim1</span>, name <span class="op">=</span> <span class="st">"d.1"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>          <span class="fu">layer_batch_normalization</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"bn.4"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>          <span class="fu">layer_activation</span><span class="op">(</span><span class="st">'leaky_relu'</span>, name <span class="op">=</span> <span class="st">"act.4"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>          <span class="fu">layer_dense</span><span class="op">(</span>units <span class="op">=</span> <span class="va">input_shape</span>, activation <span class="op">=</span> <span class="st">'sigmoid'</span><span class="op">)</span></span>
+<span><span class="va">decoded</span> <span class="op">&lt;-</span> <span class="va">encoded</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>          <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_dense.html" class="external-link">layer_dense</a></span><span class="op">(</span>units <span class="op">=</span> <span class="va">hidden_dim2</span>, name <span class="op">=</span> <span class="st">"d.2"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>          <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_batch_normalization.html" class="external-link">layer_batch_normalization</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"bn.3"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>          <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_activation.html" class="external-link">layer_activation</a></span><span class="op">(</span><span class="st">'leaky_relu'</span>, name <span class="op">=</span> <span class="st">"act.3"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>          <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_dense.html" class="external-link">layer_dense</a></span><span class="op">(</span>units <span class="op">=</span> <span class="va">hidden_dim1</span>, name <span class="op">=</span> <span class="st">"d.1"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>          <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_batch_normalization.html" class="external-link">layer_batch_normalization</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"bn.4"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>          <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_activation.html" class="external-link">layer_activation</a></span><span class="op">(</span><span class="st">'leaky_relu'</span>, name <span class="op">=</span> <span class="st">"act.4"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>          <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_dense.html" class="external-link">layer_dense</a></span><span class="op">(</span>units <span class="op">=</span> <span class="va">input_shape</span>, activation <span class="op">=</span> <span class="st">'sigmoid'</span><span class="op">)</span></span>
 <span>      </span>
 <span><span class="co"># Autoencoder Model</span></span>
-<span><span class="va">autoencoder</span> <span class="op">&lt;-</span> <span class="fu">keras_model</span><span class="op">(</span><span class="va">input_seq</span>, <span class="va">decoded</span><span class="op">)</span></span>
-<span><span class="va">autoencoder</span> <span class="op">%&gt;%</span> <span class="fu">keras</span><span class="fu">::</span><span class="fu"><a href="https://generics.r-lib.org/reference/compile.html" class="external-link">compile</a></span><span class="op">(</span>optimizer <span class="op">=</span> <span class="fu">optimizer_adam</span><span class="op">(</span>learning_rate <span class="op">=</span> <span class="fl">0.0001</span><span class="op">)</span>,</span>
+<span><span class="va">autoencoder</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/keras_model.html" class="external-link">keras_model</a></span><span class="op">(</span><span class="va">input_seq</span>, <span class="va">decoded</span><span class="op">)</span></span>
+<span><span class="va">autoencoder</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">keras</span><span class="fu">::</span><span class="fu"><a href="https://generics.r-lib.org/reference/compile.html" class="external-link">compile</a></span><span class="op">(</span>optimizer <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/optimizer_adam.html" class="external-link">optimizer_adam</a></span><span class="op">(</span>learning_rate <span class="op">=</span> <span class="fl">0.0001</span><span class="op">)</span>,</span>
 <span>                                   loss <span class="op">=</span> <span class="st">"mse"</span><span class="op">)</span></span>
 <span>      </span>
 <span><span class="co"># Train the model</span></span>
-<span><span class="va">history</span> <span class="op">&lt;-</span> <span class="va">autoencoder</span> <span class="op">%&gt;%</span> <span class="fu">fit</span><span class="op">(</span>x <span class="op">=</span> <span class="va">x_train</span>,</span>
+<span><span class="va">history</span> <span class="op">&lt;-</span> <span class="va">autoencoder</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://generics.r-lib.org/reference/fit.html" class="external-link">fit</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">x_train</span>,</span>
 <span>                               y <span class="op">=</span> <span class="va">x_train</span>,</span>
 <span>                               validation_data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">x_val</span>, <span class="va">x_val</span><span class="op">)</span>,</span>
 <span>                               epochs <span class="op">=</span> <span class="va">epochs</span>,</span>
@@ -1010,10 +982,10 @@ parameters are modified for the sake of the vignette. We will use the
 <span>                               verbose <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">history</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu">scale_color_viridis</span><span class="op">(</span>option <span class="op">=</span> <span class="st">"B"</span>, discrete <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu">scale_fill_manual</span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"black"</span>,<span class="st">"black"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu">theme_classic</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="immApex_files/figure-html/unnamed-chunk-19-1.png" width="700"></p>
+<span>  <span class="fu"><a href="https://sjmgarnier.github.io/viridis/reference/scale_viridis.html" class="external-link">scale_color_viridis</a></span><span class="op">(</span>option <span class="op">=</span> <span class="st">"B"</span>, discrete <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_fill_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"black"</span>,<span class="st">"black"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_classic</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="immApex_files/figure-html/unnamed-chunk-20-1.png" width="700"></p>
 </div>
 <div class="section level3">
 <h3 id="classifier">Classifier<a class="anchor" aria-label="anchor" href="#classifier"></a>
@@ -1022,17 +994,17 @@ parameters are modified for the sake of the vignette. We will use the
 networks. Building deep classifiers requires more data than classical
 machine learning methods, like random forests, so the vignette may not
 be ideal.</p>
-<p>The first step is to generate distinct types of sequences
-using <code>generateSequences()</code> and <code>onehotEncoder()</code> to
+<p>The first step is to generate distinct types of sequences using
+<code><a href="https://rdrr.io/pkg/immApex/man/generateSequences.html" class="external-link">generateSequences()</a></code> and <code><a href="https://rdrr.io/pkg/immApex/man/onehotEncoder.html" class="external-link">onehotEncoder()</a></code> to
 prepare the data for the model.</p>
-<div class="sourceCode" id="cb66"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">class1.sequences</span> <span class="op">&lt;-</span> <span class="fu">generateSequences</span><span class="op">(</span>prefix.motif <span class="op">=</span> <span class="st">"CAS"</span>,</span>
+<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">class1.sequences</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/immApex/man/generateSequences.html" class="external-link">generateSequences</a></span><span class="op">(</span>prefix.motif <span class="op">=</span> <span class="st">"CAS"</span>,</span>
 <span>                                      suffix.motif <span class="op">=</span> <span class="st">"YF"</span>,</span>
 <span>                                      number.of.sequences <span class="op">=</span> <span class="fl">10000</span>,</span>
 <span>                                      min.length <span class="op">=</span> <span class="fl">8</span>,</span>
 <span>                                      max.length <span class="op">=</span> <span class="fl">16</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">class2.sequences</span> <span class="op">&lt;-</span> <span class="fu">generateSequences</span><span class="op">(</span>prefix.motif <span class="op">=</span> <span class="st">"CASF"</span>,</span>
+<span><span class="va">class2.sequences</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/immApex/man/generateSequences.html" class="external-link">generateSequences</a></span><span class="op">(</span>prefix.motif <span class="op">=</span> <span class="st">"CASF"</span>,</span>
 <span>                                      suffix.motif <span class="op">=</span> <span class="st">"YF"</span>,</span>
 <span>                                      number.of.sequences <span class="op">=</span> <span class="fl">10000</span>,</span>
 <span>                                      min.length <span class="op">=</span> <span class="fl">8</span>,</span>
@@ -1040,33 +1012,30 @@ prepare the data for the model.</p>
 <span></span>
 <span><span class="va">labels</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">10000</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">10000</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">classifier.matrix</span> <span class="op">&lt;-</span> <span class="fu">onehotEncoder</span><span class="op">(</span>input.sequences <span class="op">=</span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">class1.sequences</span>, <span class="va">class2.sequences</span><span class="op">)</span>, </span>
+<span><span class="va">classifier.matrix</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/immApex/man/onehotEncoder.html" class="external-link">onehotEncoder</a></span><span class="op">(</span>input.sequences <span class="op">=</span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">class1.sequences</span>, <span class="va">class2.sequences</span><span class="op">)</span>, </span>
 <span>                                   convert.to.matrix <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] "Padding sequences..."</span></span>
-<span><span class="co">## [1] "One Hot Encoding sequences..."</span></span>
-<span><span class="co">## [1] "Preparing a matrix..."</span></span></code></pre>
 <p>Next, we will define and train the Keras classifier model using
 artificial sequences. We will use a simple convolutional neural network
 with 2 layers and then a single neuron that will classify the sequences
 into class 1 or class 2 (here, the labels are 0 and 1).</p>
-<div class="sourceCode" id="cb68"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#Input shape will be 1D as we are using a matrix</span></span>
 <span><span class="va">input.shape</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">classifier.matrix</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span></span>
 <span></span>
 <span><span class="co">#Simple model structure</span></span>
-<span><span class="va">classifier.model</span> <span class="op">&lt;-</span> <span class="fu">keras_model_sequential</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
-<span>                        <span class="fu">layer_dense</span><span class="op">(</span>units <span class="op">=</span> <span class="fl">128</span>, activation <span class="op">=</span> <span class="st">"relu"</span>, </span>
-<span>                                    input_shape <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">input.shape</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>                        <span class="fu">layer_dense</span><span class="op">(</span>units <span class="op">=</span> <span class="fl">32</span>, activation <span class="op">=</span> <span class="st">"relu"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>                        <span class="fu">layer_dense</span><span class="op">(</span>units <span class="op">=</span> <span class="fl">1</span>, activation <span class="op">=</span> <span class="st">"sigmoid"</span><span class="op">)</span></span>
+<span><span class="va">classifier.model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/keras_model_sequential.html" class="external-link">keras_model_sequential</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>                        <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_dense.html" class="external-link">layer_dense</a></span><span class="op">(</span>units <span class="op">=</span> <span class="fl">128</span>, activation <span class="op">=</span> <span class="st">"relu"</span>, </span>
+<span>                                    input_shape <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">input.shape</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>                        <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_dense.html" class="external-link">layer_dense</a></span><span class="op">(</span>units <span class="op">=</span> <span class="fl">32</span>, activation <span class="op">=</span> <span class="st">"relu"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>                        <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_dense.html" class="external-link">layer_dense</a></span><span class="op">(</span>units <span class="op">=</span> <span class="fl">1</span>, activation <span class="op">=</span> <span class="st">"sigmoid"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">classifier.model</span> <span class="op">%&gt;%</span> <span class="fu">compile</span><span class="op">(</span></span>
-<span>        optimizer <span class="op">=</span> <span class="fu">optimizer_adam</span><span class="op">(</span>learning_rate <span class="op">=</span> <span class="fl">0.00001</span><span class="op">)</span>,</span>
+<span><span class="va">classifier.model</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://generics.r-lib.org/reference/compile.html" class="external-link">compile</a></span><span class="op">(</span></span>
+<span>        optimizer <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/optimizer_adam.html" class="external-link">optimizer_adam</a></span><span class="op">(</span>learning_rate <span class="op">=</span> <span class="fl">0.00001</span><span class="op">)</span>,</span>
 <span>        loss <span class="op">=</span> <span class="st">"binary_crossentropy"</span>,</span>
 <span>        metrics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"accuracy"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="co">#Seperating data and labels</span></span>
+<span><span class="co">#Separating data and labels</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span></span>
 <span><span class="va">val_indices</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">classifier.matrix</span><span class="op">)</span>, <span class="fl">10000</span><span class="op">*</span><span class="fl">0.2</span><span class="op">)</span></span>
 <span><span class="va">x_val</span> <span class="op">&lt;-</span> <span class="va">classifier.matrix</span><span class="op">[</span><span class="va">val_indices</span>,<span class="op">]</span></span>
@@ -1076,7 +1045,7 @@ into class 1 or class 2 (here, the labels are 0 and 1).</p>
 <span><span class="va">train_labels</span> <span class="op">&lt;-</span> <span class="va">labels</span><span class="op">[</span><span class="op">-</span><span class="va">val_indices</span><span class="op">]</span></span>
 <span></span>
 <span><span class="co">#Training the classifier.model</span></span>
-<span><span class="va">history</span> <span class="op">&lt;-</span> <span class="va">classifier.model</span> <span class="op">%&gt;%</span> <span class="fu">fit</span><span class="op">(</span><span class="va">x_train</span>, </span>
+<span><span class="va">history</span> <span class="op">&lt;-</span> <span class="va">classifier.model</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://generics.r-lib.org/reference/fit.html" class="external-link">fit</a></span><span class="op">(</span><span class="va">x_train</span>, </span>
 <span>                                    <span class="va">train_labels</span>, </span>
 <span>                                    epochs <span class="op">=</span> <span class="fl">20</span>, </span>
 <span>                                    batch_size <span class="op">=</span> <span class="fl">32</span>, </span>
@@ -1085,13 +1054,13 @@ into class 1 or class 2 (here, the labels are 0 and 1).</p>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">history</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu">scale_color_viridis</span><span class="op">(</span>option <span class="op">=</span> <span class="st">"B"</span>, discrete <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu">scale_fill_manual</span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"black"</span>,<span class="st">"black"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu">theme_classic</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="immApex_files/figure-html/unnamed-chunk-21-1.png" width="700"></p>
+<span>  <span class="fu"><a href="https://sjmgarnier.github.io/viridis/reference/scale_viridis.html" class="external-link">scale_color_viridis</a></span><span class="op">(</span>option <span class="op">=</span> <span class="st">"B"</span>, discrete <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_fill_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"black"</span>,<span class="st">"black"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_classic</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="immApex_files/figure-html/unnamed-chunk-22-1.png" width="700"></p>
 <p>Here, we can achieve a validation accuracy of 98.25%, which is
 impressive. But to contextualize, we used
-<code>generateSequences()</code> and distinct motifs - “CAS” vs “CASF”
+<code><a href="https://rdrr.io/pkg/immApex/man/generateSequences.html" class="external-link">generateSequences()</a></code> and distinct motifs - “CAS” vs “CASF”
 to create our 2 classes of sequences. Using sequences from experimental
 data will likely result in lower accuracy or require greater model
 complexity.</p>
@@ -1101,23 +1070,23 @@ complexity.</p>
 <div class="section level2">
 <h2 id="conclusion">Conclusion<a class="anchor" aria-label="anchor" href="#conclusion"></a>
 </h2>
-<p>This has been a general overview of the capabilities of immApex for
-processing immune receptor sequences and making deep learning models. If
-you have any questions, comments, or suggestions, feel free to visit the
-<a href="https://github.com/ncborcherding/immApex" class="external-link">GitHub
+<p>This has been a general overview of the capabilities of
+<strong>immApex</strong> for processing immune receptor sequences and
+making deep learning models. If you have any questions, comments, or
+suggestions, feel free to visit the <a href="https://github.com/ncborcherding/immApex" class="external-link">GitHub
 repository</a>.</p>
 <div class="section level3">
 <h3 id="session-info">Session Info<a class="anchor" aria-label="anchor" href="#session-info"></a>
 </h3>
-<div class="sourceCode" id="cb69"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## R version 4.3.0 (2023-04-21)</span></span>
-<span><span class="co">## Platform: aarch64-apple-darwin20 (64-bit)</span></span>
-<span><span class="co">## Running under: macOS 14.0</span></span>
+<pre><code><span><span class="co">## R version 4.4.1 (2024-06-14)</span></span>
+<span><span class="co">## Platform: aarch64-apple-darwin20</span></span>
+<span><span class="co">## Running under: macOS Sonoma 14.6</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## Matrix products: default</span></span>
-<span><span class="co">## BLAS:   /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRblas.0.dylib </span></span>
-<span><span class="co">## LAPACK: /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.11.0</span></span>
+<span><span class="co">## BLAS:   /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRblas.0.dylib </span></span>
+<span><span class="co">## LAPACK: /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.0</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## locale:</span></span>
 <span><span class="co">## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8</span></span>
@@ -1130,65 +1099,61 @@ repository</a>.</p>
 <span><span class="co">## </span></span>
 <span><span class="co">## other attached packages:</span></span>
 <span><span class="co">## [1] dplyr_1.1.4       viridis_0.6.5     viridisLite_0.4.2 ggplot2_3.5.1    </span></span>
-<span><span class="co">## [5] keras_2.15.0      immApex_0.99.0   </span></span>
+<span><span class="co">## [5] keras_2.15.0      immApex_0.99.1   </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## loaded via a namespace (and not attached):</span></span>
 <span><span class="co">##  [1] tidyselect_1.2.1            farver_2.1.2               </span></span>
-<span><span class="co">##  [3] tensorflow_2.16.0           bitops_1.0-8               </span></span>
-<span><span class="co">##  [5] fastmap_1.2.0               SingleCellExperiment_1.24.0</span></span>
-<span><span class="co">##  [7] RCurl_1.98-1.16             digest_0.6.36              </span></span>
-<span><span class="co">##  [9] lifecycle_1.0.4             magrittr_2.0.3             </span></span>
-<span><span class="co">## [11] compiler_4.3.0              rlang_1.1.4                </span></span>
-<span><span class="co">## [13] sass_0.4.9                  tools_4.3.0                </span></span>
-<span><span class="co">## [15] utf8_1.2.4                  yaml_2.3.10                </span></span>
-<span><span class="co">## [17] knitr_1.48                  labeling_0.4.3             </span></span>
-<span><span class="co">## [19] S4Arrays_1.2.0              htmlwidgets_1.6.4          </span></span>
-<span><span class="co">## [21] curl_5.2.1                  reticulate_1.37.0          </span></span>
-<span><span class="co">## [23] here_1.0.1                  DelayedArray_0.28.0        </span></span>
-<span><span class="co">## [25] xml2_1.3.6                  abind_1.4-5                </span></span>
-<span><span class="co">## [27] withr_3.0.1                 purrr_1.0.2                </span></span>
-<span><span class="co">## [29] BiocGenerics_0.48.1         desc_1.4.3                 </span></span>
-<span><span class="co">## [31] grid_4.3.0                  hash_2.2.6.3               </span></span>
-<span><span class="co">## [33] stats4_4.3.0                fansi_1.0.6                </span></span>
-<span><span class="co">## [35] colorspace_2.1-1            scales_1.3.0               </span></span>
-<span><span class="co">## [37] zeallot_0.1.0               SummarizedExperiment_1.32.0</span></span>
-<span><span class="co">## [39] cli_3.6.3                   rmarkdown_2.27             </span></span>
-<span><span class="co">## [41] crayon_1.5.3                ragg_1.3.2                 </span></span>
-<span><span class="co">## [43] generics_0.1.3              rstudioapi_0.16.0          </span></span>
-<span><span class="co">## [45] httr_1.4.7                  tfruns_1.5.3               </span></span>
-<span><span class="co">## [47] cachem_1.1.0                stringr_1.5.1              </span></span>
-<span><span class="co">## [49] splines_4.3.0               zlibbioc_1.48.0            </span></span>
-<span><span class="co">## [51] rvest_1.0.4                 formatR_1.14               </span></span>
-<span><span class="co">## [53] selectr_0.4-2               XVector_0.42.0             </span></span>
-<span><span class="co">## [55] matrixStats_1.3.0           base64enc_0.1-3            </span></span>
-<span><span class="co">## [57] vctrs_0.6.5                 Matrix_1.6-5               </span></span>
-<span><span class="co">## [59] jsonlite_1.8.8              IRanges_2.36.0             </span></span>
-<span><span class="co">## [61] S4Vectors_0.40.2            systemfonts_1.1.0          </span></span>
-<span><span class="co">## [63] jquerylib_0.1.4             glue_1.7.0                 </span></span>
-<span><span class="co">## [65] pkgdown_2.0.9               stringi_1.8.4              </span></span>
-<span><span class="co">## [67] gtable_0.3.5                GenomeInfoDb_1.38.6        </span></span>
-<span><span class="co">## [69] GenomicRanges_1.54.1        munsell_0.5.1              </span></span>
-<span><span class="co">## [71] tibble_3.2.1                pillar_1.9.0               </span></span>
-<span><span class="co">## [73] htmltools_0.5.8.1           GenomeInfoDbData_1.2.11    </span></span>
-<span><span class="co">## [75] R6_2.5.1                    textshaping_0.4.0          </span></span>
-<span><span class="co">## [77] rprojroot_2.0.4             evaluate_0.24.0            </span></span>
-<span><span class="co">## [79] lattice_0.22-6              Biobase_2.62.0             </span></span>
-<span><span class="co">## [81] highr_0.11                  png_0.1-8                  </span></span>
-<span><span class="co">## [83] memoise_2.0.1               bslib_0.8.0                </span></span>
-<span><span class="co">## [85] Rcpp_1.0.13                 nlme_3.1-165               </span></span>
-<span><span class="co">## [87] gridExtra_2.3               SparseArray_1.2.4          </span></span>
-<span><span class="co">## [89] mgcv_1.9-1                  whisker_0.4.1              </span></span>
-<span><span class="co">## [91] xfun_0.46                   fs_1.6.4                   </span></span>
-<span><span class="co">## [93] MatrixGenerics_1.14.0       pkgconfig_2.0.3</span></span></code></pre>
+<span><span class="co">##  [3] tensorflow_2.16.0           fastmap_1.2.0              </span></span>
+<span><span class="co">##  [5] SingleCellExperiment_1.26.0 digest_0.6.36              </span></span>
+<span><span class="co">##  [7] lifecycle_1.0.4             magrittr_2.0.3             </span></span>
+<span><span class="co">##  [9] compiler_4.4.1              rlang_1.1.4                </span></span>
+<span><span class="co">## [11] sass_0.4.9                  tools_4.4.1                </span></span>
+<span><span class="co">## [13] utf8_1.2.4                  yaml_2.3.10                </span></span>
+<span><span class="co">## [15] knitr_1.48                  labeling_0.4.3             </span></span>
+<span><span class="co">## [17] S4Arrays_1.4.1              htmlwidgets_1.6.4          </span></span>
+<span><span class="co">## [19] curl_5.2.1                  reticulate_1.38.0          </span></span>
+<span><span class="co">## [21] DelayedArray_0.30.1         xml2_1.3.6                 </span></span>
+<span><span class="co">## [23] abind_1.4-5                 withr_3.0.1                </span></span>
+<span><span class="co">## [25] BiocGenerics_0.50.0         desc_1.4.3                 </span></span>
+<span><span class="co">## [27] grid_4.4.1                  hash_2.2.6.3               </span></span>
+<span><span class="co">## [29] stats4_4.4.1                fansi_1.0.6                </span></span>
+<span><span class="co">## [31] colorspace_2.1-1            scales_1.3.0               </span></span>
+<span><span class="co">## [33] zeallot_0.1.0               SummarizedExperiment_1.34.0</span></span>
+<span><span class="co">## [35] cli_3.6.3                   rmarkdown_2.27             </span></span>
+<span><span class="co">## [37] crayon_1.5.3                ragg_1.3.2                 </span></span>
+<span><span class="co">## [39] generics_0.1.3              rstudioapi_0.16.0          </span></span>
+<span><span class="co">## [41] httr_1.4.7                  tfruns_1.5.3               </span></span>
+<span><span class="co">## [43] cachem_1.1.0                stringr_1.5.1              </span></span>
+<span><span class="co">## [45] zlibbioc_1.50.0             splines_4.4.1              </span></span>
+<span><span class="co">## [47] rvest_1.0.4                 formatR_1.14               </span></span>
+<span><span class="co">## [49] selectr_0.4-2               XVector_0.44.0             </span></span>
+<span><span class="co">## [51] matrixStats_1.3.0           base64enc_0.1-3            </span></span>
+<span><span class="co">## [53] vctrs_0.6.5                 Matrix_1.7-0               </span></span>
+<span><span class="co">## [55] jsonlite_1.8.8              IRanges_2.38.1             </span></span>
+<span><span class="co">## [57] S4Vectors_0.42.1            systemfonts_1.1.0          </span></span>
+<span><span class="co">## [59] jquerylib_0.1.4             glue_1.7.0                 </span></span>
+<span><span class="co">## [61] pkgdown_2.1.0               stringi_1.8.4              </span></span>
+<span><span class="co">## [63] gtable_0.3.5                GenomeInfoDb_1.40.1        </span></span>
+<span><span class="co">## [65] GenomicRanges_1.56.1        UCSC.utils_1.0.0           </span></span>
+<span><span class="co">## [67] munsell_0.5.1               tibble_3.2.1               </span></span>
+<span><span class="co">## [69] pillar_1.9.0                htmltools_0.5.8.1          </span></span>
+<span><span class="co">## [71] GenomeInfoDbData_1.2.12     R6_2.5.1                   </span></span>
+<span><span class="co">## [73] textshaping_0.4.0           evaluate_0.24.0            </span></span>
+<span><span class="co">## [75] lattice_0.22-6              Biobase_2.64.0             </span></span>
+<span><span class="co">## [77] highr_0.11                  png_0.1-8                  </span></span>
+<span><span class="co">## [79] bslib_0.8.0                 Rcpp_1.0.13                </span></span>
+<span><span class="co">## [81] gridExtra_2.3               SparseArray_1.4.8          </span></span>
+<span><span class="co">## [83] nlme_3.1-166                mgcv_1.9-1                 </span></span>
+<span><span class="co">## [85] whisker_0.4.1               xfun_0.46                  </span></span>
+<span><span class="co">## [87] fs_1.6.4                    MatrixGenerics_1.16.0      </span></span>
+<span><span class="co">## [89] pkgconfig_2.0.3</span></span></code></pre>
 </div>
 </div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
 
-        <nav id="toc" data-toggle="toc"><h2 data-toc-skip>Contents</h2>
-    </nav>
-</div>
+      </div>
 
 </div>
 
@@ -1201,16 +1166,16 @@ repository</a>.</p>
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
 </div>
 
       </footer>
 </div>
 
-  
 
 
-  
+
+
 
   </body>
 </html>

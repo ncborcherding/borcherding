@@ -12,14 +12,13 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><meta property="og:title" content="Single-cell Gene Set Enrichment Analysis">
-<meta property="og:description" content="scRepertoire">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
-    
+
 
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -33,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scRepertoire</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.0.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.0.8</span>
       </span>
     </div>
 
@@ -48,7 +47,7 @@
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Vignettes
-     
+
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
@@ -119,7 +118,7 @@
 <li>
   <a href="https://github.com/ncborcherding/scRepertoire/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
-     
+
   </a>
 </li>
       </ul>
@@ -130,14 +129,14 @@
 </div>
 <!--/.navbar -->
 
-      
+
 
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Single-cell Gene Set Enrichment Analysis</h1>
             
-            <h4 data-toc-skip class="date">Compiled: August 09,
+            <h4 data-toc-skip class="date">Compiled: October 18,
 2024</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ncborcherding/scRepertoire/blob/HEAD/vignettes/articles/Running_Escape.Rmd" class="external-link"><code>vignettes/articles/Running_Escape.Rmd</code></a></small>
@@ -256,9 +255,9 @@ approach and generating an empirical cumulative distribution function
 for each individual cell. The enrichment score is defined for a gene set
 (<em>G</em>) using the number of genes in the gene set (<em>NG</em>) and
 total number of genes (<em>N</em>).</p>
-<p><span class="math display">\[
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>E</mi><mi>S</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>G</mi><mo>,</mo><mi>S</mi><mo stretchy="true" form="postfix">)</mo></mrow><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></munderover><mrow><mo stretchy="true" form="prefix">[</mo><msubsup><mi>P</mi><mi>W</mi><mi>G</mi></msubsup><mrow><mo stretchy="true" form="prefix">(</mo><mi>G</mi><mo>,</mo><mi>S</mi><mo>,</mo><mi>i</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>−</mo><msub><mi>P</mi><mrow><mi>N</mi><mi>G</mi></mrow></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>G</mi><mo>,</mo><mi>S</mi><mo>,</mo><mi>i</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo stretchy="true" form="postfix">]</mo></mrow></mrow><annotation encoding="application/x-tex">
 ES(G,S) \sum_{i = 1}^{n} [P_W^G(G,S,i)-P_{NG}(G,S,i)]
-\]</span> Please see the following <a href="https://pubmed.ncbi.nlm.nih.gov/19847166/" class="external-link">citation</a> for more
+</annotation></semantics></math> Please see the following <a href="https://pubmed.ncbi.nlm.nih.gov/19847166/" class="external-link">citation</a> for more
 information.</p>
 </div>
 <div class="section level4">
@@ -270,9 +269,9 @@ density function. But like ssGSEA, the ultimate enrichment score
 reported is based on the maximum value of the random walk statistic.
 GSVA appears to have better overall consistency and runs faster than
 ssGSEA.</p>
-<p><span class="math display">\[
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>E</mi><msubsup><mi>S</mi><mrow><mi>j</mi><mi>k</mi></mrow><mrow><mi>m</mi><mi>a</mi><mi>x</mi></mrow></msubsup><mo>=</mo><msub><mi>V</mi><mrow><mi>j</mi><mi>k</mi></mrow></msub><mrow><mo stretchy="true" form="prefix">[</mo><mi>m</mi><mi>a</mi><msub><mi>x</mi><mrow><mi>l</mi><mo>=</mo><mn>1</mn><mo>,</mo><mi>.</mi><mi>.</mi><mi>.</mi><mo>,</mo><mi>p</mi></mrow></msub><mo stretchy="false" form="prefix">|</mo><msub><mi>v</mi><mrow><mi>j</mi><mi>k</mi></mrow></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>l</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo stretchy="true" form="postfix">]</mo></mrow></mrow><annotation encoding="application/x-tex">
 ES_{jk}^{max} = V_{jk} [max_{l=1,...,p}|v_{jk}(l)]
-\]</span> Please see the following <a href="https://pubmed.ncbi.nlm.nih.gov/23323831/" class="external-link">citation</a> for more
+</annotation></semantics></math> Please see the following <a href="https://pubmed.ncbi.nlm.nih.gov/23323831/" class="external-link">citation</a> for more
 information.</p>
 </div>
 <div class="section level4">
@@ -291,14 +290,15 @@ information.</p>
 </h4>
 <p>UCell calculates a Mann-Whitney U statistic based on the gene rank
 list. <strong>Importantly</strong>, UCell has a cut-off for ranked genes
-(<span class="math inline">\(r_{max}\)</span>) at 1500 - this is per
-design as drop-out in single-cell can alter enrichment results. This
-also substantially speeds the calculations up.</p>
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>r</mi><mrow><mi>m</mi><mi>a</mi><mi>x</mi></mrow></msub><annotation encoding="application/x-tex">r_{max}</annotation></semantics></math>)
+at 1500 - this is per design as drop-out in single-cell can alter
+enrichment results. This also substantially speeds the calculations
+up.</p>
 <p>The enrichment score output is then calculated using the complement
 of the U statistic scaled by the gene set size and cut-off.</p>
-<p><span class="math display">\[
+<p><span class="math display">$$
 U_j^` = 1-\frac{U_j}{n \bullet r_{max}}
-\]</span></p>
+$$</span></p>
 <p>Please see the following <a href="https://pubmed.ncbi.nlm.nih.gov/34285779/" class="external-link">citation</a> for more
 information.</p>
 </div>
@@ -351,11 +351,11 @@ caution.</p>
 <span>                                   min.size <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></code></pre></div>
 <p>We can visualize the raw results with a ggplot:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">enrichment.scores</span><span class="op">)</span>, </span>
-<span>      mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">`HALLMARK-DNA-REPAIR`</span>, <span class="va">`HALLMARK-G2M-CHECKPOINT`</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu">theme_classic</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu">theme</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">enrichment.scores</span><span class="op">)</span>, </span>
+<span>      mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">`HALLMARK-DNA-REPAIR`</span>, <span class="va">`HALLMARK-G2M-CHECKPOINT`</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_classic</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Running_Escape_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
 <p>Multi-core support is for all methods is available through <a href="https://bioconductor.org/packages/release/bioc/html/BiocParallel.html" class="external-link">BiocParallel</a>.
 To add more cores, use the argument <strong>BPPARAM</strong> to
@@ -392,8 +392,8 @@ visualization/workflow we prefer - here we will use just
 <span><span class="va">colorblind_vector</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/palettes.html" class="external-link">hcl.colors</a></span><span class="op">(</span>n<span class="op">=</span><span class="fl">7</span>, palette <span class="op">=</span> <span class="st">"inferno"</span>, fixup <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">FeaturePlot</span><span class="op">(</span><span class="va">scRep_example</span>, <span class="st">"HALLMARK-APOPTOSIS"</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu">scale_color_gradientn</span><span class="op">(</span>colors <span class="op">=</span> <span class="va">colorblind_vector</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu">theme</span><span class="op">(</span>plot.title <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_gradient.html" class="external-link">scale_color_gradientn</a></span><span class="op">(</span>colors <span class="op">=</span> <span class="va">colorblind_vector</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Running_Escape_files/figure-html/unnamed-chunk-11-1.png" width="700"></p>
 </div>
 <div class="section level3">
@@ -535,14 +535,14 @@ available color palettes can be viewed with <code><a href="https://rdrr.io/r/grD
 <p><img src="Running_Escape_files/figure-html/unnamed-chunk-17-1.png" width="700"></p>
 <p>Alternatively, we can add an additional layer to the ggplot object
 that is returned by the visualizations using something like
-<code>scale_fill_gradientn()</code> for continuous values or
-<code>scale_fill_manual()</code> for the categorical variables.</p>
+<code><a href="https://ggplot2.tidyverse.org/reference/scale_gradient.html" class="external-link">scale_fill_gradientn()</a></code> for continuous values or
+<code><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_fill_manual()</a></code> for the categorical variables.</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">heatmapEnrichment</span><span class="op">(</span><span class="va">scRep_example</span>, </span>
 <span>                  group.by <span class="op">=</span> <span class="st">"ident"</span>,</span>
 <span>                  gene.set.use <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">scRep_example</span><span class="op">@</span><span class="va">assays</span><span class="op">$</span><span class="va">escape.ssGSEA</span><span class="op">@</span><span class="va">data</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">12</span><span class="op">]</span>,</span>
 <span>                  assay <span class="op">=</span> <span class="st">"escape.ssGSEA"</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu">scale_fill_gradientn</span><span class="op">(</span>colors <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rev.html" class="external-link">rev</a></span><span class="op">(</span><span class="fu">brewer.pal</span><span class="op">(</span><span class="fl">11</span>, <span class="st">"RdYlBu"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> </span></code></pre></div>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_gradient.html" class="external-link">scale_fill_gradientn</a></span><span class="op">(</span>colors <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rev.html" class="external-link">rev</a></span><span class="op">(</span><span class="fu">brewer.pal</span><span class="op">(</span><span class="fl">11</span>, <span class="st">"RdYlBu"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> </span></code></pre></div>
 <p><img src="Running_Escape_files/figure-html/unnamed-chunk-18-1.png" width="700"></p>
 </div>
 <div class="section level3">
@@ -780,9 +780,7 @@ is the total feature space for each cell.</p>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
 
-        <nav id="toc" data-toggle="toc"><h2 data-toc-skip>Contents</h2>
-    </nav>
-</div>
+      </div>
 
 </div>
 
@@ -795,16 +793,16 @@ is the total feature space for each cell.</p>
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
 </div>
 
       </footer>
 </div>
 
-  
 
 
-  
+
+
 
   </body>
 </html>
