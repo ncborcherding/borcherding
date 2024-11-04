@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scRepertoire</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.0.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.2.1</span>
       </span>
     </div>
 
@@ -114,6 +114,12 @@
     <div class="section level2">
 <h2 class="page-header" data-toc-text="2.0.8" id="screpertoire-version-208">scRepertoire VERSION 2.0.8<a class="anchor" aria-label="anchor" href="#screpertoire-version-208"></a></h2>
 <div class="section level3">
+<h3 id="new-features-2-0-8">NEW FEATURES<a class="anchor" aria-label="anchor" href="#new-features-2-0-8"></a></h3>
+<ul><li>Added <code><a href="../reference/getContigDoublets.html">getContigDoublets()</a></code> experimental function to identify TCR and BCR doublets as a preprocessing step to <code><a href="../reference/combineExpression.html">combineExpression()</a></code>
+</li>
+<li>Added <strong>proportion</strong> argument to <code><a href="../reference/clonalCompare.html">clonalCompare()</a></code> so that when set to FALSE, the comparison will be based on frequency normalized by per-sample repertoire diversity.</li>
+</ul></div>
+<div class="section level3">
 <h3 id="underlying-changes-2-0-8">UNDERLYING CHANGES<a class="anchor" aria-label="anchor" href="#underlying-changes-2-0-8"></a></h3>
 <ul><li>Fixed issue with single chain output for <code><a href="../reference/clonalLength.html">clonalLength()</a></code>
 </li>
@@ -122,6 +128,13 @@
 <li>Allow one sample to be plotted by <code><a href="../reference/percentVJ.html">percentVJ()</a></code>
 </li>
 <li>Fixed issue with <code><a href="../reference/positionalProperty.html">positionalProperty()</a></code> and exportTable</li>
+<li>Fixed issue with <code><a href="../reference/loadContigs.html">loadContigs()</a></code> edge case when TRUST4 data only has 1 row.</li>
+<li>convert documentation to use markdown (<code>roxygen2md</code>)</li>
+<li>import <code>lifecycle</code>, <code>purrr</code>, <code>withr</code>
+</li>
+<li>suppressed “using discrete variable for alpha is not recommended” warning in alluvialClones unit tests.</li>
+<li>Fixed issue with <code><a href="../reference/clonalCluster.html">clonalCluster()</a></code> and exportGraph = TRUE</li>
+<li>improve performance of <code><a href="../reference/combineBCR.html">combineBCR()</a></code> by a constant factor with C++</li>
 <li>Restructured functions to exportTable before plotting</li>
 </ul></div>
 </div>
