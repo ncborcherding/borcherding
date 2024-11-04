@@ -147,7 +147,7 @@
 <div class="section level3">
 <h3 id="applying-deep-learning-to-vdj-data">Applying Deep Learning to VDJ data<a class="anchor" aria-label="anchor" href="#applying-deep-learning-to-vdj-data"></a>
 </h3>
-<p>scRepertoire is compatible and integrated with the R packages <a href="https://github.com/ncborcherding/Trex" class="external-link">Trex</a> for convolutional-neural-network-based autoencoding of the T cell receptor and <a href="https://github.com/ncborcherding/Ibex" class="external-link">Ibex</a> for the B cell receptor.</p>
+<p>scRepertoire is compatible and integrated with the R packages <a href="https://github.com/ncborcherding/Trex" class="external-link">Trex</a> for convolutional-neural-network-based autoencoding of the T cell receptor and <a href="https://github.com/ncborcherding/Ibex" class="external-link">Ibex</a> for the B cell receptor. If you are interested in making your own deep-learning models with immune receptors, please see <a href="https://github.com/ncborcherding/immApex" class="external-link">immApex</a>.</p>
 </div>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
@@ -160,9 +160,12 @@
 <div class="section level3">
 <h3 id="installing-from-bioconductor">Installing from Bioconductor<a class="anchor" aria-label="anchor" href="#installing-from-bioconductor"></a>
 </h3>
-<p>The current version of scRepertoire is also available in the development version of Bioconductor. Important to note, the version is listed as 1.99.0 on <a href="https://bioconductor.org/packages/3.19/bioc/html/scRepertoire.html" class="external-link">Bioconductor</a> per their version guidelines.</p>
-<pre><code><span><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://bioconductor.github.io/BiocManager/reference/install.html" class="external-link">install</a></span><span class="op">(</span>version<span class="op">=</span><span class="st">'devel'</span><span class="op">)</span></span>
-<span><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://bioconductor.github.io/BiocManager/reference/install.html" class="external-link">install</a></span><span class="op">(</span><span class="st">"scRepertoire"</span><span class="op">)</span></span></code></pre>
+<p>The current version of scRepertoire is also available on <a href="https://www.bioconductor.org/packages/release/bioc/html/scRepertoire.html" class="external-link">Bioconductor</a>.</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://bioconductor.github.io/BiocManager/" class="external-link">"BiocManager"</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"BiocManager"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://bioconductor.github.io/BiocManager/reference/install.html" class="external-link">install</a></span><span class="op">(</span><span class="st">"scRepertoire"</span><span class="op">)</span></span></code></pre></div>
 <div class="section level4">
 <h4 id="legacy-version-1">Legacy Version 1<a class="anchor" aria-label="anchor" href="#legacy-version-1"></a>
 </h4>
@@ -179,7 +182,8 @@
 <div class="section level2">
 <h2 id="please-cite">Please Cite<a class="anchor" aria-label="anchor" href="#please-cite"></a>
 </h2>
-<p>We are working on submitting the scRepertoire v2 as a peer review article.</p>
+<p>We are working on submitting the scRepertoire v2 as a peer review article. For now, please cite scRepertoire using the doi from <a href="https://www.bioconductor.org/packages/release/bioc/html/scRepertoire.html" class="external-link">Bioconductor</a>.</p>
+<p><em>Borcherding, N, Yang, Q, &amp; Safina, K. (2024). scRepertoire v2: A toolkit for single-cell immune receptor profiling. DOI: 10.18129/B9.bioc.scRepertoire</em></p>
 </div>
 <div class="section level2">
 <h2 id="bug-reportsnew-features">Bug Reports/New Features<a class="anchor" aria-label="anchor" href="#bug-reportsnew-features"></a>
