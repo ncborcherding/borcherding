@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scRepertoire</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.3.2</span>
       </span>
     </div>
 
@@ -116,7 +116,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/ncborcherding/scRepertoire/" class="external-link">
+  <a href="https://github.com/BorchLab/scRepertoire/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
 
   </a>
@@ -136,10 +136,10 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Making Deep Learning Models with immApex</h1>
             
-            <h4 data-toc-skip class="date">Compiled: November 04,
-2024</h4>
+            <h4 data-toc-skip class="date">Compiled: January 29,
+2025</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/ncborcherding/scRepertoire/blob/HEAD/vignettes/articles/immApex.Rmd" class="external-link"><code>vignettes/articles/immApex.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/BorchLab/scRepertoire/blob/HEAD/vignettes/articles/immApex.Rmd" class="external-link"><code>vignettes/articles/immApex.Rmd</code></a></small>
       <div class="hidden name"><code>immApex.Rmd</code></div>
 
     </div>
@@ -159,14 +159,13 @@ deep-learning models based on immune receptor sequencing. These
 functions extract or generate amino acid or nucleotide sequences and
 prepare them for deep learning tasks through <a href="https://tensorflow.rstudio.com/guides/keras/basics" class="external-link">Keras</a>.
 <strong>immApex</strong> is the underlying structure for the BCR models
-in <a href="https://github.com/ncborcherding/Ibex" class="external-link">Ibex</a> and TCR
-models in <a href="https://github.com/ncborcherding/Trex" class="external-link">Trex</a>. It
-should be noted that the tools here are created for immune receptor
-sequences; they will work more generally for nucleotide or amino acid
-sequences. The package itself supports AIRR, Adaptive, and 10x formats
-and interacts with the <strong>scRepertoire</strong> R package.</p>
-<p>More information is available at the <a href="https://github.com/ncborcherding/immApex" class="external-link">immApex GitHub
-Repo</a>.</p>
+in <a href="https://github.com/BorchLab/Ibex" class="external-link">Ibex</a> and TCR models in
+<a href="https://github.com/BorchLab/Trex" class="external-link">Trex</a>. It should be noted
+that the tools here are created for immune receptor sequences; they will
+work more generally for nucleotide or amino acid sequences. The package
+itself supports AIRR, Adaptive, and 10x formats and interacts with the
+<strong>scRepertoire</strong> R package.</p>
+<p>More information is available at the <a href="https://github.com/BorchLab/immApex" class="external-link">immApex GitHub Repo</a>.</p>
 <div class="section level3">
 <h3 id="loading-libraries">Loading Libraries<a class="anchor" aria-label="anchor" href="#loading-libraries"></a>
 </h3>
@@ -295,11 +294,11 @@ mutation (default are all amino acids)</li>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">variational.sequences</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/immApex/man/variationalSequences.html" class="external-link">variationalSequences</a></span><span class="op">(</span><span class="va">sequences</span>, encoder <span class="op">=</span> <span class="st">"onehotEncoder"</span>, number.of.sequences <span class="op">=</span> <span class="fl">100</span>,</span>
 <span>    encoder.hidden.dim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">256</span>, <span class="fl">128</span><span class="op">)</span>, latent.dim <span class="op">=</span> <span class="fl">16</span>, batch.size <span class="op">=</span> <span class="fl">16</span>, call.threshold <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## 4/4 - 0s - 11ms/step</span></span></code></pre>
+<pre><code><span><span class="co">## 4/4 - 0s - 10ms/step</span></span></code></pre>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">variational.sequences</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] "CASPQQD.KK.GHYYF" "CASHHTVQKVQYRSYF" "CASHFPEMRMHHEF"   "CASSYFALSQFYF"   </span></span>
-<span><span class="co">## [5] "CASKAHK.SWG.YF"   "CASR.EGMMAPH"</span></span></code></pre>
+<pre><code><span><span class="co">## [1] "CASSDMKGQNSE..YF" "CASTCYIDKHAYF.YF" "CASLEHMYGGLDAYF"  "CASAWE.HK.EYRF"  </span></span>
+<span><span class="co">## [5] "CASLF.RFFMH.PYF"  "CASRC.LDME.YF"</span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="mutatesequences">mutateSequences<a class="anchor" aria-label="anchor" href="#mutatesequences"></a>
@@ -907,8 +906,8 @@ derived from one-hot encoding:</p>
 <h3 id="autoencoder">Autoencoder<a class="anchor" aria-label="anchor" href="#autoencoder"></a>
 </h3>
 <p>For the vignette - we will use an autoencoder for sequence embedding.
-The code below is based on the <a href="https://github.com/ncborcherding/Trex" class="external-link">Trex</a> R package. The
-overall structure of the autoencoder is the same. However, some of the
+The code below is based on the <a href="https://github.com/BorchLab/Trex" class="external-link">Trex</a> R package. The overall
+structure of the autoencoder is the same. However, some of the
 parameters are modified for the sake of the vignette. We will use the
 <strong>sequence.matrix</strong> we generated above from the
 <code><a href="https://rdrr.io/pkg/immApex/man/onehotEncoder.html" class="external-link">onehotEncoder()</a></code>.</p>
@@ -1074,8 +1073,7 @@ complexity.</p>
 <p>This has been a general overview of the capabilities of
 <strong>immApex</strong> for processing immune receptor sequences and
 making deep learning models. If you have any questions, comments, or
-suggestions, feel free to visit the <a href="https://github.com/ncborcherding/immApex" class="external-link">GitHub
-repository</a>.</p>
+suggestions, feel free to visit the <a href="https://github.com/BorchLab/immApex" class="external-link">GitHub repository</a>.</p>
 <div class="section level3">
 <h3 id="session-info">Session Info<a class="anchor" aria-label="anchor" href="#session-info"></a>
 </h3>
@@ -1105,50 +1103,52 @@ repository</a>.</p>
 <span><span class="co">## loaded via a namespace (and not attached):</span></span>
 <span><span class="co">##  [1] tidyselect_1.2.1            farver_2.1.2               </span></span>
 <span><span class="co">##  [3] tensorflow_2.16.0           fastmap_1.2.0              </span></span>
-<span><span class="co">##  [5] SingleCellExperiment_1.26.0 digest_0.6.36              </span></span>
-<span><span class="co">##  [7] lifecycle_1.0.4             magrittr_2.0.3             </span></span>
-<span><span class="co">##  [9] compiler_4.4.1              rlang_1.1.4                </span></span>
-<span><span class="co">## [11] sass_0.4.9                  tools_4.4.1                </span></span>
-<span><span class="co">## [13] utf8_1.2.4                  yaml_2.3.10                </span></span>
-<span><span class="co">## [15] knitr_1.48                  labeling_0.4.3             </span></span>
-<span><span class="co">## [17] S4Arrays_1.4.1              htmlwidgets_1.6.4          </span></span>
-<span><span class="co">## [19] curl_5.2.1                  reticulate_1.38.0          </span></span>
-<span><span class="co">## [21] here_1.0.1                  DelayedArray_0.30.1        </span></span>
-<span><span class="co">## [23] xml2_1.3.6                  abind_1.4-5                </span></span>
-<span><span class="co">## [25] withr_3.0.1                 BiocGenerics_0.50.0        </span></span>
-<span><span class="co">## [27] desc_1.4.3                  grid_4.4.1                 </span></span>
-<span><span class="co">## [29] hash_2.2.6.3                stats4_4.4.1               </span></span>
-<span><span class="co">## [31] fansi_1.0.6                 colorspace_2.1-1           </span></span>
-<span><span class="co">## [33] scales_1.3.0                zeallot_0.1.0              </span></span>
-<span><span class="co">## [35] SummarizedExperiment_1.34.0 cli_3.6.3                  </span></span>
-<span><span class="co">## [37] rmarkdown_2.27              crayon_1.5.3               </span></span>
-<span><span class="co">## [39] ragg_1.3.2                  generics_0.1.3             </span></span>
-<span><span class="co">## [41] rstudioapi_0.16.0           httr_1.4.7                 </span></span>
-<span><span class="co">## [43] tfruns_1.5.3                cachem_1.1.0               </span></span>
-<span><span class="co">## [45] stringr_1.5.1               splines_4.4.1              </span></span>
-<span><span class="co">## [47] zlibbioc_1.50.0             rvest_1.0.4                </span></span>
-<span><span class="co">## [49] formatR_1.14                selectr_0.4-2              </span></span>
-<span><span class="co">## [51] XVector_0.44.0              matrixStats_1.3.0          </span></span>
-<span><span class="co">## [53] base64enc_0.1-3             keras3_1.2.0               </span></span>
-<span><span class="co">## [55] vctrs_0.6.5                 Matrix_1.7-0               </span></span>
-<span><span class="co">## [57] jsonlite_1.8.8              IRanges_2.38.1             </span></span>
-<span><span class="co">## [59] S4Vectors_0.42.1            systemfonts_1.1.0          </span></span>
-<span><span class="co">## [61] jquerylib_0.1.4             glue_1.7.0                 </span></span>
-<span><span class="co">## [63] pkgdown_2.1.0               stringi_1.8.4              </span></span>
-<span><span class="co">## [65] gtable_0.3.5                GenomeInfoDb_1.40.1        </span></span>
-<span><span class="co">## [67] GenomicRanges_1.56.1        UCSC.utils_1.0.0           </span></span>
-<span><span class="co">## [69] munsell_0.5.1               tibble_3.2.1               </span></span>
-<span><span class="co">## [71] pillar_1.9.0                htmltools_0.5.8.1          </span></span>
-<span><span class="co">## [73] GenomeInfoDbData_1.2.12     R6_2.5.1                   </span></span>
-<span><span class="co">## [75] textshaping_0.4.0           rprojroot_2.0.4            </span></span>
-<span><span class="co">## [77] evaluate_0.24.0             lattice_0.22-6             </span></span>
-<span><span class="co">## [79] Biobase_2.64.0              highr_0.11                 </span></span>
-<span><span class="co">## [81] png_0.1-8                   bslib_0.8.0                </span></span>
-<span><span class="co">## [83] Rcpp_1.0.13                 nlme_3.1-166               </span></span>
-<span><span class="co">## [85] gridExtra_2.3               SparseArray_1.4.8          </span></span>
-<span><span class="co">## [87] mgcv_1.9-1                  whisker_0.4.1              </span></span>
-<span><span class="co">## [89] xfun_0.48                   fs_1.6.4                   </span></span>
-<span><span class="co">## [91] MatrixGenerics_1.16.0       pkgconfig_2.0.3</span></span></code></pre>
+<span><span class="co">##  [5] SingleCellExperiment_1.26.0 promises_1.3.2             </span></span>
+<span><span class="co">##  [7] digest_0.6.37               lifecycle_1.0.4            </span></span>
+<span><span class="co">##  [9] processx_3.8.5              magrittr_2.0.3             </span></span>
+<span><span class="co">## [11] compiler_4.4.1              rlang_1.1.5                </span></span>
+<span><span class="co">## [13] sass_0.4.9                  tools_4.4.1                </span></span>
+<span><span class="co">## [15] yaml_2.3.10                 knitr_1.49                 </span></span>
+<span><span class="co">## [17] labeling_0.4.3              S4Arrays_1.4.1             </span></span>
+<span><span class="co">## [19] htmlwidgets_1.6.4           curl_6.2.0                 </span></span>
+<span><span class="co">## [21] here_1.0.1                  reticulate_1.40.0          </span></span>
+<span><span class="co">## [23] DelayedArray_0.30.1         xml2_1.3.6                 </span></span>
+<span><span class="co">## [25] abind_1.4-8                 websocket_1.4.2            </span></span>
+<span><span class="co">## [27] withr_3.0.2                 BiocGenerics_0.50.0        </span></span>
+<span><span class="co">## [29] desc_1.4.3                  grid_4.4.1                 </span></span>
+<span><span class="co">## [31] hash_2.2.6.3                stats4_4.4.1               </span></span>
+<span><span class="co">## [33] colorspace_2.1-1            scales_1.3.0               </span></span>
+<span><span class="co">## [35] zeallot_0.1.0               SummarizedExperiment_1.34.0</span></span>
+<span><span class="co">## [37] cli_3.6.3                   rmarkdown_2.29             </span></span>
+<span><span class="co">## [39] crayon_1.5.3                ragg_1.3.3                 </span></span>
+<span><span class="co">## [41] generics_0.1.3              rstudioapi_0.17.1          </span></span>
+<span><span class="co">## [43] httr_1.4.7                  tfruns_1.5.3               </span></span>
+<span><span class="co">## [45] cachem_1.1.0                chromote_0.4.0             </span></span>
+<span><span class="co">## [47] stringr_1.5.1               splines_4.4.1              </span></span>
+<span><span class="co">## [49] zlibbioc_1.50.0             rvest_1.0.4                </span></span>
+<span><span class="co">## [51] selectr_0.4-2               formatR_1.14               </span></span>
+<span><span class="co">## [53] XVector_0.44.0              matrixStats_1.5.0          </span></span>
+<span><span class="co">## [55] base64enc_0.1-3             keras3_1.2.0               </span></span>
+<span><span class="co">## [57] vctrs_0.6.5                 Matrix_1.7-2               </span></span>
+<span><span class="co">## [59] jsonlite_1.8.9              IRanges_2.38.1             </span></span>
+<span><span class="co">## [61] S4Vectors_0.42.1            systemfonts_1.2.1          </span></span>
+<span><span class="co">## [63] jquerylib_0.1.4             glue_1.8.0                 </span></span>
+<span><span class="co">## [65] pkgdown_2.1.1               ps_1.8.1                   </span></span>
+<span><span class="co">## [67] stringi_1.8.4               gtable_0.3.6               </span></span>
+<span><span class="co">## [69] later_1.4.1                 GenomeInfoDb_1.40.1        </span></span>
+<span><span class="co">## [71] GenomicRanges_1.56.1        UCSC.utils_1.0.0           </span></span>
+<span><span class="co">## [73] munsell_0.5.1               tibble_3.2.1               </span></span>
+<span><span class="co">## [75] pillar_1.10.1               htmltools_0.5.8.1          </span></span>
+<span><span class="co">## [77] GenomeInfoDbData_1.2.12     R6_2.5.1                   </span></span>
+<span><span class="co">## [79] textshaping_1.0.0           rprojroot_2.0.4            </span></span>
+<span><span class="co">## [81] evaluate_1.0.3              lattice_0.22-6             </span></span>
+<span><span class="co">## [83] Biobase_2.64.0              png_0.1-8                  </span></span>
+<span><span class="co">## [85] bslib_0.8.0                 Rcpp_1.0.14                </span></span>
+<span><span class="co">## [87] nlme_3.1-167                gridExtra_2.3              </span></span>
+<span><span class="co">## [89] SparseArray_1.4.8           mgcv_1.9-1                 </span></span>
+<span><span class="co">## [91] whisker_0.4.1               xfun_0.50                  </span></span>
+<span><span class="co">## [93] fs_1.6.5                    MatrixGenerics_1.16.0      </span></span>
+<span><span class="co">## [95] pkgconfig_2.0.3</span></span></code></pre>
 </div>
 </div>
   </div>
@@ -1168,7 +1168,7 @@ repository</a>.</p>
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
       </footer>

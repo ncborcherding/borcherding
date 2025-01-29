@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scRepertoire</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.3.2</span>
       </span>
     </div>
 
@@ -116,7 +116,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/ncborcherding/scRepertoire/" class="external-link">
+  <a href="https://github.com/BorchLab/scRepertoire/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
 
   </a>
@@ -136,10 +136,10 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Additional Processing Steps</h1>
             
-            <h4 data-toc-skip class="date">Compiled: November 04,
-2024</h4>
+            <h4 data-toc-skip class="date">Compiled: January 29,
+2025</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/ncborcherding/scRepertoire/blob/HEAD/vignettes/articles/Processing.Rmd" class="external-link"><code>vignettes/articles/Processing.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/BorchLab/scRepertoire/blob/HEAD/vignettes/articles/Processing.Rmd" class="external-link"><code>vignettes/articles/Processing.Rmd</code></a></small>
       <div class="hidden name"><code>Processing.Rmd</code></div>
 
     </div>
@@ -422,6 +422,27 @@ the csv file name</p>
 <span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>             <span class="at">dir =</span> <span class="st">"~/Documents/MyExperiment/Sample1/"</span></span>
 <span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>             <span class="at">file.name =</span> <span class="st">"clones.csv"</span></span></code></pre></div>
 </div>
+<div class="section level2">
+<h2 id="quietvdjgenes">quietVDJgenes<a class="anchor" aria-label="anchor" href="#quietvdjgenes"></a>
+</h2>
+<p>The <code><a href="../reference/quietVDJgenes.html">quietVDJgenes()</a></code> function removes both TCR and BCR
+genes from the variable features of a Seurat object.</p>
+<ul>
+<li>
+<strong>sc</strong> A single-cell object or a character vector of
+variable genes.<br>
+</li>
+<li>
+<strong>assay</strong> The assay slot within the Seurat object to
+use. If NULL, it defaults to the default assay.</li>
+</ul>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">screp_example</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/quietVDJgenes.html">quietVDJgenes</a></span><span class="op">(</span><span class="va">screp_example</span><span class="op">)</span></span></code></pre></div>
+<p>In addition to <code><a href="../reference/quietVDJgenes.html">quietVDJgenes()</a></code>, there is also T and B
+cell specific functions <code>quietTCRgene()</code> and
+<code><a href="../reference/quietVDJgenes.html">quietBCRgenes()</a></code> that will remove the respective
+lineage-specific receptor genes from the variable gene list.</p>
+</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -439,7 +460,7 @@ the csv file name</p>
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
       </footer>

@@ -1,6 +1,7 @@
 <urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
 <url><loc>https://www.borch.dev/uploads/scRepertoire/404.html</loc></url>
 <url><loc>https://www.borch.dev/uploads/scRepertoire/LICENSE-text.html</loc></url>
+<url><loc>https://www.borch.dev/uploads/scRepertoire/LICENSE.html</loc></url>
 <url><loc>https://www.borch.dev/uploads/scRepertoire/articles/Attaching_SC.html</loc></url>
 <url><loc>https://www.borch.dev/uploads/scRepertoire/articles/Clonal_Bias.html</loc></url>
 <url><loc>https://www.borch.dev/uploads/scRepertoire/articles/Clonal_Cluster.html</loc></url>
@@ -48,8 +49,10 @@
 <url><loc>https://www.borch.dev/uploads/scRepertoire/reference/contig_list.html</loc></url>
 <url><loc>https://www.borch.dev/uploads/scRepertoire/reference/createHTOContigList.html</loc></url>
 <url><loc>https://www.borch.dev/uploads/scRepertoire/reference/exportClones.html</loc></url>
+<url><loc>https://www.borch.dev/uploads/scRepertoire/reference/expression2List.html</loc></url>
 <url><loc>https://www.borch.dev/uploads/scRepertoire/reference/getCirclize.html</loc></url>
 <url><loc>https://www.borch.dev/uploads/scRepertoire/reference/getContigDoublets.html</loc></url>
+<url><loc>https://www.borch.dev/uploads/scRepertoire/reference/getHumanIgPseudoGenes.html</loc></url>
 <url><loc>https://www.borch.dev/uploads/scRepertoire/reference/highlightClones.html</loc></url>
 <url><loc>https://www.borch.dev/uploads/scRepertoire/reference/index.html</loc></url>
 <url><loc>https://www.borch.dev/uploads/scRepertoire/reference/loadContigs.html</loc></url>
@@ -60,6 +63,7 @@
 <url><loc>https://www.borch.dev/uploads/scRepertoire/reference/percentVJ.html</loc></url>
 <url><loc>https://www.borch.dev/uploads/scRepertoire/reference/positionalEntropy.html</loc></url>
 <url><loc>https://www.borch.dev/uploads/scRepertoire/reference/positionalProperty.html</loc></url>
+<url><loc>https://www.borch.dev/uploads/scRepertoire/reference/quietVDJgenes.html</loc></url>
 <url><loc>https://www.borch.dev/uploads/scRepertoire/reference/scRep_example.html</loc></url>
 <url><loc>https://www.borch.dev/uploads/scRepertoire/reference/scRepertoire-package.html</loc></url>
 <url><loc>https://www.borch.dev/uploads/scRepertoire/reference/subsetClones.html</loc></url>

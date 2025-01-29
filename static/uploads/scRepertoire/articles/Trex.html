@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scRepertoire</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.3.2</span>
       </span>
     </div>
 
@@ -116,7 +116,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/ncborcherding/scRepertoire/" class="external-link">
+  <a href="https://github.com/BorchLab/scRepertoire/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
 
   </a>
@@ -136,10 +136,10 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Combining Deep Learning and TCRs with Trex</h1>
             
-            <h4 data-toc-skip class="date">Compiled: November 04,
-2024</h4>
+            <h4 data-toc-skip class="date">Compiled: January 29,
+2025</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/ncborcherding/scRepertoire/blob/HEAD/vignettes/articles/Trex.Rmd" class="external-link"><code>vignettes/articles/Trex.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/BorchLab/scRepertoire/blob/HEAD/vignettes/articles/Trex.Rmd" class="external-link"><code>vignettes/articles/Trex.Rmd</code></a></small>
       <div class="hidden name"><code>Trex.Rmd</code></div>
 
     </div>
@@ -162,12 +162,12 @@ uses amino acid characteristics and autoencoder as a means to get a
 dimensional reduction. Another option is <a href="https://github.com/phbradley/conga" class="external-link">CoNGA</a>, which produces an
 embedding using TCR and RNA with python. Trex was designed to make a
 customizable approach to this combined approach using R.</p>
-<p>More information is available at the <a href="https://github.com/ncborcherding/Trex" class="external-link">Trex GitHub Repo</a>.</p>
+<p>More information is available at the <a href="https://github.com/BorchLab/Trex" class="external-link">Trex GitHub Repo</a>.</p>
 <div class="section level3">
 <h3 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h3>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"ncborcherding/Trex"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"BorchLab/Trex"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="the-data-set">The Data Set<a class="anchor" aria-label="anchor" href="#the-data-set"></a>
@@ -183,7 +183,7 @@ manuscript</a>.</p>
 <p>Here is the basic workflow that was used to make the single-cell
 object to use in the vignette. Notice there is a removal of TCR-related
 CITE-seq data and RNA features (using the <strong>Trex</strong> function
-<code>quietTCRgenes()</code>). As we are going to combine multimodal
+<code><a href="../reference/quietVDJgenes.html">quietTCRgenes()</a></code>). As we are going to combine multimodal
 data, both the GEX and CITE probes may cause bias in the weighted
 output.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
@@ -211,7 +211,7 @@ output.</p>
 <span><span class="fu">DefaultAssay</span><span class="op">(</span><span class="va">Pt17</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">'RNA'</span></span>
 <span><span class="va">Pt17</span> <span class="op">&lt;-</span> <span class="fu">NormalizeData</span><span class="op">(</span><span class="va">Pt17</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu">FindVariableFeatures</span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>  <span class="fu">quietTCRgenes</span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="../reference/quietVDJgenes.html">quietTCRgenes</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu">ScaleData</span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu">RunPCA</span><span class="op">(</span>verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
@@ -264,9 +264,9 @@ based on the selection of variables. Unlike <code>runTrex()</code>
 below, <code>maTrex()</code> does not filter the input for only T cells
 with attached TCR data. In addition, <code>maTrex()</code> is compatible
 with the list output from the <code><a href="../reference/combineTCR.html">combineTCR()</a></code> function from
-the <a href="https://github.com/ncborcherding/scRepertoire" class="external-link">scRepertoire</a> R
-package, while <code>runTrex()</code> must be performed on a single-cell
-object.</p>
+the <a href="https://github.com/BorchLab/scRepertoire" class="external-link">scRepertoire</a>
+R package, while <code>runTrex()</code> must be performed on a
+single-cell object.</p>
 <p><strong>chains</strong></p>
 <ul>
 <li>“TRA” for TCR Alpha Chain</li>
@@ -550,7 +550,7 @@ using <strong>edit.distance</strong>.</p>
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
       </footer>

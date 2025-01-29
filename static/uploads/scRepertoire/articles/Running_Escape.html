@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scRepertoire</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.3.2</span>
       </span>
     </div>
 
@@ -116,7 +116,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/ncborcherding/scRepertoire/" class="external-link">
+  <a href="https://github.com/BorchLab/scRepertoire/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
 
   </a>
@@ -136,10 +136,10 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Single-cell Gene Set Enrichment Analysis</h1>
             
-            <h4 data-toc-skip class="date">Compiled: November 04,
-2024</h4>
+            <h4 data-toc-skip class="date">Compiled: January 29,
+2025</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/ncborcherding/scRepertoire/blob/HEAD/vignettes/articles/Running_Escape.Rmd" class="external-link"><code>vignettes/articles/Running_Escape.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/BorchLab/scRepertoire/blob/HEAD/vignettes/articles/Running_Escape.Rmd" class="external-link"><code>vignettes/articles/Running_Escape.Rmd</code></a></small>
       <div class="hidden name"><code>Running_Escape.Rmd</code></div>
 
     </div>
@@ -160,7 +160,7 @@ p.caption {
 tortuous acronym implies, <em>escape</em> was designed as a
 user-friendly package for gene set enrichment analysis that leverages
 the heterogeneity of single-cell data.</p>
-<p>More information is available at the <a href="https://github.com/ncborcherding/escape" class="external-link">GitHub Repo</a>.</p>
+<p>More information is available at the <a href="https://github.com/BorchLab/escape" class="external-link">GitHub Repo</a>.</p>
 <div class="section level3">
 <h3 id="citation">Citation<a class="anchor" aria-label="anchor" href="#citation"></a>
 </h3>
@@ -174,13 +174,11 @@ Commun Biol 4, 122 (2021). <a href="https://doi.org/10.1038/s42003-020-01625-6" 
 </h3>
 <p><em>escape</em> is available via github using:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"ncborcherding/escape"</span><span class="op">)</span></span>
-<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"ncborcherding/escape"</span><span class="op">)</span></span></code></pre></div>
-<p>For now, the newest version of <em>escape</em> is available in the
-Bioconductor dev version (3.19).</p>
+<code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"BorchLab/escape"</span><span class="op">)</span></span>
+<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"BorchLab/escape"</span><span class="op">)</span></span></code></pre></div>
+<p>Or via Bioconductor with:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://bioconductor.github.io/BiocManager/reference/install.html" class="external-link">install</a></span><span class="op">(</span>version<span class="op">=</span><span class="st">'devel'</span><span class="op">)</span></span>
-<span><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://bioconductor.github.io/BiocManager/reference/install.html" class="external-link">install</a></span><span class="op">(</span><span class="st">"escape"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://bioconductor.github.io/BiocManager/reference/install.html" class="external-link">install</a></span><span class="op">(</span><span class="st">"escape"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="loading-data">Loading Data<a class="anchor" aria-label="anchor" href="#loading-data"></a>
@@ -459,8 +457,8 @@ we can plot all gene sets using <strong>gene.set.use</strong> =
 <span>                  group.by <span class="op">=</span> <span class="st">"ident"</span>,</span>
 <span>                  gene.set.use <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">scRep_example</span><span class="op">@</span><span class="va">assays</span><span class="op">$</span><span class="va">escape.ssGSEA</span><span class="op">@</span><span class="va">data</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">12</span><span class="op">]</span>,</span>
 <span>                  assay <span class="op">=</span> <span class="st">"escape.ssGSEA"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Running_Escape_files/figure-html/unnamed-chunk-14-1.png" width="700">
-Most of the visualizations in <em>escape</em> have a defined set of
+<p><img src="Running_Escape_files/figure-html/unnamed-chunk-14-1.png" width="700"></p>
+<p>Most of the visualizations in <em>escape</em> have a defined set of
 parameters.</p>
 <p><strong>group.by</strong></p>
 <ul>
@@ -575,10 +573,10 @@ visualization of an additional variable.</p>
 <span>                 assay <span class="op">=</span> <span class="st">"escape.ssGSEA"</span>,</span>
 <span>                 gene.set <span class="op">=</span> <span class="st">"HALLMARK-INTERFERON-GAMMA-RESPONSE"</span>, </span>
 <span>                 facet.by <span class="op">=</span> <span class="st">"Type"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Running_Escape_files/figure-html/unnamed-chunk-21-1.png" width="700">
-Lastly, we can select the way the color is applied to the plot using the
-<strong>color.by</strong> parameter. Here we can set it to the gene set
-of interest <em>“HALLMARK-INTERFERON-GAMMA-RESPONSE”</em>.</p>
+<p><img src="Running_Escape_files/figure-html/unnamed-chunk-21-1.png" width="700"></p>
+<p>Lastly, we can select the way the color is applied to the plot using
+the <strong>color.by</strong> parameter. Here we can set it to the gene
+set of interest <em>“HALLMARK-INTERFERON-GAMMA-RESPONSE”</em>.</p>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">geyserEnrichment</span><span class="op">(</span><span class="va">scRep_example</span>, </span>
 <span>                 assay <span class="op">=</span> <span class="st">"escape.ssGSEA"</span>,</span>
@@ -793,7 +791,7 @@ is the total feature space for each cell.</p>
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
       </footer>
