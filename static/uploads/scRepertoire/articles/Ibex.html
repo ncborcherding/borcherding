@@ -131,13 +131,13 @@
 
 
 
-      </header><div class="row">
+      </header><script src="Ibex_files/kePrint-0.0.1/kePrint.js"></script><link href="Ibex_files/lightable-0.0.1/lightable.css" rel="stylesheet">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Combining Deep Learning and BCRs with Ibex</h1>
             
-            <h4 data-toc-skip class="date">Compiled: January 29,
-2025</h4>
+            <h4 data-toc-skip class="date">Compiled: March 10, 2025</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/BorchLab/scRepertoire/blob/HEAD/vignettes/articles/Ibex.Rmd" class="external-link"><code>vignettes/articles/Ibex.Rmd</code></a></small>
       <div class="hidden name"><code>Ibex.Rmd</code></div>
@@ -152,7 +152,7 @@ p.caption {
 }
 </style>
 <div class="section level2">
-<h2 id="getting-started">Getting Started<a class="anchor" aria-label="anchor" href="#getting-started"></a>
+<h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
 <p>The idea behind Ibex is to combine BCR CDR3 amino acid information
 with phenotypic RNA/protein data to direct the use of single-cell
@@ -169,141 +169,1330 @@ approach to this combined approach using R.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"BorchLab/Ibex"</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div class="section level3">
-<h3 id="the-data-set">The Data Set<a class="anchor" aria-label="anchor" href="#the-data-set"></a>
-</h3>
-<p>To show the multiple options of Ibex, the example data is derived
-from <a href="https://pubmed.ncbi.nlm.nih.gov/33891889/" class="external-link">this
-manuscript</a>, multimodal single-cell characterization of
-COVID19-associated multisystem inflammatory syndrome in children.</p>
-<div class="section level4">
-<h4 id="formation-of-the-single-cell-object">Formation of the Single-cell Object<a class="anchor" aria-label="anchor" href="#formation-of-the-single-cell-object"></a>
-</h4>
-<p>Here is the basic workflow that was used to make the single-cell
-object to use in the vignette. Notice there is a removal of BCR-related
-RNA features (using the <strong>Ibex</strong> function
-<code><a href="../reference/quietVDJgenes.html">quietBCRgenes()</a></code>). As we are going to combine multimodal
-data, both the GEX and CITE probes may cause bias in the weighted
-output.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">##################################</span></span>
-<span><span class="co">#scRNA/ADT loading and processing</span></span>
-<span><span class="co">#################################</span></span>
-<span><span class="va">tmp</span> <span class="op">&lt;-</span>  <span class="fu">Read10X</span><span class="op">(</span><span class="st">"~/data/GSM5073055_P1.1_filtered_feature_bc_matrix"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">MIS.sample</span> <span class="op">&lt;-</span> <span class="fu">CreateSeuratObject</span><span class="op">(</span>counts <span class="op">=</span> <span class="va">tmp</span><span class="op">$</span><span class="va">`Gene Expression`</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">tmp</span><span class="op">$</span><span class="va">`Antibody Capture`</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_remove.html" class="external-link">str_remove_all</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">tmp</span><span class="op">$</span><span class="va">`Antibody Capture`</span><span class="op">)</span>, <span class="st">"anti_human_"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">tmp</span><span class="op">$</span><span class="va">`Antibody Capture`</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_remove.html" class="external-link">str_remove_all</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">tmp</span><span class="op">$</span><span class="va">`Antibody Capture`</span><span class="op">)</span>, <span class="st">"anti_mousehuman_"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">tmp</span><span class="op">$</span><span class="va">`Antibody Capture`</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/substr.html" class="external-link">substr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">tmp</span><span class="op">$</span><span class="va">`Antibody Capture`</span><span class="op">)</span>, <span class="fl">6</span>, <span class="fu"><a href="https://rdrr.io/r/base/nchar.html" class="external-link">nchar</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">tmp</span><span class="op">$</span><span class="va">`Antibody Capture`</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">adt_assay</span> <span class="op">&lt;-</span> <span class="fu">CreateAssayObject</span><span class="op">(</span>counts <span class="op">=</span> <span class="va">tmp</span><span class="op">$</span><span class="va">`Antibody Capture`</span><span class="op">)</span></span>
-<span></span>
-<span></span>
-<span><span class="va">MIS.sample</span><span class="op">[[</span><span class="st">"ADT"</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">adt_assay</span></span>
-<span><span class="va">MIS.sample</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">MIS.sample</span>, subset <span class="op">=</span> <span class="va">nFeature_RNA</span> <span class="op">&gt;</span> <span class="fl">100</span><span class="op">)</span> </span>
-<span><span class="va">MIS.sample</span>  <span class="op">&lt;-</span> <span class="fu">RenameCells</span><span class="op">(</span>object <span class="op">=</span> <span class="va">MIS.sample</span> , new.names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"MIS.sample_"</span>, <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">MIS.sample</span><span class="op">[[</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">MIS.sample</span><span class="op">[[</span><span class="st">"mito.genes"</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu">PercentageFeatureSet</span><span class="op">(</span><span class="va">MIS.sample</span>, pattern <span class="op">=</span> <span class="st">"^MT-"</span><span class="op">)</span></span>
-<span>    </span>
-<span><span class="co">#Filtering step</span></span>
-<span><span class="va">standev</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html" class="external-link">sd</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">MIS.sample</span><span class="op">$</span><span class="va">nFeature_RNA</span><span class="op">)</span><span class="op">)</span><span class="op">*</span><span class="fl">2.5</span> <span class="co">#cutting off above standard deviation of 2.5</span></span>
-<span><span class="va">mean</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">MIS.sample</span><span class="op">$</span><span class="va">nFeature_RNA</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">cut</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="va">standev</span><span class="op">+</span><span class="va">mean</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">MIS.sample</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">MIS.sample</span>, subset <span class="op">=</span> <span class="va">mito.genes</span> <span class="op">&lt;</span> <span class="fl">10</span> <span class="op">&amp;</span> <span class="va">nFeature_RNA</span> <span class="op">&lt;</span> <span class="va">cut</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co">#Processing and Adding Contig Info</span></span>
-<span><span class="va">contigs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="st">"~/data/GSM5073091_PBMC_P1.1_MIS-C_Severe_BCR_filtered_contig_annotations.csv.gz"</span><span class="op">)</span></span>
-<span><span class="va">clones</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/combineBCR.html">combineBCR</a></span><span class="op">(</span><span class="va">contigs</span>, samples <span class="op">=</span> <span class="st">"MIS.sample"</span>, removeNA <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="va">MIS.sample</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/combineExpression.html">combineExpression</a></span><span class="op">(</span><span class="va">clones</span>, <span class="va">MIS.sample</span>, cloneCall<span class="op">=</span><span class="st">"aa"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co">#Subset only B cells (by contigs)</span></span>
-<span><span class="va">MIS.sample</span><span class="op">$</span><span class="va">BCR.recoverd</span> <span class="op">&lt;-</span> <span class="st">"No"</span></span>
-<span><span class="va">MIS.sample</span><span class="op">$</span><span class="va">BCR.recoverd</span><span class="op">[</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">MIS.sample</span><span class="op">$</span><span class="va">CTaa</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"Yes"</span></span>
-<span><span class="va">MIS.sample</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">MIS.sample</span>, <span class="va">BCR.recoverd</span> <span class="op">==</span> <span class="st">"Yes"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co">#Processing RNA</span></span>
-<span><span class="fu">DefaultAssay</span><span class="op">(</span><span class="va">MIS.sample</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">'RNA'</span></span>
-<span><span class="va">MIS.sample</span> <span class="op">&lt;-</span> <span class="fu">NormalizeData</span><span class="op">(</span><span class="va">MIS.sample</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">FindVariableFeatures</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
-<span>  <span class="fu"><a href="../reference/quietVDJgenes.html">quietBCRgenes</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">ScaleData</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">RunPCA</span><span class="op">(</span>verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co">#Processing ADT</span></span>
-<span><span class="fu">DefaultAssay</span><span class="op">(</span><span class="va">MIS.sample</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">'ADT'</span></span>
-<span><span class="fu">VariableFeatures</span><span class="op">(</span><span class="va">MIS.sample</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">MIS.sample</span><span class="op">[[</span><span class="st">"ADT"</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
-<span><span class="va">MIS.sample</span> <span class="op">&lt;-</span> <span class="fu">NormalizeData</span><span class="op">(</span><span class="va">MIS.sample</span>, normalization.method <span class="op">=</span> <span class="st">'CLR'</span>, margin <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
-<span>  <span class="fu">ScaleData</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">RunPCA</span><span class="op">(</span>reduction.name <span class="op">=</span> <span class="st">'apca'</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co">###################################</span></span>
-<span><span class="co">#Making Example Data Set for Trex</span></span>
-<span><span class="co">#################################</span></span>
-<span><span class="va">meta</span> <span class="op">&lt;-</span> <span class="va">MIS.sample</span><span class="op">[[</span><span class="op">]</span><span class="op">]</span></span>
-<span><span class="va">meta</span> <span class="op">&lt;-</span> <span class="va">meta</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">meta</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">meta</span><span class="op">)</span><span class="op">*</span><span class="fl">0.33</span><span class="op">)</span>,<span class="op">]</span></span>
-<span><span class="va">ibex_example</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">MIS.sample</span>, cells <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">meta</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/save.html" class="external-link">save</a></span><span class="op">(</span><span class="va">ibex_example</span>, file <span class="op">=</span> <span class="st">"ibex_example.rda"</span>, compress <span class="op">=</span> <span class="st">"xz"</span><span class="op">)</span></span></code></pre></div>
 </div>
+<div class="section level2">
+<h2 id="the-data-set">The Data Set<a class="anchor" aria-label="anchor" href="#the-data-set"></a>
+</h2>
+<p>The data used here are derived from 10x Genomics’ 2k BEAM-Ab Mouse
+HEL data set, consisting of splenocytes from transgenic mice engineered
+to recognize Hen Egg Lysozyme (HEL). These splenocytes were labeled with
+a small antigen panel: SARS-TRI-S, gp120, H5N1, and a negative
+control.</p>
+<p>To illustrate the Ibex framework, we subset to a smaller set of 200
+cells (including some dominant clones) and convert the Seurat object
+into a SingleCellExperiment. The resulting “ibex_example” object stores
+all the necessary data—RNA expression, antigen capture (BEAM) features,
+BCR contig annotations, and computed dimensional reductions—ready for
+downstream Ibex analyses. The object is saved
+(<code>ibex_example.rda</code>), along with the contig information
+(<code>ibex_vdj.rda</code>), ensuring that the integrated data set can
+be readily reloaded and explored in subsequent steps.</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://www.borch.dev/uploads/scRepertoire/">scRepertoire</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://satijalab.org/seurat" class="external-link">Seurat</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://bioconductor.org/packages/SummarizedExperiment" class="external-link">SummarizedExperiment</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">SingleCellExperiment</span><span class="op">)</span></span>
+<span><span class="co">################################## scRNA/ADT loading and processing</span></span>
+<span></span>
+<span><span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/Read10X.html" class="external-link">Read10X</a></span><span class="op">(</span><span class="st">"~/data/filtered_feature_bc_matrix"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">SeuratObj</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mojaveazure.github.io/seurat-object/reference/CreateSeuratObject.html" class="external-link">CreateSeuratObject</a></span><span class="op">(</span>counts <span class="op">=</span> <span class="va">tmp</span><span class="op">$</span><span class="va">`Gene Expression`</span><span class="op">)</span></span>
+<span><span class="va">beam_assay</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mojaveazure.github.io/seurat-object/reference/CreateAssayObject.html" class="external-link">CreateAssayObject</a></span><span class="op">(</span>counts <span class="op">=</span> <span class="va">tmp</span><span class="op">$</span><span class="va">`Antigen Capture`</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">SeuratObj</span><span class="op">[[</span><span class="st">"BEAM"</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">beam_assay</span></span>
+<span><span class="va">SeuratObj</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">SeuratObj</span>, subset <span class="op">=</span> <span class="va">nFeature_RNA</span> <span class="op">&gt;</span> <span class="fl">100</span><span class="op">)</span></span>
+<span><span class="va">SeuratObj</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mojaveazure.github.io/seurat-object/reference/RenameCells.html" class="external-link">RenameCells</a></span><span class="op">(</span>object <span class="op">=</span> <span class="va">SeuratObj</span>, new.names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"BEAM.sample_"</span>, <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">SeuratObj</span><span class="op">[[</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">SeuratObj</span><span class="op">[[</span><span class="st">"mito.genes"</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/PercentageFeatureSet.html" class="external-link">PercentageFeatureSet</a></span><span class="op">(</span><span class="va">SeuratObj</span>, pattern <span class="op">=</span> <span class="st">"^mt-"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Filtering step</span></span>
+<span><span class="va">standev</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html" class="external-link">sd</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">SeuratObj</span><span class="op">$</span><span class="va">nFeature_RNA</span><span class="op">)</span><span class="op">)</span> <span class="op">*</span> <span class="fl">2.5</span>  <span class="co">#cutting off above standard deviation of 2.5</span></span>
+<span><span class="va">mean</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">SeuratObj</span><span class="op">$</span><span class="va">nFeature_RNA</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">cut</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="va">standev</span> <span class="op">+</span> <span class="va">mean</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">SeuratObj</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">SeuratObj</span>, subset <span class="op">=</span> <span class="va">mito.genes</span> <span class="op">&lt;</span> <span class="fl">10</span> <span class="op">&amp;</span> <span class="va">nFeature_RNA</span> <span class="op">&lt;</span> <span class="va">cut</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Processing and Adding Contig Info</span></span>
+<span><span class="va">contigs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="st">"~/data/2k_BEAM-Ab_Mouse_HEL_5pv2_2k_BEAM-Ab_Mouse_HEL_5pv2_vdj_b_filtered_contig_annotations.csv"</span><span class="op">)</span></span>
+<span><span class="va">clones</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/combineBCR.html">combineBCR</a></span><span class="op">(</span><span class="va">contigs</span>, samples <span class="op">=</span> <span class="st">"BEAM.sample"</span>, removeNA <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="va">SeuratObj</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/combineExpression.html">combineExpression</a></span><span class="op">(</span><span class="va">clones</span>, <span class="va">SeuratObj</span>, cloneCall <span class="op">=</span> <span class="st">"aa"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Subset only cells with BCR and Heavy Chain</span></span>
+<span><span class="va">cell.idx</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://generics.r-lib.org/reference/setops.html" class="external-link">intersect</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">SeuratObj</span><span class="op">$</span><span class="va">CTaa</span><span class="op">)</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_split.html" class="external-link">str_split</a></span><span class="op">(</span><span class="va">SeuratObj</span><span class="op">$</span><span class="va">CTaa</span>,</span>
+<span>    <span class="st">"_"</span>, simplify <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">[</span>, <span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">SeuratObj</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">SeuratObj</span>, cells <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">SeuratObj</span><span class="op">)</span><span class="op">[</span><span class="va">cell.idx</span><span class="op">]</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Processing RNA</span></span>
+<span><span class="fu"><a href="https://mojaveazure.github.io/seurat-object/reference/DefaultAssay.html" class="external-link">DefaultAssay</a></span><span class="op">(</span><span class="va">SeuratObj</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">"RNA"</span></span>
+<span><span class="va">SeuratObj</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/NormalizeData.html" class="external-link">NormalizeData</a></span><span class="op">(</span><span class="va">SeuratObj</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>    <span class="fu"><a href="https://satijalab.org/seurat/reference/FindVariableFeatures.html" class="external-link">FindVariableFeatures</a></span><span class="op">(</span>verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>    <span class="fu"><a href="../reference/quietVDJgenes.html">quietBCRgenes</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>    <span class="fu"><a href="https://satijalab.org/seurat/reference/ScaleData.html" class="external-link">ScaleData</a></span><span class="op">(</span>verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>    <span class="fu"><a href="https://satijalab.org/seurat/reference/RunPCA.html" class="external-link">RunPCA</a></span><span class="op">(</span>verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Removing negative control + B Cells</span></span>
+<span><span class="fu"><a href="https://mojaveazure.github.io/seurat-object/reference/DefaultAssay.html" class="external-link">DefaultAssay</a></span><span class="op">(</span><span class="va">SeuratObj</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">"BEAM"</span></span>
+<span><span class="va">SeuratObj</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">SeuratObj</span>, subset <span class="op">=</span> <span class="va">`negative-control`</span> <span class="op">&lt;</span> <span class="fl">100</span>, slot <span class="op">=</span> <span class="st">"counts"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Processing BEAM</span></span>
+<span><span class="fu"><a href="https://mojaveazure.github.io/seurat-object/reference/VariableFeatures.html" class="external-link">VariableFeatures</a></span><span class="op">(</span><span class="va">SeuratObj</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">SeuratObj</span><span class="op">[[</span><span class="st">"BEAM"</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="va">SeuratObj</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/NormalizeData.html" class="external-link">NormalizeData</a></span><span class="op">(</span><span class="va">SeuratObj</span>, normalization.method <span class="op">=</span> <span class="st">"CLR"</span>, margin <span class="op">=</span> <span class="fl">2</span>, <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>    <span class="fu"><a href="https://satijalab.org/seurat/reference/ScaleData.html" class="external-link">ScaleData</a></span><span class="op">(</span>verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>    <span class="fu"><a href="https://satijalab.org/seurat/reference/RunPCA.html" class="external-link">RunPCA</a></span><span class="op">(</span>verbose <span class="op">=</span> <span class="cn">FALSE</span>, reduction.name <span class="op">=</span> <span class="st">"apca"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://mojaveazure.github.io/seurat-object/reference/DefaultAssay.html" class="external-link">DefaultAssay</a></span><span class="op">(</span><span class="va">SeuratObj</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">"RNA"</span></span>
+<span><span class="co">################################### Making Example Data Set for Ibex</span></span>
+<span></span>
+<span><span class="co"># Subset nondominate clones + random sampling of dominant</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span></span>
+<span><span class="va">cell.idx</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grepl</a></span><span class="op">(</span><span class="st">"CANWDGDYW"</span>, <span class="va">SeuratObj</span><span class="op">$</span><span class="va">CTaa</span><span class="op">)</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">SeuratObj</span><span class="op">[[</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>    <span class="fl">154</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">ibex_example</span> <span class="op">&lt;-</span> <span class="va">SeuratObj</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">saveRDS</a></span><span class="op">(</span><span class="va">ibex_example</span>, file <span class="op">=</span> <span class="st">"Ibex_FullExample.rds"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Forming Example Data set in SCE format</span></span>
+<span><span class="va">ibex_example</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">ibex_example</span>, cells <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">ibex_example</span><span class="op">)</span><span class="op">[</span><span class="va">cell.idx</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="va">PCA</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mojaveazure.github.io/seurat-object/reference/Embeddings.html" class="external-link">Embeddings</a></span><span class="op">(</span><span class="va">ibex_example</span><span class="op">[[</span><span class="st">"pca"</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="va">APCA</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mojaveazure.github.io/seurat-object/reference/Embeddings.html" class="external-link">Embeddings</a></span><span class="op">(</span><span class="va">ibex_example</span><span class="op">[[</span><span class="st">"apca"</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="va">BEAM_counts</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mojaveazure.github.io/seurat-object/reference/AssayData.html" class="external-link">GetAssayData</a></span><span class="op">(</span><span class="va">ibex_example</span>, slot <span class="op">=</span> <span class="st">"counts"</span>, assay <span class="op">=</span> <span class="st">"BEAM"</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span>, <span class="op">]</span></span>
+<span><span class="va">BEAM_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mojaveazure.github.io/seurat-object/reference/AssayData.html" class="external-link">GetAssayData</a></span><span class="op">(</span><span class="va">ibex_example</span>, slot <span class="op">=</span> <span class="st">"data"</span>, assay <span class="op">=</span> <span class="st">"BEAM"</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span>, <span class="op">]</span></span>
+<span><span class="va">ibex_example</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/as.SingleCellExperiment.html" class="external-link">as.SingleCellExperiment</a></span><span class="op">(</span><span class="va">ibex_example</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/SingleCellExperiment/man/altExps.html" class="external-link">altExp</a></span><span class="op">(</span><span class="va">ibex_example</span>, <span class="st">"BEAM"</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">SummarizedExperiment</a></span><span class="op">(</span>assays <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>counts <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">BEAM_counts</span><span class="op">)</span>,</span>
+<span>    logcounts <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">BEAM_data</span><span class="op">)</span><span class="op">)</span>, colData <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">colData</a></span><span class="op">(</span><span class="va">ibex_example</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/SingleCellExperiment/man/reducedDims.html" class="external-link">reducedDim</a></span><span class="op">(</span><span class="va">ibex_example</span>, <span class="st">"pca"</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">PCA</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/SingleCellExperiment/man/reducedDims.html" class="external-link">reducedDim</a></span><span class="op">(</span><span class="va">ibex_example</span>, <span class="st">"apca"</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">APCA</span></span>
+<span></span>
+<span><span class="co"># Saving the built-in data set</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/save.html" class="external-link">save</a></span><span class="op">(</span><span class="va">ibex_example</span>, file <span class="op">=</span> <span class="st">"ibex_example.rda"</span>, compress <span class="op">=</span> <span class="st">"xz"</span><span class="op">)</span></span>
+<span><span class="va">ibex_vdj</span> <span class="op">&lt;-</span> <span class="va">contigs</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/save.html" class="external-link">save</a></span><span class="op">(</span><span class="va">ibex_vdj</span>, file <span class="op">=</span> <span class="st">"ibex_vdj.rda"</span>, compress <span class="op">=</span> <span class="st">"xz"</span><span class="op">)</span></span></code></pre></div>
 <div class="section level4">
 <h4 id="loading-the-data-object">Loading the Data Object<a class="anchor" aria-label="anchor" href="#loading-the-data-object"></a>
 </h4>
-<p>For the purpose of the vignette, we will load the full object. The
-data example built into the package (<strong>ibex_example</strong>) is
-derived from randomly sampling cells from Patient 1 (see above).</p>
+<p>For the purpose of the vignette, will use the built-in data set
+<strong>ibex_example</strong>, but will convert it into a Seurat
+object.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">SeuratObj</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/connections.html" class="external-link">url</a></span><span class="op">(</span><span class="st">"https://www.borch.dev/uploads/data/Ibex_FullExample.rds"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"ibex_example"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">SeuratObj</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mojaveazure.github.io/seurat-object/reference/as.Seurat.html" class="external-link">as.Seurat</a></span><span class="op">(</span><span class="va">ibex_example</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="getting-expanded-sequences">Getting Expanded Sequences<a class="anchor" aria-label="anchor" href="#getting-expanded-sequences"></a>
+</h3>
+<p>The function <code>combineExpandedBCR()</code> extends the
+functionality of <code><a href="../reference/combineBCR.html">combineBCR()</a></code> from the scRepertoire package
+by first concatenating the CDR1, CDR2, and CDR3 sequences into a single
+expanded variable. This approach retains additional information from the
+BCR variable regions before calling <code><a href="../reference/combineBCR.html">combineBCR()</a></code> to
+consolidate BCR sequences into clones. This will allow for use of
+expanded sequence models which we will detail below.</p>
+<div class="section level4">
+<h4 id="function-parameters">
+<strong>Function Parameters</strong><a class="anchor" aria-label="anchor" href="#function-parameters"></a>
+</h4>
+<p>The <code>combineExpandedBCR()</code> function supports the following
+parameters:</p>
+<table class="table">
+<colgroup>
+<col width="22%">
+<col width="69%">
+<col width="8%">
+</colgroup>
+<thead><tr class="header">
+<th>Parameter</th>
+<th>Description</th>
+<th>Default</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td><code>input.data</code></td>
+<td>List of data frames containing BCR sequencing results.</td>
+<td><strong>Required</strong></td>
+</tr>
+<tr class="even">
+<td><code>samples</code></td>
+<td>Character vector labeling each sample.</td>
+<td><strong>Required</strong></td>
+</tr>
+<tr class="odd">
+<td><code>ID</code></td>
+<td>Additional sample labeling (optional).</td>
+<td><code>NULL</code></td>
+</tr>
+<tr class="even">
+<td><code>call.related.clones</code></td>
+<td>Whether to group related clones using nucleotide sequences and V
+genes.</td>
+<td><code>TRUE</code></td>
+</tr>
+<tr class="odd">
+<td><code>threshold</code></td>
+<td>Normalized edit distance for clone clustering.</td>
+<td><code>0.85</code></td>
+</tr>
+<tr class="even">
+<td><code>removeNA</code></td>
+<td>Remove chains without values.</td>
+<td><code>FALSE</code></td>
+</tr>
+<tr class="odd">
+<td><code>removeMulti</code></td>
+<td>Remove barcodes with more than two chains.</td>
+<td><code>FALSE</code></td>
+</tr>
+<tr class="even">
+<td><code>filterMulti</code></td>
+<td>Select highest-expressing light and heavy chains.</td>
+<td><code>TRUE</code></td>
+</tr>
+<tr class="odd">
+<td><code>filterNonproductive</code></td>
+<td>Remove nonproductive chains if the column exists.</td>
+<td><code>TRUE</code></td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">combined.BCR</span> <span class="op">&lt;-</span> <span class="fu">combineExpandedBCR</span><span class="op">(</span>input.data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">ibex_vdj</span><span class="op">)</span>,</span>
+<span>                                   samples <span class="op">=</span> <span class="st">"Sample1"</span>,</span>
+<span>                                   filterNonproductive <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">combined.BCR</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">11</span><span class="op">)</span><span class="op">]</span></span></code></pre></div>
+<pre><code><span><span class="co">##                      barcode</span></span>
+<span><span class="co">## 1 Sample1_CATCAGAAGTACGATA-1</span></span>
+<span><span class="co">## 2 Sample1_CTCGAGGGTCATCGGC-1</span></span>
+<span><span class="co">## 3 Sample1_AGCTTGAGTTTAAGCC-1</span></span>
+<span><span class="co">## 4 Sample1_ACGCCGATCATGCATG-1</span></span>
+<span><span class="co">## 5 Sample1_CAGGTGCAGTGTTAGA-1</span></span>
+<span><span class="co">## 6 Sample1_GGCGTGTGTCATATGC-1</span></span>
+<span><span class="co">##                                                                  CTaa</span></span>
+<span><span class="co">## 1      GFTFSDY-SSGSST-CARDPYYYGSSPDYW_KASQDINKYIA-YTSTLQP-CLQYDNLTWTF</span></span>
+<span><span class="co">## 2 GYSITSGY-SYDGS-CARDENGYYYGSRYYAMDYW_KASDHINNWLA-GATSLET-CQQYWSTPFTF</span></span>
+<span><span class="co">## 3 GYTFTSY-NPSNGG-CTRGGWDGYYYTMDYW_KASQSVDYDGDSYMN-AAANLES-CQQSNEDPRTF</span></span>
+<span><span class="co">## 4   GYTFTSY-DPNSGG-CARSRGTRWYFDVW_KASQSVDYDGDSYMN-AASNLES-CQQSNEDPYTF</span></span>
+<span><span class="co">## 5   GYTFTIY-NPSNGG-CARRTSDSSGYSYW_KASQSVDYDGDSYMN-AASNLES-CQQSNEDPRTF</span></span>
+<span><span class="co">## 6   GYTFTNY-NPSNGG-CSRGGWGSGALDYW_KASQSVDYDGDSYMN-AASNLES-CQQSNEDPRTF</span></span></code></pre>
+<p>We can attach the expanded sequences to the Seurat or Single-Cell
+Experiment objects using the scRepertoire <a href="https://www.borch.dev/uploads/screpertoire/reference/combineexpression" class="external-link"><code>combineExpression()</code></a>
+function.</p>
+</div>
+</div>
+<div class="section level3">
+<h3 id="available-models">Available Models<a class="anchor" aria-label="anchor" href="#available-models"></a>
+</h3>
+<p><strong>Ibex</strong> offers a diverse set of models built on various
+architectures and encoding methods. Currently, models are available for
+both heavy and light chain sequences in humans, as well as heavy chain
+models for mice. Models for CDR3-based sequences have been trained on
+sequences of 45 residues or fewer, while models for CDR1/2/3-based
+sequences are specific to sequences of 90 amino acids or fewer.</p>
+<p>A full list of available models is provided below:</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">model.meta.data</span> <span class="op">&lt;-</span>  <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"metadata.csv"</span>, </span>
+<span>                                               package <span class="op">=</span> <span class="st">"Ibex"</span><span class="op">)</span><span class="op">)</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span>,<span class="fl">8</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="va">model.meta.data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu">kable</span><span class="op">(</span><span class="st">"html"</span>, escape <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu">kable_styling</span><span class="op">(</span>full_width <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu">scroll_box</span><span class="op">(</span>width <span class="op">=</span> <span class="st">"100%"</span>, height <span class="op">=</span> <span class="st">"400px"</span><span class="op">)</span></span></code></pre></div>
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:400px; overflow-x: scroll; width:100%; ">
+<table class="table table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead><tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Title
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Description
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Species
+</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Human_Heavy_CNN_atchleyFactors_encoder.keras
+</td>
+<td style="text-align:left;">
+Keras-based deep learning encoder for BCR sequences. Chain: Heavy,
+Architecture: CNN, Encoding Method: atchleyFactors
+</td>
+<td style="text-align:left;">
+Homo sapiens
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Human_Heavy_CNN_crucianiProperties_encoder.keras
+</td>
+<td style="text-align:left;">
+Keras-based deep learning encoder for BCR sequences. Chain: Heavy,
+Architecture: CNN, Encoding Method: crucianiProperties
+</td>
+<td style="text-align:left;">
+Homo sapiens
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Human_Heavy_CNN_kideraFactors_encoder.keras
+</td>
+<td style="text-align:left;">
+Keras-based deep learning encoder for BCR sequences. Chain: Heavy,
+Architecture: CNN, Encoding Method: kideraFactors
+</td>
+<td style="text-align:left;">
+Homo sapiens
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Human_Heavy_CNN_MSWHIM_encoder.keras
+</td>
+<td style="text-align:left;">
+Keras-based deep learning encoder for BCR sequences. Chain: Heavy,
+Architecture: CNN, Encoding Method: MSWHIM
+</td>
+<td style="text-align:left;">
+Homo sapiens
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Human_Heavy_CNN_OHE_encoder.keras
+</td>
+<td style="text-align:left;">
+Keras-based deep learning encoder for BCR sequences. Chain: Heavy,
+Architecture: CNN, Encoding Method: OHE
+</td>
+<td style="text-align:left;">
+Homo sapiens
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Human_Heavy_CNN_tScales_encoder.keras
+</td>
+<td style="text-align:left;">
+Keras-based deep learning encoder for BCR sequences. Chain: Heavy,
+Architecture: CNN, Encoding Method: tScales
+</td>
+<td style="text-align:left;">
+Homo sapiens
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Human_Heavy_CNN.EXP_atchleyFactors_encoder.keras
+</td>
+<td style="text-align:left;">
+Keras-based deep learning encoder for BCR sequences. Chain: Heavy,
+Architecture: CNN.EXP, Encoding Method: atchleyFactors
+</td>
+<td style="text-align:left;">
+Homo sapiens
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Human_Heavy_CNN.EXP_crucianiProperties_encoder.keras
+</td>
+<td style="text-align:left;">
+Keras-based deep learning encoder for BCR sequences. Chain: Heavy,
+Architecture: CNN.EXP, Encoding Method: crucianiProperties
+</td>
+<td style="text-align:left;">
+Homo sapiens
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Human_Heavy_CNN.EXP_kideraFactors_encoder.keras
+</td>
+<td style="text-align:left;">
+Keras-based deep learning encoder for BCR sequences. Chain: Heavy,
+Architecture: CNN.EXP, Encoding Method: kideraFactors
+</td>
+<td style="text-align:left;">
+Homo sapiens
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Human_Heavy_CNN.EXP_MSWHIM_encoder.keras
+</td>
+<td style="text-align:left;">
+Keras-based deep learning encoder for BCR sequences. Chain: Heavy,
+Architecture: CNN.EXP, Encoding Method: MSWHIM
+</td>
+<td style="text-align:left;">
+Homo sapiens
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Human_Heavy_CNN.EXP_OHE_encoder.keras
+</td>
+<td style="text-align:left;">
+Keras-based deep learning encoder for BCR sequences. Chain: Heavy,
+Architecture: CNN.EXP, Encoding Method: OHE
+</td>
+<td style="text-align:left;">
+Homo sapiens
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Human_Heavy_CNN.EXP_tScales_encoder.keras
+</td>
+<td style="text-align:left;">
+Keras-based deep learning encoder for BCR sequences. Chain: Heavy,
+Architecture: CNN.EXP, Encoding Method: tScales
+</td>
+<td style="text-align:left;">
+Homo sapiens
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Human_Heavy_VAE_atchleyFactors_encoder.keras
+</td>
+<td style="text-align:left;">
+Keras-based deep learning encoder for BCR sequences. Chain: Heavy,
+Architecture: VAE, Encoding Method: atchleyFactors
+</td>
+<td style="text-align:left;">
+Homo sapiens
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Human_Heavy_VAE_crucianiProperties_encoder.keras
+</td>
+<td style="text-align:left;">
+Keras-based deep learning encoder for BCR sequences. Chain: Heavy,
+Architecture: VAE, Encoding Method: crucianiProperties
+</td>
+<td style="text-align:left;">
+Homo sapiens
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Human_Heavy_VAE_kideraFactors_encoder.keras
+</td>
+<td style="text-align:left;">
+Keras-based deep learning encoder for BCR sequences. Chain: Heavy,
+Architecture: VAE, Encoding Method: kideraFactors
+</td>
+<td style="text-align:left;">
+Homo sapiens
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Human_Heavy_VAE_MSWHIM_encoder.keras
+</td>
+<td style="text-align:left;">
+Keras-based deep learning encoder for BCR sequences. Chain: Heavy,
+Architecture: VAE, Encoding Method: MSWHIM
+</td>
+<td style="text-align:left;">
+Homo sapiens
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Human_Heavy_VAE_OHE_encoder.keras
+</td>
+<td style="text-align:left;">
+Keras-based deep learning encoder for BCR sequences. Chain: Heavy,
+Architecture: VAE, Encoding Method: OHE
+</td>
+<td style="text-align:left;">
+Homo sapiens
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Human_Heavy_VAE_tScales_encoder.keras
+</td>
+<td style="text-align:left;">
+Keras-based deep learning encoder for BCR sequences. Chain: Heavy,
+Architecture: VAE, Encoding Method: tScales
+</td>
+<td style="text-align:left;">
+Homo sapiens
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Human_Heavy_VAE.EXP_atchleyFactors_encoder.keras
+</td>
+<td style="text-align:left;">
+Keras-based deep learning encoder for BCR sequences. Chain: Heavy,
+Architecture: VAE.EXP, Encoding Method: atchleyFactors
+</td>
+<td style="text-align:left;">
+Homo sapiens
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Human_Heavy_VAE.EXP_crucianiProperties_encoder.keras
+</td>
+<td style="text-align:left;">
+Keras-based deep learning encoder for BCR sequences. Chain: Heavy,
+Architecture: VAE.EXP, Encoding Method: crucianiProperties
+</td>
+<td style="text-align:left;">
+Homo sapiens
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Human_Heavy_VAE.EXP_kideraFactors_encoder.keras
+</td>
+<td style="text-align:left;">
+Keras-based deep learning encoder for BCR sequences. Chain: Heavy,
+Architecture: VAE.EXP, Encoding Method: kideraFactors
+</td>
+<td style="text-align:left;">
+Homo sapiens
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Human_Heavy_VAE.EXP_MSWHIM_encoder.keras
+</td>
+<td style="text-align:left;">
+Keras-based deep learning encoder for BCR sequences. Chain: Heavy,
+Architecture: VAE.EXP, Encoding Method: MSWHIM
+</td>
+<td style="text-align:left;">
+Homo sapiens
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Human_Heavy_VAE.EXP_OHE_encoder.keras
+</td>
+<td style="text-align:left;">
+Keras-based deep learning encoder for BCR sequences. Chain: Heavy,
+Architecture: VAE.EXP, Encoding Method: OHE
+</td>
+<td style="text-align:left;">
+Homo sapiens
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Human_Heavy_VAE.EXP_tScales_encoder.keras
+</td>
+<td style="text-align:left;">
+Keras-based deep learning encoder for BCR sequences. Chain: Heavy,
+Architecture: VAE.EXP, Encoding Method: tScales
+</td>
+<td style="text-align:left;">
+Homo sapiens
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Human_Light_CNN_atchleyFactors_encoder.keras
+</td>
+<td style="text-align:left;">
+Keras-based deep learning encoder for BCR sequences. Chain: Light,
+Architecture: CNN, Encoding Method: atchleyFactors
+</td>
+<td style="text-align:left;">
+Homo sapiens
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Human_Light_CNN_crucianiProperties_encoder.keras
+</td>
+<td style="text-align:left;">
+Keras-based deep learning encoder for BCR sequences. Chain: Light,
+Architecture: CNN, Encoding Method: crucianiProperties
+</td>
+<td style="text-align:left;">
+Homo sapiens
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Human_Light_CNN_kideraFactors_encoder.keras
+</td>
+<td style="text-align:left;">
+Keras-based deep learning encoder for BCR sequences. Chain: Light,
+Architecture: CNN, Encoding Method: kideraFactors
+</td>
+<td style="text-align:left;">
+Homo sapiens
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Human_Light_CNN_MSWHIM_encoder.keras
+</td>
+<td style="text-align:left;">
+Keras-based deep learning encoder for BCR sequences. Chain: Light,
+Architecture: CNN, Encoding Method: MSWHIM
+</td>
+<td style="text-align:left;">
+Homo sapiens
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Human_Light_CNN_OHE_encoder.keras
+</td>
+<td style="text-align:left;">
+Keras-based deep learning encoder for BCR sequences. Chain: Light,
+Architecture: CNN, Encoding Method: OHE
+</td>
+<td style="text-align:left;">
+Homo sapiens
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Human_Light_CNN_tScales_encoder.keras
+</td>
+<td style="text-align:left;">
+Keras-based deep learning encoder for BCR sequences. Chain: Light,
+Architecture: CNN, Encoding Method: tScales
+</td>
+<td style="text-align:left;">
+Homo sapiens
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Human_Light_CNN.EXP_atchleyFactors_encoder.keras
+</td>
+<td style="text-align:left;">
+Keras-based deep learning encoder for BCR sequences. Chain: Light,
+Architecture: CNN.EXP, Encoding Method: atchleyFactors
+</td>
+<td style="text-align:left;">
+Homo sapiens
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Human_Light_CNN.EXP_crucianiProperties_encoder.keras
+</td>
+<td style="text-align:left;">
+Keras-based deep learning encoder for BCR sequences. Chain: Light,
+Architecture: CNN.EXP, Encoding Method: crucianiProperties
+</td>
+<td style="text-align:left;">
+Homo sapiens
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Human_Light_CNN.EXP_kideraFactors_encoder.keras
+</td>
+<td style="text-align:left;">
+Keras-based deep learning encoder for BCR sequences. Chain: Light,
+Architecture: CNN.EXP, Encoding Method: kideraFactors
+</td>
+<td style="text-align:left;">
+Homo sapiens
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Human_Light_CNN.EXP_MSWHIM_encoder.keras
+</td>
+<td style="text-align:left;">
+Keras-based deep learning encoder for BCR sequences. Chain: Light,
+Architecture: CNN.EXP, Encoding Method: MSWHIM
+</td>
+<td style="text-align:left;">
+Homo sapiens
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Human_Light_CNN.EXP_OHE_encoder.keras
+</td>
+<td style="text-align:left;">
+Keras-based deep learning encoder for BCR sequences. Chain: Light,
+Architecture: CNN.EXP, Encoding Method: OHE
+</td>
+<td style="text-align:left;">
+Homo sapiens
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Human_Light_CNN.EXP_tScales_encoder.keras
+</td>
+<td style="text-align:left;">
+Keras-based deep learning encoder for BCR sequences. Chain: Light,
+Architecture: CNN.EXP, Encoding Method: tScales
+</td>
+<td style="text-align:left;">
+Homo sapiens
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Human_Light_VAE_atchleyFactors_encoder.keras
+</td>
+<td style="text-align:left;">
+Keras-based deep learning encoder for BCR sequences. Chain: Light,
+Architecture: VAE, Encoding Method: atchleyFactors
+</td>
+<td style="text-align:left;">
+Homo sapiens
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Human_Light_VAE_crucianiProperties_encoder.keras
+</td>
+<td style="text-align:left;">
+Keras-based deep learning encoder for BCR sequences. Chain: Light,
+Architecture: VAE, Encoding Method: crucianiProperties
+</td>
+<td style="text-align:left;">
+Homo sapiens
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Human_Light_VAE_kideraFactors_encoder.keras
+</td>
+<td style="text-align:left;">
+Keras-based deep learning encoder for BCR sequences. Chain: Light,
+Architecture: VAE, Encoding Method: kideraFactors
+</td>
+<td style="text-align:left;">
+Homo sapiens
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Human_Light_VAE_MSWHIM_encoder.keras
+</td>
+<td style="text-align:left;">
+Keras-based deep learning encoder for BCR sequences. Chain: Light,
+Architecture: VAE, Encoding Method: MSWHIM
+</td>
+<td style="text-align:left;">
+Homo sapiens
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Human_Light_VAE_OHE_encoder.keras
+</td>
+<td style="text-align:left;">
+Keras-based deep learning encoder for BCR sequences. Chain: Light,
+Architecture: VAE, Encoding Method: OHE
+</td>
+<td style="text-align:left;">
+Homo sapiens
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Human_Light_VAE_tScales_encoder.keras
+</td>
+<td style="text-align:left;">
+Keras-based deep learning encoder for BCR sequences. Chain: Light,
+Architecture: VAE, Encoding Method: tScales
+</td>
+<td style="text-align:left;">
+Homo sapiens
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Human_Light_VAE.EXP_atchleyFactors_encoder.keras
+</td>
+<td style="text-align:left;">
+Keras-based deep learning encoder for BCR sequences. Chain: Light,
+Architecture: VAE.EXP, Encoding Method: atchleyFactors
+</td>
+<td style="text-align:left;">
+Homo sapiens
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Human_Light_VAE.EXP_crucianiProperties_encoder.keras
+</td>
+<td style="text-align:left;">
+Keras-based deep learning encoder for BCR sequences. Chain: Light,
+Architecture: VAE.EXP, Encoding Method: crucianiProperties
+</td>
+<td style="text-align:left;">
+Homo sapiens
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Human_Light_VAE.EXP_kideraFactors_encoder.keras
+</td>
+<td style="text-align:left;">
+Keras-based deep learning encoder for BCR sequences. Chain: Light,
+Architecture: VAE.EXP, Encoding Method: kideraFactors
+</td>
+<td style="text-align:left;">
+Homo sapiens
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Human_Light_VAE.EXP_MSWHIM_encoder.keras
+</td>
+<td style="text-align:left;">
+Keras-based deep learning encoder for BCR sequences. Chain: Light,
+Architecture: VAE.EXP, Encoding Method: MSWHIM
+</td>
+<td style="text-align:left;">
+Homo sapiens
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Human_Light_VAE.EXP_OHE_encoder.keras
+</td>
+<td style="text-align:left;">
+Keras-based deep learning encoder for BCR sequences. Chain: Light,
+Architecture: VAE.EXP, Encoding Method: OHE
+</td>
+<td style="text-align:left;">
+Homo sapiens
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Human_Light_VAE.EXP_tScales_encoder.keras
+</td>
+<td style="text-align:left;">
+Keras-based deep learning encoder for BCR sequences. Chain: Light,
+Architecture: VAE.EXP, Encoding Method: tScales
+</td>
+<td style="text-align:left;">
+Homo sapiens
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mouse_Heavy_CNN_atchleyFactors_encoder.keras
+</td>
+<td style="text-align:left;">
+Keras-based deep learning encoder for BCR sequences. Chain: Heavy,
+Architecture: CNN, Encoding Method: atchleyFactors
+</td>
+<td style="text-align:left;">
+Mus musculus
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mouse_Heavy_CNN_crucianiProperties_encoder.keras
+</td>
+<td style="text-align:left;">
+Keras-based deep learning encoder for BCR sequences. Chain: Heavy,
+Architecture: CNN, Encoding Method: crucianiProperties
+</td>
+<td style="text-align:left;">
+Mus musculus
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mouse_Heavy_CNN_kideraFactors_encoder.keras
+</td>
+<td style="text-align:left;">
+Keras-based deep learning encoder for BCR sequences. Chain: Heavy,
+Architecture: CNN, Encoding Method: kideraFactors
+</td>
+<td style="text-align:left;">
+Mus musculus
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mouse_Heavy_CNN_MSWHIM_encoder.keras
+</td>
+<td style="text-align:left;">
+Keras-based deep learning encoder for BCR sequences. Chain: Heavy,
+Architecture: CNN, Encoding Method: MSWHIM
+</td>
+<td style="text-align:left;">
+Mus musculus
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mouse_Heavy_CNN_OHE_encoder.keras
+</td>
+<td style="text-align:left;">
+Keras-based deep learning encoder for BCR sequences. Chain: Heavy,
+Architecture: CNN, Encoding Method: OHE
+</td>
+<td style="text-align:left;">
+Mus musculus
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mouse_Heavy_CNN_tScales_encoder.keras
+</td>
+<td style="text-align:left;">
+Keras-based deep learning encoder for BCR sequences. Chain: Heavy,
+Architecture: CNN, Encoding Method: tScales
+</td>
+<td style="text-align:left;">
+Mus musculus
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mouse_Heavy_CNN.EXP_atchleyFactors_encoder.keras
+</td>
+<td style="text-align:left;">
+Keras-based deep learning encoder for BCR sequences. Chain: Heavy,
+Architecture: CNN.EXP, Encoding Method: atchleyFactors
+</td>
+<td style="text-align:left;">
+Mus musculus
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mouse_Heavy_CNN.EXP_crucianiProperties_encoder.keras
+</td>
+<td style="text-align:left;">
+Keras-based deep learning encoder for BCR sequences. Chain: Heavy,
+Architecture: CNN.EXP, Encoding Method: crucianiProperties
+</td>
+<td style="text-align:left;">
+Mus musculus
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mouse_Heavy_CNN.EXP_kideraFactors_encoder.keras
+</td>
+<td style="text-align:left;">
+Keras-based deep learning encoder for BCR sequences. Chain: Heavy,
+Architecture: CNN.EXP, Encoding Method: kideraFactors
+</td>
+<td style="text-align:left;">
+Mus musculus
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mouse_Heavy_CNN.EXP_MSWHIM_autoencoder.keras
+</td>
+<td style="text-align:left;">
+Keras-based deep learning encoder for BCR sequences. Chain: Heavy,
+Architecture: CNN.EXP, Encoding Method: MSWHIM
+</td>
+<td style="text-align:left;">
+Mus musculus
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mouse_Heavy_CNN.EXP_OHE_autoencoder.keras
+</td>
+<td style="text-align:left;">
+Keras-based deep learning encoder for BCR sequences. Chain: Heavy,
+Architecture: CNN.EXP, Encoding Method: OHE
+</td>
+<td style="text-align:left;">
+Mus musculus
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mouse_Heavy_CNN.EXP_tScales_encoder.keras
+</td>
+<td style="text-align:left;">
+Keras-based deep learning encoder for BCR sequences. Chain: Heavy,
+Architecture: CNN.EXP, Encoding Method: tScales
+</td>
+<td style="text-align:left;">
+Mus musculus
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mouse_Heavy_VAE_atchleyFactors_encoder.keras
+</td>
+<td style="text-align:left;">
+Keras-based deep learning encoder for BCR sequences. Chain: Heavy,
+Architecture: VAE, Encoding Method: atchleyFactors
+</td>
+<td style="text-align:left;">
+Mus musculus
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mouse_Heavy_VAE_crucianiProperties_encoder.keras
+</td>
+<td style="text-align:left;">
+Keras-based deep learning encoder for BCR sequences. Chain: Heavy,
+Architecture: VAE, Encoding Method: crucianiProperties
+</td>
+<td style="text-align:left;">
+Mus musculus
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mouse_Heavy_VAE_kideraFactors_encoder.keras
+</td>
+<td style="text-align:left;">
+Keras-based deep learning encoder for BCR sequences. Chain: Heavy,
+Architecture: VAE, Encoding Method: kideraFactors
+</td>
+<td style="text-align:left;">
+Mus musculus
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mouse_Heavy_VAE_MSWHIM_encoder.keras
+</td>
+<td style="text-align:left;">
+Keras-based deep learning encoder for BCR sequences. Chain: Heavy,
+Architecture: VAE, Encoding Method: MSWHIM
+</td>
+<td style="text-align:left;">
+Mus musculus
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mouse_Heavy_VAE_OHE_encoder.keras
+</td>
+<td style="text-align:left;">
+Keras-based deep learning encoder for BCR sequences. Chain: Heavy,
+Architecture: VAE, Encoding Method: OHE
+</td>
+<td style="text-align:left;">
+Mus musculus
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mouse_Heavy_VAE_tScales_encoder.keras
+</td>
+<td style="text-align:left;">
+Keras-based deep learning encoder for BCR sequences. Chain: Heavy,
+Architecture: VAE, Encoding Method: tScales
+</td>
+<td style="text-align:left;">
+Mus musculus
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mouse_Heavy_VAE.EXP_atchleyFactors_encoder.keras
+</td>
+<td style="text-align:left;">
+Keras-based deep learning encoder for BCR sequences. Chain: Heavy,
+Architecture: VAE.EXP, Encoding Method: atchleyFactors
+</td>
+<td style="text-align:left;">
+Mus musculus
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mouse_Heavy_VAE.EXP_crucianiProperties_encoder.keras
+</td>
+<td style="text-align:left;">
+Keras-based deep learning encoder for BCR sequences. Chain: Heavy,
+Architecture: VAE.EXP, Encoding Method: crucianiProperties
+</td>
+<td style="text-align:left;">
+Mus musculus
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mouse_Heavy_VAE.EXP_kideraFactors_encoder.keras
+</td>
+<td style="text-align:left;">
+Keras-based deep learning encoder for BCR sequences. Chain: Heavy,
+Architecture: VAE.EXP, Encoding Method: kideraFactors
+</td>
+<td style="text-align:left;">
+Mus musculus
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mouse_Heavy_VAE.EXP_MSWHIM_encoder.keras
+</td>
+<td style="text-align:left;">
+Keras-based deep learning encoder for BCR sequences. Chain: Heavy,
+Architecture: VAE.EXP, Encoding Method: MSWHIM
+</td>
+<td style="text-align:left;">
+Mus musculus
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mouse_Heavy_VAE.EXP_OHE_encoder.keras
+</td>
+<td style="text-align:left;">
+Keras-based deep learning encoder for BCR sequences. Chain: Heavy,
+Architecture: VAE.EXP, Encoding Method: OHE
+</td>
+<td style="text-align:left;">
+Mus musculus
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mouse_Heavy_VAE.EXP_tScales_encoder.keras
+</td>
+<td style="text-align:left;">
+Keras-based deep learning encoder for BCR sequences. Chain: Heavy,
+Architecture: VAE.EXP, Encoding Method: tScales
+</td>
+<td style="text-align:left;">
+Mus musculus
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>ll the models are available via a <a href="https://zenodo.org/records/14919286" class="external-link">Zenodo repository</a>, which
+Ibex will pull automatically and cache for future use locally. There is
+no need to download the models independent of the <code>runIbex()</code>
+or <code>ibex.matrix()</code> calls.</p>
+<div class="section level4">
+<h4 id="choosing-between-cnn-and-vae">Choosing Between CNN and VAE<a class="anchor" aria-label="anchor" href="#choosing-between-cnn-and-vae"></a>
+</h4>
+<p><strong>Convolutional Neural Networks (CNNs)</strong></p>
+<ul>
+<li>
+<strong>Pros</strong>: Detect local sequence motifs effectively;
+relatively straightforward and quick to train.</li>
+<li>
+<strong>Cons</strong>: Can struggle to capture global context</li>
+</ul>
+<p><strong>Variational Autoencoders (VAEs)</strong></p>
+<ul>
+<li>
+<strong>Pros</strong>: Model sequences within a probabilistic,
+continuous latent space; suitable for generating novel variants.<br>
+</li>
+<li>
+<strong>Cons</strong>: Training can be more complex (balancing
+reconstruction and regularization losses); interpretability may be less
+direct.</li>
+</ul>
+<p><strong>Which to choose?</strong></p>
+<ul>
+<li>
+<strong>Use CNNs</strong> if local motif detection and simpler
+training are priorities.<br>
+</li>
+<li>
+<strong>Use VAEs</strong> if you want a generative model capturing
+broader sequence structures.</li>
+</ul>
+</div>
+<div class="section level4">
+<h4 id="choosing-encoding-methods">Choosing Encoding Methods<a class="anchor" aria-label="anchor" href="#choosing-encoding-methods"></a>
+</h4>
+<p><strong>One-Hot Encoding:</strong> Represents each amino acid as a
+binary vector (e.g., a 20-length vector for the 20 standard
+residues).</p>
+<ul>
+<li>
+<strong>Pros</strong>: Simple and assumption-free.</li>
+<li>
+<strong>Cons</strong>: High-dimensional and doesn’t capture
+biochemical similarities.</li>
+</ul>
+<p><strong>Atchley Factors:</strong> Uses five numerical descriptors
+summarizing key physicochemical properties.</p>
+<ul>
+<li>
+<strong>Pros</strong>: Compact and embeds biochemical
+information.</li>
+<li>
+<strong>Cons</strong>: May overlook some residue-specific
+nuances.</li>
+</ul>
+<p><strong>Cruciani Properties:</strong> Encodes amino acids via
+descriptors that reflect molecular shape, hydrophobicity, and electronic
+features.</p>
+<ul>
+<li>
+<strong>Pros</strong>: Captures rich chemical details.</li>
+<li>
+<strong>Cons</strong>: More complex to compute and less
+standardized.</li>
+</ul>
+<p><strong>Kidera Factors:</strong> Provides ten orthogonal values
+derived from a broad set of physical and chemical properties.</p>
+<ul>
+<li>
+<strong>Pros</strong>: Offers a balanced, low-dimensional
+representation.</li>
+<li>
+<strong>Cons</strong>: Derived statistically, potentially averaging
+out finer details.</li>
+</ul>
+<p><strong>MSWHIM:</strong> Derives descriptors from 3D structural data,
+summarizing overall shape and surface properties.</p>
+<ul>
+<li>
+<strong>Pros</strong>: Provides robust, rotation-invariant
+structural insight.</li>
+<li>
+<strong>Cons</strong>: Requires 3D information and can be
+computationally intensive.</li>
+</ul>
+<p><strong>tScales:</strong> Encodes amino acids based on topological
+and structural features reflective of protein folding and
+interactions.</p>
+<ul>
+<li>
+<strong>Pros</strong>: Captures contextual information from the
+overall sequence structure.</li>
+<li>
+<strong>Cons</strong>: Less commonly used, making standardization
+and tool support a challenge.</li>
+</ul>
 </div>
 </div>
 </div>
 <div class="section level2">
 <h2 id="running-ibex">Running Ibex<a class="anchor" aria-label="anchor" href="#running-ibex"></a>
 </h2>
-<div class="section level3">
-<h3 id="ibex-matrix-function">Ibex.matrix Function<a class="anchor" aria-label="anchor" href="#ibex-matrix-function"></a>
-</h3>
-<p>Ibex has 2 major functions - the first being
-<code>Ibex.matrix()</code>, which is the backbone of the algorithm and
-returns the encoded values based on the selection of variables. Unlike
-<code>runIbex()</code> below, <code>Ibex.matrix()</code> does not filter
-the input for only B cells with attached BCR data. In addition,
-<code>Ibex.matrix()</code> is compatible with the list output from the
-<code><a href="../reference/combineBCR.html">combineBCR()</a></code> function from the <a href="https://github.com/BorchLab/scRepertoire" class="external-link">scRepertoire</a> R
-package, while <code>runIbex()</code> must be performed on a single-cell
-object.</p>
-<p><strong>chains</strong></p>
+<div class="section level4">
+<h4 id="ibex-matrix-function">Ibex.matrix Function<a class="anchor" aria-label="anchor" href="#ibex-matrix-function"></a>
+</h4>
+<p><strong>Ibex</strong> includes two primary functions:
+<code>Ibex.matrix()</code> and <code>runIbex()</code>. The
+<code>Ibex.matrix()</code> function serves as the backbone of the
+algorithm, returning encoded values based on user-selected parameters.
+In contrast to <code>runIbex()</code>, which filters input to include
+only B cells with attached BCR data, <code>Ibex.matrix()</code> operates
+on all provided data. Additionally, it is compatible with the list
+output from the <code><a href="../reference/combineBCR.html">combineBCR()</a></code> function (from the <a href="https://github.com/BorchLab/scRepertoire" class="external-link">scRepertoire</a>
+package), whereas <code>runIbex()</code> is designed for use with a
+single-cell object.</p>
+</div>
+<div class="section level4">
+<h4 id="parameters">Parameters<a class="anchor" aria-label="anchor" href="#parameters"></a>
+</h4>
 <ul>
-<li>“Heavy” for Ig Heavy Chain<br>
-</li>
-<li>“Light” for Ig Light Chain</li>
-</ul>
-<p><strong>method</strong></p>
+<li>
+<strong>chain</strong>:<br>
+Specifies the chain type. Options:
 <ul>
-<li>“encoder” for a convolution neural network (CNN) based
-encoding.<br>
+<li>
+<code>"Heavy"</code> for Ig Heavy Chain<br>
 </li>
-<li>“geometric” for a geometric transformation.</li>
+<li>
+<code>"Light"</code> for Ig Light Chain</li>
 </ul>
-<p><strong>encoder.model</strong></p>
+</li>
+<li>
+<strong>method</strong>:<br>
+Chooses the transformation method. Options:
 <ul>
-<li>“VAE” for a variational autoencoder<br>
+<li>
+<code>"encoder"</code>: Applies a CNN/VAE-based
+transformation.<br>
 </li>
-<li>“AE” for a traditional autoencoder</li>
+<li>
+<code>"geometric"</code>: Uses a geometric transformation.</li>
 </ul>
-<p><strong>encoder.input</strong></p>
+</li>
+<li>
+<strong>encoder.model</strong>:<br>
+When using the <code>"encoder"</code> method, selects the specific model
+variant. Options:
 <ul>
-<li>“AF” to use Atchley factors<br>
+<li>
+<code>"CNN"</code>: CDR3 Convolutional Neural Network-based
+autoencoder<br>
 </li>
-<li>“KF” to use Kidera factors<br>
+<li>
+<code>"VAE"</code>: CDR3 Variational Autoencoder<br>
 </li>
-<li>“both” to use both Atchley and Kidera factors</li>
-<li>“OHE” for a One Hot Autoencoder</li>
+<li>
+<code>"CNN.EXP"</code>: CDR1/2/3 CNN<br>
+</li>
+<li>
+<code>"VAE.EXP"</code>: CDR1/2/3 VAE</li>
 </ul>
-<p><strong>theta</strong><br>
-If choosing the geometric transformation, what value of theta to use
-(default is pi)</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">ibex_vectors</span> <span class="op">&lt;-</span> <span class="fu">Ibex.matrix</span><span class="op">(</span><span class="va">SeuratObj</span>, </span>
-<span>                            chains <span class="op">=</span> <span class="st">"Light"</span>,</span>
-<span>                            encoder.input <span class="op">=</span> <span class="st">"OHE"</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] "Calculating the encoding values..."</span></span></code></pre>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">qplot</span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">ibex_vectors</span><span class="op">)</span>, <span class="va">Ibex_2</span>, <span class="va">Ibex_3</span><span class="op">)</span> <span class="op">+</span> <span class="fu">theme_classic</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Ibex_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
+</li>
+<li>
+<strong>encoder.input</strong>:<br>
+Specifies the encoding input method. Options:
+<ul>
+<li>
+<code>"atchleyFactors"</code><br>
+</li>
+<li>
+<code>"crucianiProperties"</code><br>
+</li>
+<li>
+<code>"kideraFactors"</code><br>
+</li>
+<li>
+<code>"MSWHIM"</code><br>
+</li>
+<li>
+<code>"tScales"</code><br>
+</li>
+<li><code>"OHE"</code></li>
+</ul>
+</li>
+<li>
+<strong>theta</strong>:<br>
+For the geometric transformation, defines the value of theta (default is
+π/3).</li>
+</ul>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">Ibex_vectors</span> <span class="op">&lt;-</span> <span class="fu">Ibex.matrix</span><span class="op">(</span><span class="va">SeuratObj</span>, </span>
+<span>                            chain <span class="op">=</span> <span class="st">"Heavy"</span>,</span>
+<span>                            method <span class="op">=</span> <span class="st">"encoder"</span>,</span>
+<span>                            encoder.model <span class="op">=</span> <span class="st">"VAE"</span>, </span>
+<span>                            encoder.input <span class="op">=</span> <span class="st">"OHE"</span>, </span>
+<span>                            species <span class="op">=</span> <span class="st">"Mouse"</span>,</span>
+<span>                            verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">Ibex_vectors</span><span class="op">)</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Ibex_1</span>, <span class="va">Ibex_2</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"grey"</span>, alpha <span class="op">=</span> <span class="fl">0.7</span>, size <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_classic</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="Ibex_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">Ibex_vectors2</span> <span class="op">&lt;-</span> <span class="fu">Ibex.matrix</span><span class="op">(</span><span class="va">SeuratObj</span>, </span>
+<span>                             chain <span class="op">=</span> <span class="st">"Heavy"</span>,</span>
+<span>                             method <span class="op">=</span> <span class="st">"geometric"</span>,</span>
+<span>                             geometric.theta <span class="op">=</span> <span class="va">pi</span>, </span>
+<span>                             verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">Ibex_vectors2</span><span class="op">)</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Ibex_1</span>, y <span class="op">=</span> <span class="va">Ibex_2</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"grey"</span>, alpha <span class="op">=</span> <span class="fl">0.7</span>, size <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_classic</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="Ibex_files/figure-html/unnamed-chunk-6-2.png" width="700"></p>
 </div>
 <div class="section level3">
 <h3 id="runibex">runIbex<a class="anchor" aria-label="anchor" href="#runibex"></a>
@@ -313,67 +1502,96 @@ or Single-cell Experiment object with the Ibex vectors and allow for
 further analysis. Importantly, <code>runIbex()</code> will remove single
 cells that do not have recovered BCR data in the metadata of the
 object.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">SeuratObj</span> <span class="op">&lt;-</span> <span class="fu">runIbex</span><span class="op">(</span><span class="va">SeuratObj</span>, </span>
-<span>                     chains <span class="op">=</span> <span class="st">"Heavy"</span>,</span>
-<span>                     encoder.input <span class="op">=</span> <span class="st">"KF"</span>, </span>
-<span>                     reduction.name <span class="op">=</span> <span class="st">"ibex.KF"</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] "Calculating the encoding values..."</span></span></code></pre>
+<span>                     chain <span class="op">=</span> <span class="st">"Heavy"</span>,</span>
+<span>                     encoder.input <span class="op">=</span> <span class="st">"kideraFactors"</span>, </span>
+<span>                     reduction.name <span class="op">=</span> <span class="st">"Ibex.KF"</span>, </span>
+<span>                     species <span class="op">=</span> <span class="st">"Mouse"</span>,</span>
+<span>                     verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="using-ibex-vectors">Using Ibex Vectors<a class="anchor" aria-label="anchor" href="#using-ibex-vectors"></a>
 </h3>
-<p>After <code>runIbex()</code>, we have the encoded values stored under
-<strong>“Ibex…”</strong>. Using the Ibex reduction stored in Seurat, we
-can calculate the nearest neighbor and shared nearest neighbor indexes
-and generate a UMAP.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<p>After <code>runIbex()</code> we have the encoded values stored under
+<strong>“Ibex…”</strong>. Using the Ibex dimensions, we can calculate a
+UMAP based solely on the embedded heavy chain values. Here we will
+visualize both the Heavy/Light Chain amino acid sequence (via
+<strong>CTaa</strong>) and normalized counts associated with the
+<strong>Anti-Hen-Egg-Lysozyme</strong> antigen.</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#Generating UMAP from ibex Neighbors</span></span>
-<span><span class="va">SeuratObj</span> <span class="op">&lt;-</span> <span class="fu">RunUMAP</span><span class="op">(</span><span class="va">SeuratObj</span>, </span>
-<span>                     reduction <span class="op">=</span> <span class="st">"ibex.KF"</span>,</span>
-<span>                     dims <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">30</span>,</span>
-<span>                     reduction.name <span class="op">=</span> <span class="st">'ibex.umap'</span>, </span>
-<span>                     reduction.key <span class="op">=</span> <span class="st">'ibexUMAP_'</span><span class="op">)</span></span>
+<span><span class="va">SeuratObj</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/RunUMAP.html" class="external-link">RunUMAP</a></span><span class="op">(</span><span class="va">SeuratObj</span>, </span>
+<span>                     reduction <span class="op">=</span> <span class="st">"Ibex.KF"</span>,</span>
+<span>                     dims <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">128</span>,</span>
+<span>                     reduction.name <span class="op">=</span> <span class="st">'ibexUMAP'</span>, </span>
+<span>                     reduction.key <span class="op">=</span> <span class="st">'ibexUMAP_'</span>, </span>
+<span>                     verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co">#ibex UMAP</span></span>
-<span><span class="va">plot1</span> <span class="op">&lt;-</span> <span class="fu">DimPlot</span><span class="op">(</span><span class="va">SeuratObj</span>, reduction <span class="op">=</span> <span class="st">"ibex.umap"</span><span class="op">)</span> <span class="op">+</span> <span class="fu">NoLegend</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="va">plot2</span> <span class="op">&lt;-</span> <span class="fu">DimPlot</span><span class="op">(</span><span class="va">SeuratObj</span>, group.by <span class="op">=</span> <span class="st">"CTaa"</span>, reduction <span class="op">=</span> <span class="st">"ibex.umap"</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu">scale_color_viridis</span><span class="op">(</span>discrete <span class="op">=</span> <span class="cn">TRUE</span>, option <span class="op">=</span> <span class="st">"B"</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu">theme</span><span class="op">(</span>plot.title <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">NoLegend</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">plot1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/DimPlot.html" class="external-link">DimPlot</a></span><span class="op">(</span><span class="va">SeuratObj</span>, </span>
+<span>                 reduction <span class="op">=</span> <span class="st">"ibexUMAP"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>            <span class="fu"><a href="https://satijalab.org/seurat/reference/SeuratTheme.html" class="external-link">NoLegend</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">plot2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/DimPlot.html" class="external-link">DimPlot</a></span><span class="op">(</span><span class="va">SeuratObj</span>, </span>
+<span>                 group.by <span class="op">=</span> <span class="st">"CTaa"</span>, </span>
+<span>                 reduction <span class="op">=</span> <span class="st">"ibexUMAP"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>              <span class="fu">scale_color_viridis</span><span class="op">(</span>discrete <span class="op">=</span> <span class="cn">TRUE</span>, option <span class="op">=</span> <span class="st">"B"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>              <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>              <span class="fu"><a href="https://satijalab.org/seurat/reference/SeuratTheme.html" class="external-link">NoLegend</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">plot3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/FeaturePlot.html" class="external-link">FeaturePlot</a></span><span class="op">(</span><span class="va">SeuratObj</span>, </span>
+<span>                     reduction <span class="op">=</span> <span class="st">"ibexUMAP"</span>, </span>
+<span>                     features <span class="op">=</span> <span class="st">"Anti-Hen-Egg-Lysozyme"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>            <span class="fu">scale_color_viridis</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>            <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>            <span class="fu"><a href="https://satijalab.org/seurat/reference/SeuratTheme.html" class="external-link">NoLegend</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">plot1</span> <span class="op">+</span> <span class="va">plot2</span></span></code></pre></div>
-<p><img src="Ibex_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
+<span><span class="va">plot1</span> <span class="op">+</span> <span class="va">plot2</span> <span class="op">+</span> <span class="va">plot3</span></span></code></pre></div>
+<p><img src="Ibex_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
 <p>We now can use this in a similar way as other single-cell modalities
 and calculate weighted nearest neighbor (WNN). To check out more on WNN,
 please read the Satija’s group <a href="https://pubmed.ncbi.nlm.nih.gov/34062119/" class="external-link">paper</a>. We will use
 the RNA, ADT protein levels, and ibex vectors for the WNN
 calculations.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">SeuratObj</span> <span class="op">&lt;-</span> <span class="fu">FindMultiModalNeighbors</span><span class="op">(</span></span>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">SeuratObj</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/FindMultiModalNeighbors.html" class="external-link">FindMultiModalNeighbors</a></span><span class="op">(</span></span>
 <span>                    <span class="va">SeuratObj</span>, </span>
-<span>                    reduction.list <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"pca"</span>, <span class="st">"apca"</span>, <span class="st">"ibex.KF"</span><span class="op">)</span>, </span>
-<span>                    dims.list <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">30</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">20</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">30</span><span class="op">)</span>, </span>
-<span>                    modality.weight.name <span class="op">=</span> <span class="st">"RNA.weight"</span></span>
-<span>                  <span class="op">)</span></span>
-<span><span class="va">SeuratObj</span> <span class="op">&lt;-</span> <span class="fu">RunUMAP</span><span class="op">(</span><span class="va">SeuratObj</span>, </span>
+<span>                    reduction.list <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"pca"</span>, <span class="st">"apca"</span>, <span class="st">"Ibex.KF"</span><span class="op">)</span>, </span>
+<span>                    dims.list <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">30</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">4</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">128</span><span class="op">)</span>, </span>
+<span>                    modality.weight.name <span class="op">=</span> <span class="st">"RNA.weight"</span>, </span>
+<span>                    verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">SeuratObj</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/RunUMAP.html" class="external-link">RunUMAP</a></span><span class="op">(</span><span class="va">SeuratObj</span>, </span>
 <span>                     nn.name <span class="op">=</span> <span class="st">"weighted.nn"</span>, </span>
-<span>                     reduction.name <span class="op">=</span> <span class="st">"wnn.umap"</span>, </span>
-<span>                     reduction.key <span class="op">=</span> <span class="st">"wnnUMAP_"</span><span class="op">)</span></span>
-<span><span class="va">SeuratObj</span> <span class="op">&lt;-</span> <span class="fu">FindClusters</span><span class="op">(</span><span class="va">SeuratObj</span>, </span>
+<span>                     reduction.name <span class="op">=</span> <span class="st">"wnnUMAP"</span>, </span>
+<span>                     reduction.key <span class="op">=</span> <span class="st">"wnnUMAP_"</span>, </span>
+<span>                     verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">SeuratObj</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/FindClusters.html" class="external-link">FindClusters</a></span><span class="op">(</span><span class="va">SeuratObj</span>, </span>
 <span>                          graph.name <span class="op">=</span> <span class="st">"wsnn"</span>, </span>
 <span>                          resolution <span class="op">=</span> <span class="fl">0.6</span>,</span>
-<span>                          algorithm <span class="op">=</span> <span class="fl">3</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span>                          algorithm <span class="op">=</span> <span class="fl">3</span>, </span>
+<span>                          verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co">#WNN UMAP</span></span>
-<span><span class="va">plot3</span> <span class="op">&lt;-</span> <span class="fu">DimPlot</span><span class="op">(</span><span class="va">SeuratObj</span>, reduction <span class="op">=</span> <span class="st">"wnn.umap"</span><span class="op">)</span></span>
-<span><span class="va">plot4</span> <span class="op">&lt;-</span> <span class="fu">DimPlot</span><span class="op">(</span><span class="va">SeuratObj</span>, reduction <span class="op">=</span> <span class="st">"wnn.umap"</span>, group.by <span class="op">=</span> <span class="st">"CTaa"</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu">scale_color_viridis</span><span class="op">(</span>discrete <span class="op">=</span> <span class="cn">TRUE</span>, option <span class="op">=</span> <span class="st">"B"</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu">theme</span><span class="op">(</span>plot.title <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">NoLegend</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">plot4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/DimPlot.html" class="external-link">DimPlot</a></span><span class="op">(</span><span class="va">SeuratObj</span>, </span>
+<span>                 label <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>                 reduction <span class="op">=</span> <span class="st">"wnnUMAP"</span>, </span>
+<span>                 group.by <span class="op">=</span> <span class="st">"seurat_clusters"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>           <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>           <span class="fu"><a href="https://satijalab.org/seurat/reference/SeuratTheme.html" class="external-link">NoLegend</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">plot5</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/DimPlot.html" class="external-link">DimPlot</a></span><span class="op">(</span><span class="va">SeuratObj</span>, </span>
+<span>                 reduction <span class="op">=</span> <span class="st">"wnnUMAP"</span>, </span>
+<span>                 group.by <span class="op">=</span> <span class="st">"CTaa"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>            <span class="fu">scale_color_viridis</span><span class="op">(</span>discrete <span class="op">=</span> <span class="cn">TRUE</span>, option <span class="op">=</span> <span class="st">"B"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>            <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>            <span class="fu"><a href="https://satijalab.org/seurat/reference/SeuratTheme.html" class="external-link">NoLegend</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">plot6</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/FeaturePlot.html" class="external-link">FeaturePlot</a></span><span class="op">(</span><span class="va">SeuratObj</span>, </span>
+<span>                     reduction <span class="op">=</span> <span class="st">"wnnUMAP"</span>, </span>
+<span>                     features <span class="op">=</span> <span class="st">"Anti-Hen-Egg-Lysozyme"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>            <span class="fu">scale_color_viridis</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>            <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>            <span class="fu"><a href="https://satijalab.org/seurat/reference/SeuratTheme.html" class="external-link">NoLegend</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">plot3</span> <span class="op">+</span> <span class="va">plot4</span></span></code></pre></div>
-<p><img src="Ibex_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
+<span><span class="va">plot4</span> <span class="op">+</span> <span class="va">plot5</span> <span class="op">+</span> <span class="va">plot6</span></span></code></pre></div>
+<p><img src="Ibex_files/figure-html/unnamed-chunk-9-1.png" width="700"></p>
 </div>
 <div class="section level3">
 <h3 id="comparing-the-outcome-to-just-one-modality">Comparing the outcome to just one modality<a class="anchor" aria-label="anchor" href="#comparing-the-outcome-to-just-one-modality"></a>
@@ -382,73 +1600,114 @@ calculations.</p>
 ADT, or Ibex as individual components. Remember, the clusters that we
 are displaying in UMAP are based on clusters defined by the weighted
 nearest neighbors calculated above.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">SeuratObj</span> <span class="op">&lt;-</span> <span class="fu">RunUMAP</span><span class="op">(</span><span class="va">SeuratObj</span>, </span>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">SeuratObj</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/RunUMAP.html" class="external-link">RunUMAP</a></span><span class="op">(</span><span class="va">SeuratObj</span>, </span>
 <span>                     reduction <span class="op">=</span> <span class="st">'pca'</span>, </span>
 <span>                     dims <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">30</span>, </span>
 <span>                     assay <span class="op">=</span> <span class="st">'RNA'</span>, </span>
-<span>                     reduction.name <span class="op">=</span> <span class="st">'rna.umap'</span>, </span>
-<span>                     reduction.key <span class="op">=</span> <span class="st">'rnaUMAP_'</span><span class="op">)</span></span>
+<span>                     reduction.name <span class="op">=</span> <span class="st">'rnaUMAP'</span>, </span>
+<span>                     reduction.key <span class="op">=</span> <span class="st">'rnaUMAP_'</span>, </span>
+<span>                     verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">SeuratObj</span> <span class="op">&lt;-</span> <span class="fu">RunUMAP</span><span class="op">(</span><span class="va">SeuratObj</span>, </span>
+<span><span class="va">SeuratObj</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/RunUMAP.html" class="external-link">RunUMAP</a></span><span class="op">(</span><span class="va">SeuratObj</span>, </span>
 <span>                     reduction <span class="op">=</span> <span class="st">'apca'</span>, </span>
-<span>                     dims <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">20</span>, </span>
-<span>                     assay <span class="op">=</span> <span class="st">'ADT'</span>, </span>
-<span>                     reduction.name <span class="op">=</span> <span class="st">'adt.umap'</span>, </span>
-<span>                     reduction.key <span class="op">=</span> <span class="st">'adtUMAP_'</span><span class="op">)</span></span>
+<span>                     dims <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">4</span>, </span>
+<span>                     assay <span class="op">=</span> <span class="st">'BEAM'</span>, </span>
+<span>                     reduction.name <span class="op">=</span> <span class="st">'beamUMAP'</span>, </span>
+<span>                     reduction.key <span class="op">=</span> <span class="st">'beamUMAP_'</span>, </span>
+<span>                     verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">plot5</span> <span class="op">&lt;-</span> <span class="fu">DimPlot</span><span class="op">(</span><span class="va">SeuratObj</span>, reduction <span class="op">=</span> <span class="st">"rna.umap"</span><span class="op">)</span> <span class="op">+</span> <span class="fu">NoLegend</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="va">plot6</span> <span class="op">&lt;-</span> <span class="fu">DimPlot</span><span class="op">(</span><span class="va">SeuratObj</span>, reduction <span class="op">=</span> <span class="st">"adt.umap"</span><span class="op">)</span> <span class="op">+</span> <span class="fu">NoLegend</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="va">plot7</span> <span class="op">&lt;-</span> <span class="fu">DimPlot</span><span class="op">(</span><span class="va">SeuratObj</span>, reduction <span class="op">=</span> <span class="st">"ibex.umap"</span><span class="op">)</span> <span class="op">+</span> <span class="fu">NoLegend</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">plot7</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/DimPlot.html" class="external-link">DimPlot</a></span><span class="op">(</span><span class="va">SeuratObj</span>, </span>
+<span>                 reduction <span class="op">=</span> <span class="st">"rnaUMAP"</span>, </span>
+<span>                 group.by <span class="op">=</span> <span class="st">"seurat_clusters"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>            <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>            <span class="fu"><a href="https://satijalab.org/seurat/reference/SeuratTheme.html" class="external-link">NoLegend</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">plot8</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/DimPlot.html" class="external-link">DimPlot</a></span><span class="op">(</span><span class="va">SeuratObj</span>, </span>
+<span>                 reduction <span class="op">=</span> <span class="st">"beamUMAP"</span>, </span>
+<span>                 group.by <span class="op">=</span> <span class="st">"seurat_clusters"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>            <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>            <span class="fu"><a href="https://satijalab.org/seurat/reference/SeuratTheme.html" class="external-link">NoLegend</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">plot9</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/DimPlot.html" class="external-link">DimPlot</a></span><span class="op">(</span><span class="va">SeuratObj</span>, </span>
+<span>                 reduction <span class="op">=</span> <span class="st">"ibexUMAP"</span>, </span>
+<span>                 group.by <span class="op">=</span> <span class="st">"seurat_clusters"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>            <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>            <span class="fu"><a href="https://satijalab.org/seurat/reference/SeuratTheme.html" class="external-link">NoLegend</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">plot5</span> <span class="op">+</span> <span class="va">plot6</span> <span class="op">+</span> <span class="va">plot7</span></span></code></pre></div>
-<p><img src="Ibex_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
+<span><span class="va">plot7</span> <span class="op">+</span> <span class="va">plot8</span> <span class="op">+</span> <span class="va">plot9</span></span></code></pre></div>
+<p><img src="Ibex_files/figure-html/unnamed-chunk-10-1.png" width="700"></p>
 </div>
 </div>
 <div class="section level2">
 <h2 id="conga-reduction">CoNGA Reduction<a class="anchor" aria-label="anchor" href="#conga-reduction"></a>
 </h2>
-<p>Recent <a href="https://pubmed.ncbi.nlm.nih.gov/34426704/" class="external-link">work</a>
-has proposed using representative cells for the characterization of
-clone and gene expression relationships. In order to generate these
-representative cells, either a mean expression across a clone or using
-the PCA dimensional space to identify a single cell that has the minimum
-euclidean distance across a clone.</p>
-<p>In order to generate a single-cell object based on the CoNGA
-approach, Ibex offers the function <code>CoNGAfy()</code>. For
-<strong>method</strong>, select either “mean” or “dist” as described
-above. After performing <code>CoNGAfy()</code>, the user can use any of
-the above reduction strategies.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<p>Single-cell B-cell receptor (BCR) sequencing enables the
+identification of clonotypes, which are groups of B cells sharing the
+same BCR sequence. Often, you want to link clonotypes to their gene
+expression profiles.</p>
+<p>A challenge arises, however, when a clonotype contains multiple cells
+(e.g., 10 cells sharing the same BCR). Including all cells for every
+clonotype can lead to over-representation of highly expanded clones or
+complicate analyses that require a one-to-one mapping between clonotypes
+and “cells.” Recent work <a href="https://pubmed.ncbi.nlm.nih.gov/34426704/" class="external-link">Schattgen,2021</a> has
+proposed different strategies to summarize or represent a clonotype by a
+single expression profile. Two key strategies are common:</p>
+<p><strong>Distance Approach</strong></p>
+<ul>
+<li>First, look at the PCA or count matrices</li>
+<li>Identify the cell that has the minimum summed Euclidean distance to
+all other cells in the clonotype.</li>
+<li>This approach can help ensure that your single representation is an
+actual cell, rather than a potentially non-biological average.</li>
+</ul>
+<p><strong>Mean Approach</strong></p>
+<ul>
+<li>Simply take the average (mean) expression across all cells in the
+same clonotype.</li>
+<li>Conceptually, you collapse a multi-cell clone into one “virtual
+cell” representing its average expression.</li>
+</ul>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">CoNGA.seurat</span> <span class="op">&lt;-</span> <span class="fu">CoNGAfy</span><span class="op">(</span><span class="va">SeuratObj</span>, </span>
-<span>                         method <span class="op">=</span> <span class="st">"dist"</span><span class="op">)</span></span>
+<span>                         method <span class="op">=</span> <span class="st">"dist"</span>, </span>
+<span>                        assay <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"RNA"</span>, <span class="st">"BEAM"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">CoNGA.seurat</span> <span class="op">&lt;-</span> <span class="fu">runIbex</span><span class="op">(</span><span class="va">CoNGA.seurat</span>, </span>
-<span>                        encoder.input <span class="op">=</span> <span class="st">"KF"</span>, </span>
-<span>                        reduction.name <span class="op">=</span> <span class="st">"ibex.KF"</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] "Calculating the encoding values..."</span></span></code></pre>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">CoNGA.seurat</span> <span class="op">&lt;-</span> <span class="va">CoNGA.seurat</span> <span class="op">%&gt;%</span></span>
-<span>                  <span class="fu">FindNeighbors</span><span class="op">(</span>reduction <span class="op">=</span> <span class="st">"ibex.KF"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>                  <span class="fu">FindClusters</span><span class="op">(</span>algorithm <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Modularity Optimizer version 1.3.0 by Ludo Waltman and Nees Jan van Eck</span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">## Number of nodes: 1012</span></span>
-<span><span class="co">## Number of edges: 37175</span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">## Running smart local moving algorithm...</span></span>
-<span><span class="co">## Maximum modularity in 10 random starts: 0.5048</span></span>
-<span><span class="co">## Number of communities: 5</span></span>
-<span><span class="co">## Elapsed time: 0 seconds</span></span></code></pre>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">CoNGA.seurat</span> <span class="op">&lt;-</span> <span class="fu">RunUMAP</span><span class="op">(</span><span class="va">CoNGA.seurat</span>, </span>
-<span>                        reduction <span class="op">=</span> <span class="st">"ibex.KF"</span>, </span>
-<span>                        dims <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">20</span>, </span>
-<span>                        reduction.name <span class="op">=</span> <span class="st">'ibex.umap'</span>, </span>
-<span>                        reduction.key <span class="op">=</span> <span class="st">'ibexUMAP_'</span><span class="op">)</span></span>
+<span>                        encoder.input <span class="op">=</span> <span class="st">"atchleyFactors"</span>,</span>
+<span>                        encoder.model <span class="op">=</span> <span class="st">"CNN"</span>,</span>
+<span>                        reduction.name <span class="op">=</span> <span class="st">"ibex.AF"</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] "Encoding Sequences..."</span></span>
+<span><span class="co">## [1] "Calculating Latent Dimensions..."</span></span></code></pre>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">CoNGA.seurat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/RunUMAP.html" class="external-link">RunUMAP</a></span><span class="op">(</span><span class="va">CoNGA.seurat</span>, </span>
+<span>                        reduction <span class="op">=</span> <span class="st">"ibex.AF"</span>, </span>
+<span>                        dims <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">128</span>, </span>
+<span>                        reduction.name <span class="op">=</span> <span class="st">'ibexUMAP'</span>, </span>
+<span>                        reduction.key <span class="op">=</span> <span class="st">'ibexUMAP_'</span>,</span>
+<span>                        verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">DimPlot</span><span class="op">(</span><span class="va">CoNGA.seurat</span>, reduction <span class="op">=</span> <span class="st">"ibex.umap"</span><span class="op">)</span> <span class="op">+</span> <span class="fu">NoLegend</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Ibex_files/figure-html/unnamed-chunk-9-1.png" width="700"></p>
+<span><span class="va">plot10</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/DimPlot.html" class="external-link">DimPlot</a></span><span class="op">(</span><span class="va">CoNGA.seurat</span>, </span>
+<span>                  reduction <span class="op">=</span> <span class="st">"ibexUMAP"</span>, </span>
+<span>                  group.by <span class="op">=</span> <span class="st">"CTaa"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>                <span class="fu">scale_color_viridis</span><span class="op">(</span>discrete <span class="op">=</span> <span class="cn">TRUE</span>, option <span class="op">=</span> <span class="st">"B"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>                <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>                <span class="fu"><a href="https://satijalab.org/seurat/reference/SeuratTheme.html" class="external-link">NoLegend</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">plot11</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/FeaturePlot.html" class="external-link">FeaturePlot</a></span><span class="op">(</span><span class="va">CoNGA.seurat</span>, </span>
+<span>                  reduction <span class="op">=</span> <span class="st">"ibexUMAP"</span>, </span>
+<span>                  features <span class="op">=</span> <span class="st">"Anti-Hen-Egg-Lysozyme"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>                <span class="fu">scale_color_viridis</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>                <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>                <span class="fu"><a href="https://satijalab.org/seurat/reference/SeuratTheme.html" class="external-link">NoLegend</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">plot12</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/FeaturePlot.html" class="external-link">FeaturePlot</a></span><span class="op">(</span><span class="va">CoNGA.seurat</span>, </span>
+<span>                  reduction <span class="op">=</span> <span class="st">"ibexUMAP"</span>, </span>
+<span>                  features <span class="op">=</span> <span class="st">"SARS-TRI-S-WT"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>                <span class="fu">scale_color_viridis</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>                <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>                <span class="fu"><a href="https://satijalab.org/seurat/reference/SeuratTheme.html" class="external-link">NoLegend</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">plot10</span> <span class="op">+</span> <span class="va">plot11</span> <span class="op">+</span> <span class="va">plot12</span></span></code></pre></div>
+<p><img src="Ibex_files/figure-html/unnamed-chunk-11-1.png" width="700"></p>
 </div>
   </div>
 
