@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scRepertoire</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.3.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.3.4</span>
       </span>
     </div>
 
@@ -136,8 +136,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Additional Processing Steps</h1>
             
-            <h4 data-toc-skip class="date">Compiled: January 29,
-2025</h4>
+            <h4 data-toc-skip class="date">Compiled: March 19, 2025</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/BorchLab/scRepertoire/blob/HEAD/vignettes/articles/Processing.Rmd" class="external-link"><code>vignettes/articles/Processing.Rmd</code></a></small>
       <div class="hidden name"><code>Processing.Rmd</code></div>
@@ -420,28 +419,37 @@ the csv file name</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="fu">exportClones</span>(combined, </span>
 <span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>             <span class="at">write.file =</span> <span class="cn">TRUE</span>,</span>
 <span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>             <span class="at">dir =</span> <span class="st">"~/Documents/MyExperiment/Sample1/"</span></span>
-<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>             <span class="at">file.name =</span> <span class="st">"clones.csv"</span></span></code></pre></div>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>             <span class="at">file.name =</span> <span class="st">"clones.csv"</span>)</span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="quietvdjgenes">quietVDJgenes<a class="anchor" aria-label="anchor" href="#quietvdjgenes"></a>
+<h2 id="annotateinvariant">annotateInvariant<a class="anchor" aria-label="anchor" href="#annotateinvariant"></a>
 </h2>
-<p>The <code><a href="../reference/quietVDJgenes.html">quietVDJgenes()</a></code> function removes both TCR and BCR
-genes from the variable features of a Seurat object.</p>
+<p>The <code><a href="../reference/annotateInvariant.html">annotateInvariant()</a></code> function enables the
+identification of mucosal-associated invariant T (<strong>MAIT</strong>)
+cells and invariant natural killer T (<strong>iNKT</strong>) cells in
+single-cell sequencing datasets. These specialized T-cell subsets are
+defined by their characteristic TCR usage, making them distinguishable
+within single-cell immune profiling data. The function extracts TCR
+chain information from the provided single-cell dataset and evaluates it
+against known invariant TCR criteria for either MAIT or iNKT cells. Each
+cell is assigned a score indicating the presence (1) or absence (0) of
+the specified invariant T-cell population.</p>
 <ul>
-<li>
-<strong>sc</strong> A single-cell object or a character vector of
-variable genes.<br>
-</li>
-<li>
-<strong>assay</strong> The assay slot within the Seurat object to
-use. If NULL, it defaults to the default assay.</li>
+<li>input.data – A data object from <code><a href="../reference/combineTCR.html">combineTCR()</a></code> or
+<code><a href="../reference/combineExpression.html">combineExpression()</a></code>.</li>
+<li>type – Character string specifying the type of invariant T cell to
+annotate (“MAIT” or “iNKT”).</li>
+<li>species – Character string specifying the species (“mouse” or
+“human”).</li>
 </ul>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">screp_example</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/quietVDJgenes.html">quietVDJgenes</a></span><span class="op">(</span><span class="va">screp_example</span><span class="op">)</span></span></code></pre></div>
-<p>In addition to <code><a href="../reference/quietVDJgenes.html">quietVDJgenes()</a></code>, there is also T and B
-cell specific functions <code>quietTCRgene()</code> and
-<code><a href="../reference/quietVDJgenes.html">quietBCRgenes()</a></code> that will remove the respective
-lineage-specific receptor genes from the variable gene list.</p>
+<code class="sourceCode R"><span><span class="va">combined</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/annotateInvariant.html">annotateInvariant</a></span><span class="op">(</span><span class="va">combined</span>, </span>
+<span>                              type <span class="op">=</span> <span class="st">"MAIT"</span>, </span>
+<span>                              species <span class="op">=</span> <span class="st">"human"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">combined</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/annotateInvariant.html">annotateInvariant</a></span><span class="op">(</span><span class="va">combined</span>, </span>
+<span>                              type <span class="op">=</span> <span class="st">"iNKT"</span>, </span>
+<span>                              species <span class="op">=</span> <span class="st">"human"</span><span class="op">)</span></span></code></pre></div>
 </div>
   </div>
 

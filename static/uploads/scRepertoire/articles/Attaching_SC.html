@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scRepertoire</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.3.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.3.4</span>
       </span>
     </div>
 
@@ -136,8 +136,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Combining Clones and Single-Cell Objects</h1>
             
-            <h4 data-toc-skip class="date">Compiled: January 29,
-2025</h4>
+            <h4 data-toc-skip class="date">Compiled: March 19, 2025</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/BorchLab/scRepertoire/blob/HEAD/vignettes/articles/Attaching_SC.Rmd" class="external-link"><code>vignettes/articles/Attaching_SC.Rmd</code></a></small>
       <div class="hidden name"><code>Attaching_SC.Rmd</code></div>
@@ -151,6 +150,56 @@ p.caption {
   font-size: 0.9em;
 }
 </style>
+<div class="section level2">
+<h2 id="note-on-dimensional-reduction">Note on Dimensional Reduction<a class="anchor" aria-label="anchor" href="#note-on-dimensional-reduction"></a>
+</h2>
+<p>In single-cell RNA sequencing workflows, dimensional reduction is
+typically performed by first identifying highly variable features. These
+features are then used directly for UMAP/tSNE projection or as inputs
+for principal component analysis. The same approach is commonly applied
+to clustering as well.</p>
+<p>However, in immune-focused datasets, VDJ genes from TCR and BCR are
+often among the most variable genes. This variability arises naturally
+due to clonal expansion and diversity within lymphocytes. As a result,
+UMAP projections and clustering outcomes may be influenced by clonal
+information rather than broader transcriptional differences across cell
+types.</p>
+<p>To mitigate this issue, a common strategy is to exclude VDJ genes
+from the set of highly variable features before proceeding with
+clustering and dimensional reduction. We introduce a set of functions
+that facilitate this process by removing VDJ-related genes from either a
+Seurat Object or a vector of gene names (useful for SCE-based
+workflows):</p>
+<ul>
+<li>
+<code><a href="../reference/quietVDJgenes.html">quietVDJgenes()</a></code> – Removes both TCR and BCR VDJ
+genes.</li>
+<li>
+<code><a href="../reference/quietVDJgenes.html">quietTCRgenes()</a></code> – Removes only TCR VDJ genes.</li>
+<li>
+<code><a href="../reference/quietVDJgenes.html">quietBCRgenes()</a></code> – Removes only BCR VDJ genes, but
+retains BCR VDJ pseudogenes in the variable features.</li>
+</ul>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Check the first 10 variable features before removal</span></span>
+<span><span class="fu">VariableFeatures</span><span class="op">(</span><span class="va">scRep_example</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span></span></code></pre></div>
+<pre><code><span><span class="co">##  [1] "TRBV7-2"  "HSPA1B"   "HSPA1A"   "TRBV4-1"  "CCL4"     "TRBV5-1" </span></span>
+<span><span class="co">##  [7] "TRBV10-3" "TRBV3-1"  "TRBV6-6"  "CD79A"</span></span></code></pre>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Remove TCR VDJ genes</span></span>
+<span><span class="va">scRep_example</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/quietVDJgenes.html">quietTCRgenes</a></span><span class="op">(</span><span class="va">scRep_example</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Check the first 10 variable features after removal</span></span>
+<span><span class="fu">VariableFeatures</span><span class="op">(</span><span class="va">scRep_example</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span></span></code></pre></div>
+<pre><code><span><span class="co">##  [1] "HSPA1B"  "HSPA1A"  "CCL4"    "CD79A"   "HLA-DRA" "CCL20"   "TUBA1B" </span></span>
+<span><span class="co">##  [8] "HSPA6"   "TNF"     "MS4A1"</span></span></code></pre>
+<p>By applying these functions, you can ensure that clustering and
+dimensional reduction are driven by broader transcriptomic differences
+rather than clonal expansion artifacts.</p>
+</div>
+<div class="section level2">
+<h2 id="preprocessed-single-cell-object">Preprocessed Single-Cell Object<a class="anchor" aria-label="anchor" href="#preprocessed-single-cell-object"></a>
+</h2>
 <p>The data in the scRepertoire package is derived from a <a href="https://pubmed.ncbi.nlm.nih.gov/33622974/" class="external-link">study</a> of acute
 respiratory stress disorder in the context of bacterial and COVID-19
 infections. The internal single cell data (<code><a href="../reference/scRep_example.html">scRep_example()</a></code>)
@@ -159,10 +208,7 @@ integrated Seurat object to minimize the package size. However, for the
 purpose of the vignette we will use the full single-cell object with
 30,000 cells. We will use both Seurat and Single-Cell Experiment (SCE)
 with scater to perform further visualizations in tandem.</p>
-<div class="section level2">
-<h2 id="preprocessed-single-cell-object">Preprocessed Single-Cell Object<a class="anchor" aria-label="anchor" href="#preprocessed-single-cell-object"></a>
-</h2>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">scRep_example</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="st">"scRep_example_full.rds"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co">#Making a Single-Cell Experiment object</span></span>
@@ -202,7 +248,7 @@ FALSE.</p>
 Experiment object we just created above with using
 <strong>group.by</strong> set to the <em>sample</em> variable used in
 <code><a href="../reference/combineTCR.html">combineTCR()</a></code> :</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sce</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/combineExpression.html">combineExpression</a></span><span class="op">(</span><span class="va">combined.TCR</span>, </span>
 <span>                         <span class="va">sce</span>, </span>
 <span>                         cloneCall<span class="op">=</span><span class="st">"gene"</span>, </span>
@@ -214,7 +260,7 @@ Experiment object we just created above with using
 <span></span>
 <span><span class="fu">plotUMAP</span><span class="op">(</span><span class="va">sce</span>, colour_by <span class="op">=</span> <span class="st">"cloneSize"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu">scale_color_manual</span><span class="op">(</span>values<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/rev.html" class="external-link">rev</a></span><span class="op">(</span><span class="va">colorblind_vector</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">3</span>,<span class="fl">5</span>,<span class="fl">7</span><span class="op">)</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Attaching_SC_files/figure-html/unnamed-chunk-2-1.png" width="700"></p>
+<p><img src="Attaching_SC_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
 <p>Alternatively, if we want <strong>cloneSize</strong> to be based on
 the frequency of the clone, we can set <strong>proportion</strong> =
 FALSE and we will need to change the <strong>cloneSize</strong> bins to
@@ -223,7 +269,7 @@ limit of the clonal frequency might be difficult -
 <code><a href="../reference/combineExpression.html">combineExpression()</a></code> will automatically adjust the upper
 limit to fit the distribution of the frequencies. To demonstrate this,
 check out the Seurat object below:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">scRep_example</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/combineExpression.html">combineExpression</a></span><span class="op">(</span><span class="va">combined.TCR</span>, </span>
 <span>                                   <span class="va">scRep_example</span>, </span>
 <span>                                   cloneCall<span class="op">=</span><span class="st">"gene"</span>, </span>
@@ -233,7 +279,7 @@ check out the Seurat object below:</p>
 <span></span>
 <span><span class="fu">Seurat</span><span class="fu">::</span><span class="fu"><a href="https://satijalab.org/seurat/reference/DimPlot.html" class="external-link">DimPlot</a></span><span class="op">(</span><span class="va">scRep_example</span>, group.by <span class="op">=</span> <span class="st">"cloneSize"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu">scale_color_manual</span><span class="op">(</span>values<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/rev.html" class="external-link">rev</a></span><span class="op">(</span><span class="va">colorblind_vector</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">3</span>,<span class="fl">4</span>,<span class="fl">5</span>,<span class="fl">7</span><span class="op">)</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Attaching_SC_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
+<p><img src="Attaching_SC_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
 </div>
 <div class="section level3">
 <h3 id="combining-both-tcr-and-bcr">Combining both TCR and BCR<a class="anchor" aria-label="anchor" href="#combining-both-tcr-and-bcr"></a>
@@ -249,7 +295,7 @@ incongruent barcodes in the products of <code><a href="../reference/combineTCR.h
 <p>As an anecdote, the <a href="https://support.10xgenomics.com/single-cell-vdj/datasets/6.0.1/SC5v2_Melanoma_5Kcells_Connect_single_channel_SC5v2_Melanoma_5Kcells_Connect_single_channel" class="external-link">testing
 data</a> we used to improve this function had 5-6% of barcode
 overlap.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#This is an example of the process, which will not be evaluated during knit</span></span>
 <span><span class="va">TCR</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/combineTCR.html">combineTCR</a></span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span>
 <span><span class="va">BCR</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/combineBCR.html">combineBCR</a></span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span>

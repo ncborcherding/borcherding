@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scRepertoire</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.3.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.3.4</span>
       </span>
     </div>
 
@@ -136,8 +136,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Combining Deep Learning and TCRs with Trex</h1>
             
-            <h4 data-toc-skip class="date">Compiled: January 29,
-2025</h4>
+            <h4 data-toc-skip class="date">Compiled: March 19, 2025</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/BorchLab/scRepertoire/blob/HEAD/vignettes/articles/Trex.Rmd" class="external-link"><code>vignettes/articles/Trex.Rmd</code></a></small>
       <div class="hidden name"><code>Trex.Rmd</code></div>
@@ -190,16 +189,16 @@ output.</p>
 <code class="sourceCode R"><span><span class="co">##################################</span></span>
 <span><span class="co">#scRNA/ADT loading and processing</span></span>
 <span><span class="co">#################################</span></span>
-<span><span class="va">tmp</span> <span class="op">&lt;-</span>  <span class="fu">Read10X</span><span class="op">(</span><span class="st">"~/Patient17/filtered_feature_bc_matrix"</span><span class="op">)</span></span>
+<span><span class="va">tmp</span> <span class="op">&lt;-</span>  <span class="fu"><a href="https://satijalab.org/seurat/reference/Read10X.html" class="external-link">Read10X</a></span><span class="op">(</span><span class="st">"~/Patient17/filtered_feature_bc_matrix"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">Pt17</span> <span class="op">&lt;-</span> <span class="fu">CreateSeuratObject</span><span class="op">(</span>counts <span class="op">=</span> <span class="va">tmp</span><span class="op">$</span><span class="va">`Gene Expression`</span><span class="op">)</span></span>
+<span><span class="va">Pt17</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mojaveazure.github.io/seurat-object/reference/CreateSeuratObject.html" class="external-link">CreateSeuratObject</a></span><span class="op">(</span>counts <span class="op">=</span> <span class="va">tmp</span><span class="op">$</span><span class="va">`Gene Expression`</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co">#Removing TCR-specific antibody</span></span>
-<span><span class="va">adt_assay</span> <span class="op">&lt;-</span> <span class="fu">CreateAssayObject</span><span class="op">(</span>counts <span class="op">=</span> <span class="va">tmp</span><span class="op">$</span><span class="va">`Antibody Capture`</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">37</span>,<span class="op">]</span><span class="op">)</span></span>
+<span><span class="va">adt_assay</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mojaveazure.github.io/seurat-object/reference/CreateAssayObject.html" class="external-link">CreateAssayObject</a></span><span class="op">(</span>counts <span class="op">=</span> <span class="va">tmp</span><span class="op">$</span><span class="va">`Antibody Capture`</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">37</span>,<span class="op">]</span><span class="op">)</span></span>
 <span><span class="va">Pt17</span><span class="op">[[</span><span class="st">"ADT"</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">adt_assay</span></span>
 <span><span class="va">Pt17</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">Pt17</span>, subset <span class="op">=</span> <span class="va">nFeature_RNA</span> <span class="op">&gt;</span> <span class="fl">100</span><span class="op">)</span> </span>
-<span><span class="va">Pt17</span>  <span class="op">&lt;-</span> <span class="fu">RenameCells</span><span class="op">(</span>object <span class="op">=</span> <span class="va">Pt17</span> , new.names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"Pt17_"</span>, <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">Pt17</span><span class="op">[[</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">Pt17</span><span class="op">[[</span><span class="st">"mito.genes"</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu">PercentageFeatureSet</span><span class="op">(</span><span class="va">Pt17</span>, pattern <span class="op">=</span> <span class="st">"^MT-"</span><span class="op">)</span></span>
+<span><span class="va">Pt17</span>  <span class="op">&lt;-</span> <span class="fu"><a href="https://mojaveazure.github.io/seurat-object/reference/RenameCells.html" class="external-link">RenameCells</a></span><span class="op">(</span>object <span class="op">=</span> <span class="va">Pt17</span> , new.names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"Pt17_"</span>, <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">Pt17</span><span class="op">[[</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">Pt17</span><span class="op">[[</span><span class="st">"mito.genes"</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/PercentageFeatureSet.html" class="external-link">PercentageFeatureSet</a></span><span class="op">(</span><span class="va">Pt17</span>, pattern <span class="op">=</span> <span class="st">"^MT-"</span><span class="op">)</span></span>
 <span>    </span>
 <span><span class="co">#Filtering step</span></span>
 <span><span class="va">standev</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html" class="external-link">sd</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">Pt17</span><span class="op">$</span><span class="va">nFeature_RNA</span><span class="op">)</span><span class="op">)</span><span class="op">*</span><span class="fl">2.5</span> <span class="co">#cutting off above standard deviation of 2.5</span></span>
@@ -208,19 +207,19 @@ output.</p>
 <span><span class="va">Pt17</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">Pt17</span>, subset <span class="op">=</span> <span class="va">mito.genes</span> <span class="op">&lt;</span> <span class="fl">10</span> <span class="op">&amp;</span> <span class="va">nFeature_RNA</span> <span class="op">&lt;</span> <span class="va">cut</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co">#Processing RNA</span></span>
-<span><span class="fu">DefaultAssay</span><span class="op">(</span><span class="va">Pt17</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">'RNA'</span></span>
-<span><span class="va">Pt17</span> <span class="op">&lt;-</span> <span class="fu">NormalizeData</span><span class="op">(</span><span class="va">Pt17</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>  <span class="fu">FindVariableFeatures</span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span><span class="fu"><a href="https://mojaveazure.github.io/seurat-object/reference/DefaultAssay.html" class="external-link">DefaultAssay</a></span><span class="op">(</span><span class="va">Pt17</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">'RNA'</span></span>
+<span><span class="va">Pt17</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/NormalizeData.html" class="external-link">NormalizeData</a></span><span class="op">(</span><span class="va">Pt17</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://satijalab.org/seurat/reference/FindVariableFeatures.html" class="external-link">FindVariableFeatures</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="../reference/quietVDJgenes.html">quietTCRgenes</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>  <span class="fu">ScaleData</span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>  <span class="fu">RunPCA</span><span class="op">(</span>verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://satijalab.org/seurat/reference/ScaleData.html" class="external-link">ScaleData</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://satijalab.org/seurat/reference/RunPCA.html" class="external-link">RunPCA</a></span><span class="op">(</span>verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co">#Processing ADT</span></span>
-<span><span class="fu">DefaultAssay</span><span class="op">(</span><span class="va">Pt17</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">'ADT'</span></span>
-<span><span class="fu">VariableFeatures</span><span class="op">(</span><span class="va">Pt17</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">Pt17</span><span class="op">[[</span><span class="st">"ADT"</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
-<span><span class="va">Pt17</span> <span class="op">&lt;-</span> <span class="fu">NormalizeData</span><span class="op">(</span><span class="va">Pt17</span>, normalization.method <span class="op">=</span> <span class="st">'CLR'</span>, margin <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>  <span class="fu">ScaleData</span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>  <span class="fu">RunPCA</span><span class="op">(</span>reduction.name <span class="op">=</span> <span class="st">'apca'</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://mojaveazure.github.io/seurat-object/reference/DefaultAssay.html" class="external-link">DefaultAssay</a></span><span class="op">(</span><span class="va">Pt17</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">'ADT'</span></span>
+<span><span class="fu"><a href="https://mojaveazure.github.io/seurat-object/reference/VariableFeatures.html" class="external-link">VariableFeatures</a></span><span class="op">(</span><span class="va">Pt17</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">Pt17</span><span class="op">[[</span><span class="st">"ADT"</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="va">Pt17</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/NormalizeData.html" class="external-link">NormalizeData</a></span><span class="op">(</span><span class="va">Pt17</span>, normalization.method <span class="op">=</span> <span class="st">'CLR'</span>, margin <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://satijalab.org/seurat/reference/ScaleData.html" class="external-link">ScaleData</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://satijalab.org/seurat/reference/RunPCA.html" class="external-link">RunPCA</a></span><span class="op">(</span>reduction.name <span class="op">=</span> <span class="st">'apca'</span><span class="op">)</span></span>
 <span></span>
 <span></span>
 <span><span class="co">##################################</span></span>
@@ -345,22 +344,22 @@ can calculate the nearest neighbor and shared nearest neighbor indexes
 and generate a UMAP.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#Generating UMAP from Trex Neighbors</span></span>
-<span><span class="va">SeuratObj</span> <span class="op">&lt;-</span> <span class="fu">RunUMAP</span><span class="op">(</span><span class="va">SeuratObj</span>, </span>
+<span><span class="va">SeuratObj</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/RunUMAP.html" class="external-link">RunUMAP</a></span><span class="op">(</span><span class="va">SeuratObj</span>, </span>
 <span>                     reduction <span class="op">=</span> <span class="st">"Trex.KF"</span>,</span>
 <span>                     dims <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">30</span>,</span>
 <span>                     reduction.name <span class="op">=</span> <span class="st">'Trex.umap'</span>, </span>
 <span>                     reduction.key <span class="op">=</span> <span class="st">'trexUMAP_'</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co">#Trex UMAP</span></span>
-<span><span class="va">plot1</span> <span class="op">&lt;-</span> <span class="fu">DimPlot</span><span class="op">(</span><span class="va">SeuratObj</span>, </span>
+<span><span class="va">plot1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/DimPlot.html" class="external-link">DimPlot</a></span><span class="op">(</span><span class="va">SeuratObj</span>, </span>
 <span>                 reduction <span class="op">=</span> <span class="st">"Trex.umap"</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>         <span class="fu">NoLegend</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="va">plot2</span> <span class="op">&lt;-</span> <span class="fu">DimPlot</span><span class="op">(</span><span class="va">SeuratObj</span>, </span>
+<span>         <span class="fu"><a href="https://satijalab.org/seurat/reference/SeuratTheme.html" class="external-link">NoLegend</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">plot2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/DimPlot.html" class="external-link">DimPlot</a></span><span class="op">(</span><span class="va">SeuratObj</span>, </span>
 <span>                 group.by <span class="op">=</span> <span class="st">"CTaa"</span>, </span>
 <span>                 reduction <span class="op">=</span> <span class="st">"Trex.umap"</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>          <span class="fu"><a href="https://sjmgarnier.github.io/viridis/reference/scale_viridis.html" class="external-link">scale_color_viridis</a></span><span class="op">(</span>discrete <span class="op">=</span> <span class="cn">TRUE</span>, option <span class="op">=</span> <span class="st">"B"</span><span class="op">)</span>  <span class="op">+</span> </span>
 <span>          <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>          <span class="fu">NoLegend</span><span class="op">(</span><span class="op">)</span></span>
+<span>          <span class="fu"><a href="https://satijalab.org/seurat/reference/SeuratTheme.html" class="external-link">NoLegend</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">plot1</span> <span class="op">+</span> <span class="va">plot2</span></span></code></pre></div>
 <p><img src="Trex_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
@@ -370,31 +369,31 @@ please read the Satija’s group <a href="https://pubmed.ncbi.nlm.nih.gov/340621
 the RNA, ADT protein levels, and Trex vectors for the WNN
 calculations.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">SeuratObj</span> <span class="op">&lt;-</span> <span class="fu">FindMultiModalNeighbors</span><span class="op">(</span></span>
+<code class="sourceCode R"><span><span class="va">SeuratObj</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/FindMultiModalNeighbors.html" class="external-link">FindMultiModalNeighbors</a></span><span class="op">(</span></span>
 <span>                    <span class="va">SeuratObj</span>, </span>
 <span>                    reduction.list <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"pca"</span>, <span class="st">"apca"</span>, <span class="st">"Trex.KF"</span><span class="op">)</span>, </span>
 <span>                    dims.list <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">30</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">20</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">30</span><span class="op">)</span>, </span>
 <span>                    modality.weight.name <span class="op">=</span> <span class="st">"RNA.weight"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">SeuratObj</span> <span class="op">&lt;-</span> <span class="fu">RunUMAP</span><span class="op">(</span><span class="va">SeuratObj</span>, </span>
+<span><span class="va">SeuratObj</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/RunUMAP.html" class="external-link">RunUMAP</a></span><span class="op">(</span><span class="va">SeuratObj</span>, </span>
 <span>                     nn.name <span class="op">=</span> <span class="st">"weighted.nn"</span>, </span>
 <span>                     reduction.name <span class="op">=</span> <span class="st">"wnn.umap"</span>, </span>
 <span>                     reduction.key <span class="op">=</span> <span class="st">"wnnUMAP_"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">SeuratObj</span> <span class="op">&lt;-</span> <span class="fu">FindClusters</span><span class="op">(</span><span class="va">SeuratObj</span>, </span>
+<span><span class="va">SeuratObj</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/FindClusters.html" class="external-link">FindClusters</a></span><span class="op">(</span><span class="va">SeuratObj</span>, </span>
 <span>                          graph.name <span class="op">=</span> <span class="st">"wsnn"</span>, </span>
 <span>                          resolution <span class="op">=</span> <span class="fl">0.6</span>,</span>
 <span>                          algorithm <span class="op">=</span> <span class="fl">3</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co">#WNN UMAP</span></span>
-<span><span class="va">plot3</span> <span class="op">&lt;-</span> <span class="fu">DimPlot</span><span class="op">(</span><span class="va">SeuratObj</span>, </span>
+<span><span class="va">plot3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/DimPlot.html" class="external-link">DimPlot</a></span><span class="op">(</span><span class="va">SeuratObj</span>, </span>
 <span>                 reduction <span class="op">=</span> <span class="st">"wnn.umap"</span><span class="op">)</span></span>
-<span><span class="va">plot4</span> <span class="op">&lt;-</span> <span class="fu">DimPlot</span><span class="op">(</span><span class="va">SeuratObj</span>, </span>
+<span><span class="va">plot4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/DimPlot.html" class="external-link">DimPlot</a></span><span class="op">(</span><span class="va">SeuratObj</span>, </span>
 <span>                 reduction <span class="op">=</span> <span class="st">"wnn.umap"</span>, </span>
 <span>                 group.by <span class="op">=</span> <span class="st">"CTaa"</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>          <span class="fu"><a href="https://sjmgarnier.github.io/viridis/reference/scale_viridis.html" class="external-link">scale_color_viridis</a></span><span class="op">(</span>discrete <span class="op">=</span> <span class="cn">TRUE</span>, option <span class="op">=</span> <span class="st">"B"</span><span class="op">)</span>  <span class="op">+</span> </span>
 <span>          <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>          <span class="fu">NoLegend</span><span class="op">(</span><span class="op">)</span></span>
+<span>          <span class="fu"><a href="https://satijalab.org/seurat/reference/SeuratTheme.html" class="external-link">NoLegend</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">plot3</span> <span class="op">+</span> <span class="va">plot4</span></span></code></pre></div>
 <p><img src="Trex_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
@@ -406,23 +405,23 @@ ADT, or Trex as individual components. Remember, the clusters that we
 are displaying in UMAP are based on clusters defined by the weighted
 nearest neighbors calculated above.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">SeuratObj</span> <span class="op">&lt;-</span> <span class="fu">RunUMAP</span><span class="op">(</span><span class="va">SeuratObj</span>, </span>
+<code class="sourceCode R"><span><span class="va">SeuratObj</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/RunUMAP.html" class="external-link">RunUMAP</a></span><span class="op">(</span><span class="va">SeuratObj</span>, </span>
 <span>                     reduction <span class="op">=</span> <span class="st">'pca'</span>, </span>
 <span>                     dims <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">30</span>, </span>
 <span>                     assay <span class="op">=</span> <span class="st">'RNA'</span>, </span>
 <span>                     reduction.name <span class="op">=</span> <span class="st">'rna.umap'</span>, </span>
 <span>                     reduction.key <span class="op">=</span> <span class="st">'rnaUMAP_'</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">SeuratObj</span> <span class="op">&lt;-</span> <span class="fu">RunUMAP</span><span class="op">(</span><span class="va">SeuratObj</span>, </span>
+<span><span class="va">SeuratObj</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/RunUMAP.html" class="external-link">RunUMAP</a></span><span class="op">(</span><span class="va">SeuratObj</span>, </span>
 <span>                     reduction <span class="op">=</span> <span class="st">'apca'</span>, </span>
 <span>                     dims <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">20</span>, </span>
 <span>                     assay <span class="op">=</span> <span class="st">'ADT'</span>, </span>
 <span>                     reduction.name <span class="op">=</span> <span class="st">'adt.umap'</span>, </span>
 <span>                     reduction.key <span class="op">=</span> <span class="st">'adtUMAP_'</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">plot5</span> <span class="op">&lt;-</span> <span class="fu">DimPlot</span><span class="op">(</span><span class="va">SeuratObj</span>, reduction <span class="op">=</span> <span class="st">"rna.umap"</span><span class="op">)</span> <span class="op">+</span> <span class="fu">NoLegend</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="va">plot6</span> <span class="op">&lt;-</span> <span class="fu">DimPlot</span><span class="op">(</span><span class="va">SeuratObj</span>, reduction <span class="op">=</span> <span class="st">"adt.umap"</span><span class="op">)</span> <span class="op">+</span> <span class="fu">NoLegend</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="va">plot7</span> <span class="op">&lt;-</span> <span class="fu">DimPlot</span><span class="op">(</span><span class="va">SeuratObj</span>, reduction <span class="op">=</span> <span class="st">"Trex.umap"</span><span class="op">)</span> <span class="op">+</span> <span class="fu">NoLegend</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">plot5</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/DimPlot.html" class="external-link">DimPlot</a></span><span class="op">(</span><span class="va">SeuratObj</span>, reduction <span class="op">=</span> <span class="st">"rna.umap"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/SeuratTheme.html" class="external-link">NoLegend</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">plot6</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/DimPlot.html" class="external-link">DimPlot</a></span><span class="op">(</span><span class="va">SeuratObj</span>, reduction <span class="op">=</span> <span class="st">"adt.umap"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/SeuratTheme.html" class="external-link">NoLegend</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">plot7</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/DimPlot.html" class="external-link">DimPlot</a></span><span class="op">(</span><span class="va">SeuratObj</span>, reduction <span class="op">=</span> <span class="st">"Trex.umap"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/SeuratTheme.html" class="external-link">NoLegend</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">plot5</span> <span class="op">+</span> <span class="va">plot6</span> <span class="op">+</span> <span class="va">plot7</span></span></code></pre></div>
 <p><img src="Trex_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
@@ -456,8 +455,8 @@ the above reduction strategies.</p>
 <pre><code><span><span class="co">## [1] "Calculating the encoding values..."</span></span></code></pre>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">CoNGA.seurat</span> <span class="op">&lt;-</span> <span class="va">CoNGA.seurat</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>                  <span class="fu">FindNeighbors</span><span class="op">(</span>reduction <span class="op">=</span> <span class="st">"Trex.KF"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>                  <span class="fu">FindClusters</span><span class="op">(</span>algorithm <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></code></pre></div>
+<span>                  <span class="fu"><a href="https://satijalab.org/seurat/reference/FindNeighbors.html" class="external-link">FindNeighbors</a></span><span class="op">(</span>reduction <span class="op">=</span> <span class="st">"Trex.KF"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>                  <span class="fu"><a href="https://satijalab.org/seurat/reference/FindClusters.html" class="external-link">FindClusters</a></span><span class="op">(</span>algorithm <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Modularity Optimizer version 1.3.0 by Ludo Waltman and Nees Jan van Eck</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## Number of nodes: 805</span></span>
@@ -468,13 +467,13 @@ the above reduction strategies.</p>
 <span><span class="co">## Number of communities: 6</span></span>
 <span><span class="co">## Elapsed time: 0 seconds</span></span></code></pre>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">CoNGA.seurat</span> <span class="op">&lt;-</span> <span class="fu">RunUMAP</span><span class="op">(</span><span class="va">CoNGA.seurat</span>, </span>
+<code class="sourceCode R"><span><span class="va">CoNGA.seurat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/RunUMAP.html" class="external-link">RunUMAP</a></span><span class="op">(</span><span class="va">CoNGA.seurat</span>, </span>
 <span>                     reduction <span class="op">=</span> <span class="st">"Trex.KF"</span>, </span>
 <span>                     dims <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">20</span>, </span>
 <span>                     reduction.name <span class="op">=</span> <span class="st">'Trex.umap'</span>, </span>
 <span>                     reduction.key <span class="op">=</span> <span class="st">'trexUMAP_'</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">DimPlot</span><span class="op">(</span><span class="va">CoNGA.seurat</span>, reduction <span class="op">=</span> <span class="st">"Trex.umap"</span><span class="op">)</span> <span class="op">+</span> <span class="fu">NoLegend</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://satijalab.org/seurat/reference/DimPlot.html" class="external-link">DimPlot</a></span><span class="op">(</span><span class="va">CoNGA.seurat</span>, reduction <span class="op">=</span> <span class="st">"Trex.umap"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/SeuratTheme.html" class="external-link">NoLegend</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Trex_files/figure-html/unnamed-chunk-9-1.png" width="700"></p>
 </div>
 <div class="section level2">
@@ -506,13 +505,13 @@ deal of effort from these sources:</p>
 <code class="sourceCode R"><span><span class="va">CoNGA.seurat</span> <span class="op">&lt;-</span> <span class="fu">annotateDB</span><span class="op">(</span><span class="va">CoNGA.seurat</span>, </span>
 <span>                           chains <span class="op">=</span> <span class="st">"TRB"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">DimPlot</span><span class="op">(</span><span class="va">CoNGA.seurat</span>, </span>
+<span><span class="fu"><a href="https://satijalab.org/seurat/reference/DimPlot.html" class="external-link">DimPlot</a></span><span class="op">(</span><span class="va">CoNGA.seurat</span>, </span>
 <span>        reduction <span class="op">=</span> <span class="st">"Trex.umap"</span>, </span>
 <span>        group.by <span class="op">=</span> <span class="st">"TRB_Epitope.species"</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Trex_files/figure-html/unnamed-chunk-10-1.png" width="700"></p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">DimPlot</span><span class="op">(</span><span class="va">CoNGA.seurat</span>, </span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://satijalab.org/seurat/reference/DimPlot.html" class="external-link">DimPlot</a></span><span class="op">(</span><span class="va">CoNGA.seurat</span>, </span>
 <span>        reduction <span class="op">=</span> <span class="st">"Trex.umap"</span>, </span>
 <span>        group.by <span class="op">=</span> <span class="st">"TRB_Epitope.sequence"</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
@@ -527,7 +526,7 @@ using <strong>edit.distance</strong>.</p>
 <span>                        chains <span class="op">=</span> <span class="st">"TRB"</span>, </span>
 <span>                        edit.distance <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">DimPlot</span><span class="op">(</span><span class="va">SeuratObj</span>, </span>
+<span><span class="fu"><a href="https://satijalab.org/seurat/reference/DimPlot.html" class="external-link">DimPlot</a></span><span class="op">(</span><span class="va">SeuratObj</span>, </span>
 <span>        reduction <span class="op">=</span> <span class="st">"rna.umap"</span>, </span>
 <span>        group.by <span class="op">=</span> <span class="st">"TRB_Epitope.species"</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
