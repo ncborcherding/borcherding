@@ -27,7 +27,7 @@ publishDate: "2025-02-25T00:00:00Z"
 publication_types: ["2"]
 
 # Publication name and optional abbreviated publication name.
-publication: In *Blooad Advances*
+publication: In *Blood Advances*
 publication_short: In *Blood Advances*
 
 abstract: Tumor necrosis factor (TNF) receptor–associated factor (TRAF)–interacting protein with forkhead-associated domain B (TIFAB), an inhibitor of NF-κB signaling, plays critical roles in hematopoiesis, myelodysplastic neoplasms, and leukemia. We previously demonstrated that Tifab enhances KMT2A::MLLT3–driven acute myeloid leukemia (AML) by either upregulating Hoxa9 or through ubiquitin-specific peptidase 15–mediated downregulation of p53 signaling. In this study, we show that Tifab deletion in KMT2A::MLLT3–induced AML impairs leukemia stem/progenitor cell (LSPC) engraftment, glucose uptake, and mitochondrial function. Gene set enrichment analysis reveals that Tifab deletion downregulates MYC, HOXA9/MEIS1, mTORC1 signaling, and genes involved in glycolysis and oxidative phosphorylation. By comparing genes upregulated in TIFAB-overexpressing LSPCs with those downregulated upon Tifab deletion, we identify hepatocyte nuclear factor 4 alpha (Hnf4a) as a key TIFAB target, regulated through the inhibition of NF-κB component RelB, which suppresses Hnf4a in leukemia cells. HNF4A, a nuclear receptor involved in organ development, metabolism, and tumorigenesis, rescues the metabolic defects caused by Tifab deletion and enhances leukemia cell engraftment. Conversely, Hnf4a knockdown attenuates TIFAB-mediated enhancement of LSPC function. These findings highlight the critical role of the TIFAB-HNF4A axis in KMT2A::MLLT3–induced AML and uncover a novel regulator in leukemia biology.
