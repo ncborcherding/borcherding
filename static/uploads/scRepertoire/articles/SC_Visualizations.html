@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scRepertoire</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.5.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.5.1</span>
       </span>
     </div>
 
@@ -147,7 +147,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Visualizations for Single-Cell Objects</h1>
             
-            <h4 data-toc-skip class="date">Compiled: July 14, 2025</h4>
+            <h4 data-toc-skip class="date">Compiled: July 22, 2025</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/BorchLab/scRepertoire/blob/HEAD/vignettes/articles/SC_Visualizations.Rmd" class="external-link"><code>vignettes/articles/SC_Visualizations.Rmd</code></a></small>
       <div class="hidden name"><code>SC_Visualizations.Rmd</code></div>
@@ -201,7 +201,7 @@ pipeline for annotating T cell subtypes.</p>
 <span>              cutpoint <span class="op">=</span> <span class="fl">1</span>, </span>
 <span>              bins <span class="op">=</span> <span class="fl">10</span>, </span>
 <span>              facet.by <span class="op">=</span> <span class="st">"Patient"</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>              <span class="fu">guides</span><span class="op">(</span>color <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span></code></pre></div>
+<span>              <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html" class="external-link">guides</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="SC_Visualizations_files/figure-html/unnamed-chunk-1-1.png" width="700"></p>
 </div>
 <div class="section level2">
@@ -307,7 +307,9 @@ sequences to highlight.</li>
 <span>                                 <span class="st">"CARKVRDSSYKLIF_CASSDSGYNEQFF"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">Seurat</span><span class="fu">::</span><span class="fu"><a href="https://satijalab.org/seurat/reference/DimPlot.html" class="external-link">DimPlot</a></span><span class="op">(</span><span class="va">scRep_example</span>, group.by <span class="op">=</span> <span class="st">"highlight"</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html" class="external-link">guides</a></span><span class="op">(</span>color<span class="op">=</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guide_legend.html" class="external-link">guide_legend</a></span><span class="op">(</span>nrow<span class="op">=</span><span class="fl">3</span>,byrow<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span>, </span>
+<span>                 legend.position <span class="op">=</span> <span class="st">"bottom"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="SC_Visualizations_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
 </div>
 <div class="section level2">
@@ -335,7 +337,10 @@ on <code>cloneSize</code> groupings:</p>
 <p>To visualize the proportion of cells by <code>ident</code> (active
 identity), without labels:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/clonalOccupy.html">clonalOccupy</a></span><span class="op">(</span><span class="va">scRep_example</span>, x.axis <span class="op">=</span> <span class="st">"ident"</span>, proportion <span class="op">=</span> <span class="cn">TRUE</span>, label <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/clonalOccupy.html">clonalOccupy</a></span><span class="op">(</span><span class="va">scRep_example</span>, </span>
+<span>             x.axis <span class="op">=</span> <span class="st">"ident"</span>, </span>
+<span>             proportion <span class="op">=</span> <span class="cn">TRUE</span>, </span>
+<span>             label <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <p><img src="SC_Visualizations_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
 </div>
 <div class="section level2">
@@ -435,11 +440,15 @@ get a scaled output.</p>
 <span></span>
 <span><span class="va">circles</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getCirclize.html">getCirclize</a></span><span class="op">(</span><span class="va">subset</span>, group.by <span class="op">=</span> <span class="st">"ident"</span>, proportion <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">grid.cols</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/pal_hue.html" class="external-link">hue_pal</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">subset</span><span class="op">@</span><span class="va">active.ident</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">grid.cols</span> <span class="op">&lt;-</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/pal_hue.html" class="external-link">hue_pal</a></span><span class="op">(</span><span class="op">)</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">subset</span><span class="op">@</span><span class="va">active.ident</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">grid.cols</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">subset</span><span class="op">@</span><span class="va">active.ident</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/circlize/man/chordDiagram.html" class="external-link">chordDiagram</a></span><span class="op">(</span><span class="va">circles</span>, self.link <span class="op">=</span> <span class="fl">1</span>, grid.col <span class="op">=</span> <span class="va">grid.cols</span>, directional <span class="op">=</span> <span class="fl">1</span>, direction.type <span class="op">=</span> <span class="st">"arrows"</span>,</span>
-<span>    link.arr.type <span class="op">=</span> <span class="st">"big.arrow"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/pkg/circlize/man/chordDiagram.html" class="external-link">chordDiagram</a></span><span class="op">(</span><span class="va">circles</span>, </span>
+<span>             self.link <span class="op">=</span> <span class="fl">1</span>, </span>
+<span>             grid.col <span class="op">=</span> <span class="va">grid.cols</span>, </span>
+<span>             directional <span class="op">=</span> <span class="fl">1</span>, </span>
+<span>             direction.type <span class="op">=</span>  <span class="st">"arrows"</span>,</span>
+<span>             link.arr.type <span class="op">=</span> <span class="st">"big.arrow"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="SC_Visualizations_files/figure-html/unnamed-chunk-11-1.png" width="700"></p>
 <p><code><a href="../reference/getCirclize.html">getCirclize()</a></code> facilitates the creation of visually
 striking and informative chord diagrams to represent shared clonal

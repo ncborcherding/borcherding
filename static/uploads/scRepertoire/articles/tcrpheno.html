@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scRepertoire</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.5.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.5.1</span>
       </span>
     </div>
 
@@ -147,7 +147,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>TCRpheno applied to T cell fate</h1>
             
-            <h4 data-toc-skip class="date">Compiled: July 17, 2025</h4>
+            <h4 data-toc-skip class="date">Compiled: July 22, 2025</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/BorchLab/scRepertoire/blob/HEAD/vignettes/articles/tcrpheno.Rmd" class="external-link"><code>vignettes/articles/tcrpheno.Rmd</code></a></small>
       <div class="hidden name"><code>tcrpheno.Rmd</code></div>
@@ -212,7 +212,7 @@ cell memory formation. Cell Reports. 2025 Jan 28;44(1)</p>
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Ensure 'remotes' is installed: install.packages('remotes')</span></span>
+<code class="sourceCode R"><span><span class="co"># Ensure 'remotes' is installed: install.packages("remotes")</span></span>
 <span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"kalaga27/tcrpheno"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
@@ -226,14 +226,18 @@ clonal information.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Load and normalize RNA</span></span>
 <span><span class="va">scRep_example</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="st">"scRep_example_full.rds"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>    <span class="fu">NormalizeData</span><span class="op">(</span>verbose <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span>
+<span>                    <span class="fu">NormalizeData</span><span class="op">(</span>verbose <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Adding Clonal Information</span></span>
-<span><span class="va">scRep_example</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/combineExpression.html">combineExpression</a></span><span class="op">(</span><span class="va">combined.TCR</span>, <span class="va">scRep_example</span>, cloneCall <span class="op">=</span> <span class="st">"aa"</span>, group.by <span class="op">=</span> <span class="st">"sample"</span>,</span>
-<span>    proportion <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="va">scRep_example</span>  <span class="op">&lt;-</span> <span class="fu"><a href="../reference/combineExpression.html">combineExpression</a></span><span class="op">(</span><span class="va">combined.TCR</span>, </span>
+<span>                                    <span class="va">scRep_example</span> , </span>
+<span>                                    cloneCall<span class="op">=</span><span class="st">"aa"</span>, </span>
+<span>                                    group.by <span class="op">=</span> <span class="st">"sample"</span>, </span>
+<span>                                    proportion <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Filtering for single-cells with TCRs</span></span>
-<span><span class="va">scRep_example</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">scRep_example</span>, cells <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">scRep_example</span><span class="op">)</span><span class="op">[</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">scRep_example</span><span class="op">$</span><span class="va">CTaa</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
+<span><span class="co">#Filtering for single-cells with TCRs</span></span>
+<span><span class="va">scRep_example</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">scRep_example</span>, </span>
+<span>                        cells <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">scRep_example</span><span class="op">)</span><span class="op">[</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">scRep_example</span><span class="op">$</span><span class="va">CTaa</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="exporting-clonal-information-for-tcrpheno">Exporting Clonal Information for tcrpheno<a class="anchor" aria-label="anchor" href="#exporting-clonal-information-for-tcrpheno"></a>
@@ -245,7 +249,9 @@ format includes separate columns for TRA V gene, TRA J gene, TRA CDR3
 sequence, TRB V gene, TRB J gene, and TRB CDR3 sequence, along with a
 cell identifier.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">exported_clones</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/exportClones.html">exportClones</a></span><span class="op">(</span><span class="va">scRep_example</span>, write.file <span class="op">=</span> <span class="cn">FALSE</span>, format <span class="op">=</span> <span class="st">"tcrpheno"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">exported_clones</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/exportClones.html">exportClones</a></span><span class="op">(</span><span class="va">scRep_example</span>,</span>
+<span>                                write.file <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>                                format <span class="op">=</span> <span class="st">"tcrpheno"</span><span class="op">)</span> </span>
 <span><span class="va">exported_clones</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html" class="external-link">na.omit</a></span><span class="op">(</span><span class="va">exported_clones</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">exported_clones</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##                      cell     TCRA_cdr3aa TCRA_vgene TCRA_jgene</span></span>
@@ -313,10 +319,14 @@ visualize them on dimensionality reduction plots, such as UMAPs. This
 helps to see if cells with particular TCR-derived phenotype scores
 cluster together or co-localize with known cell populations.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">tcrpheno.plots</span> <span class="op">&lt;-</span> <span class="fu">FeaturePlot</span><span class="op">(</span><span class="va">scRep_example</span>, features <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"TCR.mem"</span>, <span class="st">"TCR.reg"</span>, <span class="st">"TCR.CD8"</span>, <span class="st">"TCR.innate"</span><span class="op">)</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">tcrpheno.plots</span> <span class="op">&lt;-</span> <span class="fu">FeaturePlot</span><span class="op">(</span><span class="va">scRep_example</span>, </span>
+<span>                              features <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"TCR.mem"</span>, </span>
+<span>                                           <span class="st">"TCR.reg"</span>, </span>
+<span>                                           <span class="st">"TCR.CD8"</span>, </span>
+<span>                                           <span class="st">"TCR.innate"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">tcrpheno.plots</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
-<span>    <span class="va">x</span> <span class="op">+</span> <span class="fu">scale_color_viridis</span><span class="op">(</span>option <span class="op">=</span> <span class="st">"B"</span><span class="op">)</span></span>
+<span>  <span class="va">x</span> <span class="op">+</span> <span class="fu"><a href="https://sjmgarnier.github.io/viridis/reference/scale_viridis.html" class="external-link">scale_color_viridis</a></span><span class="op">(</span>option <span class="op">=</span> <span class="st">"B"</span><span class="op">)</span> </span>
 <span><span class="op">}</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">tcrpheno.plots</span></span>
 <span></span>
 <span><span class="fu"><a href="https://patchwork.data-imaginist.com/reference/wrap_plots.html" class="external-link">wrap_plots</a></span><span class="op">(</span><span class="va">tcrpheno.plots</span><span class="op">)</span></span></code></pre></div>
@@ -330,10 +340,12 @@ with the expression of known marker genes associated with different T
 cell states. This can help validate or provide biological context to the
 <code>tcrpheno</code> predictions.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">RNA.plots</span> <span class="op">&lt;-</span> <span class="fu">FeaturePlot</span><span class="op">(</span><span class="va">scRep_example</span>, features <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"CD4"</span>, <span class="st">"CD8A"</span>, <span class="st">"FOXP3"</span>, <span class="st">"KLRB1"</span><span class="op">)</span>, combine <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">RNA.plots</span> <span class="op">&lt;-</span> <span class="fu">FeaturePlot</span><span class="op">(</span><span class="va">scRep_example</span>, </span>
+<span>                          features <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"CD4"</span>,<span class="st">"CD8A"</span>, <span class="st">"FOXP3"</span>, <span class="st">"KLRB1"</span><span class="op">)</span>, </span>
+<span>                          combine <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> </span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">RNA.plots</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
-<span>    <span class="va">x</span> <span class="op">+</span> <span class="fu">scale_color_viridis</span><span class="op">(</span>option <span class="op">=</span> <span class="st">"B"</span><span class="op">)</span></span>
+<span>  <span class="va">x</span> <span class="op">+</span> <span class="fu"><a href="https://sjmgarnier.github.io/viridis/reference/scale_viridis.html" class="external-link">scale_color_viridis</a></span><span class="op">(</span>option <span class="op">=</span> <span class="st">"B"</span><span class="op">)</span> </span>
 <span><span class="op">}</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">RNA.plots</span></span>
 <span></span>
 <span><span class="fu"><a href="https://patchwork.data-imaginist.com/reference/wrap_plots.html" class="external-link">wrap_plots</a></span><span class="op">(</span><span class="va">RNA.plots</span><span class="op">)</span></span></code></pre></div>

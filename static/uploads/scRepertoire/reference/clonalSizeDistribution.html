@@ -20,7 +20,7 @@ PMID: 30485278)."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scRepertoire</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.5.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.5.1</span>
       </span>
     </div>
 
@@ -87,7 +87,7 @@ PMID: 30485278)."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax
     </li>
     <li class="divider">
     <li>
-      <a href="../articles/dandelionR.html">Immune Repertoire Trajectory Analysis</a>
+      <a href="../articles/dandelionR.html">VDJ Trajectory Analysis with dandelionR</a>
     </li>
     <li>
       <a href="../articles/immunarch.html">Using scRepertoire with immunarch</a>
@@ -158,7 +158,7 @@ model please read and cite powerTCR (more info available at
 <dt id="arg-clonecall">cloneCall<a class="anchor" aria-label="anchor" href="#arg-clonecall"></a></dt>
 <dd><p>Defines the clonal sequence grouping. Accepted values
 are: <code>gene</code> (VDJC genes), <code>nt</code> (CDR3 nucleotide sequence), <code>aa</code> (CDR3 amino
-acid sequence), or <code>strict</code> (VDJC). A custom column header can also be used.</p></dd>
+acid sequence), or <code>strict</code> (VDJC + nt). A custom column header can also be used.</p></dd>
 
 
 <dt id="arg-chain">chain<a class="anchor" aria-label="anchor" href="#arg-chain"></a></dt>
@@ -225,11 +225,13 @@ $$f(x|\alpha, \beta) = \frac{x^{\alpha-1} e^{-x/\beta}}{\beta^\alpha \Gamma(\alp
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Making combined contig data</span></span></span>
 <span class="r-in"><span><span class="va">combined</span> <span class="op">&lt;-</span> <span class="fu"><a href="combineTCR.html">combineTCR</a></span><span class="op">(</span><span class="va">contig_list</span>,</span></span>
-<span class="r-in"><span>                        samples <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"P17B"</span>, <span class="st">"P17L"</span>, <span class="st">"P18B"</span>, <span class="st">"P18L"</span>,</span></span>
-<span class="r-in"><span>                                    <span class="st">"P19B"</span>,<span class="st">"P19L"</span>, <span class="st">"P20B"</span>, <span class="st">"P20L"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>                       samples <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"P17B"</span>, <span class="st">"P17L"</span>, <span class="st">"P18B"</span>, <span class="st">"P18L"</span>,</span></span>
+<span class="r-in"><span>                                   <span class="st">"P19B"</span>,<span class="st">"P19L"</span>, <span class="st">"P20B"</span>, <span class="st">"P20L"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Using clonalSizeDistribution()</span></span></span>
-<span class="r-in"><span><span class="fu">clonalSizeDistribution</span><span class="op">(</span><span class="va">combined</span>, cloneCall <span class="op">=</span> <span class="st">"strict"</span>, method<span class="op">=</span><span class="st">"ward.D2"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">clonalSizeDistribution</span><span class="op">(</span><span class="va">combined</span>, </span></span>
+<span class="r-in"><span>                       cloneCall <span class="op">=</span> <span class="st">"strict"</span>, </span></span>
+<span class="r-in"><span>                       method<span class="op">=</span><span class="st">"ward.D2"</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="clonalSizeDistribution-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>

@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scRepertoire</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.5.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.5.1</span>
       </span>
     </div>
 
@@ -105,7 +105,7 @@
     <li class="divider">
     </li>
 <li>
-      <a href="../articles/dandelionR.html">Immune Repertoire Trajectory Analysis</a>
+      <a href="../articles/dandelionR.html">VDJ Trajectory Analysis with dandelionR</a>
     </li>
     <li>
       <a href="../articles/immunarch.html">Using scRepertoire with immunarch</a>
@@ -147,7 +147,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Visualizing Clonal Dynamics</h1>
             
-            <h4 data-toc-skip class="date">Compiled: July 14, 2025</h4>
+            <h4 data-toc-skip class="date">Compiled: July 22, 2025</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/BorchLab/scRepertoire/blob/HEAD/vignettes/articles/Clonal_Dynamics.Rmd" class="external-link"><code>vignettes/articles/Clonal_Dynamics.Rmd</code></a></small>
       <div class="hidden name"><code>Clonal_Dynamics.Rmd</code></div>
@@ -258,7 +258,9 @@ calls with default <code>clonalSplit</code> bins:</p>
 <p>To visualize clonal proportion using <code>nt</code> (nucleotide)
 clone calls with custom <code>clonalSplit</code> bins:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/clonalProportion.html">clonalProportion</a></span><span class="op">(</span><span class="va">combined.TCR</span>, cloneCall <span class="op">=</span> <span class="st">"nt"</span>, clonalSplit <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">5</span>, <span class="fl">10</span>, <span class="fl">100</span>, <span class="fl">1000</span>, <span class="fl">10000</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/clonalProportion.html">clonalProportion</a></span><span class="op">(</span><span class="va">combined.TCR</span>, </span>
+<span>                 cloneCall <span class="op">=</span> <span class="st">"nt"</span>,</span>
+<span>                 clonalSplit <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">5</span>, <span class="fl">10</span>, <span class="fl">100</span>, <span class="fl">1000</span>, <span class="fl">10000</span><span class="op">)</span><span class="op">)</span> </span></code></pre></div>
 <p><img src="Clonal_Dynamics_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
 <p><code><a href="../reference/clonalProportion.html">clonalProportion()</a></code> complements
 <code><a href="../reference/clonalHomeostasis.html">clonalHomeostasis()</a></code> by providing a perspective on how the

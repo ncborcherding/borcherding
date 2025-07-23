@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scRepertoire</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.5.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.5.1</span>
       </span>
     </div>
 
@@ -147,7 +147,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Downstream Analysis with immunarch</h1>
             
-            <h4 data-toc-skip class="date">Compiled: July 17, 2025</h4>
+            <h4 data-toc-skip class="date">Compiled: July 22, 2025</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/BorchLab/scRepertoire/blob/HEAD/vignettes/articles/immunarch.Rmd" class="external-link"><code>vignettes/articles/immunarch.Rmd</code></a></small>
       <div class="hidden name"><code>immunarch.Rmd</code></div>
@@ -194,25 +194,32 @@ initial data using <code>scRepertoire</code>. We will use the built-in
 <span><span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">suppressMessages</a></span><span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Load example data from scRepertoire</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"contig_list"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"contig_list"</span><span class="op">)</span> </span>
 <span></span>
 <span><span class="co"># Combine contigs into a single list</span></span>
-<span><span class="va">combined</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/combineTCR.html">combineTCR</a></span><span class="op">(</span><span class="va">contig_list</span>, samples <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"P17B"</span>, <span class="st">"P17L"</span>, <span class="st">"P18B"</span>, <span class="st">"P18L"</span>, <span class="st">"P19B"</span>, <span class="st">"P19L"</span>,</span>
-<span>    <span class="st">"P20B"</span>, <span class="st">"P20L"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">combined</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/combineTCR.html">combineTCR</a></span><span class="op">(</span><span class="va">contig_list</span>, </span>
+<span>                       samples <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"P17B"</span>, <span class="st">"P17L"</span>, <span class="st">"P18B"</span>, <span class="st">"P18L"</span>, </span>
+<span>                                   <span class="st">"P19B"</span>, <span class="st">"P19L"</span>, <span class="st">"P20B"</span>, <span class="st">"P20L"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="exporting-for-immunarch">Exporting for <code>immunarch</code><a class="anchor" aria-label="anchor" href="#exporting-for-immunarch"></a>
 </h2>
 <p>The <code><a href="../reference/exportClones.html">exportClones()</a></code> function can now format the
 <code>scRepertoire</code> object into a list that <code>immunarch</code>
-can immediately use. This list contains two key components: *
-<strong><code>$data</code></strong>: A list of data frames, where each
-data frame is a repertoire from a single sample. *
-<strong><code>$meta</code></strong>: A metadata data frame describing
-the samples.</p>
+can immediately use. This list contains two key components:</p>
+<ul>
+<li>
+<strong><code>$data</code></strong>: A list of data frames, where
+each data frame is a repertoire from a single sample.</li>
+<li>
+<strong><code>$meta</code></strong>: A metadata data frame
+describing the samples.</li>
+</ul>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Export the data with write.file = FALSE to get the R object</span></span>
-<span><span class="va">immunarch_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/exportClones.html">exportClones</a></span><span class="op">(</span><span class="va">combined</span>, format <span class="op">=</span> <span class="st">"immunarch"</span>, write.file <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">immunarch_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/exportClones.html">exportClones</a></span><span class="op">(</span><span class="va">combined</span>, </span>
+<span>                               format <span class="op">=</span> <span class="st">"immunarch"</span>, </span>
+<span>                               write.file <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># We can inspect the structure of the output</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">immunarch_data</span>, max.level <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
@@ -240,15 +247,16 @@ metadata to group the samples by their origin (B for blood, L for lymph
 node).</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Add a grouping variable to the metadata</span></span>
+<span><span class="va">immunarch_data</span><span class="op">$</span><span class="va">meta</span><span class="op">$</span><span class="va">Patient</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/substr.html" class="external-link">substr</a></span><span class="op">(</span><span class="va">immunarch_data</span><span class="op">$</span><span class="va">meta</span><span class="op">$</span><span class="va">Sample</span>, <span class="fl">1</span>, <span class="fl">3</span><span class="op">)</span></span>
 <span><span class="va">immunarch_data</span><span class="op">$</span><span class="va">meta</span><span class="op">$</span><span class="va">SampleType</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/substr.html" class="external-link">substr</a></span><span class="op">(</span><span class="va">immunarch_data</span><span class="op">$</span><span class="va">meta</span><span class="op">$</span><span class="va">Sample</span>, <span class="fl">4</span>, <span class="fl">4</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">immunarch_data</span><span class="op">$</span><span class="va">meta</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##   Sample SampleType</span></span>
-<span><span class="co">## 1   P17B          B</span></span>
-<span><span class="co">## 2   P17L          L</span></span>
-<span><span class="co">## 3   P18B          B</span></span>
-<span><span class="co">## 4   P18L          L</span></span>
-<span><span class="co">## 5   P19B          B</span></span>
-<span><span class="co">## 6   P19L          L</span></span></code></pre>
+<pre><code><span><span class="co">##   Sample Patient SampleType</span></span>
+<span><span class="co">## 1   P17B     P17          B</span></span>
+<span><span class="co">## 2   P17L     P17          L</span></span>
+<span><span class="co">## 3   P18B     P18          B</span></span>
+<span><span class="co">## 4   P18L     P18          L</span></span>
+<span><span class="co">## 5   P19B     P19          B</span></span>
+<span><span class="co">## 6   P19L     P19          L</span></span></code></pre>
 <div class="section level3">
 <h3 id="repertoire-overlap">Repertoire Overlap<a class="anchor" aria-label="anchor" href="#repertoire-overlap"></a>
 </h3>
@@ -273,8 +281,10 @@ proportion of the repertoire occupied by clones of different sizes
 calculates this, and <code><a href="https://immunarch.com/reference/vis.html" class="external-link">vis()</a></code> creates a bar plot.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Calculate clonal space homeostasis</span></span>
-<span><span class="va">imm_hom</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://immunarch.com/reference/repClonality.html" class="external-link">repClonality</a></span><span class="op">(</span><span class="va">immunarch_data</span><span class="op">$</span><span class="va">data</span>, .method <span class="op">=</span> <span class="st">"homeo"</span>, .clone.types <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>Small <span class="op">=</span> <span class="fl">1e-04</span>,</span>
-<span>    Medium <span class="op">=</span> <span class="fl">0.001</span>, Large <span class="op">=</span> <span class="fl">0.01</span>, Hyperexpanded <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">imm_hom</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://immunarch.com/reference/repClonality.html" class="external-link">repClonality</a></span><span class="op">(</span><span class="va">immunarch_data</span><span class="op">$</span><span class="va">data</span>,</span>
+<span>                        .method <span class="op">=</span> <span class="st">"homeo"</span>,</span>
+<span>                        .clone.types <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>Small <span class="op">=</span> <span class="fl">0.0001</span>, Medium <span class="op">=</span> <span class="fl">0.001</span>, </span>
+<span>                                         Large <span class="op">=</span> <span class="fl">0.01</span>, Hyperexpanded <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Visualize homeostasis, grouped by sample type</span></span>
 <span><span class="fu"><a href="https://immunarch.com/reference/vis.html" class="external-link">vis</a></span><span class="op">(</span><span class="va">imm_hom</span>, .by <span class="op">=</span> <span class="st">"SampleType"</span>, .meta <span class="op">=</span> <span class="va">immunarch_data</span><span class="op">$</span><span class="va">meta</span><span class="op">)</span></span></code></pre></div>
@@ -285,31 +295,68 @@ calculates this, and <code><a href="https://immunarch.com/reference/vis.html" cl
 </h3>
 <p><code>immunarch</code> provides powerful tools to analyze and
 visualize the usage of V, D, and J genes. Here, we’ll compute the usage
-of TRBV genes and visualize their distribution across samples.</p>
+of TRAV/TRBV genes and visualize their distribution across samples. It
+is important to note, in paired mode, immunarch calculates usage for
+both V genes.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Compute TRBV gene usage</span></span>
+<code class="sourceCode R"><span><span class="co"># Compute TRAV/TRBV gene usage</span></span>
 <span><span class="va">imm_gu</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://immunarch.com/reference/geneUsage.html" class="external-link">geneUsage</a></span><span class="op">(</span><span class="va">immunarch_data</span><span class="op">$</span><span class="va">data</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, <span class="st">"hs.trbv"</span>, .norm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Visualize gene usage as a heatmap</span></span>
-<span><span class="fu"><a href="https://immunarch.com/reference/vis.html" class="external-link">vis</a></span><span class="op">(</span><span class="va">imm_gu</span>, .grid <span class="op">=</span> <span class="cn">TRUE</span>, .title <span class="op">=</span> <span class="st">"TRBV Gene Usage"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://immunarch.com/reference/vis.html" class="external-link">vis</a></span><span class="op">(</span><span class="va">imm_gu</span><span class="op">[</span><span class="fl">30</span><span class="op">:</span><span class="fl">60</span>,<span class="op">]</span>, .grid <span class="op">=</span> <span class="cn">TRUE</span>, .title <span class="op">=</span> <span class="st">"TRAV/TRBV Gene Usage"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="immunarch_files/figure-html/GeneUsage-1.png" width="700"></p>
 <p>We can also visualize the gene usage grouped by our metadata
-variable.</p>
+variable. Here, we analyze the imm_gu object using the Jensen-Shannon
+(<code>js</code>) divergence and correlation analysis. JS divergence is
+a measure of similarity between two probability distributions (lower =
+more similar). Converesely, correlation (<code>cor</code>) measures the
+linear relationship between the gene usage profiles of different
+samples.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">imm_gu</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://immunarch.com/reference/geneUsage.html" class="external-link">geneUsage</a></span><span class="op">(</span><span class="va">immunarch_data</span><span class="op">$</span><span class="va">data</span>, <span class="st">"hs.trbv"</span>, .norm <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span>
-<span><span class="va">imm_gu_js</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://immunarch.com/reference/geneUsageAnalysis.html" class="external-link">geneUsageAnalysis</a></span><span class="op">(</span><span class="va">imm_gu</span>, .method <span class="op">=</span> <span class="st">"js"</span>, .verbose <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span>
-<span><span class="va">imm_gu_cor</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://immunarch.com/reference/geneUsageAnalysis.html" class="external-link">geneUsageAnalysis</a></span><span class="op">(</span><span class="va">imm_gu</span>, .method <span class="op">=</span> <span class="st">"cor"</span>, .verbose <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">imm_gu</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://immunarch.com/reference/geneUsage.html" class="external-link">geneUsage</a></span><span class="op">(</span><span class="va">immunarch_data</span><span class="op">$</span><span class="va">data</span>, <span class="st">"hs.trbv"</span>, </span>
+<span>                    .norm <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span>
+<span><span class="va">imm_gu_js</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://immunarch.com/reference/geneUsageAnalysis.html" class="external-link">geneUsageAnalysis</a></span><span class="op">(</span><span class="va">imm_gu</span>, </span>
+<span>                               .method <span class="op">=</span> <span class="st">"js"</span>, </span>
+<span>                               .verbose <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span>
+<span><span class="va">imm_gu_cor</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://immunarch.com/reference/geneUsageAnalysis.html" class="external-link">geneUsageAnalysis</a></span><span class="op">(</span><span class="va">imm_gu</span>, </span>
+<span>                                .method <span class="op">=</span> <span class="st">"cor"</span>, </span>
+<span>                                .verbose <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">p1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://immunarch.com/reference/vis.html" class="external-link">vis</a></span><span class="op">(</span><span class="va">imm_gu_js</span>, .title <span class="op">=</span> <span class="st">"Gene usage JS-divergence"</span>, .leg.title <span class="op">=</span> <span class="st">"JS"</span>, .text.size <span class="op">=</span> <span class="fl">1.5</span><span class="op">)</span></span>
-<span><span class="va">p2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://immunarch.com/reference/vis.html" class="external-link">vis</a></span><span class="op">(</span><span class="va">imm_gu_cor</span>, .title <span class="op">=</span> <span class="st">"Gene usage correlation"</span>, .leg.title <span class="op">=</span> <span class="st">"Cor"</span>, .text.size <span class="op">=</span> <span class="fl">1.5</span><span class="op">)</span></span>
+<span><span class="va">p1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://immunarch.com/reference/vis.html" class="external-link">vis</a></span><span class="op">(</span><span class="va">imm_gu_js</span>, .title <span class="op">=</span> <span class="st">"Gene usage JS-divergence"</span>, </span>
+<span>          .leg.title <span class="op">=</span> <span class="st">"JS"</span>, </span>
+<span>          .text.size <span class="op">=</span> <span class="fl">1.5</span><span class="op">)</span></span>
+<span><span class="va">p2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://immunarch.com/reference/vis.html" class="external-link">vis</a></span><span class="op">(</span><span class="va">imm_gu_cor</span>, .title <span class="op">=</span> <span class="st">"Gene usage correlation"</span>, </span>
+<span>          .leg.title <span class="op">=</span> <span class="st">"Cor"</span>, </span>
+<span>          .text.size <span class="op">=</span> <span class="fl">1.5</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span></span></code></pre></div>
 <p><img src="immunarch_files/figure-html/GeneUsageGrouped-1.png" width="700"></p>
+</div>
+<div class="section level3">
+<h3 id="calculating-diversity">Calculating Diversity<a class="anchor" aria-label="anchor" href="#calculating-diversity"></a>
+</h3>
+<p><code>immunarch</code> and <code>scRepertoire</code> have many
+overlapping features, such as diversity. One key difference is
+<code>immunarch</code> separation of calculation and visualization. This
+offers <code>immunarch</code> users the ability to group calculations in
+a post-hoc fashion. Here we can use the nonparametric <code>chao1</code>
+estimation to look at diversity across samples or by sampleType (B =
+Blood and L = Lung).</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">div_chao</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://immunarch.com/reference/repDiversity.html" class="external-link">repDiversity</a></span><span class="op">(</span><span class="va">immunarch_data</span><span class="op">$</span><span class="va">data</span>, <span class="st">"chao1"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">p1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://immunarch.com/reference/vis.html" class="external-link">vis</a></span><span class="op">(</span><span class="va">div_chao</span><span class="op">)</span></span>
+<span><span class="va">p2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://immunarch.com/reference/vis.html" class="external-link">vis</a></span><span class="op">(</span><span class="va">div_chao</span>, .by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"SampleType"</span><span class="op">)</span>, </span>
+<span>          .meta <span class="op">=</span> <span class="va">immunarch_data</span><span class="op">$</span><span class="va">meta</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span> </span></code></pre></div>
+<p><img src="immunarch_files/figure-html/unnamed-chunk-2-1.png" width="700"></p>
 <p>This concludes the vignette on integrating <code>scRepertoire</code>
 with <code>immunarch</code>. By using the <code><a href="../reference/exportClones.html">exportClones()</a></code>
 function, you can easily leverage the extensive analytical and
 visualization capabilities of <code>immunarch</code> for your
-single-cell TCR sequencing data.</p>
+single-cell TCR sequencing data. Immunarch has extensive documentation
+and vignettes available at <a href="https://immunarch.com/index.html" class="external-link">immunarch.com</a>.</p>
 </div>
 </div>
   </div>

@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scRepertoire</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.5.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.5.1</span>
       </span>
     </div>
 
@@ -105,7 +105,7 @@
     <li class="divider">
     </li>
 <li>
-      <a href="../articles/dandelionR.html">Immune Repertoire Trajectory Analysis</a>
+      <a href="../articles/dandelionR.html">VDJ Trajectory Analysis with dandelionR</a>
     </li>
     <li>
       <a href="../articles/immunarch.html">Using scRepertoire with immunarch</a>
@@ -147,7 +147,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Clustering by Edit Distance</h1>
             
-            <h4 data-toc-skip class="date">Compiled: July 14, 2025</h4>
+            <h4 data-toc-skip class="date">Compiled: July 22, 2025</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/BorchLab/scRepertoire/blob/HEAD/vignettes/articles/Clonal_Cluster.Rmd" class="external-link"><code>vignettes/articles/Clonal_Cluster.Rmd</code></a></small>
       <div class="hidden name"><code>Clonal_Cluster.Rmd</code></div>
@@ -294,16 +294,20 @@ per-patient basis without subsetting the data first.</p>
 <p>Now, run clustering on the <code>scRep_example</code> Seurat object,
 grouping calculations by “Patient”:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Run clustering, but group calculations by 'Patient'</span></span>
-<span><span class="va">scRep_example</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/clonalCluster.html">clonalCluster</a></span><span class="op">(</span><span class="va">scRep_example</span>, chain <span class="op">=</span> <span class="st">"TRA"</span>, sequence <span class="op">=</span> <span class="st">"aa"</span>, threshold <span class="op">=</span> <span class="fl">0.85</span>,</span>
-<span>    group.by <span class="op">=</span> <span class="st">"Patient"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="co"># Run clustering, but group calculations by "Patient"</span></span>
+<span><span class="va">scRep_example</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/clonalCluster.html">clonalCluster</a></span><span class="op">(</span><span class="va">scRep_example</span>, </span>
+<span>                               chain <span class="op">=</span> <span class="st">"TRA"</span>, </span>
+<span>                               sequence <span class="op">=</span> <span class="st">"aa"</span>, </span>
+<span>                               threshold <span class="op">=</span> <span class="fl">0.85</span>, </span>
+<span>                               group.by <span class="op">=</span> <span class="st">"Patient"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Define color palette</span></span>
+<span><span class="co">#Define color palette </span></span>
 <span><span class="va">num_clusters</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html" class="external-link">na.omit</a></span><span class="op">(</span><span class="va">scRep_example</span><span class="op">$</span><span class="va">TRA.Cluster</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">cluster_colors</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/palettes.html" class="external-link">hcl.colors</a></span><span class="op">(</span>n <span class="op">=</span> <span class="va">num_clusters</span>, palette <span class="op">=</span> <span class="st">"inferno"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">DimPlot</span><span class="op">(</span><span class="va">scRep_example</span>, group.by <span class="op">=</span> <span class="st">"TRA.Cluster"</span><span class="op">)</span> <span class="op">+</span> <span class="fu">scale_color_manual</span><span class="op">(</span>values <span class="op">=</span> <span class="va">cluster_colors</span>, na.value <span class="op">=</span> <span class="st">"grey"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu">NoLegend</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">DimPlot</span><span class="op">(</span><span class="va">scRep_example</span>, group.by <span class="op">=</span> <span class="st">"TRA.Cluster"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">scale_color_manual</span><span class="op">(</span>values <span class="op">=</span> <span class="va">cluster_colors</span>, na.value <span class="op">=</span> <span class="st">"grey"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu">NoLegend</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Clonal_Cluster_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
 </div>
 <div class="section level3">
@@ -323,12 +327,13 @@ the networks of barcodes by the indicated clustering scheme.</p>
 <span>                               threshold <span class="op">=</span> <span class="fl">0.85</span>, </span>
 <span>                               exportGraph <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co">#Setting color scheme</span></span>
+<span><span class="co"># Setting color scheme</span></span>
 <span><span class="va">col_legend</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="fu">igraph</span><span class="fu">::</span><span class="fu"><a href="https://r.igraph.org/reference/V.html" class="external-link">V</a></span><span class="op">(</span><span class="va">igraph.object</span><span class="op">)</span><span class="op">$</span><span class="va">group</span><span class="op">)</span></span>
 <span><span class="va">col_samples</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/palettes.html" class="external-link">hcl.colors</a></span><span class="op">(</span><span class="fl">2</span>,<span class="st">"inferno"</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">col_legend</span><span class="op">)</span><span class="op">]</span></span>
 <span><span class="va">color.legend</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="fu">igraph</span><span class="fu">::</span><span class="fu"><a href="https://r.igraph.org/reference/V.html" class="external-link">V</a></span><span class="op">(</span><span class="va">igraph.object</span><span class="op">)</span><span class="op">$</span><span class="va">group</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">sample.vertices</span> <span class="op">&lt;-</span> <span class="fu">V</span><span class="op">(</span><span class="va">igraph.object</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">igraph.object</span><span class="op">)</span>, <span class="fl">500</span><span class="op">)</span><span class="op">]</span></span>
 <span></span>
+<span><span class="co"># Sampling 1000 Barcodes</span></span>
+<span><span class="va">sample.vertices</span> <span class="op">&lt;-</span> <span class="fu">V</span><span class="op">(</span><span class="va">igraph.object</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">igraph.object</span><span class="op">)</span>, <span class="fl">1000</span><span class="op">)</span><span class="op">]</span></span>
 <span><span class="va">subgraph.object</span> <span class="op">&lt;-</span> <span class="fu">induced_subgraph</span><span class="op">(</span><span class="va">igraph.object</span>, vids <span class="op">=</span> <span class="va">sample.vertices</span><span class="op">)</span></span>
 <span><span class="fu">V</span><span class="op">(</span><span class="va">subgraph.object</span><span class="op">)</span><span class="op">$</span><span class="va">degrees</span> <span class="op">&lt;-</span> <span class="fu">igraph</span><span class="fu">::</span><span class="fu"><a href="https://r.igraph.org/reference/degree.html" class="external-link">degree</a></span><span class="op">(</span><span class="va">subgraph.object</span><span class="op">)</span></span>
 <span><span class="va">edge_alpha_color</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/adjustcolor.html" class="external-link">adjustcolor</a></span><span class="op">(</span><span class="st">"gray"</span>, alpha.f <span class="op">=</span> <span class="fl">0.3</span><span class="op">)</span></span>
@@ -360,7 +365,9 @@ the connections between all barcodes in the input data, with the edit
 distance that meet the threshold in places of connection.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Generate the sparse matrix</span></span>
-<span><span class="va">adj.matrix</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/clonalCluster.html">clonalCluster</a></span><span class="op">(</span><span class="va">combined.TCR</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">]</span>, chain <span class="op">=</span> <span class="st">"TRB"</span>, exportAdjMatrix <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="va">adj.matrix</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/clonalCluster.html">clonalCluster</a></span><span class="op">(</span><span class="va">combined.TCR</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span><span class="op">]</span>,</span>
+<span>                            chain <span class="op">=</span> <span class="st">"TRB"</span>,</span>
+<span>                            exportAdjMatrix <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># View the dimensions and a snippet of the matrix</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">adj.matrix</span><span class="op">)</span></span></code></pre></div>
@@ -388,9 +395,10 @@ chains by setting <code>chain = "both"</code>. This will create a single
 cluster column named <code>Multi.Cluster</code>.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Cluster using both TRB and TRA chains simultaneously</span></span>
-<span><span class="va">clustered_both</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/clonalCluster.html">clonalCluster</a></span><span class="op">(</span><span class="va">combined.TCR</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">]</span>, chain <span class="op">=</span> <span class="st">"both"</span><span class="op">)</span></span>
+<span><span class="va">clustered_both</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/clonalCluster.html">clonalCluster</a></span><span class="op">(</span><span class="va">combined.TCR</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span><span class="op">]</span>, </span>
+<span>                                chain <span class="op">=</span> <span class="st">"both"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># View the new 'Multi.Cluster' column</span></span>
+<span><span class="co"># View the new "Multi.Cluster" column</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">clustered_both</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"barcode"</span>, <span class="st">"TCR1"</span>, <span class="st">"TCR2"</span>, <span class="st">"Multi.Cluster"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##                   barcode                     TCR1                        TCR2</span></span>
 <span><span class="co">## 1 P17B_AAACCTGAGTACGACG-1       TRAV25.TRAJ20.TRAC  TRBV5-1.None.TRBJ2-7.TRBC2</span></span>
@@ -416,7 +424,9 @@ robust, you can use other algorithms from the igraph package, such as
 different community structures.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Cluster using the walktrap algorithm</span></span>
-<span><span class="va">graph_walktrap</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/clonalCluster.html">clonalCluster</a></span><span class="op">(</span><span class="va">combined.TCR</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">]</span>, cluster.method <span class="op">=</span> <span class="st">"walktrap"</span>, exportGraph <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="va">graph_walktrap</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/clonalCluster.html">clonalCluster</a></span><span class="op">(</span><span class="va">combined.TCR</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span><span class="op">]</span>,</span>
+<span>                                cluster.method <span class="op">=</span> <span class="st">"walktrap"</span>,</span>
+<span>                                exportGraph <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Compare the number of clusters found</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="fu">V</span><span class="op">(</span><span class="va">graph_walktrap</span><span class="op">)</span><span class="op">$</span><span class="va">cluster</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>

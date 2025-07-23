@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scRepertoire</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.5.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.5.1</span>
       </span>
     </div>
 
@@ -105,7 +105,7 @@
     <li class="divider">
     </li>
 <li>
-      <a href="../articles/dandelionR.html">Immune Repertoire Trajectory Analysis</a>
+      <a href="../articles/dandelionR.html">VDJ Trajectory Analysis with dandelionR</a>
     </li>
     <li>
       <a href="../articles/immunarch.html">Using scRepertoire with immunarch</a>
@@ -147,7 +147,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Combining Contigs into Clones</h1>
             
-            <h4 data-toc-skip class="date">Compiled: July 14, 2025</h4>
+            <h4 data-toc-skip class="date">Compiled: July 22, 2025</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/BorchLab/scRepertoire/blob/HEAD/vignettes/articles/Combining_Contigs.Rmd" class="external-link"><code>vignettes/articles/Combining_Contigs.Rmd</code></a></small>
       <div class="hidden name"><code>Combining_Contigs.Rmd</code></div>
@@ -342,7 +342,7 @@ call.related.clones = TRUE (default: <code>both</code>).</li>
 V/J gene to be clustered (default: <code>TRUE</code>)</li>
 <li>
 <code>cluster.method</code>: The clustering algorithm to apply to
-the edit-distanc network (default: <code>components</code>).</li>
+the edit-distance network (default: <code>components</code>).</li>
 </ul>
 <p>First, load the example BCR contig data:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
@@ -388,7 +388,10 @@ helps resolve cellular multiplets or technical artifacts.</p>
 <p>Here is an example applying these filters (though they are on by
 default):</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">cleaned.BCR</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/combineBCR.html">combineBCR</a></span><span class="op">(</span><span class="va">BCR.contigs</span>, samples <span class="op">=</span> <span class="st">"Patient1"</span>, filterNonproductive <span class="op">=</span> <span class="cn">TRUE</span>, filterMulti <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">cleaned.BCR</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/combineBCR.html">combineBCR</a></span><span class="op">(</span><span class="va">BCR.contigs</span>,</span>
+<span>                          samples <span class="op">=</span> <span class="st">"Patient1"</span>,</span>
+<span>                          filterNonproductive <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>                          filterMulti <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">cleaned.BCR</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##                       barcode   sample                            IGH</span></span>

@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scRepertoire</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.5.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.5.1</span>
       </span>
     </div>
 
@@ -105,7 +105,7 @@
     <li class="divider">
     </li>
 <li>
-      <a href="../articles/dandelionR.html">Immune Repertoire Trajectory Analysis</a>
+      <a href="../articles/dandelionR.html">VDJ Trajectory Analysis with dandelionR</a>
     </li>
     <li>
       <a href="../articles/immunarch.html">Using scRepertoire with immunarch</a>
@@ -147,7 +147,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Quantifying Clonal Bias</h1>
             
-            <h4 data-toc-skip class="date">Compiled: July 14, 2025</h4>
+            <h4 data-toc-skip class="date">Compiled: July 22, 2025</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/BorchLab/scRepertoire/blob/HEAD/vignettes/articles/Clonal_Bias.Rmd" class="external-link"><code>vignettes/articles/Clonal_Bias.Rmd</code></a></small>
       <div class="hidden name"><code>Clonal_Bias.Rmd</code></div>
@@ -164,32 +164,35 @@ p.caption {
 <div class="section level2">
 <h2 id="startracdiversity">StartracDiversity<a class="anchor" aria-label="anchor" href="#startracdiversity"></a>
 </h2>
-<p>From the excellent work by <a href="https://www.nature.com/articles/s41586-018-0694-x" class="external-link">Lei Zhang, et
-al.</a>, the authors introduced new methods for looking at clones by
-cellular origins and cluster identification. Their <a href="https://github.com/Japrin/STARTRAC" class="external-link">STARTRAC</a> software has been
-adapted to work with <code>scRepertoire</code> and please read and cite
-their excellent work.</p>
-<p>To use the <code><a href="../reference/StartracDiversity.html">StartracDiversity()</a></code> function, you need to
-include the product of the <code><a href="../reference/combineExpression.html">combineExpression()</a></code> function.
-The second requirement is a column header in the metadata of the Seurat
-object that has the tissue of origin. In the example data, type
-corresponds to the column “Type”, which includes the “P” (peripheral
-blood) and “L” (lung) classifiers. The indices can be subsetted for a
-specific patient or examined overall using the group.by variable.
-Importantly, the function uses only the strict definition of a clone,
-which includes the VDJC genes and the CDR3 nucleotide sequence.</p>
+<p>From the excellent work by <a href="https://www.nature.com/articles/s41586-018-0694-x" class="external-link">Zhang et
+al. (2018, Nature)</a>, the authors introduced new methods for looking
+at clones by cellular origins and cluster identification. We strongly
+recommend you read and cite their publication when using this
+function.</p>
+<p>To use the <code><a href="../reference/StartracDiversity.html">StartracDiversity()</a></code> function, you need the
+output of the <code><a href="../reference/combineExpression.html">combineExpression()</a></code> function and a column in
+your metadata that specifies the tissue of origin.</p>
 <div class="section level3">
 <h3 id="indices-output-from-startracdiversity">Indices Output from <code>StartracDiversity()</code><a class="anchor" aria-label="anchor" href="#indices-output-from-startracdiversity"></a>
 </h3>
 <ul>
 <li>
-<code>expa</code> - Clonal Expansion<br>
+<code>expa</code> - Clonal Expansion. Measures the degree of clonal
+proliferation within a given cell cluster. It is calculated as
+<code>1 - normalized Shannon entropy</code>, where a higher value
+indicates that a few clones dominate the cluster.<br>
 </li>
 <li>
-<code>migr</code> - Cross-tissue Migration<br>
+<code>migr</code> - Cross-tissue Migration. Quantifies the movement
+of clonal T cells between different tissues, as defined by the
+<code>type</code> parameter. This index is based on the entropy of a
+single clonotype’s distribution across the specified tissues.<br>
 </li>
 <li>
-<code>tran</code> - State Transition</li>
+<code>tran</code> - State Transition. Measures the developmental
+transition of T cell clones between different functional clusters. This
+index is calculated from the entropy of a single clonotype’s
+distribution across the cell clusters identified in the data.</li>
 </ul>
 <p>Key Parameters for <code><a href="../reference/StartracDiversity.html">StartracDiversity()</a></code></p>
 <ul>
@@ -200,13 +203,51 @@ type.</li>
 <code>group.by</code>: A column header in the metadata to group the
 analysis by (e.g., “sample”, “treatment”).</li>
 </ul>
-<p>Calculate and plot Startrac diversity metrics using “Type” for tissue
-and “Patient” for grouping:</p>
+<p>By default, <code><a href="../reference/StartracDiversity.html">StartracDiversity()</a></code> will calculate all three
+indices (<code>expa</code>, <code>migr</code>, and <code>tran</code>)
+for each cluster and group you define. This provides a comprehensive
+overview of the clonal dynamics in your dataset. The output is a
+three-paneled plot, with each panel representing one index.</p>
+<p>In the example data, <code>type</code> corresponds to the “Type”
+column, which includes “P” (peripheral blood) and “L” (lung)
+classifiers. The analysis is grouped by the “Patient” column.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/StartracDiversity.html">StartracDiversity</a></span><span class="op">(</span><span class="va">scRep_example</span>, </span>
+<code class="sourceCode R"><span><span class="co"># Calculate and plot all three STARTRAC indices</span></span>
+<span><span class="fu"><a href="../reference/StartracDiversity.html">StartracDiversity</a></span><span class="op">(</span><span class="va">scRep_example</span>, </span>
 <span>                  type <span class="op">=</span> <span class="st">"Type"</span>, </span>
 <span>                  group.by <span class="op">=</span> <span class="st">"Patient"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Clonal_Bias_files/figure-html/unnamed-chunk-1-1.png" width="700"></p>
+</div>
+<div class="section level3">
+<h3 id="calculating-a-single-index">Calculating a Single Index<a class="anchor" aria-label="anchor" href="#calculating-a-single-index"></a>
+</h3>
+<p>If you’re only interested in one aspect of clonal dynamics, you can
+specify it using the <code>index</code> parameter. For example, to only
+calculate and plot clonal expansion:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Calculate and plot only the clonal expansion index</span></span>
+<span><span class="fu"><a href="../reference/StartracDiversity.html">StartracDiversity</a></span><span class="op">(</span><span class="va">scRep_example</span>, </span>
+<span>                  type <span class="op">=</span> <span class="st">"Type"</span>, </span>
+<span>                  group.by <span class="op">=</span> <span class="st">"Patient"</span>,</span>
+<span>                  index <span class="op">=</span> <span class="st">"expa"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="Clonal_Bias_files/figure-html/unnamed-chunk-2-1.png" width="700"></p>
+</div>
+<div class="section level3">
+<h3 id="pairwise-migration-analysis">Pairwise Migration Analysis<a class="anchor" aria-label="anchor" href="#pairwise-migration-analysis"></a>
+</h3>
+<p>Another feature of <code><a href="../reference/StartracDiversity.html">StartracDiversity()</a></code> is the ability to
+perform pairwise comparisons. To specifically quantify the migration
+between two tissues (e.g., Lung vs. Periphery), set
+<code>index = "migr"</code> and tell the function which column to use
+for the comparison with <code>pairwise = "Type"</code>.</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># # Calculate pairwise migration between tissues</span></span>
+<span><span class="fu"><a href="../reference/StartracDiversity.html">StartracDiversity</a></span><span class="op">(</span><span class="va">scRep_example</span>, </span>
+<span>                  type <span class="op">=</span> <span class="st">"Type"</span>, </span>
+<span>                  group.by <span class="op">=</span> <span class="st">"Patient"</span>,</span>
+<span>                  index <span class="op">=</span> <span class="st">"migr"</span>,</span>
+<span>                  pairwise <span class="op">=</span> <span class="st">"Type"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="Clonal_Bias_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
 </div>
 </div>
 <div class="section level2">
@@ -238,14 +279,14 @@ comparison (default = 10).</li>
 <p>Here we calculate and plot clonal bias using <code>aa</code> clone
 calls, splitting by “Patient” and grouping by “seurat_clusters”, with a
 minimum expansion of 5 and 10 bootstraps:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/clonalBias.html">clonalBias</a></span><span class="op">(</span><span class="va">scRep_example</span>, </span>
 <span>           cloneCall <span class="op">=</span> <span class="st">"aa"</span>, </span>
 <span>           split.by <span class="op">=</span> <span class="st">"Patient"</span>, </span>
 <span>           group.by <span class="op">=</span> <span class="st">"seurat_clusters"</span>,</span>
 <span>           n.boots <span class="op">=</span> <span class="fl">10</span>, </span>
 <span>           min.expand <span class="op">=</span><span class="fl">5</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Clonal_Bias_files/figure-html/unnamed-chunk-2-1.png" width="700"></p>
+<p><img src="Clonal_Bias_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
 </div>
   </div>
 

@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scRepertoire</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.5.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.5.1</span>
       </span>
     </div>
 
@@ -147,7 +147,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Single-cell Gene Set Enrichment Analysis</h1>
             
-            <h4 data-toc-skip class="date">Compiled: July 17, 2025</h4>
+            <h4 data-toc-skip class="date">Compiled: July 23, 2025</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/BorchLab/scRepertoire/blob/HEAD/vignettes/articles/Running_Escape.Rmd" class="external-link"><code>vignettes/articles/Running_Escape.Rmd</code></a></small>
       <div class="hidden name"><code>Running_Escape.Rmd</code></div>
@@ -381,11 +381,12 @@ caution.</p>
 <span>                                   groups <span class="op">=</span> <span class="fl">1000</span>, </span>
 <span>                                   min.size <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">enrichment.scores</span><span class="op">)</span>, </span>
-<span>      mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">enrichment.scores</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span>, <span class="va">enrichment.scores</span><span class="op">[</span>,<span class="fl">2</span><span class="op">]</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_classic</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>axis.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">enrichment.scores</span><span class="op">)</span>, </span>
+<span>      mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span><span class="va">enrichment.scores</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span>, <span class="va">enrichment.scores</span><span class="op">[</span>,<span class="fl">2</span><span class="op">]</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu">theme_classic</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu">xlab</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">enrichment.scores</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu">ylab</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">enrichment.scores</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span> </span></code></pre></div>
 <p><img src="Running_Escape_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
 <p>Multi-core support is for all methods is available through <a href="https://bioconductor.org/packages/release/bioc/html/BiocParallel.html" class="external-link">BiocParallel</a>.
 To add more cores, use the argument <strong>BPPARAM</strong> to
@@ -430,8 +431,8 @@ visualization/workflow we prefer - here we will use just
 <span></span>
 <span><span class="fu">DefaultAssay</span><span class="op">(</span><span class="va">scRep_example</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">"escape.ssGSEA"</span></span>
 <span><span class="fu">FeaturePlot</span><span class="op">(</span><span class="va">scRep_example</span>, <span class="st">"Proinflammatory"</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_gradient.html" class="external-link">scale_color_gradientn</a></span><span class="op">(</span>colors <span class="op">=</span> <span class="va">colorblind_vector</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu">scale_color_gradientn</span><span class="op">(</span>colors <span class="op">=</span> <span class="va">colorblind_vector</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu">theme</span><span class="op">(</span>plot.title <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Running_Escape_files/figure-html/unnamed-chunk-11-1.png" width="700"></p>
 </div>
 <div class="section level3">
@@ -476,9 +477,9 @@ can alter the enrichment score interpretation.</p>
 </h2>
 <p>There are a number of ways to look at the enrichment values
 downstream of <code>runEscape()</code> with the myriad plotting and
-visualizations functions/packages for single-cell data. <em>escape</em>
-include several additional plotting functions to assist in the
-analysis.</p>
+visualizations functions/packages for single-cell data.
+<code>escape</code> include several additional plotting functions to
+assist in the analysis.</p>
 <div class="section level3">
 <h3 id="heatmapenrichment">heatmapEnrichment<a class="anchor" aria-label="anchor" href="#heatmapenrichment"></a>
 </h3>
@@ -565,13 +566,13 @@ be viewed with <code><a href="https://rdrr.io/r/grDevices/palettes.html" class="
 <p><img src="Running_Escape_files/figure-html/unnamed-chunk-17-1.png" width="700"></p>
 <p>Alternatively, we can add an additional layer to the ggplot object
 that is returned by the visualizations using something like
-<code><a href="https://ggplot2.tidyverse.org/reference/scale_gradient.html" class="external-link">scale_fill_gradientn()</a></code> for continuous values or
-<code><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_fill_manual()</a></code> for the categorical variables.</p>
+<code>scale_fill_gradientn()</code> for continuous values or
+<code>scale_fill_manual()</code> for the categorical variables.</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">heatmapEnrichment</span><span class="op">(</span><span class="va">scRep_example</span>, </span>
 <span>                  group.by <span class="op">=</span> <span class="st">"ident"</span>,</span>
 <span>                  assay <span class="op">=</span> <span class="st">"escape.UCell"</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_gradient.html" class="external-link">scale_fill_gradientn</a></span><span class="op">(</span>colors <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rev.html" class="external-link">rev</a></span><span class="op">(</span><span class="fu">brewer.pal</span><span class="op">(</span><span class="fl">11</span>, <span class="st">"RdYlBu"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> </span></code></pre></div>
+<span>  <span class="fu">scale_fill_gradientn</span><span class="op">(</span>colors <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rev.html" class="external-link">rev</a></span><span class="op">(</span><span class="fu">brewer.pal</span><span class="op">(</span><span class="fl">11</span>, <span class="st">"RdYlBu"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> </span></code></pre></div>
 <p><img src="Running_Escape_files/figure-html/unnamed-chunk-18-1.png" width="700"></p>
 </div>
 <div class="section level3">
@@ -906,14 +907,14 @@ types.</p>
 <div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## (1) Bar plot –20 most significant per database</span></span>
 <span><span class="fu">enrichItPlot</span><span class="op">(</span><span class="va">GSEA.results</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>strip.background <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>        strip.text.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>              </span></code></pre></div>
+<span>  <span class="fu">theme</span><span class="op">(</span>strip.background <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span>,</span>
+<span>        strip.text.x <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span><span class="op">)</span>              </span></code></pre></div>
 <p><img src="Running_Escape_files/figure-html/unnamed-chunk-35-1.png" width="700"></p>
 <div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## (2) Dot plot – colored by –log10 padj, sized by core-hits</span></span>
 <span><span class="fu">enrichItPlot</span><span class="op">(</span><span class="va">GSEA.results</span>, <span class="st">"dot"</span>, top <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>strip.background <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>        strip.text.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>   </span></code></pre></div>
+<span>  <span class="fu">theme</span><span class="op">(</span>strip.background <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span>,</span>
+<span>        strip.text.x <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span><span class="op">)</span>   </span></code></pre></div>
 <p><img src="Running_Escape_files/figure-html/unnamed-chunk-35-2.png" width="700"></p>
 <div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## (3) C-net plot – network of pathways ↔ leading-edge genes</span></span>

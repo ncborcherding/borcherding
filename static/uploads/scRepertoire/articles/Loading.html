@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scRepertoire</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.5.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.5.1</span>
       </span>
     </div>
 
@@ -147,7 +147,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Loading Data into scRepertoire</h1>
             
-            <h4 data-toc-skip class="date">Compiled: July 14, 2025</h4>
+            <h4 data-toc-skip class="date">Compiled: July 22, 2025</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/BorchLab/scRepertoire/blob/HEAD/vignettes/articles/Loading.Rmd" class="external-link"><code>vignettes/articles/Loading.Rmd</code></a></small>
       <div class="hidden name"><code>Loading.Rmd</code></div>
@@ -230,10 +230,11 @@ function.</p>
 <code>input</code>: A directory path containing your contig files
 (the function will recursively search) or a list/data frame of
 pre-loaded contig data.</li>
-<li>format: A string specifying the data format (e.g., <code>10X</code>,
-<code>TRUST4</code>, <code>WAT3R</code>). If set to “auto”, the function
-will attempt to automatically detect the format based on file names or
-data structure.</li>
+<li>
+<code>format</code>: A string specifying the data format (e.g.,
+<code>10X</code>, <code>TRUST4</code>, <code>WAT3R</code>). If set to
+“auto”, the function will attempt to automatically detect the format
+based on file names or data structure.</li>
 </ul>
 <p>You can provide <code><a href="../reference/loadContigs.html">loadContigs()</a></code> with a directory where
 your sequencing experiments are located, and it will recursively load
