@@ -41,6 +41,6 @@ links:
   url: https://twitter.com/theHumanBorch
 #url_code: ""
 #url_pdf: 
-url_slides: "https://github.com/ncborcherding/borcherding/blob/master/static/uploads/20250814_CeliacDisease.pdf"
+url_slides: "/uploads/20250814_CeliacDisease.pdf"
 #url_video: ""
 ---

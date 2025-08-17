@@ -39,6 +39,6 @@ links:
   url: https://twitter.com/theHumanBorch
 #url_code: ""
 #url_pdf: 
-url_slides: "https://github.com/ncborcherding/borcherding/blob/master/static/uploads/20230125_SCGpresentation.pdf"
+url_slides: "/uploads/20230125_SCGpresentation.pdf"
 #url_video: ""
 ---

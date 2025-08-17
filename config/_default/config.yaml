@@ -4,8 +4,8 @@
 # This file is formatted using YAML syntax - learn more at https://learnxinyminutes.com/docs/yaml/
 
 title: borch.dev # Website name
-baseurl: 'borch.dev' # Website URL
-copyright: '© {2023} Me'
+baseurl: 'https://borch.dev' # Website URL
+copyright: '© {2025} Me'
 
 ############################
 ## LANGUAGE

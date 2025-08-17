@@ -41,6 +41,6 @@ links:
   url: https://twitter.com/theHumanBorch
 #url_code: ""
 #url_pdf: 
-url_slides: "https://github.com/ncborcherding/borcherding/blob/master/static/uploads/GrandRounds.pdf"
+url_slides: "/uploads/GrandRounds.pdf"
 #url_video: ""
 ---
