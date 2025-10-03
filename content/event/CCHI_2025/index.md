@@ -1,8 +1,7 @@
 ---
-title: Celiac Disease: A Tail of Two HLA Alleles
+title: "Celiac Disease: A Tail of Two HLA Alleles"
 
-event: Clinical Conference of Histocompatibility & Immunogenetics
-event_url: https://example.org
+event: Clinical Conference of Histocompatibility & Immunogenetics
 
 location: Washington University
 address:
@@ -12,7 +11,6 @@ address:
   postcode: '63110'
   country: United States
 
-summary: Celiac Disease: A Tail of Two HLA Alleles
 abstract: "Pathogenesis and the role of HLA genotyping in Celiac Disease"
 
 # Talk start and end times.
