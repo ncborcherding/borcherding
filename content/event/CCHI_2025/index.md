@@ -1,7 +1,7 @@
 ---
-title: Clinical Conference of Histocompatibility & Immunogenetics
+title: Celiac Disease: A Tail of Two HLA Alleles
 
-event: Washington University Department of Pathology and Immunology
+event: Clinical Conference of Histocompatibility & Immunogenetics
 event_url: https://example.org
 
 location: Washington University
@@ -28,7 +28,7 @@ authors: []
 tags: []
 
 # Is this a featured talk? (true/false)
-featured: TRUE
+featured: FALSE
 
 image:
   caption: 
