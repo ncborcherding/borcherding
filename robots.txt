@@ -1,0 +1,25 @@
+# Block AI data scrapers from training on website content.
+User-agent: GPTBot
+Disallow: /
+
+User-agent: Google-Extended
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: anthropic-ai
+Disallow: /
+
+User-agent: PerplexityBot
+Disallow: /
+
+User-agent: cohere-ai
+Disallow: /
+
+User-agent: Applebot-Extended
+Disallow: /
+
+# Allow all other user agents (including major search engines like Googlebot, Bingbot, etc.)
+User-agent: *
+Disallow:
