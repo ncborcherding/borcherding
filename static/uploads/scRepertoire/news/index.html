@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scRepertoire</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.5.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.5.7</span>
       </span>
     </div>
 
@@ -44,6 +44,7 @@
       <a href="../articles/Processing.html">Additional Processing</a>
     </li>
     <li class="divider">
+    <li class="dropdown-header">Repertoire Analysis</li>
     <li>
       <a href="../articles/Clonal_Visualizations.html">Basic Clonal Analysis</a>
     </li>
@@ -60,6 +61,7 @@
       <a href="../articles/Clonal_Cluster.html">Clustering Sequences by Edit Distance</a>
     </li>
     <li class="divider">
+    <li class="dropdown-header">Working with Single-Cell Objects</li>
     <li>
       <a href="../articles/Attaching_SC.html">Combining Clones and Single-Cell Objects</a>
     </li>
@@ -70,6 +72,7 @@
       <a href="../articles/Clonal_Bias.html">Quantifying Clonal Bias</a>
     </li>
     <li class="divider">
+    <li class="dropdown-header">Deep Learning Integrations</li>
     <li>
       <a href="../articles/immApex.html">Making Deep Learning Models with immApex</a>
     </li>
@@ -79,18 +82,22 @@
     <li>
       <a href="../articles/Ibex.html">Combining Deep Learning and BCRs with Ibex</a>
     </li>
+    <li class="divider">
+    <li class="dropdown-header">Other Workflow Integrations</li>
     <li>
       <a href="../articles/Running_Escape.html">Single-cell Gene Set Enrichment Analysis</a>
     </li>
-    <li class="divider">
     <li>
-      <a href="../articles/dandelionR.html">VDJ Trajectory Analysis with dandelionR</a>
+      <a href="../articles/immcantation.html">Combining Immcantation and scRepertoire</a>
+    </li>
+    <li>
+      <a href="../articles/tcrpheno.html">TCRpheno applied to T cell fate</a>
     </li>
     <li>
       <a href="../articles/immunarch.html">Using scRepertoire with immunarch</a>
     </li>
     <li>
-      <a href="../articles/tcrpheno.html">TCRpheno applied to T cell fate</a>
+      <a href="../articles/dandelionR.html">VDJ Trajectory Analysis with dandelionR</a>
     </li>
   </ul></li>
 <li>
@@ -122,13 +129,48 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="2.5.1" id="screpertoire-version-251">scRepertoire VERSION 2.5.1<a class="anchor" aria-label="anchor" href="#screpertoire-version-251"></a></h2>
+<h2 class="page-header" data-toc-text="2.5.7" id="screpertoire-version-257">scRepertoire VERSION 2.5.7<a class="anchor" aria-label="anchor" href="#screpertoire-version-257"></a></h2>
 <div class="section level3">
-<h3 id="underlying-changes-2-5-1">UNDERLYING CHANGES<a class="anchor" aria-label="anchor" href="#underlying-changes-2-5-1"></a></h3>
-<ul><li>Introduced pairwise calculations to <code><a href="../reference/StartracDiversity.html">StartracDiversity()</a></code>
+<h3 id="bug-fixes-2-5-7">BUG FIXES<a class="anchor" aria-label="anchor" href="#bug-fixes-2-5-7"></a></h3>
+<ul><li>Fixed chain handling for BCR genes in <code><a href="../reference/percentGeneUsage.html">percentGeneUsage()</a></code> and propagates to wrappers: <code>percentGenes</code>, <code>percentVJ</code> and <code>vizGenes</code>
+</li>
+<li>Fix <code><a href="../reference/percentKmer.html">percentKmer()</a></code> handling of motifs with “;”, now set to conditional removal</li>
+</ul></div>
+</div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="2.5.6" id="screpertoire-version-256">scRepertoire VERSION 2.5.6<a class="anchor" aria-label="anchor" href="#screpertoire-version-256"></a></h2>
+<div class="section level3">
+<h3 id="bug-fixes-2-5-6">BUG FIXES<a class="anchor" aria-label="anchor" href="#bug-fixes-2-5-6"></a></h3>
+<ul><li>Fixed passing group.by for <code><a href="../reference/combineBCR.html">combineBCR()</a></code>
 </li>
 </ul></div>
 </div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="2.5.5" id="screpertoire-version-255">scRepertoire VERSION 2.5.5<a class="anchor" aria-label="anchor" href="#screpertoire-version-255"></a></h2>
+<ul><li>Update unit tests for ggplot2 v4</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="2.5.3" id="screpertoire-version-253">scRepertoire VERSION 2.5.3<a class="anchor" aria-label="anchor" href="#screpertoire-version-253"></a></h2>
+<div class="section level3">
+<h3 id="bug-fixes-2-5-3">BUG FIXES<a class="anchor" aria-label="anchor" href="#bug-fixes-2-5-3"></a></h3>
+<ul><li>Fixed clonalProportion calculation to use grouping properly during <code><a href="../reference/combineExpression.html">combineExpression()</a></code>
+</li>
+<li>Fixed immunarch support for <code><a href="../reference/exportClones.html">exportClones()</a></code> - TRA/Light chain column handling</li>
+</ul></div>
+</div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="2.5.2" id="screpertoire-version-252">scRepertoire VERSION 2.5.2<a class="anchor" aria-label="anchor" href="#screpertoire-version-252"></a></h2>
+<ul><li>Added support for mouse genes in <code><a href="../reference/quietVDJgenes.html">quietBCRgenes()</a></code> and <code><a href="../reference/quietVDJgenes.html">quietTCRgenes()</a></code>
+</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="2.5.1" id="screpertoire-version-251">scRepertoire VERSION 2.5.1<a class="anchor" aria-label="anchor" href="#screpertoire-version-251"></a></h2>
+<ul><li>Introduced pairwise calculations to <code><a href="../reference/StartracDiversity.html">StartracDiversity()</a></code>
+</li>
+<li>Internal function conversion for <code><a href="../reference/clonalSizeDistribution.html">clonalSizeDistribution()</a></code> - remove cubature, truncdist and VGAM from dependencies.</li>
+<li>Increased speed of <code><a href="../reference/clonalSizeDistribution.html">clonalSizeDistribution()</a></code>
+</li>
+</ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="2.5.0" id="screpertoire-version-250">scRepertoire VERSION 2.5.0<a class="anchor" aria-label="anchor" href="#screpertoire-version-250"></a></h2>
 <div class="section level3">

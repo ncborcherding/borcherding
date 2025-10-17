@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scRepertoire</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.5.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.5.7</span>
       </span>
     </div>
 
@@ -102,12 +102,12 @@
     <li>
       <a href="../articles/Ibex.html">Combining Deep Learning and BCRs with Ibex</a>
     </li>
-    <li>
-      <a href="../articles/Running_Escape.html">Single-cell Gene Set Enrichment Analysis</a>
-    </li>
     <li class="divider">
     </li>
 <li class="dropdown-header">Other Workflow Integrations</li>
+    <li>
+      <a href="../articles/Running_Escape.html">Single-cell Gene Set Enrichment Analysis</a>
+    </li>
     <li>
       <a href="../articles/immcantation.html">Combining Immcantation and scRepertoire</a>
     </li>
@@ -155,7 +155,8 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Combining Deep Learning and BCRs with Ibex</h1>
             
-            <h4 data-toc-skip class="date">Compiled: July 31, 2025</h4>
+            <h4 data-toc-skip class="date">Compiled: October 17,
+2025</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/BorchLab/scRepertoire/blob/HEAD/vignettes/articles/Ibex.Rmd" class="external-link"><code>vignettes/articles/Ibex.Rmd</code></a></small>
       <div class="hidden name"><code>Ibex.Rmd</code></div>
@@ -184,13 +185,36 @@ approach to this combined approach using R.</p>
 <div class="section level3">
 <h3 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h3>
+<p>To run Ibex, open R and install Ibex from GitHub:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"BorchLab/Ibex"</span><span class="op">)</span></span></code></pre></div>
+<p>or via Bioconductor with</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://bioconductor.github.io/BiocManager/" class="external-link">"BiocManager"</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"BiocManager"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://bioconductor.github.io/BiocManager/reference/install.html" class="external-link">install</a></span><span class="op">(</span><span class="st">"Ibex"</span><span class="op">)</span></span></code></pre></div>
 </div>
+<div class="section level3">
+<h3 id="load-libraries">Load Libraries<a class="anchor" aria-label="anchor" href="#load-libraries"></a>
+</h3>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">suppressPackageStartupMessages</a></span><span class="op">(</span><span class="op">{</span></span>
+<span>  <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">bluster</span><span class="op">)</span></span>
+<span>  <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
+<span>  <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
+<span>  <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/BorchLab/Ibex/" class="external-link">Ibex</a></span><span class="op">)</span></span>
+<span>  <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://haozhu233.github.io/kableExtra/" class="external-link">kableExtra</a></span><span class="op">)</span></span>
+<span>  <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://bioconductor.org/packages/mumosa" class="external-link">mumosa</a></span><span class="op">)</span></span>
+<span>  <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://patchwork.data-imaginist.com" class="external-link">patchwork</a></span><span class="op">)</span></span>
+<span>  <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/dosorio/Peptides/" class="external-link">Peptides</a></span><span class="op">)</span></span>
+<span>  <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://bioconductor.org/packages/scater/" class="external-link">scater</a></span><span class="op">)</span></span>
+<span>  <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://sjmgarnier.github.io/viridis/" class="external-link">viridis</a></span><span class="op">)</span></span>
+<span><span class="op">}</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div class="section level2">
-<h2 id="the-data-set">The Data Set<a class="anchor" aria-label="anchor" href="#the-data-set"></a>
-</h2>
+<div class="section level3">
+<h3 id="the-data-set">The Data Set<a class="anchor" aria-label="anchor" href="#the-data-set"></a>
+</h3>
 <p>The data used here are derived from 10x Genomics’ 2k BEAM-Ab Mouse
 HEL data set, consisting of splenocytes from transgenic mice engineered
 to recognize Hen Egg Lysozyme (HEL). These splenocytes were labeled with
@@ -204,109 +228,20 @@ BCR contig annotations, and computed dimensional reductions—ready for
 downstream Ibex analyses. The object is saved
 (<code>ibex_example.rda</code>), along with the contig information
 (<code>ibex_vdj.rda</code>), ensuring that the integrated data set can
-be readily reloaded and explored in subsequent steps.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://www.borch.dev/uploads/scRepertoire/">scRepertoire</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://satijalab.org/seurat" class="external-link">Seurat</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://bioconductor.org/packages/SummarizedExperiment" class="external-link">SummarizedExperiment</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">SingleCellExperiment</span><span class="op">)</span></span>
-<span><span class="co">##################################</span></span>
-<span><span class="co">#scRNA/ADT loading and processing</span></span>
-<span><span class="co">#################################</span></span>
-<span></span>
-<span><span class="va">tmp</span> <span class="op">&lt;-</span>  <span class="fu"><a href="https://satijalab.org/seurat/reference/Read10X.html" class="external-link">Read10X</a></span><span class="op">(</span><span class="st">"~/data/filtered_feature_bc_matrix"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">SeuratObj</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.github.io/seurat-object/reference/CreateSeuratObject.html" class="external-link">CreateSeuratObject</a></span><span class="op">(</span>counts <span class="op">=</span> <span class="va">tmp</span><span class="op">$</span><span class="va">`Gene Expression`</span><span class="op">)</span></span>
-<span><span class="va">beam_assay</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.github.io/seurat-object/reference/CreateAssayObject.html" class="external-link">CreateAssayObject</a></span><span class="op">(</span>counts <span class="op">=</span> <span class="va">tmp</span><span class="op">$</span><span class="va">`Antigen Capture`</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">SeuratObj</span><span class="op">[[</span><span class="st">"BEAM"</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">beam_assay</span></span>
-<span><span class="va">SeuratObj</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">SeuratObj</span>, subset <span class="op">=</span> <span class="va">nFeature_RNA</span> <span class="op">&gt;</span> <span class="fl">100</span><span class="op">)</span> </span>
-<span><span class="va">SeuratObj</span>  <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.github.io/seurat-object/reference/RenameCells.html" class="external-link">RenameCells</a></span><span class="op">(</span>object <span class="op">=</span> <span class="va">SeuratObj</span> , new.names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"BEAM.sample_"</span>, <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">SeuratObj</span><span class="op">[[</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">SeuratObj</span><span class="op">[[</span><span class="st">"mito.genes"</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/PercentageFeatureSet.html" class="external-link">PercentageFeatureSet</a></span><span class="op">(</span><span class="va">SeuratObj</span>, pattern <span class="op">=</span> <span class="st">"^mt-"</span><span class="op">)</span></span>
-<span>    </span>
-<span><span class="co">#Filtering step</span></span>
-<span><span class="va">standev</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html" class="external-link">sd</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">SeuratObj</span><span class="op">$</span><span class="va">nFeature_RNA</span><span class="op">)</span><span class="op">)</span><span class="op">*</span><span class="fl">2.5</span> <span class="co">#cutting off above standard deviation of 2.5</span></span>
-<span><span class="va">mean</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">SeuratObj</span><span class="op">$</span><span class="va">nFeature_RNA</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">cut</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="va">standev</span><span class="op">+</span><span class="va">mean</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">SeuratObj</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">SeuratObj</span>, subset <span class="op">=</span> <span class="va">mito.genes</span> <span class="op">&lt;</span> <span class="fl">10</span> <span class="op">&amp;</span> <span class="va">nFeature_RNA</span> <span class="op">&lt;</span> <span class="va">cut</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co">#Processing and Adding Contig Info</span></span>
-<span><span class="va">contigs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="st">"~/data/2k_BEAM-Ab_Mouse_HEL_5pv2_2k_BEAM-Ab_Mouse_HEL_5pv2_vdj_b_filtered_contig_annotations.csv"</span><span class="op">)</span></span>
-<span><span class="va">clones</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/combineBCR.html">combineBCR</a></span><span class="op">(</span><span class="va">contigs</span>, samples <span class="op">=</span> <span class="st">"BEAM.sample"</span>, removeNA <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="va">SeuratObj</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/combineExpression.html">combineExpression</a></span><span class="op">(</span><span class="va">clones</span>, <span class="va">SeuratObj</span>, cloneCall<span class="op">=</span><span class="st">"aa"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co">#Subset only cells with BCR and Heavy Chain </span></span>
-<span><span class="va">cell.idx</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://generics.r-lib.org/reference/setops.html" class="external-link">intersect</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">SeuratObj</span><span class="op">$</span><span class="va">CTaa</span><span class="op">)</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_split.html" class="external-link">str_split</a></span><span class="op">(</span><span class="va">SeuratObj</span><span class="op">$</span><span class="va">CTaa</span>, <span class="st">"_"</span>, simplify <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">SeuratObj</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">SeuratObj</span>, cells <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">SeuratObj</span><span class="op">)</span><span class="op">[</span><span class="va">cell.idx</span><span class="op">]</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co">#Processing RNA</span></span>
-<span><span class="fu"><a href="https://satijalab.github.io/seurat-object/reference/DefaultAssay.html" class="external-link">DefaultAssay</a></span><span class="op">(</span><span class="va">SeuratObj</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">'RNA'</span></span>
-<span><span class="va">SeuratObj</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/NormalizeData.html" class="external-link">NormalizeData</a></span><span class="op">(</span><span class="va">SeuratObj</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>                <span class="fu"><a href="https://satijalab.org/seurat/reference/FindVariableFeatures.html" class="external-link">FindVariableFeatures</a></span><span class="op">(</span>verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>                <span class="fu"><a href="../reference/quietVDJgenes.html">quietBCRgenes</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>                <span class="fu"><a href="https://satijalab.org/seurat/reference/ScaleData.html" class="external-link">ScaleData</a></span><span class="op">(</span>verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>                <span class="fu"><a href="https://satijalab.org/seurat/reference/RunPCA.html" class="external-link">RunPCA</a></span><span class="op">(</span>verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co">#Removing negative control + B Cells</span></span>
-<span><span class="fu"><a href="https://satijalab.github.io/seurat-object/reference/DefaultAssay.html" class="external-link">DefaultAssay</a></span><span class="op">(</span><span class="va">SeuratObj</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">'BEAM'</span></span>
-<span><span class="va">SeuratObj</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">SeuratObj</span>, subset <span class="op">=</span> <span class="va">`negative-control`</span> <span class="op">&lt;</span> <span class="fl">100</span>, slot <span class="op">=</span> <span class="st">"counts"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co">#Processing BEAM</span></span>
-<span><span class="fu"><a href="https://satijalab.github.io/seurat-object/reference/VariableFeatures.html" class="external-link">VariableFeatures</a></span><span class="op">(</span><span class="va">SeuratObj</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">SeuratObj</span><span class="op">[[</span><span class="st">"BEAM"</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
-<span><span class="va">SeuratObj</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/NormalizeData.html" class="external-link">NormalizeData</a></span><span class="op">(</span><span class="va">SeuratObj</span>, </span>
-<span>                           normalization.method <span class="op">=</span> <span class="st">'CLR'</span>,</span>
-<span>                           margin <span class="op">=</span> <span class="fl">2</span>, <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>                <span class="fu"><a href="https://satijalab.org/seurat/reference/ScaleData.html" class="external-link">ScaleData</a></span><span class="op">(</span>verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>                <span class="fu"><a href="https://satijalab.org/seurat/reference/RunPCA.html" class="external-link">RunPCA</a></span><span class="op">(</span>verbose <span class="op">=</span> <span class="cn">FALSE</span>, reduction.name <span class="op">=</span> <span class="st">'apca'</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://satijalab.github.io/seurat-object/reference/DefaultAssay.html" class="external-link">DefaultAssay</a></span><span class="op">(</span><span class="va">SeuratObj</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">'RNA'</span> </span>
-<span><span class="co">###################################</span></span>
-<span><span class="co">#Making Example Data Set for Ibex</span></span>
-<span><span class="co">#################################</span></span>
-<span></span>
-<span><span class="co"># Subset nondominate clones + random sampling of dominant</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span></span>
-<span><span class="va">cell.idx</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grepl</a></span><span class="op">(</span><span class="st">"CANWDGDYW"</span>, <span class="va">SeuratObj</span><span class="op">$</span><span class="va">CTaa</span><span class="op">)</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">SeuratObj</span><span class="op">[[</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">)</span>, <span class="fl">154</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">ibex_example</span> <span class="op">&lt;-</span> <span class="va">SeuratObj</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">saveRDS</a></span><span class="op">(</span><span class="va">ibex_example</span>, file <span class="op">=</span> <span class="st">"Ibex_FullExample.rds"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Forming Example Data set in SCE format</span></span>
-<span><span class="va">ibex_example</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">ibex_example</span>, cells <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">ibex_example</span><span class="op">)</span><span class="op">[</span><span class="va">cell.idx</span><span class="op">]</span><span class="op">)</span></span>
-<span><span class="va">PCA</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.github.io/seurat-object/reference/Embeddings.html" class="external-link">Embeddings</a></span><span class="op">(</span><span class="va">ibex_example</span><span class="op">[[</span><span class="st">"pca"</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
-<span><span class="va">APCA</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.github.io/seurat-object/reference/Embeddings.html" class="external-link">Embeddings</a></span><span class="op">(</span><span class="va">ibex_example</span><span class="op">[[</span><span class="st">"apca"</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
-<span><span class="va">BEAM_counts</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.github.io/seurat-object/reference/AssayData.html" class="external-link">GetAssayData</a></span><span class="op">(</span><span class="va">ibex_example</span>, slot <span class="op">=</span> <span class="st">"counts"</span>, assay <span class="op">=</span> <span class="st">"BEAM"</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span>,<span class="op">]</span></span>
-<span><span class="va">BEAM_data</span>   <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.github.io/seurat-object/reference/AssayData.html" class="external-link">GetAssayData</a></span><span class="op">(</span><span class="va">ibex_example</span>, slot <span class="op">=</span> <span class="st">"data"</span>,   assay <span class="op">=</span> <span class="st">"BEAM"</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span>,<span class="op">]</span></span>
-<span><span class="va">ibex_example</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/as.SingleCellExperiment.html" class="external-link">as.SingleCellExperiment</a></span><span class="op">(</span><span class="va">ibex_example</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/SingleCellExperiment/man/altExps.html" class="external-link">altExp</a></span><span class="op">(</span><span class="va">ibex_example</span>, <span class="st">"BEAM"</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">SummarizedExperiment</a></span><span class="op">(</span></span>
-<span>  assays <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span>    counts <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">BEAM_counts</span><span class="op">)</span>,</span>
-<span>    logcounts <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">BEAM_data</span><span class="op">)</span> </span>
-<span>  <span class="op">)</span>,</span>
-<span>  colData <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">colData</a></span><span class="op">(</span><span class="va">ibex_example</span><span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/SingleCellExperiment/man/reducedDims.html" class="external-link">reducedDim</a></span><span class="op">(</span><span class="va">ibex_example</span>, <span class="st">"pca"</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">PCA</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/SingleCellExperiment/man/reducedDims.html" class="external-link">reducedDim</a></span><span class="op">(</span><span class="va">ibex_example</span>, <span class="st">"apca"</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">APCA</span></span>
-<span></span>
-<span><span class="co">#Saving the built-in data set</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/save.html" class="external-link">save</a></span><span class="op">(</span><span class="va">ibex_example</span>, file <span class="op">=</span> <span class="st">"ibex_example.rda"</span>, compress <span class="op">=</span> <span class="st">"xz"</span><span class="op">)</span></span>
-<span><span class="va">ibex_vdj</span> <span class="op">&lt;-</span> <span class="va">contigs</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/save.html" class="external-link">save</a></span><span class="op">(</span><span class="va">ibex_vdj</span>, file <span class="op">=</span> <span class="st">"ibex_vdj.rda"</span>, compress <span class="op">=</span> <span class="st">"xz"</span><span class="op">)</span></span></code></pre></div>
+be readily reloaded and explored in subsequent steps. More information
+on the processing steps are available in the <code>inst/scripts</code>
+directory of the package.</p>
 <div class="section level4">
-<h4 id="loading-the-data-object">Loading the Data Object<a class="anchor" aria-label="anchor" href="#loading-the-data-object"></a>
+<h4 id="loading-the-processed-data">Loading the processed data<a class="anchor" aria-label="anchor" href="#loading-the-processed-data"></a>
 </h4>
 <p>For the purpose of the vignette, will use the built-in data set
 <code>ibex_example</code>, but will convert it into a Seurat object.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"ibex_example"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">SeuratObj</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.github.io/seurat-object/reference/as.Seurat.html" class="external-link">as.Seurat</a></span><span class="op">(</span><span class="va">ibex_example</span><span class="op">)</span></span></code></pre></div>
+</div>
 </div>
 <div class="section level3">
 <h3 id="getting-expanded-sequences">Getting Expanded Sequences<a class="anchor" aria-label="anchor" href="#getting-expanded-sequences"></a>
 </h3>
-<p>The function <code>combineExpandedBCR()</code> extends the
+<p>The function <code><a href="https://rdrr.io/pkg/Ibex/man/combineExpandedBCR.html" class="external-link">combineExpandedBCR()</a></code> extends the
 functionality of <code><a href="../reference/combineBCR.html">combineBCR()</a></code> from the scRepertoire package
 by first concatenating the CDR1, CDR2, and CDR3 sequences into a single
 expanded variable. This approach retains additional information from the
@@ -317,7 +252,7 @@ expanded sequence models which we will detail below.</p>
 <h4 id="function-parameters">
 <strong>Function Parameters</strong><a class="anchor" aria-label="anchor" href="#function-parameters"></a>
 </h4>
-<p>The <code>combineExpandedBCR()</code> function supports the following
+<p>The <code><a href="https://rdrr.io/pkg/Ibex/man/combineExpandedBCR.html" class="external-link">combineExpandedBCR()</a></code> function supports the following
 parameters:</p>
 <table class="table">
 <colgroup>
@@ -380,7 +315,8 @@ genes.</td>
 </tbody>
 </table>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">combined.BCR</span> <span class="op">&lt;-</span> <span class="fu">combineExpandedBCR</span><span class="op">(</span>input.data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">ibex_vdj</span><span class="op">)</span>,</span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"ibex_vdj"</span><span class="op">)</span></span>
+<span><span class="va">combined.BCR</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/Ibex/man/combineExpandedBCR.html" class="external-link">combineExpandedBCR</a></span><span class="op">(</span>input.data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">ibex_vdj</span><span class="op">)</span>,</span>
 <span>                                   samples <span class="op">=</span> <span class="st">"Sample1"</span>,</span>
 <span>                                   filterNonproductive <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">combined.BCR</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">11</span><span class="op">)</span><span class="op">]</span></span></code></pre></div>
@@ -406,7 +342,7 @@ function.</p>
 <div class="section level3">
 <h3 id="available-models">Available Models<a class="anchor" aria-label="anchor" href="#available-models"></a>
 </h3>
-<p><code>Ibex</code> offers a diverse set of models built on various
+<p><strong>Ibex</strong> offers a diverse set of models built on various
 architectures and encoding methods. Currently, models are available for
 both heavy and light chain sequences in humans, as well as heavy chain
 models for mice. Models for CDR3-based sequences have been trained on
@@ -415,11 +351,11 @@ sequences are specific to sequences of 90 amino acids or fewer.</p>
 <p>A full list of available models is provided below:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">model.meta.data</span> <span class="op">&lt;-</span>  <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"metadata.csv"</span>, </span>
-<span>                                               package <span class="op">=</span> <span class="st">"Ibex"</span><span class="op">)</span><span class="op">)</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span>,<span class="fl">8</span><span class="op">)</span><span class="op">]</span></span>
+<span>                                         package <span class="op">=</span> <span class="st">"Ibex"</span><span class="op">)</span><span class="op">)</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span>,<span class="fl">8</span><span class="op">)</span><span class="op">]</span></span>
 <span><span class="va">model.meta.data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu">kable</span><span class="op">(</span><span class="st">"html"</span>, escape <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu">kable_styling</span><span class="op">(</span>full_width <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu">scroll_box</span><span class="op">(</span>width <span class="op">=</span> <span class="st">"100%"</span>, height <span class="op">=</span> <span class="st">"400px"</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="st">"html"</span>, escape <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/kable_styling.html" class="external-link">kable_styling</a></span><span class="op">(</span>full_width <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/scroll_box.html" class="external-link">scroll_box</a></span><span class="op">(</span>width <span class="op">=</span> <span class="st">"100%"</span>, height <span class="op">=</span> <span class="st">"400px"</span><span class="op">)</span></span></code></pre></div>
 <div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:400px; overflow-x: scroll; width:100%; ">
 <table class="table table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead><tr>
@@ -1301,10 +1237,10 @@ Mus musculus
 </tbody>
 </table>
 </div>
-<p>ll the models are available via a <a href="https://zenodo.org/records/14919286" class="external-link">Zenodo repository</a>, which
+<p>All the models are available via a <a href="https://zenodo.org/records/14919286" class="external-link">Zenodo repository</a>, which
 Ibex will pull automatically and cache for future use locally. There is
-no need to download the models independent of the <code>runIbex()</code>
-or <code>ibex.matrix()</code> calls.</p>
+no need to download the models independent of the <code><a href="https://rdrr.io/pkg/Ibex/man/runIbex.html" class="external-link">runIbex()</a></code>
+or <code><a href="https://rdrr.io/pkg/Ibex/man/Ibex_matrix.html" class="external-link">Ibex_matrix()</a></code> calls.</p>
 <div class="section level4">
 <h4 id="choosing-between-cnn-and-vae">Choosing Between CNN and VAE<a class="anchor" aria-label="anchor" href="#choosing-between-cnn-and-vae"></a>
 </h4>
@@ -1408,20 +1344,27 @@ and tool support a challenge.</li>
 <div class="section level2">
 <h2 id="running-ibex">Running Ibex<a class="anchor" aria-label="anchor" href="#running-ibex"></a>
 </h2>
-<div class="section level4">
-<h4 id="ibex-matrix-function">Ibex.matrix Function<a class="anchor" aria-label="anchor" href="#ibex-matrix-function"></a>
-</h4>
+<p>The idea behind <strong>Ibex</strong> is to combine BCR CDR3 amino
+acid information with phenotypic RNA/protein data to direct the use of
+single-cell sequencing towards antigen-specific discoveries. This is a
+growing field - specifically <a href="https://github.com/jcao89757/TESSA" class="external-link">TESSA</a> uses amino acid
+characteristics and autoencoder as a means to get a dimensional
+reduction. Another option is <a href="https://github.com/phbradley/conga" class="external-link">CoNGA</a>, which produces an
+embedding using BCR and RNA. <strong>Ibex</strong> was designed to make
+a customizable approach to this combined approach using R.</p>
+<div class="section level3">
+<h3 id="ibex_matrix-function">Ibex_matrix Function<a class="anchor" aria-label="anchor" href="#ibex_matrix-function"></a>
+</h3>
 <p><strong>Ibex</strong> includes two primary functions:
-<code>Ibex.matrix()</code> and <code>runIbex()</code>. The
-<code>Ibex.matrix()</code> function serves as the backbone of the
+<code><a href="https://rdrr.io/pkg/Ibex/man/Ibex_matrix.html" class="external-link">Ibex_matrix()</a></code> and <code><a href="https://rdrr.io/pkg/Ibex/man/runIbex.html" class="external-link">runIbex()</a></code>. The
+<code><a href="https://rdrr.io/pkg/Ibex/man/Ibex_matrix.html" class="external-link">Ibex_matrix()</a></code> function serves as the backbone of the
 algorithm, returning encoded values based on user-selected parameters.
-In contrast to <code>runIbex()</code>, which filters input to include
-only B cells with attached BCR data, <code>Ibex.matrix()</code> operates
+In contrast to <code><a href="https://rdrr.io/pkg/Ibex/man/runIbex.html" class="external-link">runIbex()</a></code>, which filters input to include
+only B cells with attached BCR data, <code><a href="https://rdrr.io/pkg/Ibex/man/Ibex_matrix.html" class="external-link">Ibex_matrix()</a></code> operates
 on all provided data. Additionally, it is compatible with the list
 output from the <code><a href="../reference/combineBCR.html">combineBCR()</a></code> function (from the <a href="https://github.com/BorchLab/scRepertoire" class="external-link">scRepertoire</a>
-package), whereas <code>runIbex()</code> is designed for use with a
+package), whereas <code><a href="https://rdrr.io/pkg/Ibex/man/runIbex.html" class="external-link">runIbex()</a></code> is designed for use with a
 single-cell object.</p>
-</div>
 <div class="section level4">
 <h4 id="parameters">Parameters<a class="anchor" aria-label="anchor" href="#parameters"></a>
 </h4>
@@ -1496,21 +1439,21 @@ For the geometric transformation, defines the value of theta (default is
 π/3).</li>
 </ul>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">Ibex_vectors</span> <span class="op">&lt;-</span> <span class="fu">Ibex.matrix</span><span class="op">(</span><span class="va">SeuratObj</span>, </span>
+<code class="sourceCode R"><span><span class="va">Ibex_vectors</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/Ibex/man/Ibex_matrix.html" class="external-link">Ibex_matrix</a></span><span class="op">(</span><span class="va">ibex_example</span>, </span>
 <span>                            chain <span class="op">=</span> <span class="st">"Heavy"</span>,</span>
 <span>                            method <span class="op">=</span> <span class="st">"encoder"</span>,</span>
 <span>                            encoder.model <span class="op">=</span> <span class="st">"VAE"</span>, </span>
 <span>                            encoder.input <span class="op">=</span> <span class="st">"OHE"</span>, </span>
 <span>                            species <span class="op">=</span> <span class="st">"Mouse"</span>,</span>
 <span>                            verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## <span style="font-weight: bold;">1/7</span> <span style="color: #00BB00;">━━</span><span style="color: #BBBBBB;">━━━━━━━━━━━━━━━━━━</span> <span style="font-weight: bold;">0s</span> 22ms/step<span style="font-weight: bold;">7/7</span> <span style="color: #00BB00;">━━━━━━━━━━━━━━━━━━━━</span> <span style="font-weight: bold;">0s</span> 3ms/step</span></span></code></pre>
+<pre><code><span><span class="co">## <span style="font-weight: bold;">1/7</span> <span style="color: #00BB00;">━━</span><span style="color: #BBBBBB;">━━━━━━━━━━━━━━━━━━</span> <span style="font-weight: bold;">0s</span> 31ms/step<span style="font-weight: bold;">2/7</span> <span style="color: #00BB00;">━━━━━</span><span style="color: #BBBBBB;">━━━━━━━━━━━━━━━</span> <span style="font-weight: bold;">0s</span> 2ms/step<span style="font-weight: bold;">7/7</span> <span style="color: #00BB00;">━━━━━━━━━━━━━━━━━━━━</span> <span style="font-weight: bold;">0s</span> 5ms/step</span></span></code></pre>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">Ibex_vectors</span><span class="op">)</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Ibex_1</span>, <span class="va">Ibex_2</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"grey"</span>, alpha <span class="op">=</span> <span class="fl">0.7</span>, size <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_classic</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Ibex_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
+<p><img src="Ibex_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">Ibex_vectors2</span> <span class="op">&lt;-</span> <span class="fu">Ibex.matrix</span><span class="op">(</span><span class="va">SeuratObj</span>, </span>
+<code class="sourceCode R"><span><span class="va">Ibex_vectors2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/Ibex/man/Ibex_matrix.html" class="external-link">Ibex_matrix</a></span><span class="op">(</span><span class="va">ibex_example</span>, </span>
 <span>                             chain <span class="op">=</span> <span class="st">"Heavy"</span>,</span>
 <span>                             method <span class="op">=</span> <span class="st">"geometric"</span>,</span>
 <span>                             geometric.theta <span class="op">=</span> <span class="va">pi</span>, </span>
@@ -1519,107 +1462,87 @@ For the geometric transformation, defines the value of theta (default is
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">Ibex_vectors2</span><span class="op">)</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Ibex_1</span>, y <span class="op">=</span> <span class="va">Ibex_2</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"grey"</span>, alpha <span class="op">=</span> <span class="fl">0.7</span>, size <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_classic</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Ibex_files/figure-html/unnamed-chunk-6-2.png" width="700"></p>
+<p><img src="Ibex_files/figure-html/unnamed-chunk-7-2.png" width="700"></p>
+</div>
 </div>
 <div class="section level3">
 <h3 id="runibex">runIbex<a class="anchor" aria-label="anchor" href="#runibex"></a>
 </h3>
-<p>Additionally, <code>runIbex()</code> can be used to append the Seurat
+<p>Additionally, <code><a href="https://rdrr.io/pkg/Ibex/man/runIbex.html" class="external-link">runIbex()</a></code> can be used to append the Seurat
 or Single-cell Experiment object with the Ibex vectors and allow for
-further analysis. Importantly, <code>runIbex()</code> will remove single
+further analysis. Importantly, <code><a href="https://rdrr.io/pkg/Ibex/man/runIbex.html" class="external-link">runIbex()</a></code> will remove single
 cells that do not have recovered BCR data in the metadata of the
 object.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">SeuratObj</span> <span class="op">&lt;-</span> <span class="fu">runIbex</span><span class="op">(</span><span class="va">SeuratObj</span>, </span>
-<span>                     chain <span class="op">=</span> <span class="st">"Heavy"</span>,</span>
-<span>                     encoder.input <span class="op">=</span> <span class="st">"kideraFactors"</span>, </span>
-<span>                     reduction.name <span class="op">=</span> <span class="st">"Ibex.KF"</span>, </span>
-<span>                     species <span class="op">=</span> <span class="st">"Mouse"</span>,</span>
-<span>                     verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## <span style="font-weight: bold;">1/7</span> <span style="color: #00BB00;">━━</span><span style="color: #BBBBBB;">━━━━━━━━━━━━━━━━━━</span> <span style="font-weight: bold;">0s</span> 25ms/step<span style="font-weight: bold;">7/7</span> <span style="color: #00BB00;">━━━━━━━━━━━━━━━━━━━━</span> <span style="font-weight: bold;">0s</span> 3ms/step</span></span></code></pre>
+<code class="sourceCode R"><span><span class="va">ibex_example</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/Ibex/man/runIbex.html" class="external-link">runIbex</a></span><span class="op">(</span><span class="va">ibex_example</span>, </span>
+<span>                        chain <span class="op">=</span> <span class="st">"Heavy"</span>,</span>
+<span>                        encoder.input <span class="op">=</span> <span class="st">"kideraFactors"</span>, </span>
+<span>                        reduction.name <span class="op">=</span> <span class="st">"Ibex.KF"</span>, </span>
+<span>                        species <span class="op">=</span> <span class="st">"Mouse"</span>,</span>
+<span>                        verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## <span style="font-weight: bold;">1/7</span> <span style="color: #00BB00;">━━</span><span style="color: #BBBBBB;">━━━━━━━━━━━━━━━━━━</span> <span style="font-weight: bold;">0s</span> 25ms/step<span style="font-weight: bold;">7/7</span> <span style="color: #00BB00;">━━━━━━━━━━━━━━━━━━━━</span> <span style="font-weight: bold;">0s</span> 5ms/step</span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="using-ibex-vectors">Using Ibex Vectors<a class="anchor" aria-label="anchor" href="#using-ibex-vectors"></a>
 </h3>
-<p>After <code>runIbex()</code> we have the encoded values stored under
+<p>After <code><a href="https://rdrr.io/pkg/Ibex/man/runIbex.html" class="external-link">runIbex()</a></code> we have the encoded values stored under
 <strong>“Ibex…”</strong>. Using the Ibex dimensions, we can calculate a
 UMAP based solely on the embedded heavy chain values. Here we will
 visualize both the Heavy/Light Chain amino acid sequence (via
 <strong>CTaa</strong>) and normalized counts associated with the
 <strong>Anti-Hen-Egg-Lysozyme</strong> antigen.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">#Generating UMAP from ibex Neighbors</span></span>
-<span><span class="va">SeuratObj</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/RunUMAP.html" class="external-link">RunUMAP</a></span><span class="op">(</span><span class="va">SeuratObj</span>, </span>
-<span>                     reduction <span class="op">=</span> <span class="st">"Ibex.KF"</span>,</span>
-<span>                     dims <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">128</span>,</span>
-<span>                     reduction.name <span class="op">=</span> <span class="st">'ibexUMAP'</span>, </span>
-<span>                     reduction.key <span class="op">=</span> <span class="st">'ibexUMAP_'</span>, </span>
-<span>                     verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
+<span><span class="co">#Generating UMAP from Ibex Neighbors</span></span>
+<span><span class="va">ibex_example</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/scater/man/runUMAP.html" class="external-link">runUMAP</a></span><span class="op">(</span><span class="va">ibex_example</span>, </span>
+<span>                        dimred <span class="op">=</span> <span class="st">"Ibex.KF"</span>,</span>
+<span>                        name <span class="op">=</span> <span class="st">"ibexUMAP"</span><span class="op">)</span></span>
+<span><span class="co">#Ibex UMAP</span></span>
+<span><span class="va">plot1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/scater/man/plot_reddim.html" class="external-link">plotUMAP</a></span><span class="op">(</span><span class="va">ibex_example</span>, color_by <span class="op">=</span><span class="st">"Anti-Hen-Egg-Lysozyme"</span>, dimred <span class="op">=</span> <span class="st">"ibexUMAP"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>            <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"bottom"</span><span class="op">)</span></span>
+<span><span class="va">plot2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/scater/man/plot_reddim.html" class="external-link">plotUMAP</a></span><span class="op">(</span><span class="va">ibex_example</span>, color_by <span class="op">=</span> <span class="st">"CTaa"</span>, dimred <span class="op">=</span> <span class="st">"ibexUMAP"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://sjmgarnier.github.io/viridis/reference/scale_viridis.html" class="external-link">scale_color_viridis</a></span><span class="op">(</span>discrete <span class="op">=</span> <span class="cn">TRUE</span>, option <span class="op">=</span> <span class="st">"B"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html" class="external-link">guides</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co">#ibex UMAP</span></span>
-<span><span class="va">plot1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/DimPlot.html" class="external-link">DimPlot</a></span><span class="op">(</span><span class="va">SeuratObj</span>, </span>
-<span>                 reduction <span class="op">=</span> <span class="st">"ibexUMAP"</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>            <span class="fu"><a href="https://satijalab.org/seurat/reference/SeuratTheme.html" class="external-link">NoLegend</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="va">plot2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/DimPlot.html" class="external-link">DimPlot</a></span><span class="op">(</span><span class="va">SeuratObj</span>, </span>
-<span>                 group.by <span class="op">=</span> <span class="st">"CTaa"</span>, </span>
-<span>                 reduction <span class="op">=</span> <span class="st">"ibexUMAP"</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>              <span class="fu">scale_color_viridis</span><span class="op">(</span>discrete <span class="op">=</span> <span class="cn">TRUE</span>, option <span class="op">=</span> <span class="st">"B"</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>              <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>              <span class="fu"><a href="https://satijalab.org/seurat/reference/SeuratTheme.html" class="external-link">NoLegend</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="va">plot3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/FeaturePlot.html" class="external-link">FeaturePlot</a></span><span class="op">(</span><span class="va">SeuratObj</span>, </span>
-<span>                     reduction <span class="op">=</span> <span class="st">"ibexUMAP"</span>, </span>
-<span>                     features <span class="op">=</span> <span class="st">"Anti-Hen-Egg-Lysozyme"</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>            <span class="fu">scale_color_viridis</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>            <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>            <span class="fu"><a href="https://satijalab.org/seurat/reference/SeuratTheme.html" class="external-link">NoLegend</a></span><span class="op">(</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">plot1</span> <span class="op">+</span> <span class="va">plot2</span> <span class="op">+</span> <span class="va">plot3</span></span></code></pre></div>
-<p><img src="Ibex_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
-<p>We now can use this in a similar way as other single-cell modalities
-and calculate weighted nearest neighbor (WNN). To check out more on WNN,
-please read the Satija’s group <a href="https://pubmed.ncbi.nlm.nih.gov/34062119/" class="external-link">paper</a>. We will use
-the RNA, ADT protein levels, and ibex vectors for the WNN
-calculations.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">SeuratObj</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/FindMultiModalNeighbors.html" class="external-link">FindMultiModalNeighbors</a></span><span class="op">(</span></span>
-<span>                    <span class="va">SeuratObj</span>, </span>
-<span>                    reduction.list <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"pca"</span>, <span class="st">"apca"</span>, <span class="st">"Ibex.KF"</span><span class="op">)</span>, </span>
-<span>                    dims.list <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">30</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">4</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">128</span><span class="op">)</span>, </span>
-<span>                    modality.weight.name <span class="op">=</span> <span class="st">"RNA.weight"</span>, </span>
-<span>                    verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="va">SeuratObj</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/RunUMAP.html" class="external-link">RunUMAP</a></span><span class="op">(</span><span class="va">SeuratObj</span>, </span>
-<span>                     nn.name <span class="op">=</span> <span class="st">"weighted.nn"</span>, </span>
-<span>                     reduction.name <span class="op">=</span> <span class="st">"wnnUMAP"</span>, </span>
-<span>                     reduction.key <span class="op">=</span> <span class="st">"wnnUMAP_"</span>, </span>
-<span>                     verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="va">SeuratObj</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/FindClusters.html" class="external-link">FindClusters</a></span><span class="op">(</span><span class="va">SeuratObj</span>, </span>
-<span>                          graph.name <span class="op">=</span> <span class="st">"wsnn"</span>, </span>
-<span>                          resolution <span class="op">=</span> <span class="fl">0.6</span>,</span>
-<span>                          algorithm <span class="op">=</span> <span class="fl">3</span>, </span>
-<span>                          verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co">#WNN UMAP</span></span>
-<span><span class="va">plot4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/DimPlot.html" class="external-link">DimPlot</a></span><span class="op">(</span><span class="va">SeuratObj</span>, </span>
-<span>                 label <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>                 reduction <span class="op">=</span> <span class="st">"wnnUMAP"</span>, </span>
-<span>                 group.by <span class="op">=</span> <span class="st">"seurat_clusters"</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>           <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>           <span class="fu"><a href="https://satijalab.org/seurat/reference/SeuratTheme.html" class="external-link">NoLegend</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="va">plot5</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/DimPlot.html" class="external-link">DimPlot</a></span><span class="op">(</span><span class="va">SeuratObj</span>, </span>
-<span>                 reduction <span class="op">=</span> <span class="st">"wnnUMAP"</span>, </span>
-<span>                 group.by <span class="op">=</span> <span class="st">"CTaa"</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>            <span class="fu">scale_color_viridis</span><span class="op">(</span>discrete <span class="op">=</span> <span class="cn">TRUE</span>, option <span class="op">=</span> <span class="st">"B"</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>            <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>            <span class="fu"><a href="https://satijalab.org/seurat/reference/SeuratTheme.html" class="external-link">NoLegend</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="va">plot6</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/FeaturePlot.html" class="external-link">FeaturePlot</a></span><span class="op">(</span><span class="va">SeuratObj</span>, </span>
-<span>                     reduction <span class="op">=</span> <span class="st">"wnnUMAP"</span>, </span>
-<span>                     features <span class="op">=</span> <span class="st">"Anti-Hen-Egg-Lysozyme"</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>            <span class="fu">scale_color_viridis</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>            <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>            <span class="fu"><a href="https://satijalab.org/seurat/reference/SeuratTheme.html" class="external-link">NoLegend</a></span><span class="op">(</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">plot4</span> <span class="op">+</span> <span class="va">plot5</span> <span class="op">+</span> <span class="va">plot6</span></span></code></pre></div>
+<span><span class="va">plot1</span> <span class="op">+</span> <span class="va">plot2</span></span></code></pre></div>
 <p><img src="Ibex_files/figure-html/unnamed-chunk-9-1.png" width="700"></p>
+<p>In this workflow, we can combine these three dimension reductions
+into a single, integrated UMAP embedding using the
+<code><a href="https://rdrr.io/pkg/mumosa/man/runMultiUMAP.html" class="external-link">runMultiUMAP()</a></code> function with a cosine metric. To further
+refine this integration, we apply <code><a href="https://rdrr.io/pkg/mumosa/man/rescaleByNeighbors.html" class="external-link">rescaleByNeighbors()</a></code> to
+align the nearest neighbors across modalities, followed by clustering
+with <code><a href="https://rdrr.io/pkg/bluster/man/clusterRows.html" class="external-link">clusterRows()</a></code>, resulting in a “combined.clustering”
+that reflects all data types. Finally, we visualize this joint embedding
+as “MultiUMAP,” coloring points by expression of a specific protein
+marker (e.g., Anti-Hen-Egg-Lysozyme), the integrated cluster
+assignments, or other relevant annotations. The result is a holistic
+representation of cellular diversity that leverages shared and unique
+signals from RNA, protein, and Ibex IGH latent features.</p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#Multimodal UMAP</span></span>
+<span><span class="va">ibex_example</span> <span class="op">&lt;-</span> <span class="fu">mumosa</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/mumosa/man/runMultiUMAP.html" class="external-link">runMultiUMAP</a></span><span class="op">(</span><span class="va">ibex_example</span>, </span>
+<span>                                     dimreds<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"pca"</span>, <span class="st">"apca"</span>, <span class="st">"Ibex.KF"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#Multimodal Clustering</span></span>
+<span><span class="va">output</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/mumosa/man/rescaleByNeighbors.html" class="external-link">rescaleByNeighbors</a></span><span class="op">(</span><span class="va">ibex_example</span>, </span>
+<span>                             dimreds<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"pca"</span>, <span class="st">"apca"</span>, <span class="st">"Ibex.KF"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">ibex_example</span><span class="op">$</span><span class="va">combined.clustering</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/bluster/man/clusterRows.html" class="external-link">clusterRows</a></span><span class="op">(</span><span class="va">output</span>, <span class="fu"><a href="https://rdrr.io/pkg/bluster/man/NNGraphParam-class.html" class="external-link">NNGraphParam</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">plot3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/scater/man/plot_reddim.html" class="external-link">plotUMAP</a></span><span class="op">(</span><span class="va">ibex_example</span>, </span>
+<span>                  dimred <span class="op">=</span> <span class="st">"MultiUMAP"</span>, </span>
+<span>                  color_by <span class="op">=</span> <span class="st">"Anti-Hen-Egg-Lysozyme"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>            <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"bottom"</span><span class="op">)</span></span>
+<span><span class="va">plot4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/scater/man/plot_reddim.html" class="external-link">plotUMAP</a></span><span class="op">(</span><span class="va">ibex_example</span>, </span>
+<span>                  dimred <span class="op">=</span> <span class="st">"MultiUMAP"</span>, </span>
+<span>                  color_by <span class="op">=</span> <span class="st">"combined.clustering"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>            <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"bottom"</span><span class="op">)</span></span>
+<span><span class="va">plot5</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/scater/man/plot_reddim.html" class="external-link">plotUMAP</a></span><span class="op">(</span><span class="va">ibex_example</span>, </span>
+<span>                  dimred <span class="op">=</span> <span class="st">"MultiUMAP"</span>, </span>
+<span>                  color_by <span class="op">=</span> <span class="st">"CTaa"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_color_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="https://sjmgarnier.github.io/viridis/reference/viridis_pal.html" class="external-link">viridis_pal</a></span><span class="op">(</span>option <span class="op">=</span> <span class="st">"B"</span><span class="op">)</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">ibex_example</span><span class="op">$</span><span class="va">CTaa</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html" class="external-link">guides</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">plot3</span> <span class="op">+</span> <span class="va">plot4</span> <span class="op">+</span> <span class="va">plot5</span></span></code></pre></div>
+<p><img src="Ibex_files/figure-html/unnamed-chunk-10-1.png" width="700"></p>
 </div>
 <div class="section level3">
 <h3 id="comparing-the-outcome-to-just-one-modality">Comparing the outcome to just one modality<a class="anchor" aria-label="anchor" href="#comparing-the-outcome-to-just-one-modality"></a>
@@ -1629,40 +1552,27 @@ ADT, or Ibex as individual components. Remember, the clusters that we
 are displaying in UMAP are based on clusters defined by the weighted
 nearest neighbors calculated above.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">SeuratObj</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/RunUMAP.html" class="external-link">RunUMAP</a></span><span class="op">(</span><span class="va">SeuratObj</span>, </span>
-<span>                     reduction <span class="op">=</span> <span class="st">'pca'</span>, </span>
-<span>                     dims <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">30</span>, </span>
-<span>                     assay <span class="op">=</span> <span class="st">'RNA'</span>, </span>
-<span>                     reduction.name <span class="op">=</span> <span class="st">'rnaUMAP'</span>, </span>
-<span>                     reduction.key <span class="op">=</span> <span class="st">'rnaUMAP_'</span>, </span>
-<span>                     verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">ibex_example</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/scater/man/runUMAP.html" class="external-link">runUMAP</a></span><span class="op">(</span><span class="va">ibex_example</span>, </span>
+<span>                        dimred <span class="op">=</span> <span class="st">'pca'</span>, </span>
+<span>                        name <span class="op">=</span> <span class="st">"pcaUMAP"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">SeuratObj</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/RunUMAP.html" class="external-link">RunUMAP</a></span><span class="op">(</span><span class="va">SeuratObj</span>, </span>
-<span>                     reduction <span class="op">=</span> <span class="st">'apca'</span>, </span>
-<span>                     dims <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">4</span>, </span>
-<span>                     assay <span class="op">=</span> <span class="st">'BEAM'</span>, </span>
-<span>                     reduction.name <span class="op">=</span> <span class="st">'beamUMAP'</span>, </span>
-<span>                     reduction.key <span class="op">=</span> <span class="st">'beamUMAP_'</span>, </span>
-<span>                     verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">ibex_example</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/scater/man/runUMAP.html" class="external-link">runUMAP</a></span><span class="op">(</span><span class="va">ibex_example</span>, </span>
+<span>                        dimred <span class="op">=</span> <span class="st">'apca'</span>, </span>
+<span>                        name <span class="op">=</span> <span class="st">"beamUMAP"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">plot7</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/DimPlot.html" class="external-link">DimPlot</a></span><span class="op">(</span><span class="va">SeuratObj</span>, </span>
-<span>                 reduction <span class="op">=</span> <span class="st">"rnaUMAP"</span>, </span>
-<span>                 group.by <span class="op">=</span> <span class="st">"seurat_clusters"</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>            <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>            <span class="fu"><a href="https://satijalab.org/seurat/reference/SeuratTheme.html" class="external-link">NoLegend</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="va">plot8</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/DimPlot.html" class="external-link">DimPlot</a></span><span class="op">(</span><span class="va">SeuratObj</span>, </span>
-<span>                 reduction <span class="op">=</span> <span class="st">"beamUMAP"</span>, </span>
-<span>                 group.by <span class="op">=</span> <span class="st">"seurat_clusters"</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>            <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>            <span class="fu"><a href="https://satijalab.org/seurat/reference/SeuratTheme.html" class="external-link">NoLegend</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="va">plot9</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/DimPlot.html" class="external-link">DimPlot</a></span><span class="op">(</span><span class="va">SeuratObj</span>, </span>
-<span>                 reduction <span class="op">=</span> <span class="st">"ibexUMAP"</span>, </span>
-<span>                 group.by <span class="op">=</span> <span class="st">"seurat_clusters"</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>            <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>            <span class="fu"><a href="https://satijalab.org/seurat/reference/SeuratTheme.html" class="external-link">NoLegend</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">plot6</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/scater/man/plot_reddim.html" class="external-link">plotUMAP</a></span><span class="op">(</span><span class="va">ibex_example</span>, </span>
+<span>                  dimred <span class="op">=</span> <span class="st">"pcaUMAP"</span>, </span>
+<span>                  color_by <span class="op">=</span> <span class="st">"combined.clustering"</span><span class="op">)</span> </span>
+<span><span class="va">plot7</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/scater/man/plot_reddim.html" class="external-link">plotUMAP</a></span><span class="op">(</span><span class="va">ibex_example</span>, </span>
+<span>                  dimred <span class="op">=</span> <span class="st">"beamUMAP"</span>, </span>
+<span>                  color_by <span class="op">=</span> <span class="st">"combined.clustering"</span><span class="op">)</span> </span>
+<span><span class="va">plot8</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/scater/man/plot_reddim.html" class="external-link">plotUMAP</a></span><span class="op">(</span><span class="va">ibex_example</span>, </span>
+<span>                  dimred <span class="op">=</span> <span class="st">"ibexUMAP"</span>, </span>
+<span>                  color_by <span class="op">=</span> <span class="st">"combined.clustering"</span><span class="op">)</span> </span>
 <span></span>
-<span><span class="va">plot7</span> <span class="op">+</span> <span class="va">plot8</span> <span class="op">+</span> <span class="va">plot9</span></span></code></pre></div>
-<p><img src="Ibex_files/figure-html/unnamed-chunk-10-1.png" width="700"></p>
+<span><span class="va">plot6</span> <span class="op">+</span> <span class="va">plot7</span> <span class="op">+</span> <span class="va">plot8</span> <span class="op">+</span> <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_layout.html" class="external-link">plot_layout</a></span><span class="op">(</span>guides <span class="op">=</span> <span class="st">"collect"</span><span class="op">)</span> <span class="op">&amp;</span>  </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"bottom"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="Ibex_files/figure-html/unnamed-chunk-11-1.png" width="700"></p>
 </div>
 </div>
 <div class="section level2">
@@ -1695,48 +1605,35 @@ same clonotype.</li>
 cell” representing its average expression.</li>
 </ul>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">CoNGA.seurat</span> <span class="op">&lt;-</span> <span class="fu">CoNGAfy</span><span class="op">(</span><span class="va">SeuratObj</span>, </span>
-<span>                         method <span class="op">=</span> <span class="st">"dist"</span>, </span>
-<span>                        assay <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"RNA"</span>, <span class="st">"BEAM"</span><span class="op">)</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">CoNGA.sce</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/Ibex/man/CoNGAfy.html" class="external-link">CoNGAfy</a></span><span class="op">(</span><span class="va">ibex_example</span>, </span>
+<span>                     method <span class="op">=</span> <span class="st">"mean"</span>, </span>
+<span>                     assay <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"RNA"</span>, <span class="st">"BEAM"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">CoNGA.seurat</span> <span class="op">&lt;-</span> <span class="fu">runIbex</span><span class="op">(</span><span class="va">CoNGA.seurat</span>, </span>
-<span>                        encoder.input <span class="op">=</span> <span class="st">"atchleyFactors"</span>,</span>
-<span>                        encoder.model <span class="op">=</span> <span class="st">"CNN"</span>,</span>
-<span>                        reduction.name <span class="op">=</span> <span class="st">"ibex.AF"</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] "Encoding Sequences..."</span></span>
-<span><span class="co">## [1] "Calculating Latent Dimensions..."</span></span>
-<span><span class="co">## <span style="font-weight: bold;">1/2</span> <span style="color: #00BB00;">━━━━━━━━━━</span><span style="color: #BBBBBB;">━━━━━━━━━━</span> <span style="font-weight: bold;">0s</span> 32ms/step<span style="font-weight: bold;">2/2</span> <span style="color: #00BB00;">━━━━━━━━━━━━━━━━━━━━</span> <span style="font-weight: bold;">0s</span> 21ms/step</span></span></code></pre>
+<span><span class="va">CoNGA.sce</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/Ibex/man/runIbex.html" class="external-link">runIbex</a></span><span class="op">(</span><span class="va">CoNGA.sce</span>, </span>
+<span>                     encoder.input <span class="op">=</span> <span class="st">"kideraFactors"</span>, </span>
+<span>                     encoder.model <span class="op">=</span> <span class="st">"VAE"</span>,</span>
+<span>                     reduction.name <span class="op">=</span> <span class="st">"Ibex.KF"</span>, </span>
+<span>                     species <span class="op">=</span> <span class="st">"Mouse"</span>,</span>
+<span>                     verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## <span style="font-weight: bold;">1/2</span> <span style="color: #00BB00;">━━━━━━━━━━</span><span style="color: #BBBBBB;">━━━━━━━━━━</span> <span style="font-weight: bold;">0s</span> 76ms/step<span style="font-weight: bold;">2/2</span> <span style="color: #00BB00;">━━━━━━━━━━━━━━━━━━━━</span> <span style="font-weight: bold;">0s</span> 84ms/step<span style="font-weight: bold;">2/2</span> <span style="color: #00BB00;">━━━━━━━━━━━━━━━━━━━━</span> <span style="font-weight: bold;">0s</span> 85ms/step</span></span></code></pre>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">CoNGA.seurat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/RunUMAP.html" class="external-link">RunUMAP</a></span><span class="op">(</span><span class="va">CoNGA.seurat</span>, </span>
-<span>                        reduction <span class="op">=</span> <span class="st">"ibex.AF"</span>, </span>
-<span>                        dims <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">128</span>, </span>
-<span>                        reduction.name <span class="op">=</span> <span class="st">'ibexUMAP'</span>, </span>
-<span>                        reduction.key <span class="op">=</span> <span class="st">'ibexUMAP_'</span>,</span>
-<span>                        verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">CoNGA.sce</span> <span class="op">&lt;-</span> <span class="va">CoNGA.sce</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>                  <span class="fu"><a href="https://rdrr.io/pkg/scater/man/runUMAP.html" class="external-link">runUMAP</a></span><span class="op">(</span>dimred <span class="op">=</span> <span class="st">"Ibex.KF"</span>, </span>
+<span>                          name <span class="op">=</span> <span class="st">"ibexUMAP"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">plot10</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/DimPlot.html" class="external-link">DimPlot</a></span><span class="op">(</span><span class="va">CoNGA.seurat</span>, </span>
-<span>                  reduction <span class="op">=</span> <span class="st">"ibexUMAP"</span>, </span>
-<span>                  group.by <span class="op">=</span> <span class="st">"CTaa"</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>                <span class="fu">scale_color_viridis</span><span class="op">(</span>discrete <span class="op">=</span> <span class="cn">TRUE</span>, option <span class="op">=</span> <span class="st">"B"</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>                <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>                <span class="fu"><a href="https://satijalab.org/seurat/reference/SeuratTheme.html" class="external-link">NoLegend</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">plot9</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/scater/man/plot_reddim.html" class="external-link">plotUMAP</a></span><span class="op">(</span><span class="va">CoNGA.sce</span>, </span>
+<span>                  dimred <span class="op">=</span> <span class="st">"ibexUMAP"</span>, </span>
+<span>                  color_by <span class="op">=</span> <span class="st">"Anti-Hen-Egg-Lysozyme"</span>, </span>
+<span>                  by.assay.type <span class="op">=</span> <span class="st">"counts"</span><span class="op">)</span> </span>
 <span></span>
-<span><span class="va">plot11</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/FeaturePlot.html" class="external-link">FeaturePlot</a></span><span class="op">(</span><span class="va">CoNGA.seurat</span>, </span>
-<span>                  reduction <span class="op">=</span> <span class="st">"ibexUMAP"</span>, </span>
-<span>                  features <span class="op">=</span> <span class="st">"Anti-Hen-Egg-Lysozyme"</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>                <span class="fu">scale_color_viridis</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>                <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>                <span class="fu"><a href="https://satijalab.org/seurat/reference/SeuratTheme.html" class="external-link">NoLegend</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">plot10</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/scater/man/plot_reddim.html" class="external-link">plotUMAP</a></span><span class="op">(</span><span class="va">CoNGA.sce</span>, </span>
+<span>                   dimred <span class="op">=</span> <span class="st">"ibexUMAP"</span>, </span>
+<span>                   color_by <span class="op">=</span> <span class="st">"H5N1"</span>, </span>
+<span>                   by.assay.type <span class="op">=</span> <span class="st">"counts"</span><span class="op">)</span> </span>
 <span></span>
-<span><span class="va">plot12</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/FeaturePlot.html" class="external-link">FeaturePlot</a></span><span class="op">(</span><span class="va">CoNGA.seurat</span>, </span>
-<span>                  reduction <span class="op">=</span> <span class="st">"ibexUMAP"</span>, </span>
-<span>                  features <span class="op">=</span> <span class="st">"SARS-TRI-S-WT"</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>                <span class="fu">scale_color_viridis</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>                <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>                <span class="fu"><a href="https://satijalab.org/seurat/reference/SeuratTheme.html" class="external-link">NoLegend</a></span><span class="op">(</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">plot10</span> <span class="op">+</span> <span class="va">plot11</span> <span class="op">+</span> <span class="va">plot12</span></span></code></pre></div>
-<p><img src="Ibex_files/figure-html/unnamed-chunk-11-1.png" width="700"></p>
+<span><span class="va">plot9</span> <span class="op">+</span> <span class="va">plot10</span> <span class="op">&amp;</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"bottom"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="Ibex_files/figure-html/unnamed-chunk-12-1.png" width="700"></p>
 </div>
   </div>
 

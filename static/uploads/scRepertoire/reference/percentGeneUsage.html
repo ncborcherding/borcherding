@@ -18,7 +18,7 @@ or gene pairings across T or B cell clones."><!-- mathjax --><script src="https:
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scRepertoire</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.5.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.5.7</span>
       </span>
     </div>
 
@@ -45,6 +45,7 @@ or gene pairings across T or B cell clones."><!-- mathjax --><script src="https:
       <a href="../articles/Processing.html">Additional Processing</a>
     </li>
     <li class="divider">
+    <li class="dropdown-header">Repertoire Analysis</li>
     <li>
       <a href="../articles/Clonal_Visualizations.html">Basic Clonal Analysis</a>
     </li>
@@ -61,6 +62,7 @@ or gene pairings across T or B cell clones."><!-- mathjax --><script src="https:
       <a href="../articles/Clonal_Cluster.html">Clustering Sequences by Edit Distance</a>
     </li>
     <li class="divider">
+    <li class="dropdown-header">Working with Single-Cell Objects</li>
     <li>
       <a href="../articles/Attaching_SC.html">Combining Clones and Single-Cell Objects</a>
     </li>
@@ -71,6 +73,7 @@ or gene pairings across T or B cell clones."><!-- mathjax --><script src="https:
       <a href="../articles/Clonal_Bias.html">Quantifying Clonal Bias</a>
     </li>
     <li class="divider">
+    <li class="dropdown-header">Deep Learning Integrations</li>
     <li>
       <a href="../articles/immApex.html">Making Deep Learning Models with immApex</a>
     </li>
@@ -80,18 +83,22 @@ or gene pairings across T or B cell clones."><!-- mathjax --><script src="https:
     <li>
       <a href="../articles/Ibex.html">Combining Deep Learning and BCRs with Ibex</a>
     </li>
+    <li class="divider">
+    <li class="dropdown-header">Other Workflow Integrations</li>
     <li>
       <a href="../articles/Running_Escape.html">Single-cell Gene Set Enrichment Analysis</a>
     </li>
-    <li class="divider">
     <li>
-      <a href="../articles/dandelionR.html">VDJ Trajectory Analysis with dandelionR</a>
+      <a href="../articles/immcantation.html">Combining Immcantation and scRepertoire</a>
+    </li>
+    <li>
+      <a href="../articles/tcrpheno.html">TCRpheno applied to T cell fate</a>
     </li>
     <li>
       <a href="../articles/immunarch.html">Using scRepertoire with immunarch</a>
     </li>
     <li>
-      <a href="../articles/tcrpheno.html">TCRpheno applied to T cell fate</a>
+      <a href="../articles/dandelionR.html">VDJ Trajectory Analysis with dandelionR</a>
     </li>
   </ul></li>
 <li>
@@ -328,7 +335,7 @@ If <code>exportTable = TRUE</code>, a matrix or data frame of the raw data is re
 <span class="r-plt img"><img src="percentGeneUsage-6.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Quantify TRA J-gene usage and export the table</span></span></span>
-<span class="r-in"><span><span class="va">ighj_usage_table</span> <span class="op">&lt;-</span> <span class="fu">percentGenes</span><span class="op">(</span><span class="va">combined</span>,</span></span>
+<span class="r-in"><span><span class="va">traj_usage_table</span> <span class="op">&lt;-</span> <span class="fu">percentGenes</span><span class="op">(</span><span class="va">combined</span>,</span></span>
 <span class="r-in"><span>                                 chain <span class="op">=</span> <span class="st">"TRA"</span>,</span></span>
 <span class="r-in"><span>                                 gene <span class="op">=</span> <span class="st">"Jgene"</span>,</span></span>
 <span class="r-in"><span>                                 group.by <span class="op">=</span> <span class="st">"sample"</span>,</span></span>

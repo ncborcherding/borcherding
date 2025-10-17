@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scRepertoire</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.5.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.5.7</span>
       </span>
     </div>
 
@@ -62,7 +62,8 @@
     </li>
     <li class="divider">
     </li>
-<li>
+<li class="dropdown-header">Repertoire Analysis</li>
+    <li>
       <a href="../articles/Clonal_Visualizations.html">Basic Clonal Analysis</a>
     </li>
     <li>
@@ -79,7 +80,8 @@
     </li>
     <li class="divider">
     </li>
-<li>
+<li class="dropdown-header">Working with Single-Cell Objects</li>
+    <li>
       <a href="../articles/Attaching_SC.html">Combining Clones and Single-Cell Objects</a>
     </li>
     <li>
@@ -90,7 +92,8 @@
     </li>
     <li class="divider">
     </li>
-<li>
+<li class="dropdown-header">Deep Learning Integrations</li>
+    <li>
       <a href="../articles/immApex.html">Making Deep Learning Models with immApex</a>
     </li>
     <li>
@@ -99,19 +102,23 @@
     <li>
       <a href="../articles/Ibex.html">Combining Deep Learning and BCRs with Ibex</a>
     </li>
+    <li class="divider">
+    </li>
+<li class="dropdown-header">Other Workflow Integrations</li>
     <li>
       <a href="../articles/Running_Escape.html">Single-cell Gene Set Enrichment Analysis</a>
     </li>
-    <li class="divider">
+    <li>
+      <a href="../articles/immcantation.html">Combining Immcantation and scRepertoire</a>
     </li>
-<li>
-      <a href="../articles/dandelionR.html">VDJ Trajectory Analysis with dandelionR</a>
+    <li>
+      <a href="../articles/tcrpheno.html">TCRpheno applied to T cell fate</a>
     </li>
     <li>
       <a href="../articles/immunarch.html">Using scRepertoire with immunarch</a>
     </li>
     <li>
-      <a href="../articles/tcrpheno.html">TCRpheno applied to T cell fate</a>
+      <a href="../articles/dandelionR.html">VDJ Trajectory Analysis with dandelionR</a>
     </li>
   </ul>
 </li>
@@ -147,7 +154,8 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Single-cell Gene Set Enrichment Analysis</h1>
             
-            <h4 data-toc-skip class="date">Compiled: July 31, 2025</h4>
+            <h4 data-toc-skip class="date">Compiled: October 17,
+2025</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/BorchLab/scRepertoire/blob/HEAD/vignettes/articles/Running_Escape.Rmd" class="external-link"><code>vignettes/articles/Running_Escape.Rmd</code></a></small>
       <div class="hidden name"><code>Running_Escape.Rmd</code></div>
@@ -423,13 +431,13 @@ as a custom assay in the single-cell object.</p>
 <span>                           new.assay.name <span class="op">=</span> <span class="st">"escape.UCell"</span><span class="op">)</span></span></code></pre></div>
 <p>We can quickly examine the attached enrichment scores using the
 visualization/workflow we prefer - here we will use just
-<code>FeaturePlot()</code> from the Seurat R package.</p>
+<code><a href="https://satijalab.org/seurat/reference/FeaturePlot.html" class="external-link">FeaturePlot()</a></code> from the Seurat R package.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#Define color palette </span></span>
 <span><span class="va">colorblind_vector</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/palettes.html" class="external-link">hcl.colors</a></span><span class="op">(</span>n<span class="op">=</span><span class="fl">7</span>, palette <span class="op">=</span> <span class="st">"inferno"</span>, fixup <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">DefaultAssay</span><span class="op">(</span><span class="va">scRep_example</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">"escape.ssGSEA"</span></span>
-<span><span class="fu">FeaturePlot</span><span class="op">(</span><span class="va">scRep_example</span>, <span class="st">"Proinflammatory"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span><span class="fu"><a href="https://satijalab.github.io/seurat-object/reference/DefaultAssay.html" class="external-link">DefaultAssay</a></span><span class="op">(</span><span class="va">scRep_example</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">"escape.ssGSEA"</span></span>
+<span><span class="fu"><a href="https://satijalab.org/seurat/reference/FeaturePlot.html" class="external-link">FeaturePlot</a></span><span class="op">(</span><span class="va">scRep_example</span>, <span class="st">"Proinflammatory"</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_gradient.html" class="external-link">scale_color_gradientn</a></span><span class="op">(</span>colors <span class="op">=</span> <span class="va">colorblind_vector</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Running_Escape_files/figure-html/unnamed-chunk-11-1.png" width="700"></p>
@@ -763,7 +771,7 @@ eigenvalues and rotations. If we want to look at the relative
 contribution to overall variance of each component or a Biplot-like
 overlay of the individual features, use <code>performPCA()</code>.</p>
 <p>Alternatively, other PCA-based functions like Seurat’s
-<code>RunPCA()</code> or scater’s ``<code>runPCA()</code> can be used.
+<code><a href="https://satijalab.org/seurat/reference/RunPCA.html" class="external-link">RunPCA()</a></code> or scater’s ``<code><a href="https://rdrr.io/pkg/BiocSingular/man/runPCA.html" class="external-link">runPCA()</a></code> can be used.
 These functions are likely faster and would be ideal if we have a larger
 number of cells and/or gene sets.</p>
 <div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
@@ -805,8 +813,8 @@ underlying differences in enrichment across different cells.</p>
 </h3>
 <p>Functional enrichment is not limited to per-cell scores. Many
 workflows start with <strong>differential-expression (DE)
-statistics</strong> (e.g. Seurat’s <code>FindMarkers()</code>, DESeq2’s
-<code>results()</code>, edgeR’s <code>topTags()</code>). Those produce a
+statistics</strong> (e.g. Seurat’s <code><a href="https://satijalab.org/seurat/reference/FindMarkers.html" class="external-link">FindMarkers()</a></code>, DESeq2’s
+<code>results()</code>, edgeR’s <code><a href="https://rdrr.io/pkg/edgeR/man/topTags.html" class="external-link">topTags()</a></code>). Those produce a
 <em>ranked gene list</em> that can be fed into a classical
 <strong>Gene-Set Enrichment Analysis (GSEA)</strong>.</p>
 <div class="section level4">
@@ -854,8 +862,8 @@ or<br>
 <h4 id="example-enrichit-workflow">Example <code>enrichIt()</code> workflow<a class="anchor" aria-label="anchor" href="#example-enrichit-workflow"></a>
 </h4>
 <div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">DefaultAssay</span><span class="op">(</span><span class="va">scRep_example</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">"RNA"</span></span>
-<span><span class="va">DEG.markers</span> <span class="op">&lt;-</span> <span class="fu">FindMarkers</span><span class="op">(</span><span class="va">scRep_example</span>, </span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://satijalab.github.io/seurat-object/reference/DefaultAssay.html" class="external-link">DefaultAssay</a></span><span class="op">(</span><span class="va">scRep_example</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">"RNA"</span></span>
+<span><span class="va">DEG.markers</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/FindMarkers.html" class="external-link">FindMarkers</a></span><span class="op">(</span><span class="va">scRep_example</span>, </span>
 <span>                           ident.1 <span class="op">=</span> <span class="st">"1"</span>, </span>
 <span>                           ident.2 <span class="op">=</span> <span class="st">"2"</span><span class="op">)</span></span>
 <span></span>
@@ -874,8 +882,8 @@ or<br>
 <span><span class="co">## 6:                 Antinflammatory 0.131147541 0.43715847 0.2529611 0.9883311</span></span>
 <span><span class="co">##         NES  size                                        leadingEdge  geneRatio</span></span>
 <span><span class="co">##       &lt;num&gt; &lt;int&gt;                                             &lt;char&gt;      &lt;num&gt;</span></span>
-<span><span class="co">## 1: 1.552116    63 HIST1H4C;CDKN1A;HIST1H1D;CCNG2;H2AFZ;HIST1H1E;H1FX 0.11111111</span></span>
-<span><span class="co">## 2: 1.541180    17                                               OASL 0.05882353</span></span>
+<span><span class="co">## 1: 1.552117    63 HIST1H4C;CDKN1A;HIST1H1D;CCNG2;H2AFZ;HIST1H1E;H1FX 0.11111111</span></span>
+<span><span class="co">## 2: 1.541182    17                                               OASL 0.05882353</span></span>
 <span><span class="co">## 3: 1.933083     7                                        PDCD1;CTLA4 0.28571429</span></span>
 <span><span class="co">## 4: 1.926023     7                              FAM129A;HSPA1A;HSPA1B 0.42857143</span></span>
 <span><span class="co">## 5: 1.996093     6                                     GZMB;GZMA;GZMH 0.50000000</span></span>
@@ -937,19 +945,19 @@ enrichment scores.</p>
 <span>                                   gene.sets <span class="op">=</span> <span class="va">escape.gene.sets</span>,</span>
 <span>                                   make.positive <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">all.markers</span> <span class="op">&lt;-</span> <span class="fu">FindAllMarkers</span><span class="op">(</span><span class="va">scRep_example</span>, </span>
+<span><span class="va">all.markers</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/FindAllMarkers.html" class="external-link">FindAllMarkers</a></span><span class="op">(</span><span class="va">scRep_example</span>, </span>
 <span>                              assay <span class="op">=</span> <span class="st">"escape.ssGSEA_normalized"</span>, </span>
 <span>                              min.pct <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>                              logfc.threshold <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">all.markers</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##                        p_val  avg_log2FC pct.1 pct.2    p_val_adj cluster</span></span>
-<span><span class="co">## Cytolytic       8.835726e-33 -0.22290562     1     1 1.767145e-31       1</span></span>
-<span><span class="co">## TCA-cycle       3.828829e-15 -0.18921087     1     1 7.657658e-14       1</span></span>
+<span><span class="co">## Cytolytic       8.834350e-33 -0.22290562     1     1 1.766870e-31       1</span></span>
+<span><span class="co">## TCA-cycle       3.829028e-15 -0.18921087     1     1 7.658056e-14       1</span></span>
 <span><span class="co">## Antinflammatory 7.518488e-11 -0.09552935     1     1 1.503698e-09       1</span></span>
-<span><span class="co">## Hypoxia         8.299977e-10  0.02923536     1     1 1.659995e-08       1</span></span>
-<span><span class="co">## G1S             2.501304e-09 -0.31214094     1     1 5.002607e-08       1</span></span>
-<span><span class="co">## PPS             3.565329e-09 -0.10738891     1     1 7.130657e-08       1</span></span>
+<span><span class="co">## Hypoxia         8.299978e-10  0.02923536     1     1 1.659996e-08       1</span></span>
+<span><span class="co">## G1S             2.501403e-09 -0.31214094     1     1 5.002806e-08       1</span></span>
+<span><span class="co">## PPS             3.565047e-09 -0.10738891     1     1 7.130095e-08       1</span></span>
 <span><span class="co">##                            gene</span></span>
 <span><span class="co">## Cytolytic             Cytolytic</span></span>
 <span><span class="co">## TCA-cycle             TCA-cycle</span></span>
