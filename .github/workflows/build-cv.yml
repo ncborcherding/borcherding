@@ -1,32 +1,73 @@
-## `.github/workflows/build-cv.yml`
 name: Build CV
+
 on:
   push:
-    branches: [ main ]
+    branches: [ main, master ]
   workflow_dispatch:
+  schedule:
+    - cron: "0 6 * * 1"  # optional: also refresh weekly
 
 jobs:
-  cv:
+  build-cv:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
     steps:
-      - uses: actions/checkout@v4
-      - uses: r-lib/actions/setup-r@v2
-      - uses: quarto-dev/quarto-actions/setup@v2
-      - uses: r-lib/actions/setup-tinytex@v2
-      - name: Install R packages
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # --- Publications updater (optional but recommended) ---
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Python deps
         run: |
-          Rscript -e 'install.packages(c("yaml","glue","purrr","knitr"))'
-      - name: Render CV
+          pip install biopython bibtexparser requests
+
+      - name: Update pubs from MyNCBI (paginate + filter preprints)
+        env:
+          NCBI_API_KEY: ${{ secrets.NCBI_API_KEY }}   # optional but recommended
+          ENTREZ_EMAIL: ${{ secrets.ENTREZ_EMAIL }}   # optional; fallback: actions@github.com
         run: |
-          quarto render cv.qmd --to pdf
-          quarto render cv.qmd --to html
-          mkdir -p static/files
-          cp cv.pdf static/files/Borcherding_CV.pdf
-          cp cv.html static/files/Borcherding_CV.html
-      - name: Commit rendered CV
+          python scripts/update_pubs_from_ncbi.py
+
+      - name: Commit pubs.bib (if changed)
         run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
-          git add static/files/borcherding_cv.pdf static/files/borcherding_cv.html
-          git commit -m "Update CV artifacts" || echo "No changes"
-          git push
+          git add data/pubs.bib || true
+          git commit -m "chore: auto-update pubs.bib from MyNCBI" || echo "No changes"
+          git push || true
+
+      # --- R + Quarto + TinyTeX for PDF rendering ---
+      - name: Set up R
+        uses: r-lib/actions/setup-r@v2
+        with:
+          use-public-rspm: true
+
+      - name: Install R packages
+        run: |
+          Rscript -e 'install.packages(c("yaml","glue","purrr","dplyr","knitr", "rmarkdown"))'
+
+      - name: Setup Quarto (with TinyTeX for PDF)
+        uses: quarto-dev/quarto-actions/setup@v2
+        with:
+          version: release
+          tinytex: true
+
+      - name: Render CV (PDF + HTML)
+        run: |
+          quarto render cv.qmd --to pdf --output cv.pdf
+          quarto render cv.qmd --to html --output cv.html
+          mkdir -p static/files
+          cp cv.pdf  static/files/Borcherding_CV.pdf
+          cp cv.html static/files/Borcherding_CV.html
+
+      - name: Commit rendered CV artifacts (if changed)
+        run: |
+          git add static/files/Borcherding_CV.pdf static/files/Borcherding_CV.html || true
+          git commit -m "chore: auto-render CV artifacts" || echo "No changes"
+          git push || true
