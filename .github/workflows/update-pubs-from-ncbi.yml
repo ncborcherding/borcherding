@@ -1,0 +1,44 @@
+name: Update publications from MyNCBI
+on:
+  schedule: [{ cron: "0 6 * * 1" }]  # Mondays 06:00 UTC
+  workflow_dispatch: {}
+jobs:
+  update-pubs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with: { python-version: "3.11" }
+
+      - name: Install deps
+        run: pip install biopython bibtexparser requests
+
+      - name: Pull publications from MyNCBI (public)
+        env:
+          NCBI_API_KEY: ${{ secrets.NCBI_API_KEY }}  # optional
+        run: python scripts/update_pubs_from_ncbi.py
+
+      - name: Commit pubs.bib
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add data/pubs.bib
+          git commit -m "chore: auto-update pubs.bib from MyNCBI public bibliography" || echo "No changes"
+          git push
+
+      - name: Setup Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+
+      - name: Render CV & publish PDF
+        run: |
+          quarto render cv.qmd --to pdf
+          mkdir -p static/uploads
+          cp cv.pdf static/uploads/borcherding_cv.pdf
+
+      - name: Commit CV PDF
+        run: |
+          git add static/uploads/borcherding_cv.pdf
+          git commit -m "chore: refresh CV PDF" || echo "No changes"
+          git push

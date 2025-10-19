@@ -1,79 +1,96 @@
 ---
 # Display name
-title: Nick Borcherding
+title: "Nick Borcherding"
 
-# Is this the primary user of the site?
+# Primary site author
 superuser: true
 
 # Role/position/tagline
-role: Assistant Professor
+role: Assistant Professor of Pathology & Immunology
 
-# Organizations/Affiliations to show in About widget
+# Organizations
 organizations:
-- name: Washington University
-  url: https://pathology.wustl.edu/
+  - name: Washington University School of Medicine in St. Louis
+    url: https://pathology.wustl.edu/
 
-# Short bio (displayed in user profile at end of posts)
-bio: My research includes systems immunology, single-cell sequencing technology, and computational frameworks. 
+# Short bio
+bio: >
+  My research integrates systems immunology, single-cell sequencing, and computational frameworks to understand the adaptive immune response.
 
-# Interests to show in About widget
+# Research interests
 interests:
-- Tumor Immunology
-- Immunometabolism 
-- Single-cell immune profiling 
-- Adaptive immune receptor repertoire analyses 
-- Open data science 
+  - Tumor Immunology
+  - Immunometabolism
+  - Single-Cell Immune Profiling
+  - Adaptive Immune Receptor Repertoire Analyses
+  - Open Data Science
 
-# Education to show in About widget
+# Education summary (for the About widget)
 education:
   courses:
-  - course: Clinical Pathology Residency
-    institution: Washington University St Louis
-    year: 2023
-  - course: Medical Doctorate
-    institution: University of Iowa
-    year: 2020
-  - course: PhD in Cancer Biology
-    institution: University of Iowa
-    year: 2020
-  - course: MS in Pathology
-    institution: University of Iowa
-    year: 2014
-  - course: BS in Nutritional Sciences
-    institution: Iowa State University
-    year: 2012
+    - course: Fellow, Histocompatibility & Immunogenetics
+      institution: Washington University School of Medicine
+      year: "Present"
+    - course: Residency in Clinical Pathology
+      institution: Washington University School of Medicine
+      year: 2023
+    - course: MD / PhD, Cancer Biology
+      institution: University of Iowa
+      year: 2020
+    - course: MS, Pathology
+      institution: University of Iowa
+      year: 2014
+    - course: BS, Nutritional Sciences (Summa Cum Laude)
+      institution: Iowa State University
+      year: 2012
 
-# Social/Academic Networking
-# For available icons, see: https://wowchemy.com/docs/getting-started/page-builder/#icons
-#   For an email link, use "fas" icon pack, "envelope" icon, and a link in the
-#   form "mailto:your-email@example.com" or "/#contact" for contact widget.
+# Social/Academic links
 social:
-- icon: twitter
-  icon_pack: fab
-  link: https://twitter.com/theHumanBorch
-- icon: graduation-cap  # Alternatively, use `google-scholar` icon from `ai` icon pack
-  icon_pack: fas
-  link: https://scholar.google.com/citations?user=_n4TRuIAAAAJ&hl=en
-- icon: github
-  icon_pack: fab
-  link: https://github.com/ncborcherding
-- icon: linkedin
-  icon_pack: fab
-  link: https://www.linkedin.com/in/thehumanborch/
+  - icon: twitter
+    icon_pack: fab
+    link: https://twitter.com/theHumanBorch
+  - icon: graduation-cap
+    icon_pack: ai
+    link: https://scholar.google.com/citations?user=_n4TRuIAAAAJ
+  - icon: github
+    icon_pack: fab
+    link: https://github.com/ncborcherding
+  - icon: linkedin
+    icon_pack: fab
+    link: https://www.linkedin.com/in/thehumanborch/
+  - icon: cv
+    icon_pack: ai
+    link: uploads/borcherding_cv.pdf
 
-# Link to a PDF of your resume/CV.
-# To use: copy your resume to `static/uploads/borcherding_cv.pdf`, enable `ai` icons in `params.toml`, 
-# and uncomment the lines below.
-# - icon: cv
-#   icon_pack: ai
-#   link: uploads/resume.pdf
+# Highlight author in lists?
+highlight_name: true
 
-# Highlight the author in author lists? (true/false)
-highlight_name: false
+# Auto-generated CV file (regenerated from Quarto)
+cv_file: "uploads/borcherding_cv.pdf"
+
+# Show the "About" widget with dynamic CV link
+widget: "about"
+
+# Enable dynamic build
+_build:
+  list: always
+  render: always
+  publishResources: true
 ---
 
-Nick is an Assistant Professor in the Department of Pathology and Immunology at Washington University St Louis. His clinical responsibilities include human leukocyte antigen testing in the context of transplant, autoimmunity, and cancer. He recieved his MD/PhD from the University of Iowa, as part of the medical scientist training program. He was a member of the Washington University Department of Pathology and Immunology dual residency and post-doc PSTP program. He was co-mentored by [Jon Brestoff](https://brestofflab.com/) and [David DeNardo](https://www.icce-wustl.org/david-denardo-lab.html). His research focused on the use of innate cellular barcodes, such as mitochondrial genome and adaptive immune receptor sequences, to track immune responses and predict clinical outcomes.
+Nick is an Assistant Professor in the **Department of Pathology and Immunology** at Washington University School of Medicine.  
+His clinical responsibilities include human leukocyte antigen testing in the contexts of transplant, autoimmunity, and cancer.
 
-In his free time, Nick likes to write R packages for the single-cell community, including [scRepertoire](https://github.com/ncborcherding/scRepertoire), [escape](https://github.com/ncborcherding/escape), and [Trex](https://github.com/ncborcherding/Trex). In addition, he has compiled the largest immune single-cell RNA/TCR data set for tumors, which is freely available to [anyone](https://github.com/ncborcherding/utility).
+He earned his **MD/PhD** as part of the Medical Scientist Training Program at the **University of Iowa**, where he was mentored by
+[Jon Brestoff](https://brestofflab.com/) and [David DeNardo](https://www.icce-wustl.org/david-denardo-lab.html).  
+His research focuses on the use of **innate cellular barcodes**—including mitochondrial genomes and adaptive immune receptor sequences—to track immune responses and predict clinical outcomes.
 
-{{< icon name="download" pack="fas" >}} Download my {{< staticref "uploads/borcherding_cv.pdf" "newtab" >}}curriculum vitae{{< /staticref >}}.
+Nick develops open-source software for immune repertoire analysis, including
+[scRepertoire](https://github.com/ncborcherding/scRepertoire),
+[escape](https://github.com/ncborcherding/escape),
+[Trex](https://github.com/ncborcherding/Trex),
+[Ibex](https://github.com/BorchLab/Ibex),
+and [immReferent](https://github.com/BorchLab/immReferent).
+
+{{< icon name="download" pack="fas" >}}  
+[Download my Curriculum Vitae]({{< staticref "uploads/borcherding_cv.pdf" "newtab" >}}).

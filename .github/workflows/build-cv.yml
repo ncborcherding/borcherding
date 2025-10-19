@@ -1,0 +1,32 @@
+## `.github/workflows/build-cv.yml`
+name: Build CV
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  cv:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: r-lib/actions/setup-r@v2
+      - uses: quarto-dev/quarto-actions/setup@v2
+      - uses: r-lib/actions/setup-tinytex@v2
+      - name: Install R packages
+        run: |
+          Rscript -e 'install.packages(c("yaml","glue","purrr","knitr"))'
+      - name: Render CV
+        run: |
+          quarto render cv.qmd --to pdf
+          quarto render cv.qmd --to html
+          mkdir -p static/files
+          cp cv.pdf static/files/Borcherding_CV.pdf
+          cp cv.html static/files/Borcherding_CV.html
+      - name: Commit rendered CV
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add static/files/borcherding_cv.pdf static/files/borcherding_cv.html
+          git commit -m "Update CV artifacts" || echo "No changes"
+          git push

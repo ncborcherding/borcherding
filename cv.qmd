@@ -1,0 +1,245 @@
+---
+title: "Curriculum Vitae — Nicholas C. Borcherding"
+author: "Nicholas C. Borcherding, MD PhD"
+format:
+  pdf:
+    toc: false
+    number-sections: false
+    geometry: margin=1in
+  html:
+    theme: cosmo
+    toc: true
+filters:
+  - bold-author.lua
+execute:
+  echo: false
+---
+
+```{r}
+# Core libraries
+library(yaml)
+library(glue)
+library(purrr)
+library(dplyr)
+
+# Load YAML (expects 'cv.yaml' in the working directory)
+cv <- yaml::read_yaml("cv.yaml")
+
+# ---------- Helpers ----------
+nz <- function(x, alt = "") if (is.null(x) || identical(x, "") || (length(x)==1 && is.na(x))) alt else x
+pr <- function(x) paste(x, collapse = "")  # tiny print helper
+
+fmt_range <- function(start, end) {
+  s <- nz(start, "")
+  e <- if (is.null(end) || end == "" || tolower(end) == "present") "Present" else end
+  if (nchar(s) && nchar(e)) glue("{s}–{e}") else nz(s, e)
+}
+
+# Bold your name in author strings (covers "Borcherding, N.", "Nicholas C. Borcherding", etc.)
+my_name_rx <- "(?i)(Borcherding,?\\s*N(?:\\.?\\s*C\\.)?|Nicholas\\s*C\\.?\\s*Borcherding)"
+embolden_me <- function(x) {
+  if (is.null(x)) return("")
+  gsub(my_name_rx, function(m) paste0("**", m, "**"), x, perl = TRUE)
+}
+
+# Contact fields (some are at top-level in YAML)
+contact_name  <- nz(cv$name, "Nicholas C. Borcherding, MD PhD")
+contact_email <- nz(cv$contact$email, "")
+contact_site  <- nz(cv$website, nz(cv$contact$website, ""))
+contact_phone <- nz(cv$phone,   nz(cv$contact$phone, ""))
+contact_addr  <- nz(cv$address, nz(cv$contact$address, ""))
+```
+
+# Contact
+`r pr(glue("{contact_name}\n\n{contact_email}{ifelse(nchar(contact_email) && nchar(contact_site), ' · ', '')}{contact_site}{ifelse((nchar(contact_email) || nchar(contact_site)) && nchar(contact_phone), ' · ', '')}{contact_phone}\n{contact_addr}"))`
+
+## Positions
+```{r}
+pos <- cv$positions %||% list()
+if (length(pos)) {
+  cat(map_chr(pos, ~ glue("- **{.x$title}**, {.x$org} ({fmt_range(.x$start, .x$end)}) — {.x$location}")), sep = "\n")
+} else {
+  cat("_(none listed)_")
+}
+```
+
+## Education & Training
+```{r}
+edu <- cv$education %||% list()
+trn <- cv$training %||% list()
+
+if (length(edu)) {
+  cat("**Education**\n")
+  cat(map_chr(edu, ~ glue("- **{.x$degree}**, {.x$org}, {.x$year}")), sep = "\n")
+} else cat("_Education not listed_\n")
+
+cat("\n\n")
+
+if (length(trn)) {
+  cat("**Postgraduate Training**\n")
+  cat(map_chr(trn, ~ glue("- **{.x$title}**, {.x$org} ({fmt_range(.x$start, .x$end)})")), sep = "\n")
+} else cat("_Training not listed_")
+```
+
+## Professional Licensure
+```{r}
+lic <- cv$licensures %||% list()
+if (length(lic)) {
+  cat(map_chr(lic, ~ glue("- {nz(.x$year_start)}: {nz(.x$license)}{ifelse(!is.null(.x$state), glue(', {.x$state}'), '')}{ifelse(!is.null(.x$number), glue(', #{.x$number}'), '')}{ifelse(!is.null(.x$status), glue(' ({.x$status})'), '')}")), sep = "\n")
+} else cat("_(none listed)_")
+```
+
+## Military Experience
+```{r}
+mil <- cv$military %||% list()
+if (length(mil)) {
+  cat(map_chr(mil, ~ glue("- {.x$branch}, {.x$rank} ({fmt_range(.x$start, .x$end)}), {.x$status}")), sep = "\n")
+} else cat("_(none listed)_")
+```
+
+## Consulting & Advisory
+```{r}
+con <- cv$consulting %||% list()
+if (length(con)) {
+  cat(map_chr(con, ~ glue("- **{.x$role}**, {.x$org} ({fmt_range(.x$start, .x$end)})")), sep = "\n")
+} else cat("_(none listed)_")
+```
+
+## Editorial & Peer Review
+```{r}
+ed <- cv$editorial %||% list()
+
+if (!is.null(ed$review_board) && length(ed$review_board)) {
+  cat("**Editorial/Review Boards**\n")
+  cat(map_chr(ed$review_board, ~ glue("- {.x$journal}{ifelse(!is.null(.x$year), glue(' ({.x$year})'), '')}")), sep = "\n")
+  cat("\n\n")
+}
+
+if (!is.null(ed$guest_editor) && length(ed$guest_editor)) {
+  cat("**Guest Editor**\n")
+  cat(map_chr(ed$guest_editor, ~ glue("- {.x$journal}{ifelse(!is.null(.x$year), glue(' ({.x$year})'), '')}")), sep = "\n")
+  cat("\n\n")
+}
+
+ahr <- ed$ad_hoc_reviews %||% list()
+if (length(ahr)) {
+  items <- map_chr(ahr, function(x) if (is.character(x)) glue("- {x}") else glue("- {x$journal}{ifelse(!is.null(x$year), glue(' ({x$year})'), '')}"))
+  cat("**Ad Hoc Reviews**\n")
+  cat(items, sep = "\n")
+} else cat("_No ad hoc reviews listed_")
+```
+
+## Service & Committees
+```{r}
+srv <- cv$service %||% list()
+
+if (!is.null(srv$institutional) && length(srv$institutional)) {
+  cat("**Institutional**\n")
+  cat(map_chr(srv$institutional, ~ glue("- {.x$committee} ({fmt_range(.x$start, .x$end)})")), sep = "\n")
+  cat("\n\n")
+}
+
+if (!is.null(srv$national) && length(srv$national)) {
+  cat("**National**\n")
+  cat(map_chr(srv$national, ~ glue("- {.x$committee} ({fmt_range(.x$start, .x$end)})")), sep = "\n")
+} else if (is.null(srv$institutional) || !length(srv$institutional)) {
+  cat("_(none listed)_")
+}
+```
+
+## Mentorship
+```{r}
+mnt <- cv$mentorship %||% list()
+
+if (!is.null(mnt$research) && length(mnt$research)) {
+  cat("**Research Mentorship**\n")
+  cat(map_chr(mnt$research, ~ glue("- {.x$mentee}, {.x$level}, {fmt_range(.x$start, 'Present')}: {.x$topic}")), sep = "\n")
+  cat("\n\n")
+}
+
+if (!is.null(mnt$career) && length(mnt$career)) {
+  cat("**Career Development**\n")
+  cat(map_chr(mnt$career, ~ glue("- {.x$mentee}, {.x$level}, {fmt_range(.x$start, 'Present')}: {.x$topic}")), sep = "\n")
+} else if (is.null(mnt$research) || !length(mnt$research)) {
+  cat("_(none listed)_")
+}
+```
+
+## Awards & Honors
+```{r}
+awd <- cv$awards %||% list()
+if (length(awd)) {
+  cat(map_chr(awd, ~ glue("- {._$year}: **{._$name}**")), sep = "\n")
+} else cat("_(none listed)_")
+```
+
+## Professional Memberships
+```{r}
+mbr <- cv$memberships %||% list()
+if (length(mbr)) {
+  cat(map_chr(mbr, ~ glue("- {.x$org} ({fmt_range(.x$start, .x$end)})")), sep = "\n")
+} else cat("_(none listed)_")
+```
+
+## Software
+```{r}
+sft <- cv$software %||% list()
+if (length(sft)) {
+  cat(map_chr(sft, ~ glue("- **[{._$name}]({._$link})** ({._$year}) — {._$role}. {._$description}")), sep = "\n")
+} else cat("_(none listed)_")
+```
+
+## Research Funding
+**Institutional**
+```{r}
+rf <- cv$research_funding %||% list()
+inst <- rf$institutional %||% list()
+if (length(inst)) {
+  cat(map_chr(inst, ~ glue("- {._$years}: *{._$title}* — {._$sponsor}. Role: **{._$role}**")), sep = "\n")
+} else cat("_(none listed)_")
+```
+
+**National**
+```{r}
+nat <- rf$national %||% list()
+if (length(nat)) {
+  cat(map_chr(nat, ~ glue("- {._$years}: *{._$title}* — {._$sponsor}. Role: **{._$role}**")), sep = "\n")
+} else cat("_(none listed)_")
+```
+
+## Invited Presentations
+**Institutional**
+```{r}
+pres <- cv$presentations %||% list()
+ipi <- pres$invited$institutional %||% list()
+if (length(ipi)) {
+  cat(map_chr(ipi, ~ glue("- {._$year}: *{._$title}*. {._$venue}")), sep = "\n")
+} else cat("_(none listed)_")
+```
+
+**National**
+```{r}
+ipn <- pres$invited$national %||% list()
+if (length(ipn)) {
+  cat(map_chr(ipn, ~ glue("- {._$year}: *{._$title}*. {._$venue}")), sep = "\n")
+} else cat("_(none listed)_")
+```
+
+## Conference Abstracts
+```{r}
+abs <- pres$abstracts %||% list()
+if (length(abs)) {
+  cat(map_chr(abs, ~ glue("- {._$year}: {embolden_me(._$authors)}. *{._$title}*. {._$venue}")), sep = "\n")
+} else cat("_(none listed)_")
+```
+
+## Publications
+```{r}
+# If data/pubs.bib exists (auto-generated by your GitHub Action), render a references block.
+if (!is.null(cv$selected_publications_bib) && file.exists(cv$selected_publications_bib)) {
+  knitr::knit_meta_add(list(bibliography = cv$selected_publications_bib))
+  cat("\n::: {#refs}\n:::\n")
+} else {
+  cat("_(bibliography file not found — set `selected_publications_bib` in cv.yaml)_")
+}
+```
