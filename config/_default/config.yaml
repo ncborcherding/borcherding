@@ -5,7 +5,7 @@
 
 title: borch.dev # Website name
 baseurl: 'borch.dev' # Website URL
-copyright: '© {2023} Me'
+copyright: '© {2025} Nick'
 
 ############################
 ## LANGUAGE
@@ -35,7 +35,7 @@ paginate: 10
 enableEmoji: true
 enableRobotsTXT: true
 footnotereturnlinkcontents: <sup>^</sup>
-ignoreFiles: [\.ipynb$, .ipynb_checkpoints$, \.Rmd$, \.Rmarkdown$, _cache$]
+ignoreFiles: [\.ipynb$, .ipynb_checkpoints$, \.Rmd$, \.Rmarkdown$, _cache$, \.bib$]
 permalinks:
   event: '/talk/:slug/'
   tags: '/tag/:slug/'

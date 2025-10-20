@@ -1,12 +1,12 @@
 ---
-title: "Curriculum Vitae — Nicholas C. Borcherding"
-author: "Nicholas C. Borcherding, MD PhD"
+title: "Nicholas C. Borcherding"
 format:
   pdf:
     pdf-engine: xelatex
-    cite-method: citeproc
-    number-sections: false
     toc: false
+    number-sections: false
+    citations: true
+    bibliography: data/pubs.bib
     geometry: margin=1in
     linestretch: 1.1
   html:
@@ -15,8 +15,10 @@ format:
 filters:
   - bold-author.lua
 bibliography: "data/pubs.bib"
+csl: vancouver.csl
 nocite: "@*"
 link-citations: true
+citation-number: true  
 execute:
   echo: false
 ---
@@ -54,64 +56,54 @@ fmt_range <- function(start, end) {
 
 embolden_me <- function(x) {
   if (is.null(x)) return("")
-  # Flatten lists safely
-  if (is.list(x)) x <- paste(unlist(x, use.names = FALSE), collapse = ", ")
-  # Guard against functions and expressions
-  if (is.function(x) || is.language(x) || is.symbol(x) || is.expression(x)) return("")
-  x <- as.character(x)
 
-  # Regex patterns to catch common author formats
-  me_rx <- paste0(
-    "(?i)",
-    "\\bNicholas\\s+C\\.?\\s*Borcherding\\b|",
-    "\\bNicholas\\s+Borcherding\\b|",
-    "\\bN\\.?\\s*C\\.?\\s*Borcherding\\b|",
-    "\\bBorcherding,\\s*N(?:\\.?\\s*C\\.?)?\\b|",
-    "\\bBorcherding,\\s*N\\b"
+  # If they handed us an abstract record, use its authors field
+  if (is.list(x) && !is.null(x$authors)) x <- x$authors
+
+  # If still a list, drop non-character-ish entries and collapse
+  if (is.list(x)) {
+    x <- unlist(x, use.names = FALSE)
+  }
+  # Keep only atomic, non-language, non-function bits
+  keep <- vapply(x, function(z) {
+    is.atomic(z) && !is.language(z) && !is.symbol(z) && !is.expression(z) && !is.function(z)
+  }, logical(1L))
+  x <- x[keep]
+  x <- paste(as.character(x), collapse = ", ")
+
+  patterns <- c(
+    "Borcherding,?\\s*N\\.?\\s*C?\\.?",
+    "Borcherding,?\\s*Nicholas\\s*C?\\.?",
+    "N\\.?\\s*C?\\.?\\s*Borcherding",
+    "Nicholas\\s*C?\\.?\\s*Borcherding"
   )
 
-  # Use \\0 for entire match replacement (Pandoc will render ** ** as bold)
-  gsub(me_rx, "**\\0**", x, perl = TRUE)
+  for (p in patterns) {
+    m <- gregexpr(p, x, perl = TRUE, ignore.case = TRUE)
+    regmatches(x, m) <- lapply(regmatches(x, m), function(hits) {
+      ifelse(hits == "", hits, paste0("**", hits, "**"))
+    })
+  }
+  x
 }
 ```
 
-# Contact
+## Contact
 ```{r}
-# helpers (if not already defined above)
-`%||%` <- function(x, y) if (is.null(x)) y else x
-safe_chr <- function(x) {
-  if (is.null(x)) return("")
-  if (is.list(x)) return(paste(vapply(x, safe_chr, ""), collapse = ", "))
-  if (is.function(x) || is.language(x) || is.symbol(x) || is.expression(x)) return("")
-  val <- tryCatch(as.character(x), error = function(e) "")
-  if (length(val)) val[[1]] else ""
-}
-
-name  <- safe_chr(cv$name)
-email <- safe_chr(cv$contact$email)
-site  <- safe_chr(cv$website %||% cv$contact$website)
-phone <- safe_chr(cv$phone   %||% cv$contact$phone)
-addr  <- safe_chr(cv$address %||% cv$contact$address)
-
-name_line <- paste0("**", name, "**")
-
-contact_parts <- c(
-email %||% "",
-site %||% "",
-phone%||% ""
-)
+contact_parts <- c(cv$contact$email, cv$website, cv$phone)
 contact_line <- paste(Filter(nzchar, contact_parts), collapse = " · ")
+addr_line <- cv$address
 
-addr_line <- as.character(addr %||% "")
+# Check output format and apply centering
+is_pdf <- knitr::is_latex_output()
+line_break <- if (is_pdf) " \\\\" else "<br>"
+contact_block <- paste(contact_line, addr_line, sep = line_break)
 
-cat(
-paste(
-Filter(nzchar, c(name_line, "", contact_line, addr_line)),
-collapse = "\n"
-),
-"\n\n",
-sep = ""
-)
+if (is_pdf) {
+  cat(paste0("\\begin{center}\n", contact_block, "\n\\end{center}"))
+} else {
+  cat(paste0("<div style='text-align: center;'>\n", contact_block, "\n</div>"))
+}
 ```
 
 ## Positions
@@ -186,12 +178,13 @@ if (!is.null(ed$guest_editor) && length(ed$guest_editor)) {
   cat("\n\n")
 }
 
-ahr <- ed$ad_hoc_reviews %||% list()
+ahr <- cv$editorial$ad_hoc_reviews %||% list()
 if (length(ahr)) {
-  items <- map_chr(ahr, function(x) if (is.character(x)) glue("- {x}") else glue("- {x$journal}{ifelse(!is.null(x$year), glue(' ({x$year})'), '')}"))
-  cat("**Ad Hoc Reviews**\n")
-  cat(items, sep = "\n")
-} else cat("_No ad hoc reviews listed_")
+  cat("**Ad Hoc Reviews**\n\n")
+  cat(paste(ahr, collapse = ", "))
+} else {
+  cat("_No ad hoc reviews listed_")
+}
 ```
 
 ## Service & Committees
@@ -291,7 +284,7 @@ if (length(ipn)) {
 ```
 
 ## Conference Abstracts
-```{r}
+```{r, results='asis'}
 abs <- pres$abstracts %||% list()
 if (length(abs)) {
   cat(map_chr(abs, ~ glue("- {.x$year}: {embolden_me(.x$authors)}. *{.x$title}*. {.x$venue}")), sep = "\n")
