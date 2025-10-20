@@ -92,5 +92,4 @@ Nick develops open-source software for immune repertoire analysis, including
 [Ibex](https://github.com/BorchLab/Ibex),
 and [immReferent](https://github.com/BorchLab/immReferent).
 
-{{< icon name="download" pack="fas" >}}  
-[Download my Curriculum Vitae]({{< staticref "uploads/borcherding_cv.pdf" "newtab" >}}).
+{{< icon name="download" pack="fas" >}} [Download my Curriculum Vitae]({{< staticref "files/borcherding_cv.pdf" "newtab" >}})
