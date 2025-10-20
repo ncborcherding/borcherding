@@ -50,7 +50,7 @@ jobs:
 
       - name: Install R packages
         run: |
-          Rscript -e 'install.packages(c("yaml","glue","purrr","dplyr","knitr", "rmarkdown"))'
+          Rscript -e 'install.packages(c("yaml","glue","purrr","dplyr","knitr", "rmarkdown", "stringr"))'
 
       - name: Setup Quarto (with TinyTeX for PDF)
         uses: quarto-dev/quarto-actions/setup@v2
