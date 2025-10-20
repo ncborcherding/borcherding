@@ -3,24 +3,41 @@ title: "Curriculum Vitae — Nicholas C. Borcherding"
 author: "Nicholas C. Borcherding, MD PhD"
 format:
   pdf:
-    toc: false
+    pdf-engine: xelatex
+    cite-method: citeproc
     number-sections: false
+    toc: false
     geometry: margin=1in
+    linestretch: 1.1
   html:
     theme: cosmo
     toc: true
 filters:
   - bold-author.lua
+bibliography: "data/pubs.bib"
+nocite: "@*"
+link-citations: true
 execute:
   echo: false
 ---
 
 ```{r}
-# Core libraries
-library(yaml)
-library(glue)
-library(purrr)
-library(dplyr)
+# Global chunk defaults
+knitr::opts_chunk$set(
+  echo    = FALSE,
+  message = FALSE,
+  warning = FALSE,
+  results = "asis",
+  comment = NA
+)
+
+suppressPackageStartupMessages({
+  library(yaml)
+  library(glue)
+  library(purrr)
+  library(dplyr)
+  library(stringr)
+})
 
 # Load YAML (expects 'cv.yaml' in the working directory)
 cv <- yaml::read_yaml("data/cv.yml")
@@ -35,23 +52,67 @@ fmt_range <- function(start, end) {
   if (nchar(s) && nchar(e)) glue("{s}–{e}") else nz(s, e)
 }
 
-# Bold your name in author strings (covers "Borcherding, N.", "Nicholas C. Borcherding", etc.)
-my_name_rx <- "(?i)(Borcherding,?\\s*N(?:\\.?\\s*C\\.)?|Nicholas\\s*C\\.?\\s*Borcherding)"
 embolden_me <- function(x) {
   if (is.null(x)) return("")
-  gsub(my_name_rx, function(m) paste0("**", m, "**"), x, perl = TRUE)
-}
+  # Flatten lists safely
+  if (is.list(x)) x <- paste(unlist(x, use.names = FALSE), collapse = ", ")
+  # Guard against functions and expressions
+  if (is.function(x) || is.language(x) || is.symbol(x) || is.expression(x)) return("")
+  x <- as.character(x)
 
-# Contact fields (some are at top-level in YAML)
-contact_name  <- nz(cv$name, "Nicholas C. Borcherding, MD PhD")
-contact_email <- nz(cv$contact$email, "")
-contact_site  <- nz(cv$website, nz(cv$contact$website, ""))
-contact_phone <- nz(cv$phone,   nz(cv$contact$phone, ""))
-contact_addr  <- nz(cv$address, nz(cv$contact$address, ""))
+  # Regex patterns to catch common author formats
+  me_rx <- paste0(
+    "(?i)",
+    "\\bNicholas\\s+C\\.?\\s*Borcherding\\b|",
+    "\\bNicholas\\s+Borcherding\\b|",
+    "\\bN\\.?\\s*C\\.?\\s*Borcherding\\b|",
+    "\\bBorcherding,\\s*N(?:\\.?\\s*C\\.?)?\\b|",
+    "\\bBorcherding,\\s*N\\b"
+  )
+
+  # Use \\0 for entire match replacement (Pandoc will render ** ** as bold)
+  gsub(me_rx, "**\\0**", x, perl = TRUE)
+}
 ```
 
 # Contact
-`r pr(glue("{contact_name}\n\n{contact_email}{ifelse(nchar(contact_email) && nchar(contact_site), ' · ', '')}{contact_site}{ifelse((nchar(contact_email) || nchar(contact_site)) && nchar(contact_phone), ' · ', '')}{contact_phone}\n{contact_addr}"))`
+```{r}
+# helpers (if not already defined above)
+`%||%` <- function(x, y) if (is.null(x)) y else x
+safe_chr <- function(x) {
+  if (is.null(x)) return("")
+  if (is.list(x)) return(paste(vapply(x, safe_chr, ""), collapse = ", "))
+  if (is.function(x) || is.language(x) || is.symbol(x) || is.expression(x)) return("")
+  val <- tryCatch(as.character(x), error = function(e) "")
+  if (length(val)) val[[1]] else ""
+}
+
+name  <- safe_chr(cv$name)
+email <- safe_chr(cv$contact$email)
+site  <- safe_chr(cv$website %||% cv$contact$website)
+phone <- safe_chr(cv$phone   %||% cv$contact$phone)
+addr  <- safe_chr(cv$address %||% cv$contact$address)
+
+name_line <- paste0("**", name, "**")
+
+contact_parts <- c(
+email %||% "",
+site %||% "",
+phone%||% ""
+)
+contact_line <- paste(Filter(nzchar, contact_parts), collapse = " · ")
+
+addr_line <- as.character(addr %||% "")
+
+cat(
+paste(
+Filter(nzchar, c(name_line, "", contact_line, addr_line)),
+collapse = "\n"
+),
+"\n\n",
+sep = ""
+)
+```
 
 ## Positions
 ```{r}
@@ -69,16 +130,20 @@ edu <- cv$education %||% list()
 trn <- cv$training %||% list()
 
 if (length(edu)) {
-  cat("**Education**\n")
-  cat(map_chr(edu, ~ glue("- **{.x$degree}**, {.x$org}, {.x$year}")), sep = "\n")
-} else cat("_Education not listed_\n")
+cat("Education\n\n")
+cat(purrr::map_chr(edu, ~ glue::glue("- {.x$degree}, {.x$org}, {.x$year}")), sep = "\n")
+} else {
+cat("Education not listed\n")
+}
 
 cat("\n\n")
 
 if (length(trn)) {
-  cat("**Postgraduate Training**\n")
-  cat(map_chr(trn, ~ glue("- **{.x$title}**, {.x$org} ({fmt_range(.x$start, .x$end)})")), sep = "\n")
-} else cat("_Training not listed_")
+cat("Postgraduate Training\n\n")
+cat(purrr::map_chr(trn, ~ glue::glue("- {.x$title}, {.x$org} ({fmt_range(.x$start, .x$end)})")), sep = "\n")
+} else {
+cat("Training not listed")
+}
 ```
 
 ## Professional Licensure
@@ -134,16 +199,16 @@ if (length(ahr)) {
 srv <- cv$service %||% list()
 
 if (!is.null(srv$institutional) && length(srv$institutional)) {
-  cat("**Institutional**\n")
-  cat(map_chr(srv$institutional, ~ glue("- {.x$committee} ({fmt_range(.x$start, .x$end)})")), sep = "\n")
-  cat("\n\n")
+cat("Institutional\n\n")
+cat(purrr::map_chr(srv$institutional, ~ glue::glue("- {.x$committee} ({fmt_range(.x$start, .x$end)})")), sep = "\n")
+cat("\n\n")
 }
 
 if (!is.null(srv$national) && length(srv$national)) {
-  cat("**National**\n")
-  cat(map_chr(srv$national, ~ glue("- {.x$committee} ({fmt_range(.x$start, .x$end)})")), sep = "\n")
+cat("National\n\n")
+cat(purrr::map_chr(srv$national, ~ glue::glue("- {.x$committee} ({fmt_range(.x$start, .x$end)})")), sep = "\n")
 } else if (is.null(srv$institutional) || !length(srv$institutional)) {
-  cat("_(none listed)_")
+cat("(none listed)")
 }
 ```
 
@@ -152,16 +217,16 @@ if (!is.null(srv$national) && length(srv$national)) {
 mnt <- cv$mentorship %||% list()
 
 if (!is.null(mnt$research) && length(mnt$research)) {
-  cat("**Research Mentorship**\n")
-  cat(map_chr(mnt$research, ~ glue("- {.x$mentee}, {.x$level}, {fmt_range(.x$start, 'Present')}: {.x$topic}")), sep = "\n")
-  cat("\n\n")
+cat("Research Mentorship\n\n")
+cat(purrr::map_chr(mnt$research, ~ glue::glue("- {.x$mentee}, {.x$level}, {fmt_range(.x$start, 'Present')}: {.x$topic}")), sep = "\n")
+cat("\n\n")
 }
 
 if (!is.null(mnt$career) && length(mnt$career)) {
-  cat("**Career Development**\n")
-  cat(map_chr(mnt$career, ~ glue("- {.x$mentee}, {.x$level}, {fmt_range(.x$start, 'Present')}: {.x$topic}")), sep = "\n")
+cat("Career Development\n\n")
+cat(purrr::map_chr(mnt$career, ~ glue::glue("- {.x$mentee}, {.x$level}, {fmt_range(.x$start, 'Present')}: {.x$topic}")), sep = "\n")
 } else if (is.null(mnt$research) || !length(mnt$research)) {
-  cat("_(none listed)_")
+cat("(none listed)")
 }
 ```
 
@@ -235,11 +300,14 @@ if (length(abs)) {
 
 ## Publications
 ```{r}
-# If data/pubs.bib exists (auto-generated by your GitHub Action), render a references block.
-if (!is.null(cv$selected_publications_bib) && file.exists(file.path(cv$selected_publications_bib))) {
-  knitr::knit_meta_add(list(bibliography = cv$selected_publications_bib))
-  cat("\n::: {#refs}\n:::\n")
+# Show all items from the .bib and render them at the #refs div
+if (!is.null(cv$selected_publications_bib) && file.exists(cv$selected_publications_bib)) {
+  knitr::knit_meta_add(list(
+    bibliography = cv$selected_publications_bib,
+    nocite       = "@*"         
+  ))
+  cat("\n\n::: {#refs}\n:::\n\n")
 } else {
-  cat("_(bibliography file not found — set `selected_publications_bib` in cv.yaml)_")
+  cat("_(bibliography file not found — set `selected_publications_bib` in cv.yaml and ensure the path exists)_\n")
 }
 ```
