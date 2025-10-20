@@ -60,13 +60,13 @@ social:
     link: https://www.linkedin.com/in/thehumanborch/
   - icon: cv
     icon_pack: ai
-    link: uploads/borcherding_cv.pdf
+    link: files/Borcherding_CV.pdf
 
 # Highlight author in lists?
 highlight_name: true
 
 # Auto-generated CV file (regenerated from Quarto)
-cv_file: "uploads/borcherding_cv.pdf"
+cv_file: "files/Borcherding_CV.pdf"
 
 # Show the "About" widget with dynamic CV link
 widget: "about"
@@ -92,4 +92,3 @@ Nick develops open-source software for immune repertoire analysis, including
 [Ibex](https://github.com/BorchLab/Ibex),
 and [immReferent](https://github.com/BorchLab/immReferent).
 
-{{< icon name="download" pack="fas" >}} [Download my Curriculum Vitae]({{< staticref "files/borcherding_cv.pdf" "newtab" >}})
