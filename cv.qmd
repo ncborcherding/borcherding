@@ -21,8 +21,9 @@ execute:
 Assistant Professor\\
 Department of Pathology and Immunology\\
 Washington University in St. Louis\\
-\texttt{borcherding.n@wustl.edu} — \url{https://www.borch.dev/}
-\par\vspace{0.6em}\hrule\vspace{1.0em}
+\texttt{borcherding.n@wustl.edu} | \url{https://www.borch.dev/} \\
+\textit{Compiled on `r format(Sys.Date(), "%B %d, %Y")`}\\
+\par\vspace{0.4em}
 \end{center}
 
 ```{r}
