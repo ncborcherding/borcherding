@@ -4,13 +4,6 @@ metadata:
 
 name: "Nicholas C. Borcherding, MD PhD"
 
-contact:
-  email: "borcherding.n@wustl.edu"
-
-website: "https://www.borch.dev"
-phone: "(314) 747-0685"
-address: "BJC Institute of Health, 425 S. Euclid Ave, St. Louis, MO 63110"
-
 positions:
   - title: "Clinical Assistant Professor of Pathology and Immunology"
     org: "Washington University in St. Louis"
@@ -97,6 +90,8 @@ editorial:
     - "PLoS Computational Biology"
     - "Science Advances"
     - "Science Immunology"
+  funding:
+    - "Swiss National Science Foundation"
 
 service:
   institutional:
@@ -235,6 +230,11 @@ software:
     role: "Author"
     description: "B-cell receptor embedding and sequence analysis"
     link: "https://github.com/BorchLab/Ibex"
+    year: "2023"
+  - name: "ClamBake"
+    role: "Author"
+    description: "Metabolic estimation for CLAM cages, licensced to Columbus Instruments"
+    link: NA
     year: "2023"
   - name: "immApex"
     role: "Author"

@@ -61,13 +61,11 @@ jobs:
       - name: Render CV (PDF + HTML)
         run: |
           quarto render cv.qmd --to pdf --output cv.pdf
-          quarto render cv.qmd --to html --output cv.html
           mkdir -p static/files
           cp cv.pdf  static/files/Borcherding_CV.pdf
-          cp cv.html static/files/Borcherding_CV.html
 
       - name: Commit rendered CV artifacts (if changed)
         run: |
-          git add static/files/Borcherding_CV.pdf static/files/Borcherding_CV.html || true
+          git add static/files/Borcherding_CV.pdf || true
           git commit -m "chore: auto-render CV artifacts" || echo "No changes"
           git push || true

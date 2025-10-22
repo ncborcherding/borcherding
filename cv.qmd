@@ -1,29 +1,32 @@
 ---
-title: "Nicholas C. Borcherding"
 format:
   pdf:
     pdf-engine: xelatex
     toc: false
     number-sections: false
-    citations: true
-    bibliography: data/pubs.bib
     geometry: margin=1in
+    csl: vancouver.csl
+    nocite: "@*"
     linestretch: 1.1
-  html:
-    theme: cosmo
-    toc: true
-filters:
-  - bold-author.lua
-bibliography: "data/pubs.bib"
-csl: vancouver.csl
-nocite: "@*"
-link-citations: true
-citation-number: true  
+    header-includes:
+      - \usepackage{hyperref}
+      - \usepackage{titling}
+      - \pretitle{}\posttitle{}\predate{}\postdate{}
 execute:
   echo: false
 ---
 
+\begin{center}
+{\Huge \textbf{Nicholas C. Borcherding}}\par\vspace{0.35em}
+Assistant Professor\\
+Department of Pathology and Immunology\\
+Washington University in St. Louis\\
+\texttt{borcherding.n@wustl.edu} — \url{https://www.borch.dev/}
+\par\vspace{0.6em}\hrule\vspace{1.0em}
+\end{center}
+
 ```{r}
+#| include: false
 # Global chunk defaults
 knitr::opts_chunk$set(
   echo    = FALSE,
@@ -39,6 +42,7 @@ suppressPackageStartupMessages({
   library(purrr)
   library(dplyr)
   library(stringr)
+  library(RefManageR)
 })
 
 # Load YAML (expects 'cv.yaml' in the working directory)
@@ -86,24 +90,106 @@ embolden_me <- function(x) {
   }
   x
 }
-```
 
-## Contact
-```{r}
-contact_parts <- c(cv$contact$email, cv$website, cv$phone)
-contact_line <- paste(Filter(nzchar, contact_parts), collapse = " · ")
-addr_line <- cv$address
 
-# Check output format and apply centering
-is_pdf <- knitr::is_latex_output()
-line_break <- if (is_pdf) " \\\\" else "<br>"
-contact_block <- paste(contact_line, addr_line, sep = line_break)
-
-if (is_pdf) {
-  cat(paste0("\\begin{center}\n", contact_block, "\n\\end{center}"))
-} else {
-  cat(paste0("<div style='text-align: center;'>\n", contact_block, "\n</div>"))
+.scalarize <- function(x) {
+  if (is.null(x)) return("")
+  if (is.list(x)) x <- unlist(x, use.names = FALSE, recursive = TRUE)
+  x <- as.character(x)
+  x <- x[!is.na(x) & nzchar(trimws(x))]
+  if (!length(x)) return("")
+  paste(x, collapse = " ")
 }
+
+fix_markup <- function(x) {
+  x <- .scalarize(x)
+  x <- str_replace_all(x, regex("<\\s*i\\s*>(.*?)<\\s*/\\s*i\\s*>",  ignore_case = TRUE), "*\\1*")
+  x <- str_replace_all(x, regex("<\\s*sub\\s*>(.*?)<\\s*/\\s*sub\\s*>", ignore_case = TRUE), "_{\\1}")
+  x <- str_replace_all(x, regex("<\\s*sup\\s*>(.*?)<\\s*/\\s*sup\\s*>", ignore_case = TRUE), "^{\\1}")
+  x <- str_replace_all(x, "\\\\alpha", "α")
+  x <- str_replace_all(x, "\\\\beta",  "β")
+  x <- str_replace_all(x, "\\\\gamma", "γ")
+  x <- str_replace_all(x, "\\\\kappa", "κ")
+  x <- str_replace_all(x, regex("(?<![A-Za-z])alpha(?![A-Za-z])"), "α")
+  x <- str_replace_all(x, regex("(?<![A-Za-z])beta(?![A-Za-z])"),  "β")
+  x <- str_replace_all(x, regex("(?<![A-Za-z])gamma(?![A-Za-z])"), "γ")
+  x <- str_replace_all(x, regex("(?<![A-Za-z])kappa(?![A-Za-z])"), "κ")
+  x <- str_replace_all(x, "&alpha;", "α")
+  x <- str_replace_all(x, "&beta;",  "β")
+  x <- str_replace_all(x, "&gamma;", "γ")
+  x <- str_replace_all(x, "&kappa;", "κ")
+  # HLA alleles: DRB1*15:01 -> DRB1\*15:01
+  x <- str_replace_all(x, "(\\b[[:upper:]][[:upper:][:digit:]-]*)\\*", "\\1\\\\*")
+  x
+}
+
+bold_author <- function(x) {
+  x <- .scalarize(x)
+  x <- str_replace_all(x, fixed("**"), "\uF000\uF000")   # protect existing bold
+  pats <- c(
+    "\\bBorcherding,\\s*N[\\s\\.]*(?:C)?\\.?\\b",
+    "\\bBorcherding\\s+N[\\s\\.]*(?:C)?\\.?\\b",
+    "\\bNicholas\\s*C?\\.?\\s+Borcherding\\b",
+    "\\bN[\\s\\.]*(?:C)?\\.?\\s+Borcherding\\b"
+  )
+  for (p in pats) x <- str_replace_all(x, regex(p, ignore_case = TRUE), "**\\0**")
+  str_replace_all(x, "\uF000\uF000", "**")
+}
+
+fmt_entry <- function(s) s |> .scalarize() |> fix_markup() |> bold_author()
+
+# ---- Bib formatting helpers ----
+initials <- function(given_vec) {
+  # given_vec is a character vector of given names; collapse to initials without dots (N C -> NC)
+  if (length(given_vec) == 0) return("")
+  paste0(str_replace_all(substr(given_vec, 1, 1), "[^A-Za-z]", ""), collapse = "")
+}
+
+format_authors_vancouver <- function(persons) {
+  # persons is a list of 'person' objects (utils::person)
+  if (is.null(persons) || length(persons) == 0) return("")
+  names <- map_chr(persons, function(p) {
+    fam <- .scalarize(p$family)
+    giv <- initials(unlist(p$given, use.names = FALSE))
+    paste0(fam, " ", giv)
+  })
+  paste(names, collapse = ", ")
+  
+}
+
+fmt_pages <- function(pages) {
+  if (is.null(pages) || !nzchar(pages)) return("")
+  # Compress page ranges like 1234-1240 -> 1234–40 (optional)
+  str_replace(pages, "^(\\d+)-(\\d*)(\\d{2})$", "\\1–\\3")
+}
+
+format_bibentry_vancouver <- function(be) {
+  # be is a single RefManageR::BibEntry
+  type <- tolower(be$bibtype %||% "")
+  au   <- format_authors_vancouver(be$author)
+  yr   <- be$year %||% be$date %||% ""
+  ti   <- be$title %||% ""
+  ti <- str_trim(ti)
+  ti <- str_remove(ti, "[[:punct:]]+$")
+  jr   <- be$journal %||% be$journaltitle %||% be$booktitle %||% ""
+  vol  <- be$volume %||% ""
+  iss  <- be$number %||% be$issue %||% ""
+  pg   <- fmt_pages(be$pages %||% "")
+  doi  <- be$doi %||% ""
+
+  # Title: leave plain; italics will be preserved if present via fix_markup (e.g., <i>…</i>)
+  # Journal often italicized in Vancouver; we’ll leave plain and let CSL/TeX handle if desired
+  core <- paste0(au, ". ", ti, ". ", jr, ". ", yr)
+  # add volume/issue/pages if present
+  if (nzchar(vol)) core <- paste0(core, ";", vol)
+  if (nzchar(iss)) core <- paste0(core, "(", iss, ")")
+  if (nzchar(pg))  core <- paste0(core, ":", pg)
+  core <- paste0(core, ".")
+  if (nzchar(doi)) core <- paste0(core, " doi:", doi)
+
+  fmt_entry(core)
+}
+
 ```
 
 ## Positions
@@ -122,7 +208,7 @@ edu <- cv$education %||% list()
 trn <- cv$training %||% list()
 
 if (length(edu)) {
-cat("Education\n\n")
+cat("**Education**\n\n")
 cat(purrr::map_chr(edu, ~ glue::glue("- {.x$degree}, {.x$org}, {.x$year}")), sep = "\n")
 } else {
 cat("Education not listed\n")
@@ -131,7 +217,7 @@ cat("Education not listed\n")
 cat("\n\n")
 
 if (length(trn)) {
-cat("Postgraduate Training\n\n")
+cat("**Postgraduate Training**\n\n")
 cat(purrr::map_chr(trn, ~ glue::glue("- {.x$title}, {.x$org} ({fmt_range(.x$start, .x$end)})")), sep = "\n")
 } else {
 cat("Training not listed")
@@ -192,13 +278,13 @@ if (length(ahr)) {
 srv <- cv$service %||% list()
 
 if (!is.null(srv$institutional) && length(srv$institutional)) {
-cat("Institutional\n\n")
+cat("**Institutional**\n\n")
 cat(purrr::map_chr(srv$institutional, ~ glue::glue("- {.x$committee} ({fmt_range(.x$start, .x$end)})")), sep = "\n")
 cat("\n\n")
 }
 
 if (!is.null(srv$national) && length(srv$national)) {
-cat("National\n\n")
+cat("**National**\n\n")
 cat(purrr::map_chr(srv$national, ~ glue::glue("- {.x$committee} ({fmt_range(.x$start, .x$end)})")), sep = "\n")
 } else if (is.null(srv$institutional) || !length(srv$institutional)) {
 cat("(none listed)")
@@ -210,13 +296,13 @@ cat("(none listed)")
 mnt <- cv$mentorship %||% list()
 
 if (!is.null(mnt$research) && length(mnt$research)) {
-cat("Research Mentorship\n\n")
+cat("**Research Mentorship**\n\n")
 cat(purrr::map_chr(mnt$research, ~ glue::glue("- {.x$mentee}, {.x$level}, {fmt_range(.x$start, 'Present')}: {.x$topic}")), sep = "\n")
 cat("\n\n")
 }
 
 if (!is.null(mnt$career) && length(mnt$career)) {
-cat("Career Development\n\n")
+cat("**Career Development**\n\n")
 cat(purrr::map_chr(mnt$career, ~ glue::glue("- {.x$mentee}, {.x$level}, {fmt_range(.x$start, 'Present')}: {.x$topic}")), sep = "\n")
 } else if (is.null(mnt$research) || !length(mnt$research)) {
 cat("(none listed)")
@@ -227,7 +313,7 @@ cat("(none listed)")
 ```{r}
 awd <- cv$awards %||% list()
 if (length(awd)) {
-  cat(map_chr(awd, ~ glue("- {.x$year}: **{.x$name}**")), sep = "\n")
+  cat(map_chr(awd, ~ glue("- **{.x$year}:** {.x$name}")), sep = "\n")
 } else cat("_(none listed)_")
 ```
 
@@ -252,17 +338,33 @@ if (length(sft)) {
 ```{r}
 rf <- cv$research_funding %||% list()
 inst <- rf$institutional %||% list()
-if (length(inst)) {
-  cat(map_chr(inst, ~ glue("- {.x$years}: *{.x$title}* — {.x$sponsor}. Role: **{.x$role}**")), sep = "\n")
-} else cat("_(none listed)_")
+if (length(inst) && is.list(inst)) {
+  cat(
+    purrr::map_chr(
+      inst,
+      ~ glue::glue("- {.x$years}: *{.x$title}* — {.x$sponsor}. Role: **{.x$role}**")
+    ),
+    sep = "\n"
+  )
+} else {
+  cat("_(none listed)_")
+}
 ```
 
 **National**
 ```{r}
 nat <- rf$national %||% list()
-if (length(nat)) {
-  cat(map_chr(nat, ~ glue("- {.x$years}: *{.x$title}* — {.x$sponsor}. Role: **{.x$role}**")), sep = "\n")
-} else cat("_(none listed)_")
+if (length(nat) && is.list(nat)) {
+  cat(
+    purrr::map_chr(
+      nat,
+      ~ glue::glue("- {.x$years}: *{.x$title}* — {.x$sponsor}. Role: **{.x$role}**")
+    ),
+    sep = "\n"
+  )
+} else {
+  cat("_(none listed)_")
+}
 ```
 
 ## Invited Presentations
@@ -285,22 +387,48 @@ if (length(ipn)) {
 
 ## Conference Abstracts
 ```{r, results='asis'}
-abs <- pres$abstracts %||% list()
+abs <- cv$presentations$abstracts %||% list()
+
 if (length(abs)) {
-  cat(map_chr(abs, ~ glue("- {.x$year}: {embolden_me(.x$authors)}. *{.x$title}*. {.x$venue}")), sep = "\n")
-} else cat("_(none listed)_")
+  out <- map_chr(abs, fmt_entry)   # each element now guaranteed length 1
+  cat(paste0("- ", out), sep = "\n")
+} else {
+  cat("_No abstracts listed_\n")
+}
 ```
 
 ## Publications
 ```{r}
-# Show all items from the .bib and render them at the #refs div
-if (!is.null(cv$selected_publications_bib) && file.exists(cv$selected_publications_bib)) {
-  knitr::knit_meta_add(list(
-    bibliography = cv$selected_publications_bib,
-    nocite       = "@*"         
-  ))
-  cat("\n\n::: {#refs}\n:::\n\n")
+pubs <- cv$selected_publications_bib
+
+if (length(pubs)) {
+  if (length(pubs) == 1 && grepl("\\.bib$", pubs, ignore.case = TRUE)) {
+    # Case A: they gave us a path to a .bib file; print ALL entries (or select via keys)
+    bib <- ReadBib(pubs, check = FALSE)
+    # Optional: choose a subset using keys if you have them
+    # keys <- c("PMID35402439","PMID35361907", ...)  # define if desired
+    # if (length(keys)) bib <- bib[keys]
+
+    items <- map_chr(as.list(bib), format_bibentry_vancouver)
+  } else if (is.character(pubs) && all(grepl("^@\\w+\\{", pubs))) {
+    # Case B: user passed raw BibTeX entries as strings
+    tmp <- tempfile(fileext = ".bib")
+    writeLines(pubs, tmp)
+    bib <- ReadBib(tmp, check = FALSE)
+    items <- map_chr(as.list(bib), format_bibentry_vancouver)
+  } else if (is.list(pubs) || is.vector(pubs)) {
+    # Case C: already formatted strings or lists; just pass through fmt_entry
+    items <- map_chr(pubs, fmt_entry)
+  } else {
+    items <- character(0)
+  }
+
+  if (length(items)) {
+    cat(paste0(seq_along(items), ". ", items), sep = "\n")
+  } else {
+    cat("_No publications listed_\n")
+  }
 } else {
-  cat("_(bibliography file not found — set `selected_publications_bib` in cv.yaml and ensure the path exists)_\n")
+  cat("_No publications listed_\n")
 }
 ```
