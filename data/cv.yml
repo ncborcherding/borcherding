@@ -445,5 +445,18 @@ presentations:
       title: "CD177, A novel metastasis suppressor of breast cancer"
       authors: "Xie, Q., Borcherding, N., Kolb, R., & Zhang, W."
       venue: "American Association for Cancer Research Meeting, San Diego, CA"
+  textbook:
+    - year: "2020"
+      title: "Understanding and targeting human cancer regulatory T cells to improve cancer therapy. T Regulatory Cells in Health and Disease"
+      authors: "Kolb, R., Borcherding, N., Zhang, W."
+      isbn: "ISBN: 978-3-030-34025-4"
+    - year: "2019"
+      title: "IL-1 signaling in the tumor microenvironment. Tumor Microenvironment"
+      authors: "Zhang, W., Borcherding, N., Kolb, R."
+      isbn: "ISBN: 978-3-030-34025-4"
+    - year: "2016"
+      title: "Advanced Nutrition and the Regulation of Metabolism"
+      authors: "Schalinske, K., Borcherding, N., Rowling, M."
+      isbn: "ISBN: 978-1-5165-1468-7"
 
 selected_publications_bib: "data/pubs.bib"

@@ -8,6 +8,7 @@ format:
     csl: vancouver.csl
     nocite: "@*"
     linestretch: 1.1
+    mainfont: "Times New Roman"
     header-includes:
       - \usepackage{hyperref}
       - \usepackage{titling}
@@ -17,12 +18,12 @@ execute:
 ---
 
 \begin{center}
-{\Huge \textbf{Nicholas C. Borcherding}}\par\vspace{0.35em}
+{\Huge \textbf{Nicholas C. Borcherding, M.D., Ph.D.}}\par\vspace{0.35em}
 Assistant Professor\\
 Department of Pathology and Immunology\\
 Washington University in St. Louis\\
 \texttt{borcherding.n@wustl.edu} | \url{https://www.borch.dev/} \\
-\textit{Compiled on `r format(Sys.Date(), "%B %d, %Y")`}\\
+{\small Compiled on `r format(Sys.Date(), "%B %d, %Y")`}\\
 \par\vspace{0.4em}
 \end{center}
 
@@ -179,7 +180,7 @@ format_bibentry_vancouver <- function(be) {
   doi  <- be$doi %||% ""
 
   # Title: leave plain; italics will be preserved if present via fix_markup (e.g., <i>…</i>)
-  # Journal often italicized in Vancouver; we’ll leave plain and let CSL/TeX handle if desired
+  # Journal often italicized in Vancouver; we'll leave plain and let CSL/TeX handle if desired
   core <- paste0(au, ". ", ti, ". ", jr, ". ", yr)
   # add volume/issue/pages if present
   if (nzchar(vol)) core <- paste0(core, ";", vol)
@@ -204,24 +205,24 @@ if (length(pos)) {
 ```
 
 ## Education & Training
+
+### Education
 ```{r}
 edu <- cv$education %||% list()
-trn <- cv$training %||% list()
-
 if (length(edu)) {
-cat("**Education**\n\n")
-cat(purrr::map_chr(edu, ~ glue::glue("- {.x$degree}, {.x$org}, {.x$year}")), sep = "\n")
+  cat(purrr::map_chr(edu, ~ glue::glue("- {.x$degree}, {.x$org}, {.x$year}")), sep = "\n")
 } else {
-cat("Education not listed\n")
+  cat("_(none listed)_")
 }
+```
 
-cat("\n\n")
-
+### Postgraduate Training
+```{r}
+trn <- cv$training %||% list()
 if (length(trn)) {
-cat("**Postgraduate Training**\n\n")
-cat(purrr::map_chr(trn, ~ glue::glue("- {.x$title}, {.x$org} ({fmt_range(.x$start, .x$end)})")), sep = "\n")
+  cat(purrr::map_chr(trn, ~ glue::glue("- {.x$title}, {.x$org} ({fmt_range(.x$start, .x$end)})")), sep = "\n")
 } else {
-cat("Training not listed")
+  cat("_(none listed)_")
 }
 ```
 
@@ -250,63 +251,75 @@ if (length(con)) {
 ```
 
 ## Editorial & Peer Review
+
+### Editorial/Review Boards
 ```{r}
 ed <- cv$editorial %||% list()
-
 if (!is.null(ed$review_board) && length(ed$review_board)) {
-  cat("**Editorial/Review Boards**\n")
-  cat(map_chr(ed$review_board, ~ glue("- {.x$journal}{ifelse(!is.null(.x$year), glue(' ({.x$year})'), '')}")), sep = "\n")
-  cat("\n\n")
+  cat(map_chr(ed$review_board, ~ glue("{.x$journal} ({.x$year})")), sep = ", ")
+} else {
+  cat("_(none listed)_")
 }
+```
 
+### Guest Editor
+```{r}
 if (!is.null(ed$guest_editor) && length(ed$guest_editor)) {
-  cat("**Guest Editor**\n")
-  cat(map_chr(ed$guest_editor, ~ glue("- {.x$journal}{ifelse(!is.null(.x$year), glue(' ({.x$year})'), '')}")), sep = "\n")
-  cat("\n\n")
+  cat(map_chr(ed$guest_editor, ~ glue("{.x$journal} ({.x$year})")), sep = ", ")
+} else {
+  cat("_(none listed)_")
 }
+```
 
+### Ad Hoc Reviews
+```{r}
 ahr <- cv$editorial$ad_hoc_reviews %||% list()
 if (length(ahr)) {
-  cat("**Ad Hoc Reviews**\n\n")
   cat(paste(ahr, collapse = ", "))
 } else {
-  cat("_No ad hoc reviews listed_")
+  cat("_(none listed)_")
 }
 ```
 
 ## Service & Committees
+
+### Institutional
 ```{r}
 srv <- cv$service %||% list()
-
 if (!is.null(srv$institutional) && length(srv$institutional)) {
-cat("**Institutional**\n\n")
-cat(purrr::map_chr(srv$institutional, ~ glue::glue("- {.x$committee} ({fmt_range(.x$start, .x$end)})")), sep = "\n")
-cat("\n\n")
+  cat(purrr::map_chr(srv$institutional, ~ glue::glue("- {.x$committee} ({fmt_range(.x$start, .x$end)})")), sep = "\n")
+} else {
+  cat("_(none listed)_")
 }
+```
 
+### National
+```{r}
 if (!is.null(srv$national) && length(srv$national)) {
-cat("**National**\n\n")
-cat(purrr::map_chr(srv$national, ~ glue::glue("- {.x$committee} ({fmt_range(.x$start, .x$end)})")), sep = "\n")
-} else if (is.null(srv$institutional) || !length(srv$institutional)) {
-cat("(none listed)")
+  cat(purrr::map_chr(srv$national, ~ glue::glue("- {.x$committee} ({fmt_range(.x$start, .x$end)})")), sep = "\n")
+} else {
+  cat("_(none listed)_")
 }
 ```
 
 ## Mentorship
+
+### Research Mentorship
 ```{r}
 mnt <- cv$mentorship %||% list()
-
 if (!is.null(mnt$research) && length(mnt$research)) {
-cat("**Research Mentorship**\n\n")
-cat(purrr::map_chr(mnt$research, ~ glue::glue("- {.x$mentee}, {.x$level}, {fmt_range(.x$start, 'Present')}: {.x$topic}")), sep = "\n")
-cat("\n\n")
+  cat(purrr::map_chr(mnt$research, ~ glue::glue("- {.x$mentee}, {.x$level}, {fmt_range(.x$start, 'Present')}: {.x$topic}")), sep = "\n")
+} else {
+  cat("_(none listed)_")
 }
+```
 
+### Career Development
+```{r}
 if (!is.null(mnt$career) && length(mnt$career)) {
-cat("**Career Development**\n\n")
-cat(purrr::map_chr(mnt$career, ~ glue::glue("- {.x$mentee}, {.x$level}, {fmt_range(.x$start, 'Present')}: {.x$topic}")), sep = "\n")
-} else if (is.null(mnt$research) || !length(mnt$research)) {
-cat("(none listed)")
+  cat(purrr::map_chr(mnt$career, ~ glue::glue("- {.x$mentee}, {.x$level}, {fmt_range(.x$start, 'Present')}: {.x$topic}")), sep = "\n")
+} else {
+  cat("_(none listed)_")
 }
 ```
 
@@ -335,7 +348,8 @@ if (length(sft)) {
 ```
 
 ## Research Funding
-**Institutional**
+
+### Institutional
 ```{r}
 rf <- cv$research_funding %||% list()
 inst <- rf$institutional %||% list()
@@ -352,7 +366,7 @@ if (length(inst) && is.list(inst)) {
 }
 ```
 
-**National**
+### National
 ```{r}
 nat <- rf$national %||% list()
 if (length(nat) && is.list(nat)) {
@@ -369,7 +383,8 @@ if (length(nat) && is.list(nat)) {
 ```
 
 ## Invited Presentations
-**Institutional**
+
+### Institutional
 ```{r}
 pres <- cv$presentations %||% list()
 ipi <- pres$invited$institutional %||% list()
@@ -378,7 +393,7 @@ if (length(ipi)) {
 } else cat("_(none listed)_")
 ```
 
-**National**
+### National
 ```{r}
 ipn <- pres$invited$national %||% list()
 if (length(ipn)) {
@@ -394,7 +409,7 @@ if (length(abs)) {
   out <- map_chr(abs, fmt_entry)   # each element now guaranteed length 1
   cat(paste0("- ", out), sep = "\n")
 } else {
-  cat("_No abstracts listed_\n")
+  cat("_(none listed)_")
 }
 ```
 
@@ -427,9 +442,9 @@ if (length(pubs)) {
   if (length(items)) {
     cat(paste0(seq_along(items), ". ", items), sep = "\n")
   } else {
-    cat("_No publications listed_\n")
+    cat("_(none listed)_")
   }
 } else {
-  cat("_No publications listed_\n")
+  cat("_(none listed)_")
 }
 ```
