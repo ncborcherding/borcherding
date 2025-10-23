@@ -8,7 +8,6 @@ format:
     csl: vancouver.csl
     nocite: "@*"
     linestretch: 1.1
-    mainfont: "Times New Roman"
     header-includes:
       - \usepackage{hyperref}
       - \usepackage{titling}
