@@ -52,10 +52,14 @@ jobs:
         run: |
           Rscript -e 'install.packages(c("yaml","glue","purrr","dplyr","knitr", "rmarkdown", "stringr", "RefManageR"))'
 
-      - name: Install Font
-        run: |
-          sudo apt-get update
-          sudo apt-get install msttcorefonts
+      - name: Install Fonts (Times New Roman)
+  	run: |
+    	# 1. Pre-configure debconf to automatically accept the EULA
+    	echo "ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true" | sudo debconf-set-selections
+    
+    	# 2. Update and install the fonts (now with the EULA pre-accepted)
+    	sudo apt-get update
+    	sudo apt-get install -y msttcorefonts
 
       - name: Setup Quarto (with TinyTeX for PDF)
         uses: quarto-dev/quarto-actions/setup@v2
