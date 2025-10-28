@@ -53,7 +53,7 @@ jobs:
           Rscript -e 'install.packages(c("yaml","glue","purrr","dplyr","knitr", "rmarkdown", "stringr", "RefManageR"))'
 
       - name: Install Fonts (Times New Roman)
-  	run: |
+        run: |
           echo "ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true" | sudo debconf-set-selections
           sudo apt-get update
           sudo apt-get install -y msttcorefonts
