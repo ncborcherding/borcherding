@@ -78,17 +78,27 @@ _build:
   publishResources: true
 ---
 
-Nick is an Assistant Professor in the **Department of Pathology and Immunology** at Washington University School of Medicine.  
-His clinical responsibilities include human leukocyte antigen testing in the contexts of transplant, autoimmunity, and cancer.
+Nick Borcherding is a physician–scientist whose work bridges **computational 
+immunology**, **clinical pathology**, and **transplant immunogenetics**. He 
+serves as an Assistant Professor in the **Department of Pathology and Immunology 
+at Washington University School of Medicine**, where his clinical practice 
+focuses on human leukocyte antigen  testing for transplantation, autoimmunity, 
+and cancer immunotherapy.
 
-He earned his **MD/PhD** as part of the Medical Scientist Training Program at the **University of Iowa**, where he was mentored by
-[Jon Brestoff](https://brestofflab.com/) and [David DeNardo](https://www.icce-wustl.org/david-denardo-lab.html).  
-His research focuses on the use of **innate cellular barcodes**—including mitochondrial genomes and adaptive immune receptor sequences—to track immune responses and predict clinical outcomes.
+Nick’s research explores how the adaptive immune system encodes and recalls 
+disease experiences. His lab integrates single-cell sequencing, systems 
+immunology, and machine learning to map immune diversity and predict clinical 
+outcomes. A particular focus is on the use of innate and adaptive cellular 
+barcodes, including mitochondrial genomes and immune receptor repertoires, to 
+trace clonal relationships across tissues and disease states.
 
-Nick develops open-source software for immune repertoire analysis, including
-[scRepertoire](https://github.com/ncborcherding/scRepertoire),
-[escape](https://github.com/ncborcherding/escape),
-[Trex](https://github.com/ncborcherding/Trex),
-[Ibex](https://github.com/BorchLab/Ibex),
-and [immReferent](https://github.com/BorchLab/immReferent).
+Beyond his laboratory and clinical roles, Nick is deeply invested in open data 
+science. He develops widely used open-source software for immune repertoire 
+and single-cell analysis, including
+
+- [scRepertoire](https://github.com/ncborcherding/scRepertoire)
+- [escape](https://github.com/ncborcherding/escape)
+- [Trex](https://github.com/ncborcherding/Trex)
+- [Ibex](https://github.com/BorchLab/Ibex)
+- [immReferent](https://github.com/BorchLab/immReferent)
 
