@@ -80,16 +80,16 @@ _build:
 
 Nick Borcherding is a physician–scientist whose work bridges **computational 
 immunology**, **clinical pathology**, and **transplant immunogenetics**. He 
-serves as an Assistant Professor in the **Department of Pathology and Immunology 
-at Washington University School of Medicine**, where his clinical practice 
+serves as an Assistant Professor in the Department of Pathology and Immunology 
+at **Washington University School of Medicine**, where his clinical practice 
 focuses on human leukocyte antigen  testing for transplantation, autoimmunity, 
 and cancer immunotherapy.
 
 Nick’s research explores how the adaptive immune system encodes and recalls 
 disease experiences. His lab integrates single-cell sequencing, systems 
 immunology, and machine learning to map immune diversity and predict clinical 
-outcomes. A particular focus is on the use of innate and adaptive cellular 
-barcodes, including mitochondrial genomes and immune receptor repertoires, to 
+outcomes. A particular focus is on the use of **innate and adaptive cellular 
+barcodes**, including mitochondrial genomes and immune receptor repertoires, to 
 trace clonal relationships across tissues and disease states.
 
 Beyond his laboratory and clinical roles, Nick is deeply invested in open data 
