@@ -12,6 +12,9 @@ format:
       - \usepackage{hyperref}
       - \usepackage{titling}
       - \pretitle{}\posttitle{}\predate{}\postdate{}
+      - \usepackage{fontspec}
+      - \setsansfont{Times New Roman}  
+      - \setmainfont{Times New Roman}  
 execute:
   echo: false
 ---
@@ -172,11 +175,15 @@ format_bibentry_vancouver <- function(be) {
   ti   <- be$title %||% ""
   ti <- str_trim(ti)
   ti <- str_remove(ti, "[[:punct:]]+$")
-  jr   <- be$journal %||% be$journaltitle %||% be$booktitle %||% ""
+  if(grepl("<sup>", ti)) {
+     ti <- gsub("<sup>", "",  ti)
+     ti <- gsub("</sup>", "",  ti)
+  }
+  jr   <- stringr::str_to_title(be$journal %||% be$journaltitle %||% be$booktitle %||% "")
   vol  <- be$volume %||% ""
   iss  <- be$number %||% be$issue %||% ""
   pg   <- fmt_pages(be$pages %||% "")
-  doi  <- be$doi %||% ""
+  pmid <- be$pmid
 
   # Title: leave plain; italics will be preserved if present via fix_markup (e.g., <i>…</i>)
   # Journal often italicized in Vancouver; we'll leave plain and let CSL/TeX handle if desired
@@ -186,7 +193,11 @@ format_bibentry_vancouver <- function(be) {
   if (nzchar(iss)) core <- paste0(core, "(", iss, ")")
   if (nzchar(pg))  core <- paste0(core, ":", pg)
   core <- paste0(core, ".")
-  if (nzchar(doi)) core <- paste0(core, " doi:", doi)
+  if (nzchar(pmid)) {
+    link_url <- paste0("https://pubmed.ncbi.nlm.nih.gov/", pmid)
+    link <- paste0(" [PMID:", pmid, "](", link_url, ")")
+    core <- paste0(core, link)
+  }
 
   fmt_entry(core)
 }

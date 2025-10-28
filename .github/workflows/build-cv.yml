@@ -52,6 +52,11 @@ jobs:
         run: |
           Rscript -e 'install.packages(c("yaml","glue","purrr","dplyr","knitr", "rmarkdown", "stringr", "RefManageR"))'
 
+      - name: Install Font
+        run: |
+          sudo apt-get update
+          sudo apt-get install msttcorefonts
+
       - name: Setup Quarto (with TinyTeX for PDF)
         uses: quarto-dev/quarto-actions/setup@v2
         with:
