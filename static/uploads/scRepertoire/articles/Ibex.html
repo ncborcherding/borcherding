@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scRepertoire</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.5.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.6.0</span>
       </span>
     </div>
 
@@ -102,12 +102,12 @@
     <li>
       <a href="../articles/Ibex.html">Combining Deep Learning and BCRs with Ibex</a>
     </li>
-    <li class="divider">
-    </li>
-<li class="dropdown-header">Other Workflow Integrations</li>
     <li>
       <a href="../articles/Running_Escape.html">Single-cell Gene Set Enrichment Analysis</a>
     </li>
+    <li class="divider">
+    </li>
+<li class="dropdown-header">Other Workflow Integrations</li>
     <li>
       <a href="../articles/immcantation.html">Combining Immcantation and scRepertoire</a>
     </li>
@@ -155,7 +155,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Combining Deep Learning and BCRs with Ibex</h1>
             
-            <h4 data-toc-skip class="date">Compiled: October 17,
+            <h4 data-toc-skip class="date">Compiled: October 31,
 2025</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/BorchLab/scRepertoire/blob/HEAD/vignettes/articles/Ibex.Rmd" class="external-link"><code>vignettes/articles/Ibex.Rmd</code></a></small>
@@ -315,8 +315,7 @@ genes.</td>
 </tbody>
 </table>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"ibex_vdj"</span><span class="op">)</span></span>
-<span><span class="va">combined.BCR</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/Ibex/man/combineExpandedBCR.html" class="external-link">combineExpandedBCR</a></span><span class="op">(</span>input.data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">ibex_vdj</span><span class="op">)</span>,</span>
+<code class="sourceCode R"><span><span class="va">combined.BCR</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/Ibex/man/combineExpandedBCR.html" class="external-link">combineExpandedBCR</a></span><span class="op">(</span>input.data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">ibex_vdj</span><span class="op">)</span>,</span>
 <span>                                   samples <span class="op">=</span> <span class="st">"Sample1"</span>,</span>
 <span>                                   filterNonproductive <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">combined.BCR</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">11</span><span class="op">)</span><span class="op">]</span></span></code></pre></div>
@@ -351,7 +350,7 @@ sequences are specific to sequences of 90 amino acids or fewer.</p>
 <p>A full list of available models is provided below:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">model.meta.data</span> <span class="op">&lt;-</span>  <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"metadata.csv"</span>, </span>
-<span>                                         package <span class="op">=</span> <span class="st">"Ibex"</span><span class="op">)</span><span class="op">)</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span>,<span class="fl">8</span><span class="op">)</span><span class="op">]</span></span>
+<span>                                               package <span class="op">=</span> <span class="st">"Ibex"</span><span class="op">)</span><span class="op">)</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span>,<span class="fl">8</span><span class="op">)</span><span class="op">]</span></span>
 <span><span class="va">model.meta.data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="st">"html"</span>, escape <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/kable_styling.html" class="external-link">kable_styling</a></span><span class="op">(</span>full_width <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
@@ -1446,7 +1445,7 @@ For the geometric transformation, defines the value of theta (default is
 <span>                            encoder.input <span class="op">=</span> <span class="st">"OHE"</span>, </span>
 <span>                            species <span class="op">=</span> <span class="st">"Mouse"</span>,</span>
 <span>                            verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## <span style="font-weight: bold;">1/7</span> <span style="color: #00BB00;">━━</span><span style="color: #BBBBBB;">━━━━━━━━━━━━━━━━━━</span> <span style="font-weight: bold;">0s</span> 31ms/step<span style="font-weight: bold;">2/7</span> <span style="color: #00BB00;">━━━━━</span><span style="color: #BBBBBB;">━━━━━━━━━━━━━━━</span> <span style="font-weight: bold;">0s</span> 2ms/step<span style="font-weight: bold;">7/7</span> <span style="color: #00BB00;">━━━━━━━━━━━━━━━━━━━━</span> <span style="font-weight: bold;">0s</span> 5ms/step</span></span></code></pre>
+<pre><code><span><span class="co">## <span style="font-weight: bold;">1/7</span> <span style="color: #00BB00;">━━</span><span style="color: #BBBBBB;">━━━━━━━━━━━━━━━━━━</span> <span style="font-weight: bold;">0s</span> 28ms/step<span style="font-weight: bold;">7/7</span> <span style="color: #00BB00;">━━━━━━━━━━━━━━━━━━━━</span> <span style="font-weight: bold;">0s</span> 3ms/step</span></span></code></pre>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">Ibex_vectors</span><span class="op">)</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Ibex_1</span>, <span class="va">Ibex_2</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"grey"</span>, alpha <span class="op">=</span> <span class="fl">0.7</span>, size <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span> </span>
@@ -1480,7 +1479,7 @@ object.</p>
 <span>                        reduction.name <span class="op">=</span> <span class="st">"Ibex.KF"</span>, </span>
 <span>                        species <span class="op">=</span> <span class="st">"Mouse"</span>,</span>
 <span>                        verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## <span style="font-weight: bold;">1/7</span> <span style="color: #00BB00;">━━</span><span style="color: #BBBBBB;">━━━━━━━━━━━━━━━━━━</span> <span style="font-weight: bold;">0s</span> 25ms/step<span style="font-weight: bold;">7/7</span> <span style="color: #00BB00;">━━━━━━━━━━━━━━━━━━━━</span> <span style="font-weight: bold;">0s</span> 5ms/step</span></span></code></pre>
+<pre><code><span><span class="co">## <span style="font-weight: bold;">1/7</span> <span style="color: #00BB00;">━━</span><span style="color: #BBBBBB;">━━━━━━━━━━━━━━━━━━</span> <span style="font-weight: bold;">0s</span> 19ms/step<span style="font-weight: bold;">7/7</span> <span style="color: #00BB00;">━━━━━━━━━━━━━━━━━━━━</span> <span style="font-weight: bold;">0s</span> 3ms/step</span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="using-ibex-vectors">Using Ibex Vectors<a class="anchor" aria-label="anchor" href="#using-ibex-vectors"></a>
@@ -1615,7 +1614,7 @@ cell” representing its average expression.</li>
 <span>                     reduction.name <span class="op">=</span> <span class="st">"Ibex.KF"</span>, </span>
 <span>                     species <span class="op">=</span> <span class="st">"Mouse"</span>,</span>
 <span>                     verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## <span style="font-weight: bold;">1/2</span> <span style="color: #00BB00;">━━━━━━━━━━</span><span style="color: #BBBBBB;">━━━━━━━━━━</span> <span style="font-weight: bold;">0s</span> 76ms/step<span style="font-weight: bold;">2/2</span> <span style="color: #00BB00;">━━━━━━━━━━━━━━━━━━━━</span> <span style="font-weight: bold;">0s</span> 84ms/step<span style="font-weight: bold;">2/2</span> <span style="color: #00BB00;">━━━━━━━━━━━━━━━━━━━━</span> <span style="font-weight: bold;">0s</span> 85ms/step</span></span></code></pre>
+<pre><code><span><span class="co">## <span style="font-weight: bold;">1/2</span> <span style="color: #00BB00;">━━━━━━━━━━</span><span style="color: #BBBBBB;">━━━━━━━━━━</span> <span style="font-weight: bold;">0s</span> 20ms/step<span style="font-weight: bold;">2/2</span> <span style="color: #00BB00;">━━━━━━━━━━━━━━━━━━━━</span> <span style="font-weight: bold;">0s</span> 11ms/step</span></span></code></pre>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">CoNGA.sce</span> <span class="op">&lt;-</span> <span class="va">CoNGA.sce</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>                  <span class="fu"><a href="https://rdrr.io/pkg/scater/man/runUMAP.html" class="external-link">runUMAP</a></span><span class="op">(</span>dimred <span class="op">=</span> <span class="st">"Ibex.KF"</span>, </span>

@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scRepertoire</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.5.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.6.0</span>
       </span>
     </div>
 
@@ -102,12 +102,12 @@
     <li>
       <a href="../articles/Ibex.html">Combining Deep Learning and BCRs with Ibex</a>
     </li>
-    <li class="divider">
-    </li>
-<li class="dropdown-header">Other Workflow Integrations</li>
     <li>
       <a href="../articles/Running_Escape.html">Single-cell Gene Set Enrichment Analysis</a>
     </li>
+    <li class="divider">
+    </li>
+<li class="dropdown-header">Other Workflow Integrations</li>
     <li>
       <a href="../articles/immcantation.html">Combining Immcantation and scRepertoire</a>
     </li>
@@ -154,7 +154,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Single-cell Gene Set Enrichment Analysis</h1>
             
-            <h4 data-toc-skip class="date">Compiled: October 17,
+            <h4 data-toc-skip class="date">Compiled: October 31,
 2025</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/BorchLab/scRepertoire/blob/HEAD/vignettes/articles/Running_Escape.Rmd" class="external-link"><code>vignettes/articles/Running_Escape.Rmd</code></a></small>
@@ -882,8 +882,8 @@ or<br>
 <span><span class="co">## 6:                 Antinflammatory 0.131147541 0.43715847 0.2529611 0.9883311</span></span>
 <span><span class="co">##         NES  size                                        leadingEdge  geneRatio</span></span>
 <span><span class="co">##       &lt;num&gt; &lt;int&gt;                                             &lt;char&gt;      &lt;num&gt;</span></span>
-<span><span class="co">## 1: 1.552117    63 HIST1H4C;CDKN1A;HIST1H1D;CCNG2;H2AFZ;HIST1H1E;H1FX 0.11111111</span></span>
-<span><span class="co">## 2: 1.541182    17                                               OASL 0.05882353</span></span>
+<span><span class="co">## 1: 1.552116    63 HIST1H4C;CDKN1A;HIST1H1D;CCNG2;H2AFZ;HIST1H1E;H1FX 0.11111111</span></span>
+<span><span class="co">## 2: 1.541180    17                                               OASL 0.05882353</span></span>
 <span><span class="co">## 3: 1.933083     7                                        PDCD1;CTLA4 0.28571429</span></span>
 <span><span class="co">## 4: 1.926023     7                              FAM129A;HSPA1A;HSPA1B 0.42857143</span></span>
 <span><span class="co">## 5: 1.996093     6                                     GZMB;GZMA;GZMH 0.50000000</span></span>
@@ -952,12 +952,12 @@ enrichment scores.</p>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">all.markers</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##                        p_val  avg_log2FC pct.1 pct.2    p_val_adj cluster</span></span>
-<span><span class="co">## Cytolytic       8.834350e-33 -0.22290562     1     1 1.766870e-31       1</span></span>
-<span><span class="co">## TCA-cycle       3.829028e-15 -0.18921087     1     1 7.658056e-14       1</span></span>
+<span><span class="co">## Cytolytic       8.835726e-33 -0.22290562     1     1 1.767145e-31       1</span></span>
+<span><span class="co">## TCA-cycle       3.828829e-15 -0.18921087     1     1 7.657658e-14       1</span></span>
 <span><span class="co">## Antinflammatory 7.518488e-11 -0.09552935     1     1 1.503698e-09       1</span></span>
-<span><span class="co">## Hypoxia         8.299978e-10  0.02923536     1     1 1.659996e-08       1</span></span>
-<span><span class="co">## G1S             2.501403e-09 -0.31214094     1     1 5.002806e-08       1</span></span>
-<span><span class="co">## PPS             3.565047e-09 -0.10738891     1     1 7.130095e-08       1</span></span>
+<span><span class="co">## Hypoxia         8.299977e-10  0.02923536     1     1 1.659995e-08       1</span></span>
+<span><span class="co">## G1S             2.501304e-09 -0.31214094     1     1 5.002607e-08       1</span></span>
+<span><span class="co">## PPS             3.565329e-09 -0.10738891     1     1 7.130657e-08       1</span></span>
 <span><span class="co">##                            gene</span></span>
 <span><span class="co">## Cytolytic             Cytolytic</span></span>
 <span><span class="co">## TCA-cycle             TCA-cycle</span></span>

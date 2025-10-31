@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scRepertoire</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.5.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.6.0</span>
       </span>
     </div>
 
@@ -102,12 +102,12 @@
     <li>
       <a href="../articles/Ibex.html">Combining Deep Learning and BCRs with Ibex</a>
     </li>
-    <li class="divider">
-    </li>
-<li class="dropdown-header">Other Workflow Integrations</li>
     <li>
       <a href="../articles/Running_Escape.html">Single-cell Gene Set Enrichment Analysis</a>
     </li>
+    <li class="divider">
+    </li>
+<li class="dropdown-header">Other Workflow Integrations</li>
     <li>
       <a href="../articles/immcantation.html">Combining Immcantation and scRepertoire</a>
     </li>
@@ -154,7 +154,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Combining Contigs into Clones</h1>
             
-            <h4 data-toc-skip class="date">Compiled: October 17,
+            <h4 data-toc-skip class="date">Compiled: October 31,
 2025</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/BorchLab/scRepertoire/blob/HEAD/vignettes/articles/Combining_Contigs.Rmd" class="external-link"><code>vignettes/articles/Combining_Contigs.Rmd</code></a></small>
@@ -366,13 +366,13 @@ clustering:</p>
 <span></span>
 <span><span class="co"># The CTstrict column contains cluster IDs (e.g., "cluster.1")</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">combined.BCR.clustered</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"barcode"</span>, <span class="st">"CTstrict"</span>, <span class="st">"IGH"</span>, <span class="st">"cdr3_aa1"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##                       barcode   CTstrict                            IGH</span></span>
-<span><span class="co">## 1 Patient1_AAACCTGAGGGCACTA-1 cluster.78                           &lt;NA&gt;</span></span>
-<span><span class="co">## 2 Patient1_AAACCTGAGTACGTTC-1 cluster.16   IGHV3-64.IGHD6-6.IGHJ4.IGHG1</span></span>
-<span><span class="co">## 3 Patient1_AAACCTGAGTCCGGTC-1       &lt;NA&gt;                           &lt;NA&gt;</span></span>
-<span><span class="co">## 4 Patient1_AAACCTGCACCAGGTC-1       &lt;NA&gt; IGHV1-69-2.IGHD3-10.IGHJ6.IGHM</span></span>
-<span><span class="co">## 5 Patient1_AAACCTGGTAAATGAC-1 cluster.16  IGHV1-46.IGHD6-13.IGHJ5.IGHA2</span></span>
-<span><span class="co">## 6 Patient1_AAACGGGTCACCTCGT-1 cluster.44                           &lt;NA&gt;</span></span>
+<pre><code><span><span class="co">##                       barcode CTstrict                            IGH</span></span>
+<span><span class="co">## 1 Patient1_AAACCTGAGGGCACTA-1     &lt;NA&gt;                           &lt;NA&gt;</span></span>
+<span><span class="co">## 2 Patient1_AAACCTGAGTACGTTC-1     &lt;NA&gt;   IGHV3-64.IGHD6-6.IGHJ4.IGHG1</span></span>
+<span><span class="co">## 3 Patient1_AAACCTGAGTCCGGTC-1     &lt;NA&gt;                           &lt;NA&gt;</span></span>
+<span><span class="co">## 4 Patient1_AAACCTGCACCAGGTC-1     &lt;NA&gt; IGHV1-69-2.IGHD3-10.IGHJ6.IGHM</span></span>
+<span><span class="co">## 5 Patient1_AAACCTGGTAAATGAC-1     &lt;NA&gt;  IGHV1-46.IGHD6-13.IGHJ5.IGHA2</span></span>
+<span><span class="co">## 6 Patient1_AAACGGGTCACCTCGT-1     &lt;NA&gt;                           &lt;NA&gt;</span></span>
 <span><span class="co">##                cdr3_aa1</span></span>
 <span><span class="co">## 1                  &lt;NA&gt;</span></span>
 <span><span class="co">## 2      CAKSYSRDLPRYFGSW</span></span>
@@ -451,13 +451,13 @@ default):</p>
 <span><span class="co">## 4 TGTGTGAGAGATGGGGCGGGTCACTATGGTTCGGGGATAGGCTACTACGGTATGGACGTCTGG_TGCAGTTCATATATAAGTACCAGCACTCTCGAGGTCCTATTC</span></span>
 <span><span class="co">## 5                TGTTCGAGGGGTCGTCTCCCGATGCCAGCAGCTGGCAGTGGTTTGGTCTCCTGG_TGTCAGCACTATCATAACTGGCCTCCGTACACTTTT</span></span>
 <span><span class="co">## 6                                                                       NA_TGTCAGCAGCGTAGCAACTGGCCTCTGACGTTC</span></span>
-<span><span class="co">##                                   CTaa   CTstrict</span></span>
-<span><span class="co">## 1                     NA_CGTWDSSLSAGVF cluster.78</span></span>
-<span><span class="co">## 2         CAKSYSRDLPRYFGSW_CQQYSNWPLTF cluster.16</span></span>
-<span><span class="co">## 3                        NA_CQQYGDSLPF       &lt;NA&gt;</span></span>
-<span><span class="co">## 4 CVRDGAGHYGSGIGYYGMDVW_CSSYISTSTLEVLF       &lt;NA&gt;</span></span>
-<span><span class="co">## 5      CSRGRLPMPAAGSGLVSW_CQHYHNWPPYTF cluster.16</span></span>
-<span><span class="co">## 6                       NA_CQQRSNWPLTF cluster.44</span></span></code></pre>
+<span><span class="co">##                                   CTaa CTstrict</span></span>
+<span><span class="co">## 1                     NA_CGTWDSSLSAGVF     &lt;NA&gt;</span></span>
+<span><span class="co">## 2         CAKSYSRDLPRYFGSW_CQQYSNWPLTF     &lt;NA&gt;</span></span>
+<span><span class="co">## 3                        NA_CQQYGDSLPF     &lt;NA&gt;</span></span>
+<span><span class="co">## 4 CVRDGAGHYGSGIGYYGMDVW_CSSYISTSTLEVLF     &lt;NA&gt;</span></span>
+<span><span class="co">## 5      CSRGRLPMPAAGSGLVSW_CQHYHNWPPYTF     &lt;NA&gt;</span></span>
+<span><span class="co">## 6                       NA_CQQRSNWPLTF     &lt;NA&gt;</span></span></code></pre>
 <p><code><a href="../reference/combineBCR.html">combineBCR()</a></code> is designed for processing B cell
 repertoire data, going beyond simple contig aggregation to incorporate
 advanced clustering based on CDR3 sequence similarity. This enables the

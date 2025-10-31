@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scRepertoire</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.5.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.6.0</span>
       </span>
     </div>
 
@@ -102,12 +102,12 @@
     <li>
       <a href="../articles/Ibex.html">Combining Deep Learning and BCRs with Ibex</a>
     </li>
-    <li class="divider">
-    </li>
-<li class="dropdown-header">Other Workflow Integrations</li>
     <li>
       <a href="../articles/Running_Escape.html">Single-cell Gene Set Enrichment Analysis</a>
     </li>
+    <li class="divider">
+    </li>
+<li class="dropdown-header">Other Workflow Integrations</li>
     <li>
       <a href="../articles/immcantation.html">Combining Immcantation and scRepertoire</a>
     </li>
@@ -154,7 +154,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Clustering by Edit Distance</h1>
             
-            <h4 data-toc-skip class="date">Compiled: October 17,
+            <h4 data-toc-skip class="date">Compiled: October 31,
 2025</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/BorchLab/scRepertoire/blob/HEAD/vignettes/articles/Clonal_Cluster.Rmd" class="external-link"><code>vignettes/articles/Clonal_Cluster.Rmd</code></a></small>
@@ -279,10 +279,10 @@ amino acid sequences with a normalized similarity threshold of 0.85:</p>
 <pre><code><span><span class="co">##                   barcode                     TCR1 TRA.Cluster</span></span>
 <span><span class="co">## 1 P17B_AAACCTGAGTACGACG-1       TRAV25.TRAJ20.TRAC        &lt;NA&gt;</span></span>
 <span><span class="co">## 2 P17B_AAACCTGCAACACGCC-1 TRAV38-2/DV8.TRAJ52.TRAC        &lt;NA&gt;</span></span>
-<span><span class="co">## 3 P17B_AAACCTGCAGGCGATA-1      TRAV12-1.TRAJ9.TRAC   cluster.1</span></span>
-<span><span class="co">## 4 P17B_AAACCTGCATGAGCGA-1      TRAV12-1.TRAJ9.TRAC   cluster.1</span></span>
-<span><span class="co">## 5 P17B_AAACGGGAGAGCCCAA-1        TRAV20.TRAJ8.TRAC   cluster.2</span></span>
-<span><span class="co">## 6 P17B_AAACGGGAGCGTTTAC-1      TRAV12-1.TRAJ9.TRAC   cluster.1</span></span></code></pre>
+<span><span class="co">## 3 P17B_AAACCTGCAGGCGATA-1      TRAV12-1.TRAJ9.TRAC  cluster.24</span></span>
+<span><span class="co">## 4 P17B_AAACCTGCATGAGCGA-1      TRAV12-1.TRAJ9.TRAC  cluster.24</span></span>
+<span><span class="co">## 5 P17B_AAACGGGAGAGCCCAA-1        TRAV20.TRAJ8.TRAC cluster.148</span></span>
+<span><span class="co">## 6 P17B_AAACGGGAGCGTTTAC-1      TRAV12-1.TRAJ9.TRAC  cluster.24</span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="demonstrating-clustering-with-a-single-cell-object">Demonstrating Clustering with a Single-Cell Object<a class="anchor" aria-label="anchor" href="#demonstrating-clustering-with-a-single-cell-object"></a>
@@ -418,10 +418,10 @@ cluster column named <code>Multi.Cluster</code>.</p>
 <span><span class="co">##   Multi.Cluster</span></span>
 <span><span class="co">## 1          &lt;NA&gt;</span></span>
 <span><span class="co">## 2          &lt;NA&gt;</span></span>
-<span><span class="co">## 3     cluster.1</span></span>
-<span><span class="co">## 4     cluster.1</span></span>
-<span><span class="co">## 5     cluster.2</span></span>
-<span><span class="co">## 6     cluster.1</span></span></code></pre>
+<span><span class="co">## 3    cluster.23</span></span>
+<span><span class="co">## 4    cluster.23</span></span>
+<span><span class="co">## 5   cluster.145</span></span>
+<span><span class="co">## 6    cluster.23</span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="using-different-clustering-algorithms">Using Different Clustering Algorithms<a class="anchor" aria-label="anchor" href="#using-different-clustering-algorithms"></a>
@@ -438,7 +438,7 @@ different community structures.</p>
 <span></span>
 <span><span class="co"># Compare the number of clusters found</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="fu">V</span><span class="op">(</span><span class="va">graph_walktrap</span><span class="op">)</span><span class="op">$</span><span class="va">cluster</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] 424</span></span></code></pre>
+<pre><code><span><span class="co">## [1] 391</span></span></code></pre>
 <p>Overall, <code><a href="../reference/clonalCluster.html">clonalCluster()</a></code> is a versatile function for
 defining and analyzing clonal relationships based on sequence
 similarity. It allows researchers to move beyond exact sequence matches,
