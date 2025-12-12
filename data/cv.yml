@@ -126,6 +126,9 @@ service:
       start: "2013"
       end: "2014"
   national:
+    - committee: "Inferred Allele Review Sub-committee (IARC), AIRR Community of the Antibody Society"
+      start: "2025"
+      end: ""
     - committee: "Education Initiatives Committee, American Society for Histocompatibility and Immunogenetics"
       start: "2024"
       end: ""
