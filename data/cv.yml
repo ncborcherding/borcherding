@@ -39,7 +39,7 @@ training:
   - title: "Fellow, Histocompatibility and Immunogenetics"
     org: "Washington University School of Medicine"
     start: "2024-07"
-    end: ""
+    end: "Present"
   - title: "Resident, Clinical Pathology"
     org: "Washington University School of Medicine"
     start: "2020"
@@ -68,13 +68,15 @@ consulting:
     role: "Scientific Advisor"
     start: "2024"
     end: "Present"
+  - org: "Omniscope, Barcelona, Spain"
+    role: "Scientific Advisor"
+    start: "2022"
+    end: "2023"
+
 
 editorial:
   review_board:
     - journal: "Human Immunology"
-      year: "2025"
-  guest_editor:
-    - journal: "Viruses"
       year: "2025"
   ad_hoc_reviews:
     - "Cancer Discovery"
@@ -128,10 +130,10 @@ service:
   national:
     - committee: "Inferred Allele Review Sub-committee (IARC), AIRR Community of the Antibody Society"
       start: "2025"
-      end: ""
+      end: "Present"
     - committee: "Education Initiatives Committee, American Society for Histocompatibility and Immunogenetics"
       start: "2024"
-      end: ""
+      end: "Present"
     - committee: "First Aid/USMLErx Student Council"
       start: "2016"
       end: "2017"
@@ -199,22 +201,22 @@ awards:
 memberships:
   - org: "Member, Siteman Cancer Center at Barnes-Jewish Hospital"
     start: "2025"
-    end: ""
+    end: "Present"
   - org: "Member, Antibody Society"
     start: "2025"
-    end: ""
+    end: "Present"
   - org: "Member, Academy of Clinical Laboratory Physicians and Scientists"
     start: "2024"
-    end: ""
+    end: "Present"
   - org: "Member, American Society for Histocompatibility and Immunogenetics"
     start: "2024"
-    end: ""
+    end: "Present"
   - org: "Member, American Board of Pathology"
     start: "2023"
-    end: ""
+    end: "Present"
   - org: "Member, Alpha Omega Alpha Honor Society"
     start: "2019"
-    end: ""
+    end: "Present"
 
 software:
   - name: "scRepertoire"
