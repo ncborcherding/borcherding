@@ -272,15 +272,6 @@ if (!is.null(ed$review_board) && length(ed$review_board)) {
 }
 ```
 
-### Guest Editor
-```{r}
-if (!is.null(ed$guest_editor) && length(ed$guest_editor)) {
-  cat(map_chr(ed$guest_editor, ~ glue("{.x$journal} ({.x$year})")), sep = ", ")
-} else {
-  cat("_(none listed)_")
-}
-```
-
 ### Ad Hoc Reviews
 ```{r}
 ahr <- cv$editorial$ad_hoc_reviews %||% list()
