@@ -199,6 +199,9 @@ awards:
     name: "Eagle Scout, Boy Scouts of America"
 
 memberships:
+  - org: "Member, Division of Biology & Biomedical Sciences, Washington University"
+    start: "2025"
+    end: "Present"
   - org: "Member, Siteman Cancer Center at Barnes-Jewish Hospital"
     start: "2025"
     end: "Present"

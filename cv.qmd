@@ -35,7 +35,7 @@ execute:
 \begin{center}
 {\LARGE \textbf{Nicholas C. Borcherding, M.D., Ph.D.}}\par\vspace{0.5em}
 {\normalsize Assistant Professor}\\[0.15em]
-{\small Department of Pathology and Immunology $\cdot$ Division of Biology \& Biomedical Sciences}\\[0.15em]
+{\small Department of Pathology and Immunology}\\[0.15em]
 {\small Washington University in St. Louis}\\[0.3em]
 {\footnotesize \href{mailto:borcherding.n@wustl.edu}{borcherding.n@wustl.edu} $\vert$ \url{https://www.borch.dev/}}\\[0.2em]
 {\scriptsize \textit{Updated `r format(Sys.Date(), "%B %d, %Y")`}}
@@ -301,7 +301,7 @@ if (length(ahr)) {
 ```{r}
 srv <- cv$service %||% list()
 if (!is.null(srv$institutional) && length(srv$institutional)) {
-  cat(purrr::map_chr(srv$institutional, ~ glue::glue("- {fmt_range(.x$start, .x$end)} - {.x$committee} ")), sep = "\n")
+  cat(purrr::map_chr(srv$institutional, ~ glue::glue("- **{fmt_range(.x$start, .x$end)}**: {.x$committee}")), sep = "\n")
 } else {
   cat("_(none listed)_")
 }
@@ -310,7 +310,7 @@ if (!is.null(srv$institutional) && length(srv$institutional)) {
 ### National
 ```{r}
 if (!is.null(srv$national) && length(srv$national)) {
-  cat(purrr::map_chr(srv$national, ~ glue::glue("- {fmt_range(.x$start, .x$end)} - {.x$committee} ")), sep = "\n")
+  cat(purrr::map_chr(srv$national, ~ glue::glue("- **{fmt_range(.x$start, .x$end)}**: {.x$committee}")), sep = "\n")
 } else {
   cat("_(none listed)_")
 }
@@ -349,7 +349,7 @@ if (length(awd)) {
 ```{r}
 mbr <- cv$memberships %||% list()
 if (length(mbr)) {
-  cat(map_chr(mbr, ~ glue("- {.x$org} ({fmt_range(.x$start, .x$end)})")), sep = "\n")
+  cat(map_chr(mbr, ~ glue("- **{fmt_range(.x$start, .x$end)}**: {.x$org}")), sep = "\n")
 } else cat("_(none listed)_")
 ```
 
@@ -359,11 +359,11 @@ sft <- cv$software %||% list()
 if (length(sft)) {
   cat(map_chr(sft, function(x) {
     name_part <- if (is.null(x$link) || is.na(x$link) || x$link == "") {
-      glue("**{x$name}**")
+      glue("{x$name}")
     } else {
-      glue("**[{x$name}]({x$link})**")
+      glue("[{x$name}]({x$link})")
     }
-    glue("- {x$year} - {name_part} — {x$role}. {x$description}")
+    glue("- **{x$year}**: {name_part} — {x$role}. {x$description}")
   }), sep = "\n")
 } else cat("_(none listed)_")
 ```
@@ -372,7 +372,7 @@ if (length(sft)) {
 ```{r}
 trials <- cv$clinical_trials %||% list()
 if (length(trials)) {
-  cat(map_chr(trials, ~ glue("- {fmt_range(.x$start, .x$end)} - **{.x$title}** ({.x$sponsor}). {.x$description}. Role: {.x$role}")), sep = "\n")
+  cat(map_chr(trials, ~ glue("- **{fmt_range(.x$start, .x$end)}**: {.x$title} ({.x$sponsor}). {.x$description}. Role: {.x$role}")), sep = "\n")
 } else cat("_(none listed)_")
 ```
 
@@ -386,7 +386,7 @@ if (length(inst) && is.list(inst)) {
   cat(
     purrr::map_chr(
       inst,
-      ~ glue::glue("- {.x$years} - *{.x$title}*.  {.x$sponsor}. Role: **{.x$role}**")
+      ~ glue::glue("- **{.x$years}**: *{.x$title}*. {.x$sponsor}. Role: {.x$role}")
     ),
     sep = "\n"
   )
@@ -402,7 +402,7 @@ if (length(nat) && is.list(nat)) {
   cat(
     purrr::map_chr(
       nat,
-      ~ glue::glue("- {.x$years} - *{.x$title}*. {.x$sponsor}. Role: **{.x$role}**")
+      ~ glue::glue("- **{.x$years}**: *{.x$title}*. {.x$sponsor}. Role: {.x$role}")
     ),
     sep = "\n"
   )
@@ -418,7 +418,7 @@ if (length(nat) && is.list(nat)) {
 pres <- rev(cv$presentations) %||% list()
 ipi <- pres$invited$institutional %||% list()
 if (length(ipi)) {
-  cat(map_chr(ipi, ~ glue("- {.x$year} - *{.x$title}*. {.x$venue}")), sep = "\n")
+  cat(map_chr(ipi, ~ glue("- **{.x$year}**: *{.x$title}*. {.x$venue}")), sep = "\n")
 } else cat("_(none listed)_")
 ```
 
@@ -426,7 +426,7 @@ if (length(ipi)) {
 ```{r}
 ipn <- rev(pres$invited$national) %||% list()
 if (length(ipn)) {
-  cat(map_chr(ipn, ~ glue("- {.x$year} - *{.x$title}*. {.x$venue}")), sep = "\n")
+  cat(map_chr(ipn, ~ glue("- **{.x$year}**: *{.x$title}*. {.x$venue}")), sep = "\n")
 } else cat("_(none listed)_")
 ```
 
@@ -435,7 +435,13 @@ if (length(ipn)) {
 abs <- rev(cv$presentations$abstracts) %||% list()
 
 if (length(abs)) {
-  out <- map_chr(abs, fmt_entry)   # each element now guaranteed length 1
+  out <- map_chr(abs, function(a) {
+    authors <- fmt_entry(a$authors)
+    title <- fix_markup(a$title)
+    venue <- nz(a$venue, "")
+    year <- nz(a$year, "")
+    glue("**{year}**: {authors}. *{title}*. {venue}")
+  })
   cat(paste0("- ", out), sep = "\n")
 } else {
   cat("_(none listed)_")
@@ -444,10 +450,16 @@ if (length(abs)) {
 
 ## Textbooks or Chapters
 ```{r, results='asis'}
-abs <- rev(cv$presentations$textbook) %||% list()
+tb <- rev(cv$presentations$textbook) %||% list()
 
-if (length(abs)) {
-  out <- map_chr(abs, fmt_entry)   # each element now guaranteed length 1
+if (length(tb)) {
+  out <- map_chr(tb, function(t) {
+    authors <- fmt_entry(t$authors)
+    title <- fix_markup(t$title)
+    isbn <- nz(t$isbn, "")
+    year <- nz(t$year, "")
+    glue("**{year}**: {authors}. *{title}*. {isbn}")
+  })
   cat(paste0("- ", out), sep = "\n")
 } else {
   cat("_(none listed)_")

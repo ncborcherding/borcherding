@@ -10,11 +10,6 @@ date: "2023-01-06T00:00:00Z"
 # Optional external URL for project (replaces project detail page).
 external_link: "https://github.com/ncborcherding/utility"
 
-links:
-- icon: twitter
-  icon_pack: fab
-  name: Follow
-  url: https://twitter.com/theHumanBorch
 url_code: "https://github.com/ncborcherding/utility/"
 #url_pdf: ""
 #url_slides: ""

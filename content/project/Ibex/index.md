@@ -16,11 +16,6 @@ image:
   caption: Approach to autoencoding cdr3 sequence for BCR
   focal_point: Smart
 
-links:
-- icon: twitter
-  icon_pack: fab
-  name: Follow
-  url: https://twitter.com/theHumanBorch
 url_code: "https://github.com/ncborcherding/Ibex"
 url_pdf: "https://www.biorxiv.org/content/10.1101/2022.11.09.515787v1.full.pdf+html"
 #url_slides: ""

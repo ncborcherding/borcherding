@@ -16,11 +16,6 @@ image:
   caption: Approach to autoencoding cdr3 sequence for TCR
   focal_point: Smart
 
-links:
-- icon: twitter
-  icon_pack: fab
-  name: Follow
-  url: https://twitter.com/theHumanBorch
 url_code: "https://github.com/ncborcherding/Trex"
 #url_pdf: ""
 #url_slides: ""

@@ -17,11 +17,6 @@ image:
   caption: Attaching single-cell repertoires to gene expression data
   focal_point: Smart
 
-links:
-- icon: twitter
-  icon_pack: fab
-  name: Follow
-  url: https://twitter.com/theHumanBorch
 url_code: "https://github.com/ncborcherding/scRepertoire"
 #url_pdf: 
 #url_slides: ""
