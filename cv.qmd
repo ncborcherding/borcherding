@@ -4,30 +4,42 @@ format:
     pdf-engine: xelatex
     toc: false
     number-sections: false
-    geometry: margin=1in
+    geometry:
+      - margin=0.85in
+      - top=0.75in
+      - bottom=0.75in
     csl: vancouver.csl
     nocite: "@*"
-    linestretch: 1.1
+    linestretch: 1.05
     header-includes:
       - \usepackage{hyperref}
       - \usepackage{titling}
+      - \usepackage{titlesec}
+      - \usepackage{xcolor}
       - \pretitle{}\posttitle{}\predate{}\postdate{}
       - \usepackage{fontspec}
-      - \setsansfont{Times New Roman}  
-      - \setmainfont{Times New Roman}  
+      - \setmainfont{Helvetica Neue}[BoldFont={Helvetica Neue Bold}, ItalicFont={Helvetica Neue Italic}]
+      - \definecolor{sectionblue}{RGB}{0, 51, 102}
+      - \definecolor{linkblue}{RGB}{0, 102, 153}
+      - \titleformat{\section}{\large\bfseries\color{sectionblue}}{\thesection}{0.5em}{}[\titlerule]
+      - \titleformat{\subsection}{\normalsize\bfseries\color{sectionblue}}{\thesubsection}{0.5em}{}
+      - \titlespacing*{\section}{0pt}{1.5ex plus 0.5ex minus 0.2ex}{1ex plus 0.2ex}
+      - \titlespacing*{\subsection}{0pt}{1ex plus 0.3ex minus 0.1ex}{0.5ex plus 0.1ex}
+      - \hypersetup{colorlinks=true, linkcolor=linkblue, urlcolor=linkblue, citecolor=linkblue}
+      - \setlength{\parskip}{0.3em}
 execute:
   echo: false
 ---
 
 \begin{center}
-{\Huge \textbf{Nicholas C. Borcherding, M.D., Ph.D.}}\par\vspace{0.35em}
-Assistant Professor\\
-Department of Pathology and Immunology\\
-Washington University in St. Louis\\
-\texttt{borcherding.n@wustl.edu} | \url{https://www.borch.dev/} \\
-{\small Compiled on `r format(Sys.Date(), "%B %d, %Y")`}\\
-\par\vspace{0.4em}
+{\LARGE \textbf{Nicholas C. Borcherding, M.D., Ph.D.}}\par\vspace{0.5em}
+{\normalsize Assistant Professor}\\[0.15em]
+{\small Department of Pathology and Immunology $\cdot$ Division of Biology \& Biomedical Sciences}\\[0.15em]
+{\small Washington University in St. Louis}\\[0.3em]
+{\footnotesize \href{mailto:borcherding.n@wustl.edu}{borcherding.n@wustl.edu} $\vert$ \url{https://www.borch.dev/}}\\[0.2em]
+{\scriptsize \textit{Updated `r format(Sys.Date(), "%B %d, %Y")`}}
 \end{center}
+\vspace{0.5em}
 
 ```{r}
 #| include: false
@@ -344,7 +356,22 @@ if (length(mbr)) {
 ```{r}
 sft <- cv$software %||% list()
 if (length(sft)) {
-  cat(map_chr(sft, ~ glue("- {.x$year} - **[{.x$name}]({.x$link})** () — {.x$role}. {.x$description}")), sep = "\n")
+  cat(map_chr(sft, function(x) {
+    name_part <- if (is.null(x$link) || is.na(x$link) || x$link == "") {
+      glue("**{x$name}**")
+    } else {
+      glue("**[{x$name}]({x$link})**")
+    }
+    glue("- {x$year} - {name_part} — {x$role}. {x$description}")
+  }), sep = "\n")
+} else cat("_(none listed)_")
+```
+
+## Clinical Trials
+```{r}
+trials <- cv$clinical_trials %||% list()
+if (length(trials)) {
+  cat(map_chr(trials, ~ glue("- {fmt_range(.x$start, .x$end)} - **{.x$title}** ({.x$sponsor}). {.x$description}. Role: {.x$role}")), sep = "\n")
 } else cat("_(none listed)_")
 ```
 

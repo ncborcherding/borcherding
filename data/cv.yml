@@ -265,6 +265,14 @@ software:
     link: "https://github.com/tuonglab/dandelionR"
     year: "2025"
 
+clinical_trials:
+  - title: "SPIRIT"
+    sponsor: "Sebia"
+    role: "Site Investigator"
+    description: "Industry-sponsored FDA trial to validate an AI tool for aiding in immunosubtraction interpretation"
+    start: "2025"
+    end: "Present"
+
 research_funding:
   institutional:
     - years: "2025-2026"
