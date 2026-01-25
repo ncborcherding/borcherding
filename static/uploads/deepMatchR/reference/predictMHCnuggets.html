@@ -46,7 +46,7 @@ avoids Python stdout capture and is typically faster and more robust."><meta pro
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Predict peptide–MHC binding with mhcnuggets</h1>
-      <small class="dont-index">Source: <a href="https://github.com/BorchLab/deepMatchR/blob/HEAD/R/mhcnuggets.R" class="external-link"><code>R/mhcnuggets.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/BorchLab/deepMatchR/blob/main/R/mhcnuggets.R" class="external-link"><code>R/mhcnuggets.R</code></a></small>
       <div class="d-none name"><code>predictMHCnuggets.Rd</code></div>
     </div>
 
@@ -176,6 +176,17 @@ GitHub: https://github.com/KarchinLab/mhcnuggets</p>
 <span class="r-in"><span>  mhc_class <span class="op">=</span> <span class="st">"I"</span>,</span></span>
 <span class="r-in"><span>  rank_output <span class="op">=</span> <span class="cn">TRUE</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Installing pyenv ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Done! pyenv has been installed to '/home/runner/.local/share/r-reticulate/pyenv/bin/pyenv'.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Using Python: /home/runner/.pyenv/versions/3.10.19/bin/python3.10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Creating virtual environment '/home/runner/.cache/R/basilisk/1.22.0/deepMatchR/0.99.0/deepmatchrEnv_v2' ... </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> + /home/runner/.pyenv/versions/3.10.19/bin/python3.10 -m venv /home/runner/.cache/R/basilisk/1.22.0/deepMatchR/0.99.0/deepmatchrEnv_v2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Done!</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Installing packages: pip, wheel, setuptools</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> + /home/runner/.cache/R/basilisk/1.22.0/deepMatchR/0.99.0/deepmatchrEnv_v2/bin/python -m pip install --upgrade pip wheel setuptools</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Installing packages: 'mhcnuggets==2.4.1', 'tensorflow==2.19.1'</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> + /home/runner/.cache/R/basilisk/1.22.0/deepMatchR/0.99.0/deepmatchrEnv_v2/bin/python -m pip install --upgrade --no-user 'mhcnuggets==2.4.1' 'tensorflow==2.19.1'</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Virtual environment '/home/runner/.cache/R/basilisk/1.22.0/deepMatchR/0.99.0/deepmatchrEnv_v2' successfully created.</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     peptide    ic50</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1  SIINFEKL 5600.06</span>

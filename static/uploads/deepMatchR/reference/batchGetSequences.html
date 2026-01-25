@@ -42,7 +42,7 @@ Supports both nucleotide and protein sequences."><meta property="og:image" conte
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Batch Get Sequences with Parallel Processing</h1>
-      <small class="dont-index">Source: <a href="https://github.com/BorchLab/deepMatchR/blob/HEAD/R/getAlleleSequence.R" class="external-link"><code>R/getAlleleSequence.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/BorchLab/deepMatchR/blob/main/R/getAlleleSequence.R" class="external-link"><code>R/getAlleleSequence.R</code></a></small>
       <div class="d-none name"><code>batchGetSequences.Rd</code></div>
     </div>
 
@@ -102,6 +102,7 @@ Supports both nucleotide and protein sequences.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Get protein sequences for multiple alleles</span></span></span>
 <span class="r-in"><span><span class="va">alleles</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"A*01:01"</span>, <span class="st">"A*02:01"</span>, <span class="st">"B*07:02"</span>, <span class="st">"B*08:01"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">prot_seqs</span> <span class="op">&lt;-</span> <span class="fu">batchGetSequences</span><span class="op">(</span><span class="va">alleles</span>, type <span class="op">=</span> <span class="st">"PROT"</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Creating immReferent cache directory at: /home/runner/.immReferent</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Get nucleotide sequences with parallel processing</span></span></span>
 <span class="r-in"><span><span class="va">nuc_seqs</span> <span class="op">&lt;-</span> <span class="fu">batchGetSequences</span><span class="op">(</span><span class="va">alleles</span>, type <span class="op">=</span> <span class="st">"NUC"</span>, n_cores <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span></span>

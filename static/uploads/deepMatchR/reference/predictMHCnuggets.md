@@ -125,6 +125,17 @@ res <- predictMHCnuggets(
   mhc_class = "I",
   rank_output = TRUE
 )
+#> Installing pyenv ...
+#> Done! pyenv has been installed to '/home/runner/.local/share/r-reticulate/pyenv/bin/pyenv'.
+#> Using Python: /home/runner/.pyenv/versions/3.10.19/bin/python3.10
+#> Creating virtual environment '/home/runner/.cache/R/basilisk/1.22.0/deepMatchR/0.99.0/deepmatchrEnv_v2' ... 
+#> + /home/runner/.pyenv/versions/3.10.19/bin/python3.10 -m venv /home/runner/.cache/R/basilisk/1.22.0/deepMatchR/0.99.0/deepmatchrEnv_v2
+#> Done!
+#> Installing packages: pip, wheel, setuptools
+#> + /home/runner/.cache/R/basilisk/1.22.0/deepMatchR/0.99.0/deepmatchrEnv_v2/bin/python -m pip install --upgrade pip wheel setuptools
+#> Installing packages: 'mhcnuggets==2.4.1', 'tensorflow==2.19.1'
+#> + /home/runner/.cache/R/basilisk/1.22.0/deepMatchR/0.99.0/deepmatchrEnv_v2/bin/python -m pip install --upgrade --no-user 'mhcnuggets==2.4.1' 'tensorflow==2.19.1'
+#> Virtual environment '/home/runner/.cache/R/basilisk/1.22.0/deepMatchR/0.99.0/deepmatchrEnv_v2' successfully created.
 head(res)
 #>     peptide    ic50
 #> 1  SIINFEKL 5600.06
