@@ -22,8 +22,10 @@ format:
       - \definecolor{linkblue}{RGB}{0, 102, 153}
       - \titleformat{\section}{\large\bfseries\color{sectionblue}}{\thesection}{0.5em}{}[\titlerule]
       - \titleformat{\subsection}{\normalsize\bfseries\color{sectionblue}}{\thesubsection}{0.5em}{}
+      - \titleformat{\subsubsection}{\normalsize\itshape\color{sectionblue}}{\thesubsubsection}{0.5em}{}
       - \titlespacing*{\section}{0pt}{1.5ex plus 0.5ex minus 0.2ex}{1ex plus 0.2ex}
       - \titlespacing*{\subsection}{0pt}{1ex plus 0.3ex minus 0.1ex}{0.5ex plus 0.1ex}
+      - \titlespacing*{\subsubsection}{0pt}{0.8ex plus 0.2ex minus 0.1ex}{0.3ex plus 0.1ex}
       - \hypersetup{colorlinks=true, linkcolor=linkblue, urlcolor=linkblue, citecolor=linkblue}
       - \setlength{\parskip}{0.3em}
 execute:
