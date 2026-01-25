@@ -1,0 +1,235 @@
+# deepMatchR
+
+Tools for HLA Testing and Matching
+
+## Introduction
+
+![](reference/figures/logo.png)
+
+There are currently several computational approaches to quantifying the
+risk of the development of donor-specific antibodies during organ
+transplantation. These include
+[HLAmatchmaker](https://www.borch.dev/uploads/deepMatchR/http.www.epitopes.net/)
+for eplet quantification and [PIRCHE-II](https://www.pirche.com/) for
+CD4+ T cell epitope prediction, which have demonstrated predictive
+ability across the literature. Newer deep learning methods for structure
+predictions, eplet/epitope immunogenicity estimates, and classification
+can be leveraged to produce a clinical tool for patients. **deepMatchR**
+aims to be a centralized repository for tools and models to help in
+assisting HLA matching.
+
+## Core Functions
+
+`deepMatchR` provides a suite of functions for HLA analysis, from basic
+sequence comparison to complex visualization and deconvolution. Here is
+an overview of the main functions:
+
+### Sequence & Eplet Analysis
+
+- **`getAlleleSequence(allele_name)`**: Retrieves the full amino acid
+  sequence for a given HLA allele from the IMGT/HLA database.
+
+  ``` r
+  # Note: Requires internet connection
+  getAlleleSequence("A*01:01")
+  ```
+
+- **`quantifyMismatch(seq1, seq2)`**: Calculates the total number of
+  amino acid mismatches between two sequences.
+
+  ``` r
+  seq1 <- "YFAMYGEKVAHTHVDTLYVRYHY"
+  seq2 <- "YFDMYGEKVAHTHVDTLYVRFHY"
+  quantifyMismatch(seq1, seq2)
+  ```
+
+- **`quantifyEpletMismatch(allele1, allele2)`**: Calculates the number
+  of mismatched eplets between two HLA alleles based on the internal
+  eplet registry.
+
+  ``` r
+  quantifyEpletMismatch("A*01:01", "A*02:01")
+  ```
+
+### Antibody Analysis & Visualization
+
+- **`plotAntibodies(result_file, type)`**: Visualizes SAB or PRA results
+  as a bar plot, with an optional table of antigen specificities.
+
+  ``` r
+  data(deepMatchR_example)
+  plotAntibodies(deepMatchR_example[[1]], type = "SAB")
+  ```
+
+- **`plotEplets(result_file, plot_type)`**: Visualizes eplet-level
+  reactivity from SAB results using a treemap, bar plot, or AUC plot.
+
+  ``` r
+  data(deepMatchR_example)
+  plotEplets(deepMatchR_example[[1]], plot_type = "treemap")
+  ```
+
+- **`calculateAUC(...)` / `epletAUC(...)`**: Calculates the Area Under
+  the Curve (AUC) for feature reactivity (like eplets or CREGs) across a
+  range of MFI cutoffs.
+
+  ``` r
+  data(deepMatchR_example)
+  epletAUC(deepMatchR_example[[1]], plot_results = TRUE)
+  ```
+
+## System requirements
+
+deepMatchR has been tested on R versions \>= 4.0. Please consult the
+DESCRIPTION file for more details on required R packages. deepMatchR has
+been tested on OS X and Windows platforms.
+
+## Installation
+
+To run deepMatchR, open R and install deepMatchR from github:
+
+``` r
+devtools::install_github("BorchLab/deepMatchR")
+```
+
+------------------------------------------------------------------------
+
+## Bug Reports/New Features
+
+#### If you run into any issues or bugs please submit a [GitHub issue](https://github.com/ncborcherding/deepMatchR/issues) with details of the issue.
+
+- If possible please include a [reproducible
+  example](https://reprex.tidyverse.org/). Alternatively, an example
+  with the internal **deepMatchR_example** would be extremely helpful.
+
+#### Any requests for new features or enhancements can also be submitted as [GitHub issues](https://github.com/ncborcherding/deepMatchR/issues).
+
+#### [Pull Requests](https://github.com/ncborcherding/deepMatchR/pulls) are welcome for bug fixes, new features, or enhancements.
+
+# Package index
+
+## HLA Genotypes
+
+Create and work with HLA genotype objects
+
+- [`hlaGeno()`](https://www.borch.dev/uploads/deepMatchR/reference/hlaGeno.md)
+  : Create an hla_genotype object
+- [`validateHlaGeno()`](https://www.borch.dev/uploads/deepMatchR/reference/validateHlaGeno.md)
+  : Validate an hla_genotype object
+- [`print(`*`<hla_genotype>`*`)`](https://www.borch.dev/uploads/deepMatchR/reference/print.hla_genotype.md)
+  : Print an hla_genotype object
+
+## Sequence Analysis
+
+Functions for retrieving and comparing HLA sequences
+
+- [`getAlleleSequence()`](https://www.borch.dev/uploads/deepMatchR/reference/getAlleleSequence.md)
+  : Get Sequence for an HLA Allele
+- [`quantifyMismatch()`](https://www.borch.dev/uploads/deepMatchR/reference/quantifyMismatch.md)
+  : Quantify Amino Acid Mismatches With Charge/Polarity Awareness (base
+  R)
+- [`calculateMismatchLoad()`](https://www.borch.dev/uploads/deepMatchR/reference/calculateMismatchLoad.md)
+  : Calculate Mismatch Load Between Donor and Recipient Genotypes
+- [`getSequenceStats()`](https://www.borch.dev/uploads/deepMatchR/reference/getSequenceStats.md)
+  : Get Sequence Statistics
+- [`clearSequenceCache()`](https://www.borch.dev/uploads/deepMatchR/reference/clearSequenceCache.md)
+  : Clear Sequence Cache
+
+## Eplet Analysis
+
+Functions for eplet-based immunogenicity analysis
+
+- [`quantifyEpletMismatch()`](https://www.borch.dev/uploads/deepMatchR/reference/quantifyEpletMismatch.md)
+  : Quantify Eplet Mismatches Between Two Alleles
+- [`calculateEpletLoad()`](https://www.borch.dev/uploads/deepMatchR/reference/calculateEpletLoad.md)
+  : Calculate Eplet Load Between Donor and Recipient Genotypes
+
+## Peptide Binding Prediction
+
+Deep learning models for peptide-MHC binding prediction
+
+- [`predictMHCnuggets()`](https://www.borch.dev/uploads/deepMatchR/reference/predictMHCnuggets.md)
+  : Predict peptide–MHC binding with mhcnuggets
+- [`calculatePeptideBindingLoad()`](https://www.borch.dev/uploads/deepMatchR/reference/calculatePeptideBindingLoad.md)
+  : Calculate Peptide Binding Load for Transplant Risk Assessment
+- [`visualizePeptideBinding()`](https://www.borch.dev/uploads/deepMatchR/reference/visualizePeptideBinding.md)
+  : Visualize Cross-Locus Peptide Binding Results
+
+## Serology Conversion
+
+Convert between molecular and serological HLA nomenclature
+
+- [`toSerology()`](https://www.borch.dev/uploads/deepMatchR/reference/toSerology.md)
+  : Convert HLA Alleles to Serological Equivalents
+- [`updateWmdaData()`](https://www.borch.dev/uploads/deepMatchR/reference/updateWmdaData.md)
+  : Update WMDA Nomenclature Data
+- [`clearWmdaCache()`](https://www.borch.dev/uploads/deepMatchR/reference/clearWmdaCache.md)
+  : Clear WMDA Cache
+
+## Antibody Visualization
+
+Visualize SAB and PRA assay results
+
+- [`plotAntibodies()`](https://www.borch.dev/uploads/deepMatchR/reference/plotAntibodies.md)
+  [`plotSAB()`](https://www.borch.dev/uploads/deepMatchR/reference/plotAntibodies.md)
+  [`plotPRA()`](https://www.borch.dev/uploads/deepMatchR/reference/plotAntibodies.md)
+  : Plot Antibody Data with Optional Antigen-Level Table or Time-Series
+  Trend
+- [`plotEplets()`](https://www.borch.dev/uploads/deepMatchR/reference/plotEplets.md)
+  : Plot Eplet Results from SPI Assay
+- [`calculateAUC()`](https://www.borch.dev/uploads/deepMatchR/reference/calculateAUC.md)
+  [`epletAUC()`](https://www.borch.dev/uploads/deepMatchR/reference/calculateAUC.md)
+  [`cregAUC()`](https://www.borch.dev/uploads/deepMatchR/reference/calculateAUC.md)
+  [`serologyAUC()`](https://www.borch.dev/uploads/deepMatchR/reference/calculateAUC.md)
+  : Calculate Antigen AUC Based on MFI
+
+## Data
+
+Built-in datasets
+
+- [`deepMatchR_example`](https://www.borch.dev/uploads/deepMatchR/reference/deepMatchR_example.md)
+  : Example SAB (Class I/II) and PRA Panels
+- [`deepMatchR_cregs`](https://www.borch.dev/uploads/deepMatchR/reference/deepMatchR_cregs.md)
+  : CREG–Allele Mapping Data
+- [`deepMatchR_eplets`](https://www.borch.dev/uploads/deepMatchR/reference/deepMatchR_eplets.md)
+  : HLA Eplet Assignments (Registry-derived)
+- [`deepMatchR_wmda_pgroups`](https://www.borch.dev/uploads/deepMatchR/reference/deepMatchR_wmda_pgroups.md)
+  : WMDA P-Group Definitions
+- [`deepMatchR_wmda_serology`](https://www.borch.dev/uploads/deepMatchR/reference/deepMatchR_wmda_serology.md)
+  : WMDA DNA-to-Serology Mapping
+- [`deepMatchR_wmda_splits`](https://www.borch.dev/uploads/deepMatchR/reference/deepMatchR_wmda_splits.md)
+  : WMDA Broad-to-Split Antigen Relationships
+
+## Utilities
+
+Helper functions and internal utilities
+
+- [`deepmatchrEnv()`](https://www.borch.dev/uploads/deepMatchR/reference/deepmatchrEnv.md)
+  : Return a Basilisk environment tailored to the current platform
+- [`batchGetSequences()`](https://www.borch.dev/uploads/deepMatchR/reference/batchGetSequences.md)
+  : Batch Get Sequences with Parallel Processing
+
+# Articles
+
+### Getting Started
+
+- [Getting Started with
+  deepMatchR](https://www.borch.dev/uploads/deepMatchR/articles/deepMatchR.md):
+
+### Core Workflows
+
+Detailed guides for specific analysis tasks
+
+- [Sequence & Mismatch
+  Analysis](https://www.borch.dev/uploads/deepMatchR/articles/sequence-analysis.md):
+- [Eplet
+  Analysis](https://www.borch.dev/uploads/deepMatchR/articles/eplet-analysis.md):
+- [Peptide Binding
+  Prediction](https://www.borch.dev/uploads/deepMatchR/articles/peptide-binding.md):
+
+### Visualization
+
+Creating publication-quality figures
+
+- [Antibody
+  Visualization](https://www.borch.dev/uploads/deepMatchR/articles/antibody-visualization.md):
