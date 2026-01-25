@@ -18,7 +18,7 @@ format:
       - \usepackage{xcolor}
       - \pretitle{}\posttitle{}\predate{}\postdate{}
       - \usepackage{fontspec}
-      - \setmainfont{Helvetica Neue}[BoldFont={Helvetica Neue Bold}, ItalicFont={Helvetica Neue Italic}]
+      - \setmainfont{TeX Gyre Heros}[BoldFont={TeX Gyre Heros Bold}, ItalicFont={TeX Gyre Heros Italic}]
       - \definecolor{sectionblue}{RGB}{0, 51, 102}
       - \definecolor{linkblue}{RGB}{0, 102, 153}
       - \titleformat{\section}{\large\bfseries\color{sectionblue}}{\thesection}{0.5em}{}[\titlerule]
