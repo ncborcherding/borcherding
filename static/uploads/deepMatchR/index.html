@@ -134,37 +134,103 @@
 </li>
 </ul>
 </div>
+<div class="section level3">
+<h3 id="peptide-binding-prediction">Peptide Binding Prediction<a class="anchor" aria-label="anchor" href="#peptide-binding-prediction"></a>
+</h3>
+<ul>
+<li>
+<p><strong><code>predictMHCnuggets(peptides, allele)</code></strong>: Predicts peptide-MHC binding affinity using <a href="https://github.com/KarchinLab/mhcnuggets" class="external-link">MHCnuggets</a>, a deep learning model for MHC binding prediction.</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">peptides</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"SIINFEKL"</span>, <span class="st">"LLFGYPVYV"</span>, <span class="st">"GILGFVFTL"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/predictMHCnuggets.html">predictMHCnuggets</a></span><span class="op">(</span><span class="va">peptides</span>, allele <span class="op">=</span> <span class="st">"A*02:01"</span>, mhc_class <span class="op">=</span> <span class="st">"I"</span><span class="op">)</span></span></code></pre></div>
+</li>
+<li>
+<p><strong><code>calculatePeptideBindingLoad(recipient, donor)</code></strong>: Estimates transplant risk by predicting peptide-HLA binding between recipient HLA molecules and donor-mismatched peptides. Supports multiple backends:</p>
+<ul>
+<li>
+<code>pwm</code>: Built-in position weight matrix (no external dependencies)</li>
+<li>
+<code>mhcnuggets</code>: Deep learning via <a href="https://github.com/KarchinLab/mhcnuggets" class="external-link">MHCnuggets</a>
+</li>
+<li>
+<code>netmhcpan</code>: External tool via <a href="https://services.healthtech.dtu.dk/services/NetMHCpan-4.1/" class="external-link">NetMHCpan 4.1</a>
+</li>
+</ul>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">recipient</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/hlaGeno.html">hlaGeno</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>A_1 <span class="op">=</span> <span class="st">"A*02:01"</span>, A_2 <span class="op">=</span> <span class="st">"A*03:01"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">donor</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/hlaGeno.html">hlaGeno</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>A_1 <span class="op">=</span> <span class="st">"A*01:01"</span>, A_2 <span class="op">=</span> <span class="st">"A*24:02"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/calculatePeptideBindingLoad.html">calculatePeptideBindingLoad</a></span><span class="op">(</span><span class="va">recipient</span>, <span class="va">donor</span>, return <span class="op">=</span> <span class="st">"summary"</span><span class="op">)</span></span></code></pre></div>
+</li>
+</ul>
+</div>
 </div>
 <div class="section level2">
 <h2 id="system-requirements">System requirements<a class="anchor" aria-label="anchor" href="#system-requirements"></a>
 </h2>
-<p>deepMatchR has been tested on R versions &gt;= 4.0. Please consult the DESCRIPTION file for more details on required R packages. deepMatchR has been tested on OS X and Windows platforms.</p>
+<p>deepMatchR has been tested on R versions &gt;= 4.5. Please consult the DESCRIPTION file for more details on required R packages. deepMatchR has been tested on OS X and Windows platforms.</p>
+<div class="section level3">
+<h3 id="setting-up-netmhcpan-optional">Setting up NetMHCpan (Optional)<a class="anchor" aria-label="anchor" href="#setting-up-netmhcpan-optional"></a>
+</h3>
+<p>To use the <code>netmhcpan</code> backend for peptide binding prediction, you need to install NetMHCpan 4.1 separately:</p>
+<ol style="list-style-type: decimal">
+<li><p><strong>Request a license</strong>: Go to <a href="https://services.healthtech.dtu.dk/services/NetMHCpan-4.1/" class="external-link">https://services.healthtech.dtu.dk/services/NetMHCpan-4.1/</a> and request an academic license (free for academic users).</p></li>
+<li>
+<p><strong>Download and extract</strong>: After receiving the download link via email, extract the archive:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="fu">tar</span> <span class="at">-xzvf</span> netMHCpan-4.1.Linux.tar.gz</span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a><span class="bu">cd</span> netMHCpan-4.1</span></code></pre></div>
+</li>
+<li>
+<p><strong>Configure the installation</strong>: Edit the <code>netMHCpan</code> script to set the correct paths:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="co"># Open the script and modify these lines:</span></span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a><span class="ex">setenv</span> NMHOME /path/to/netMHCpan-4.1</span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a><span class="ex">setenv</span> TMPDIR /tmp</span></code></pre></div>
+</li>
+<li><p><strong>Download data files</strong>: Follow the instructions in the <code>netMHCpan-4.1.readme</code> file to download required data files and place them in the <code>data</code> directory.</p></li>
+<li>
+<p><strong>Test the installation</strong>:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="ex">./netMHCpan</span> <span class="at">-p</span> test.pep <span class="at">-a</span> HLA-A02:01</span></code></pre></div>
+</li>
+<li>
+<p><strong>Use in deepMatchR</strong>: Provide the path to the executable:</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/calculatePeptideBindingLoad.html">calculatePeptideBindingLoad</a></span><span class="op">(</span></span>
+<span>  recipient <span class="op">=</span> <span class="va">rgeno</span>,</span>
+<span>  donor <span class="op">=</span> <span class="va">dgeno</span>,</span>
+<span>  backend <span class="op">=</span> <span class="st">"netmhcpan"</span>,</span>
+<span>  backend_path <span class="op">=</span> <span class="st">"/path/to/netMHCpan-4.1/netMHCpan"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+</li>
+</ol>
+<blockquote>
+<p><strong>Note:</strong> NetMHCpan is available for Linux and macOS. Windows users should use WSL (Windows Subsystem for Linux) or the <code>pwm</code>/<code>mhcnuggets</code> backends instead.</p>
+</blockquote>
+</div>
 </div>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
 <p>To run deepMatchR, open R and install deepMatchR from github:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"BorchLab/deepMatchR"</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"BorchLab/deepMatchR"</span><span class="op">)</span></span></code></pre></div>
 <hr>
 </div>
 <div class="section level2">
 <h2 id="bug-reportsnew-features">Bug Reports/New Features<a class="anchor" aria-label="anchor" href="#bug-reportsnew-features"></a>
 </h2>
 <div class="section level4">
-<h4 id="if-you-run-into-any-issues-or-bugs-please-submit-a-github-issue-with-details-of-the-issue">If you run into any issues or bugs please submit a <a href="https://github.com/ncborcherding/deepMatchR/issues" class="external-link">GitHub issue</a> with details of the issue.<a class="anchor" aria-label="anchor" href="#if-you-run-into-any-issues-or-bugs-please-submit-a-github-issue-with-details-of-the-issue"></a>
+<h4 id="if-you-run-into-any-issues-or-bugs-please-submit-a-github-issue-with-details-of-the-issue">If you run into any issues or bugs please submit a <a href="https://github.com/BorchLab/deepMatchR/issues" class="external-link">GitHub issue</a> with details of the issue.<a class="anchor" aria-label="anchor" href="#if-you-run-into-any-issues-or-bugs-please-submit-a-github-issue-with-details-of-the-issue"></a>
 </h4>
 <ul>
 <li>If possible please include a <a href="https://reprex.tidyverse.org/" class="external-link">reproducible example</a>. Alternatively, an example with the internal <strong>deepMatchR_example</strong> would be extremely helpful.</li>
 </ul>
 </div>
 <div class="section level4">
-<h4 id="any-requests-for-new-features-or-enhancements-can-also-be-submitted-as-github-issues">Any requests for new features or enhancements can also be submitted as <a href="https://github.com/ncborcherding/deepMatchR/issues" class="external-link">GitHub issues</a>.<a class="anchor" aria-label="anchor" href="#any-requests-for-new-features-or-enhancements-can-also-be-submitted-as-github-issues"></a>
+<h4 id="any-requests-for-new-features-or-enhancements-can-also-be-submitted-as-github-issues">Any requests for new features or enhancements can also be submitted as <a href="https://github.com/BorchLab/deepMatchR/issues" class="external-link">GitHub issues</a>.<a class="anchor" aria-label="anchor" href="#any-requests-for-new-features-or-enhancements-can-also-be-submitted-as-github-issues"></a>
 </h4>
 </div>
 <div class="section level4">
 <h4 id="pull-requests-are-welcome-for-bug-fixes-new-features-or-enhancements">
-<a href="https://github.com/ncborcherding/deepMatchR/pulls" class="external-link">Pull Requests</a> are welcome for bug fixes, new features, or enhancements.<a class="anchor" aria-label="anchor" href="#pull-requests-are-welcome-for-bug-fixes-new-features-or-enhancements"></a>
+<a href="https://github.com/BorchLab/deepMatchR/pulls" class="external-link">Pull Requests</a> are welcome for bug fixes, new features, or enhancements.<a class="anchor" aria-label="anchor" href="#pull-requests-are-welcome-for-bug-fixes-new-features-or-enhancements"></a>
 </h4>
 </div>
 </div>

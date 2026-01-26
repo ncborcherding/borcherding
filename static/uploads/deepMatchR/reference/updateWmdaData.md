@@ -64,14 +64,30 @@ environment variable `DEEPMATCHR_CACHE_DIR` to a new location.
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
-# Update to latest WMDA data
+# Show default cache directory (does not download)
+cache_dir <- file.path(tempdir(), "wmda_test")
+print(cache_dir)
+#> [1] "/var/folders/5t/9wp2ssj13r7btc7fjmg4m68r0000gn/T//RtmpW7Z2q3/wmda_test"
+
+# \donttest{
+# Update to latest WMDA data (requires internet)
 updateWmdaData()
+#> Downloading WMDA data (version: Latest)...
+#>   Downloading rel_dna_ser.txt...
+#>   Downloading rel_ser_ser.txt...
+#>   Downloading hla_nom_p.txt...
+#>   Saving to cache...
+#> Done! Cached 27260 serology mappings, 23 split mappings, 18757 P-groups
+#> Cache location: ~/Library/Caches/deepMatchR
 
-# Update to a specific version
-updateWmdaData(version = "3.54.0")
-
-# Force re-download
+# Force re-download even if cache exists
 updateWmdaData(force = TRUE)
-} # }
+#> Downloading WMDA data (version: Latest)...
+#>   Downloading rel_dna_ser.txt...
+#>   Downloading rel_ser_ser.txt...
+#>   Downloading hla_nom_p.txt...
+#>   Saving to cache...
+#> Done! Cached 27260 serology mappings, 23 split mappings, 18757 P-groups
+#> Cache location: ~/Library/Caches/deepMatchR
+# }
 ```

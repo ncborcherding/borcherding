@@ -196,65 +196,64 @@ guidelines suggest:
 
 ### `calculateEpletLoad()`
 
-| Argument                       | Default        | Description                                                                                     |
-|--------------------------------|----------------|-------------------------------------------------------------------------------------------------|
-| `recipient_geno`, `donor_geno` | –              | HLA genotypes from [`hlaGeno()`](https://www.borch.dev/uploads/deepMatchR/reference/hlaGeno.md) |
-| `loci`                         | `NULL`         | Restrict to specific loci                                                                       |
-| `evidence_level`               | `c("A1","A2")` | Filter by evidence level                                                                        |
-| `exposition_filter`            | `NULL`         | Filter by surface exposition                                                                    |
-| `reactivity_filter`            | `NULL`         | Filter by reactivity confirmation                                                               |
-| `return`                       | `"total"`      | `"total"`, `"per_locus"`, or `"pairwise"`                                                       |
-| `pairwise_locus`               | `NULL`         | Locus for pairwise matrix                                                                       |
+| Argument | Default | Description |
+|----|----|----|
+| `recipient_geno`, `donor_geno` | – | HLA genotypes from [`hlaGeno()`](https://www.borch.dev/uploads/deepMatchR/reference/hlaGeno.md) |
+| `loci` | `NULL` | Restrict to specific loci |
+| `evidence_level` | `c("A1","A2")` | Filter by evidence level |
+| `exposition_filter` | `NULL` | Filter by surface exposition |
+| `reactivity_filter` | `NULL` | Filter by reactivity confirmation |
+| `return` | `"total"` | `"total"`, `"per_locus"`, or `"pairwise"` |
+| `pairwise_locus` | `NULL` | Locus for pairwise matrix |
 
 ## Session Information
 
 ``` r
 sessionInfo()
-#> R version 4.5.2 (2025-10-31)
-#> Platform: x86_64-pc-linux-gnu
-#> Running under: Ubuntu 24.04.3 LTS
+#> R version 4.5.0 (2025-04-11)
+#> Platform: aarch64-apple-darwin20
+#> Running under: macOS Sonoma 14.0
 #> 
 #> Matrix products: default
-#> BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3 
-#> LAPACK: /usr/lib/x86_64-linux-gnu/openblas-pthread/libopenblasp-r0.3.26.so;  LAPACK version 3.12.0
+#> BLAS:   /Library/Frameworks/R.framework/Versions/4.5-arm64/Resources/lib/libRblas.0.dylib 
+#> LAPACK: /Library/Frameworks/R.framework/Versions/4.5-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.1
 #> 
 #> locale:
-#>  [1] LC_CTYPE=C.UTF-8       LC_NUMERIC=C           LC_TIME=C.UTF-8       
-#>  [4] LC_COLLATE=C.UTF-8     LC_MONETARY=C.UTF-8    LC_MESSAGES=C.UTF-8   
-#>  [7] LC_PAPER=C.UTF-8       LC_NAME=C              LC_ADDRESS=C          
-#> [10] LC_TELEPHONE=C         LC_MEASUREMENT=C.UTF-8 LC_IDENTIFICATION=C   
+#> [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
 #> 
-#> time zone: UTC
-#> tzcode source: system (glibc)
+#> time zone: America/Chicago
+#> tzcode source: internal
 #> 
 #> attached base packages:
 #> [1] stats     graphics  grDevices utils     datasets  methods   base     
 #> 
 #> other attached packages:
-#> [1] dplyr_1.1.4       deepMatchR_0.99.0 BiocStyle_2.38.0 
+#> [1] dplyr_1.1.4       deepMatchR_0.99.0 BiocStyle_2.36.0 
 #> 
 #> loaded via a namespace (and not attached):
-#>  [1] sass_0.4.10         generics_0.1.4      xml2_1.5.2         
-#>  [4] lattice_0.22-7      immReferent_0.99.6  digest_0.6.39      
-#>  [7] magrittr_2.0.4      evaluate_1.0.5      grid_4.5.2         
-#> [10] RColorBrewer_1.1-3  bookdown_0.46       fastmap_1.2.0      
-#> [13] cellranger_1.1.0    jsonlite_2.0.0      Matrix_1.7-4       
-#> [16] BiocManager_1.30.27 rvest_1.0.5         httr_1.4.7         
-#> [19] scales_1.4.0        Biostrings_2.78.0   textshaping_1.0.4  
-#> [22] jquerylib_0.1.4     cli_3.6.5           rlang_1.1.7        
-#> [25] crayon_1.5.3        XVector_0.50.0      cachem_1.1.0       
-#> [28] yaml_2.3.12         tools_4.5.2         dir.expiry_1.18.0  
-#> [31] parallel_4.5.2      memoise_2.0.1       ggplot2_4.0.1      
-#> [34] filelock_1.0.3      basilisk_1.22.0     BiocGenerics_0.56.0
-#> [37] reticulate_1.44.1   vctrs_0.7.1         R6_2.6.1           
-#> [40] png_0.1-8           stats4_4.5.2        lifecycle_1.0.5    
-#> [43] pwalign_1.6.0       Seqinfo_1.0.0       IRanges_2.44.0     
-#> [46] S4Vectors_0.48.0    fs_1.6.6            ragg_1.5.0         
-#> [49] pkgconfig_2.0.3     desc_1.4.3          pkgdown_2.2.0      
-#> [52] pillar_1.11.1       bslib_0.9.0         gtable_0.3.6       
-#> [55] data.table_1.18.0   glue_1.8.0          Rcpp_1.1.1         
-#> [58] systemfonts_1.3.1   xfun_0.56           tibble_3.3.1       
-#> [61] tidyselect_1.2.1    knitr_1.51          farver_2.1.2       
-#> [64] patchwork_1.3.2     htmltools_0.5.9     rmarkdown_2.30     
-#> [67] compiler_4.5.2      S7_0.2.1            readxl_1.4.5
+#>  [1] gtable_0.3.6            dir.expiry_1.16.0       xfun_0.55              
+#>  [4] bslib_0.9.0             ggplot2_4.0.1           htmlwidgets_1.6.4      
+#>  [7] lattice_0.22-7          vctrs_0.6.5             tools_4.5.0            
+#> [10] generics_0.1.4          stats4_4.5.0            parallel_4.5.0         
+#> [13] tibble_3.3.0            pkgconfig_2.0.3         Matrix_1.7-4           
+#> [16] data.table_1.18.0       RColorBrewer_1.1-3      S7_0.2.1               
+#> [19] desc_1.4.3              S4Vectors_0.46.0        readxl_1.4.5           
+#> [22] lifecycle_1.0.4         GenomeInfoDbData_1.2.14 compiler_4.5.0         
+#> [25] farver_2.1.2            textshaping_1.0.4       Biostrings_2.76.0      
+#> [28] GenomeInfoDb_1.44.3     htmltools_0.5.9         sass_0.4.10            
+#> [31] yaml_2.3.12             pillar_1.11.1           pkgdown_2.2.0          
+#> [34] crayon_1.5.3            jquerylib_0.1.4         cachem_1.1.0           
+#> [37] basilisk_1.20.0         tidyselect_1.2.1        rvest_1.0.5            
+#> [40] digest_0.6.39           bookdown_0.46           fastmap_1.2.0          
+#> [43] grid_4.5.0              cli_3.6.5               magrittr_2.0.4         
+#> [46] patchwork_1.3.2         filelock_1.0.3          scales_1.4.0           
+#> [49] UCSC.utils_1.4.0        pwalign_1.4.0           rmarkdown_2.30         
+#> [52] XVector_0.48.0          httr_1.4.7              otel_0.2.0             
+#> [55] reticulate_1.44.1       cellranger_1.1.0        ragg_1.5.0             
+#> [58] png_0.1-8               memoise_2.0.1           evaluate_1.0.5         
+#> [61] knitr_1.51              IRanges_2.42.0          basilisk.utils_1.20.0  
+#> [64] immReferent_0.99.0      rlang_1.1.6             Rcpp_1.1.0             
+#> [67] glue_1.8.0              BiocManager_1.30.27     xml2_1.5.1             
+#> [70] BiocGenerics_0.54.1     rstudioapi_0.17.1       jsonlite_2.0.0         
+#> [73] R6_2.6.1                systemfonts_1.3.1       fs_1.6.6
 ```

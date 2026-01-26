@@ -33,8 +33,15 @@ Invisibly returns TRUE if cache was cleared, FALSE if no cache existed.
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
-# Clear cached WMDA data
+# Check if cache exists (safe operation, no side effects)
+cache_dir <- file.path(tempdir(), "wmda_cache_test")
+# This will report "No WMDA cache found" since we use a temp directory
+clearWmdaCache(cache_dir = cache_dir)
+#> No WMDA cache found
+
+# \donttest{
+# Clear the default WMDA cache
 clearWmdaCache()
-} # }
+#> WMDA cache cleared
+# }
 ```

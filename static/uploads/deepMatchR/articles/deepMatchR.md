@@ -221,13 +221,13 @@ The detail output includes:
 
 #### Function Reference
 
-| Argument                 | Default     | Description                                                |
-|--------------------------|-------------|------------------------------------------------------------|
-| `sequence1`, `sequence2` | –           | Two protein sequences (same length)                        |
-| `filter_charge`          | `NULL`      | Filter by charge change (`TRUE`/`FALSE`/`NULL`)            |
-| `filter_polarity`        | `NULL`      | Filter by polarity change (`TRUE`/`FALSE`/`NULL`)          |
-| `return`                 | `"count"`   | Output type: `"count"` or `"detail"`                       |
-| `na_action`              | `"exclude"` | Handle unknown residues: `"exclude"`, `"error"`, `"count"` |
+| Argument | Default | Description |
+|----|----|----|
+| `sequence1`, `sequence2` | – | Two protein sequences (same length) |
+| `filter_charge` | `NULL` | Filter by charge change (`TRUE`/`FALSE`/`NULL`) |
+| `filter_polarity` | `NULL` | Filter by polarity change (`TRUE`/`FALSE`/`NULL`) |
+| `return` | `"count"` | Output type: `"count"` or `"detail"` |
+| `na_action` | `"exclude"` | Handle unknown residues: `"exclude"`, `"error"`, `"count"` |
 
 ## Donor-Recipient Matching
 
@@ -309,14 +309,14 @@ calculateMismatchLoad(rgeno,
 
 #### Function Reference
 
-| Argument                           | Default   | Description                                                                                     |
-|------------------------------------|-----------|-------------------------------------------------------------------------------------------------|
-| `recipient_geno`, `donor_geno`     | –         | HLA genotypes from [`hlaGeno()`](https://www.borch.dev/uploads/deepMatchR/reference/hlaGeno.md) |
-| `loci`                             | `NULL`    | Restrict to specific loci (e.g., `c("A","B")`)                                                  |
-| `filter_charge`, `filter_polarity` | `NULL`    | Biophysical filters                                                                             |
-| `return`                           | `"total"` | `"total"`, `"per_locus"`, or `"pairwise"`                                                       |
-| `pairwise_locus`                   | `NULL`    | Locus for pairwise matrix                                                                       |
-| `parallel`                         | `TRUE`    | Use parallel processing                                                                         |
+| Argument | Default | Description |
+|----|----|----|
+| `recipient_geno`, `donor_geno` | – | HLA genotypes from [`hlaGeno()`](https://www.borch.dev/uploads/deepMatchR/reference/hlaGeno.md) |
+| `loci` | `NULL` | Restrict to specific loci (e.g., `c("A","B")`) |
+| `filter_charge`, `filter_polarity` | `NULL` | Biophysical filters |
+| `return` | `"total"` | `"total"`, `"per_locus"`, or `"pairwise"` |
+| `pairwise_locus` | `NULL` | Locus for pairwise matrix |
+| `parallel` | `TRUE` | Use parallel processing |
 
 ## Eplet Analysis
 
@@ -479,7 +479,7 @@ total_risk <- calculatePeptideBindingLoad(
   return = "total"
 )
 print(total_risk)
-#> [1] 0
+#> [1] 2366
 ```
 
 #### Per-Allele Summary
@@ -492,14 +492,14 @@ summary_load <- calculatePeptideBindingLoad(
 )
 print(summary_load)
 #>   hla_allele n_peptides n_strong n_weak risk_contribution
-#> 1    A*01:01          0        0      0                 0
-#> 2    A*02:01          0        0      0                 0
-#> 3    B*07:02          0        0      0                 0
-#> 4    B*08:01          0        0      0                 0
-#> 5 DQA1*02:01          0        0      0                 0
-#> 6 DQA1*05:05          0        0      0                 0
-#> 7 DQB1*02:02          0        0      0                 0
-#> 8 DQB1*03:01          0        0      0                 0
+#> 1    A*01:01       1085        0    652            350.25
+#> 2    A*02:01       1085        0    652            350.25
+#> 3    B*07:02       1085        0    582            132.25
+#> 4    B*08:01       1085        0    582            132.25
+#> 5 DQA1*02:01       1085        0    652            350.25
+#> 6 DQA1*05:05       1085        0    652            350.25
+#> 7 DQB1*02:02       1085        0    652            350.25
+#> 8 DQB1*03:01       1085        0    652            350.25
 ```
 
 #### Detailed Peptide-Level Results
@@ -511,8 +511,13 @@ detailed_load <- calculatePeptideBindingLoad(
   return = "detail"
 )
 head(detailed_load)
-#> [1] peptide        hla_allele     predicted_ic50 binding_level  contribution  
-#> <0 rows> (or 0-length row.names)
+#>     peptide hla_allele predicted_ic50 binding_level contribution
+#> 1 FDSDAASQR    A*01:01          10000    non_binder          0.0
+#> 2 DSDAASQRM    A*01:01           2500          weak          0.5
+#> 3 SDAASQRME    A*01:01          10000    non_binder          0.0
+#> 4 DAASQRMEP    A*01:01           2500          weak          0.5
+#> 5 AASQRMEPR    A*01:01           2500          weak          0.5
+#> 6 ASQRMEPRA    A*01:01           2500          weak          0.5
 ```
 
 ## Visualizing Antibody Data
@@ -706,56 +711,55 @@ plotEplets(
 
 ``` r
 sessionInfo()
-#> R version 4.5.2 (2025-10-31)
-#> Platform: x86_64-pc-linux-gnu
-#> Running under: Ubuntu 24.04.3 LTS
+#> R version 4.5.0 (2025-04-11)
+#> Platform: aarch64-apple-darwin20
+#> Running under: macOS Sonoma 14.0
 #> 
 #> Matrix products: default
-#> BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3 
-#> LAPACK: /usr/lib/x86_64-linux-gnu/openblas-pthread/libopenblasp-r0.3.26.so;  LAPACK version 3.12.0
+#> BLAS:   /Library/Frameworks/R.framework/Versions/4.5-arm64/Resources/lib/libRblas.0.dylib 
+#> LAPACK: /Library/Frameworks/R.framework/Versions/4.5-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.1
 #> 
 #> locale:
-#>  [1] LC_CTYPE=C.UTF-8       LC_NUMERIC=C           LC_TIME=C.UTF-8       
-#>  [4] LC_COLLATE=C.UTF-8     LC_MONETARY=C.UTF-8    LC_MESSAGES=C.UTF-8   
-#>  [7] LC_PAPER=C.UTF-8       LC_NAME=C              LC_ADDRESS=C          
-#> [10] LC_TELEPHONE=C         LC_MEASUREMENT=C.UTF-8 LC_IDENTIFICATION=C   
+#> [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
 #> 
-#> time zone: UTC
-#> tzcode source: system (glibc)
+#> time zone: America/Chicago
+#> tzcode source: internal
 #> 
 #> attached base packages:
 #> [1] stats     graphics  grDevices utils     datasets  methods   base     
 #> 
 #> other attached packages:
-#> [1] ggplot2_4.0.1     dplyr_1.1.4       deepMatchR_0.99.0 BiocStyle_2.38.0 
+#> [1] ggplot2_4.0.1     dplyr_1.1.4       deepMatchR_0.99.0 BiocStyle_2.36.0 
 #> 
 #> loaded via a namespace (and not attached):
-#>  [1] ggfittext_0.10.3       gtable_0.3.6           dir.expiry_1.18.0     
-#>  [4] xfun_0.56              bslib_0.9.0            lattice_0.22-7        
-#>  [7] quadprog_1.5-8         vctrs_0.7.1            tools_4.5.2           
-#> [10] generics_0.1.4         stats4_4.5.2           parallel_4.5.2        
-#> [13] tibble_3.3.1           pkgconfig_2.0.3        Matrix_1.7-4          
-#> [16] data.table_1.18.0      RColorBrewer_1.1-3     S7_0.2.1              
-#> [19] desc_1.4.3             S4Vectors_0.48.0       readxl_1.4.5          
-#> [22] lifecycle_1.0.5        compiler_4.5.2         farver_2.1.2          
-#> [25] textshaping_1.0.4      Biostrings_2.78.0      Seqinfo_1.0.0         
-#> [28] htmltools_0.5.9        sass_0.4.10            yaml_2.3.12           
-#> [31] pillar_1.11.1          pkgdown_2.2.0          crayon_1.5.3          
-#> [34] jquerylib_0.1.4        cachem_1.1.0           basilisk_1.22.0       
-#> [37] tidyselect_1.2.1       rvest_1.0.5            digest_0.6.39         
-#> [40] stringi_1.8.7          bookdown_0.46          labeling_0.4.3        
-#> [43] fastmap_1.2.0          grid_4.5.2             treemapify_2.6.0      
-#> [46] cli_3.6.5              magrittr_2.0.4         patchwork_1.3.2       
-#> [49] withr_3.0.2            filelock_1.0.3         scales_1.4.0          
-#> [52] rmarkdown_2.30         pwalign_1.6.0          XVector_0.50.0        
-#> [55] httr_1.4.7             reticulate_1.44.1      cellranger_1.1.0      
-#> [58] ragg_1.5.0             png_0.1-8              memoise_2.0.1         
-#> [61] evaluate_1.0.5         knitr_1.51             IRanges_2.44.0        
-#> [64] immReferent_0.99.6     rlang_1.1.7            Rcpp_1.1.1            
-#> [67] glue_1.8.0             BiocManager_1.30.27    xml2_1.5.2            
-#> [70] directlabels_2025.6.24 BiocGenerics_0.56.0    svglite_2.2.2         
-#> [73] jsonlite_2.0.0         R6_2.6.1               systemfonts_1.3.1     
-#> [76] fs_1.6.6
+#>  [1] ggfittext_0.10.3        gtable_0.3.6            dir.expiry_1.16.0      
+#>  [4] xfun_0.55               bslib_0.9.0             htmlwidgets_1.6.4      
+#>  [7] lattice_0.22-7          quadprog_1.5-8          vctrs_0.6.5            
+#> [10] tools_4.5.0             generics_0.1.4          stats4_4.5.0           
+#> [13] parallel_4.5.0          tibble_3.3.0            pkgconfig_2.0.3        
+#> [16] Matrix_1.7-4            data.table_1.18.0       RColorBrewer_1.1-3     
+#> [19] S7_0.2.1                desc_1.4.3              S4Vectors_0.46.0       
+#> [22] readxl_1.4.5            lifecycle_1.0.4         GenomeInfoDbData_1.2.14
+#> [25] compiler_4.5.0          farver_2.1.2            textshaping_1.0.4      
+#> [28] Biostrings_2.76.0       GenomeInfoDb_1.44.3     htmltools_0.5.9        
+#> [31] sass_0.4.10             yaml_2.3.12             pillar_1.11.1          
+#> [34] pkgdown_2.2.0           crayon_1.5.3            jquerylib_0.1.4        
+#> [37] cachem_1.1.0            basilisk_1.20.0         tidyselect_1.2.1       
+#> [40] rvest_1.0.5             digest_0.6.39           stringi_1.8.7          
+#> [43] bookdown_0.46           labeling_0.4.3          fastmap_1.2.0          
+#> [46] grid_4.5.0              treemapify_2.6.0        cli_3.6.5              
+#> [49] magrittr_2.0.4          patchwork_1.3.2         withr_3.0.2            
+#> [52] filelock_1.0.3          scales_1.4.0            UCSC.utils_1.4.0       
+#> [55] pwalign_1.4.0           rmarkdown_2.30          XVector_0.48.0         
+#> [58] httr_1.4.7              otel_0.2.0              reticulate_1.44.1      
+#> [61] cellranger_1.1.0        ragg_1.5.0              png_0.1-8              
+#> [64] memoise_2.0.1           evaluate_1.0.5          knitr_1.51             
+#> [67] IRanges_2.42.0          basilisk.utils_1.20.0   immReferent_0.99.0     
+#> [70] rlang_1.1.6             Rcpp_1.1.0              glue_1.8.0             
+#> [73] BiocManager_1.30.27     xml2_1.5.1              directlabels_2025.6.24 
+#> [76] BiocGenerics_0.54.1     svglite_2.2.2           rstudioapi_0.17.1      
+#> [79] jsonlite_2.0.0          R6_2.6.1                systemfonts_1.3.1      
+#> [82] fs_1.6.6
 ```
 
 ## Getting Help
@@ -763,4 +767,4 @@ sessionInfo()
 If you have questions, suggestions, or encounter issues:
 
 - **GitHub Issues:**
-  [github.com/ncborcherding/deepMatchR/issues](https://github.com/ncborcherding/deepMatchR/issues)
+  [github.com/BorchLab/deepMatchR/issues](https://github.com/ncborcherding/deepMatchR/issues)

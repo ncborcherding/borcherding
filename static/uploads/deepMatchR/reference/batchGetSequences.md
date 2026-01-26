@@ -53,7 +53,6 @@ Named list of sequences
 # Get protein sequences for multiple alleles
 alleles <- c("A*01:01", "A*02:01", "B*07:02", "B*08:01")
 prot_seqs <- batchGetSequences(alleles, type = "PROT")
-#> Creating immReferent cache directory at: /home/runner/.immReferent
 
 # Get nucleotide sequences with parallel processing
 nuc_seqs <- batchGetSequences(alleles, type = "NUC", n_cores = 4)
