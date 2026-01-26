@@ -42,6 +42,6 @@ clearWmdaCache(cache_dir = cache_dir)
 # \donttest{
 # Clear the default WMDA cache
 clearWmdaCache()
-#> WMDA cache cleared
+#> No WMDA cache found
 # }
 ```

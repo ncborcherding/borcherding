@@ -8,7 +8,7 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/BorchLab/deepMatchR/blob/HEAD/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/BorchLab/deepMatchR/blob/main/DESCRIPTION)
 
 Borcherding N (2026). *deepMatchR: Deep Learning Models for HLA
 Matching*. R package version 0.99.0,

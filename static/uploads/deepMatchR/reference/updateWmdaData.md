@@ -67,7 +67,7 @@ environment variable `DEEPMATCHR_CACHE_DIR` to a new location.
 # Show default cache directory (does not download)
 cache_dir <- file.path(tempdir(), "wmda_test")
 print(cache_dir)
-#> [1] "/var/folders/5t/9wp2ssj13r7btc7fjmg4m68r0000gn/T//RtmpW7Z2q3/wmda_test"
+#> [1] "/tmp/Rtmpb391iT/wmda_test"
 
 # \donttest{
 # Update to latest WMDA data (requires internet)
@@ -78,7 +78,7 @@ updateWmdaData()
 #>   Downloading hla_nom_p.txt...
 #>   Saving to cache...
 #> Done! Cached 27260 serology mappings, 23 split mappings, 18757 P-groups
-#> Cache location: ~/Library/Caches/deepMatchR
+#> Cache location: ~/.cache/deepMatchR
 
 # Force re-download even if cache exists
 updateWmdaData(force = TRUE)
@@ -88,6 +88,6 @@ updateWmdaData(force = TRUE)
 #>   Downloading hla_nom_p.txt...
 #>   Saving to cache...
 #> Done! Cached 27260 serology mappings, 23 split mappings, 18757 P-groups
-#> Cache location: ~/Library/Caches/deepMatchR
+#> Cache location: ~/.cache/deepMatchR
 # }
 ```
