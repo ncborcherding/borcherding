@@ -736,7 +736,7 @@ sessionInfo()
 #> 
 #> loaded via a namespace (and not attached):
 #>  [1] ggfittext_0.10.3       gtable_0.3.6           dir.expiry_1.18.0     
-#>  [4] xfun_0.56              bslib_0.9.0            lattice_0.22-7        
+#>  [4] xfun_0.56              bslib_0.10.0           lattice_0.22-7        
 #>  [7] quadprog_1.5-8         vctrs_0.7.1            tools_4.5.2           
 #> [10] generics_0.1.4         stats4_4.5.2           parallel_4.5.2        
 #> [13] tibble_3.3.1           pkgconfig_2.0.3        Matrix_1.7-4          

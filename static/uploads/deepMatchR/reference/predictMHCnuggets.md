@@ -119,12 +119,17 @@ bioRxiv. GitHub: https://github.com/KarchinLab/mhcnuggets
 ## Examples
 
 ``` r
-res <- predictMHCnuggets(
-  peptides = c("SIINFEKL","LLFGYPVYV"),
-  allele   = "A*02:01",
-  mhc_class = "I",
-  rank_output = TRUE
-)
+# \donttest{
+# MHCnuggets requires Python/TensorFlow and is not available on Windows
+if (.Platform$OS.type != "windows") {
+  res <- predictMHCnuggets(
+    peptides = c("SIINFEKL","LLFGYPVYV"),
+    allele   = "A*02:01",
+    mhc_class = "I",
+    rank_output = TRUE
+  )
+  head(res)
+}
 #> Installing pyenv ...
 #> Done! pyenv has been installed to '/home/runner/.local/share/r-reticulate/pyenv/bin/pyenv'.
 #> Using Python: /home/runner/.pyenv/versions/3.10.19/bin/python3.10
@@ -136,8 +141,8 @@ res <- predictMHCnuggets(
 #> Installing packages: 'mhcnuggets==2.4.1', 'tensorflow==2.19.1'
 #> + /home/runner/.cache/R/basilisk/1.22.0/deepMatchR/0.99.0/deepmatchrEnv_v2/bin/python -m pip install --upgrade --no-user 'mhcnuggets==2.4.1' 'tensorflow==2.19.1'
 #> Virtual environment '/home/runner/.cache/R/basilisk/1.22.0/deepMatchR/0.99.0/deepmatchrEnv_v2' successfully created.
-head(res)
 #>     peptide    ic50
 #> 1  SIINFEKL 5600.06
 #> 2 LLFGYPVYV  535.92
+# }
 ```

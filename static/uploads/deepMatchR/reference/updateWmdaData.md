@@ -67,7 +67,7 @@ environment variable `DEEPMATCHR_CACHE_DIR` to a new location.
 # Show default cache directory (does not download)
 cache_dir <- file.path(tempdir(), "wmda_test")
 print(cache_dir)
-#> [1] "/tmp/RtmpVcGTYA/wmda_test"
+#> [1] "/tmp/RtmpqyBOgk/wmda_test"
 
 # \donttest{
 # Update to latest WMDA data (requires internet)

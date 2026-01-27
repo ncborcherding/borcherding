@@ -170,12 +170,17 @@ GitHub: https://github.com/KarchinLab/mhcnuggets</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">predictMHCnuggets</span><span class="op">(</span></span></span>
-<span class="r-in"><span>  peptides <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"SIINFEKL"</span>,<span class="st">"LLFGYPVYV"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  allele   <span class="op">=</span> <span class="st">"A*02:01"</span>,</span></span>
-<span class="r-in"><span>  mhc_class <span class="op">=</span> <span class="st">"I"</span>,</span></span>
-<span class="r-in"><span>  rank_output <span class="op">=</span> <span class="cn">TRUE</span></span></span>
-<span class="r-in"><span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+<span class="r-in"><span><span class="co"># MHCnuggets requires Python/TensorFlow and is not available on Windows</span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="va">.Platform</span><span class="op">$</span><span class="va">OS.type</span> <span class="op">!=</span> <span class="st">"windows"</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">predictMHCnuggets</span><span class="op">(</span></span></span>
+<span class="r-in"><span>    peptides <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"SIINFEKL"</span>,<span class="st">"LLFGYPVYV"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    allele   <span class="op">=</span> <span class="st">"A*02:01"</span>,</span></span>
+<span class="r-in"><span>    mhc_class <span class="op">=</span> <span class="st">"I"</span>,</span></span>
+<span class="r-in"><span>    rank_output <span class="op">=</span> <span class="cn">TRUE</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Installing pyenv ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Done! pyenv has been installed to '/home/runner/.local/share/r-reticulate/pyenv/bin/pyenv'.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Using Python: /home/runner/.pyenv/versions/3.10.19/bin/python3.10</span>
@@ -187,10 +192,10 @@ GitHub: https://github.com/KarchinLab/mhcnuggets</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Installing packages: 'mhcnuggets==2.4.1', 'tensorflow==2.19.1'</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> + /home/runner/.cache/R/basilisk/1.22.0/deepMatchR/0.99.0/deepmatchrEnv_v2/bin/python -m pip install --upgrade --no-user 'mhcnuggets==2.4.1' 'tensorflow==2.19.1'</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Virtual environment '/home/runner/.cache/R/basilisk/1.22.0/deepMatchR/0.99.0/deepmatchrEnv_v2' successfully created.</span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     peptide    ic50</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1  SIINFEKL 5600.06</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2 LLFGYPVYV  535.92</span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
