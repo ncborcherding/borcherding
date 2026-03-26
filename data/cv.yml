@@ -129,6 +129,9 @@ service:
       start: "2013"
       end: "2014"
   national:
+    - committee: " T-Cell Receptor and Immunoglobulin Nomenclature Sub-committee (TR-IG NSC) of the International Union of Immunological Societies (IUIS)"
+      start: "2026"
+      end: "Present"
     - committee: "Inferred Allele Review Sub-committee (IARC), AIRR Community of the Antibody Society"
       start: "2025"
       end: "Present"
