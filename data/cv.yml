@@ -1,5 +1,5 @@
 metadata:
-  updated: "2025-10-19"
+  updated: "2026-04-01"
   version: "1.0.0"
 
 name: "Nicholas C. Borcherding, MD PhD"
@@ -38,7 +38,7 @@ education:
 training:
   - title: "Fellow, Histocompatibility and Immunogenetics"
     org: "Washington University School of Medicine"
-    start: "2024-07"
+    start: "2024"
     end: "Present"
   - title: "Resident, Clinical Pathology"
     org: "Washington University School of Medicine"
@@ -147,15 +147,23 @@ mentorship:
     - mentee: "Qile Yang"
       level: "Undergraduate"
       start: "2023"
+      end: "Present"
       topic: "Computational immunology research resulting in two submitted publications"
     - mentee: "Isabel Risch"
       level: "MSTP Student"
       start: "2024"
+      end: "Present"
       topic: "HLA-B27 TCR profiling"
     - mentee: "Patty Hernandez"
       level: "Fellow"
       start: "2024"
+      end: "2025"
       topic: "HLA eplet comparison of commercial assays"
+    - mentee: "Natty Doilicho"
+      level: "Surgical Resident"
+      start: "2025"
+      end: "Present"
+      topic: "TCR profiling in solid organ transplant"
   career:
     - mentee: "Haewon Shin"
       level: "Graduate Student"
@@ -163,6 +171,8 @@ mentorship:
       topic: "Serving on thesis committee"
 
 awards:
+  - year: "2026"
+    name: "Junior Faculty Award, Academy of Clinical and Laboratory Physicians and Scientists"
   - year: "2023"
     name: "Emerging Generation Award, American Society for Clinical Investigation"
   - year: "2021"
@@ -321,6 +331,9 @@ presentations:
         title: "Transcriptional heterogeneity in cancer-associated regulatory T cells is predictive of survival"
         venue: "Single-Cell RNA Sequencing Symposium, Iowa Institute of Genetics"
     national:
+      - year: "2026"
+        title: "Pre-Transplant T Cell Receptor Network Topology Predicts Kidney Allograft Outcome Independet of HLA Mismatch"
+        venue: "ACLPS Annual Meeting, St Louis, MO"
       - year: "2025"
         title: "AI for predicting the specificity of TCR"
         venue: "ASHI Annual Meeting, Orlando FL"
