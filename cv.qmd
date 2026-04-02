@@ -381,7 +381,7 @@ if (length(trials)) {
 ### Institutional
 ```{r}
 rf <- cv$research_funding %||% list()
-inst <- rev(rf$institutional) %||% list()
+inst <- rf$institutional %||% list()
 if (length(inst) && is.list(inst)) {
   cat(
     purrr::map_chr(
@@ -397,7 +397,7 @@ if (length(inst) && is.list(inst)) {
 
 ### National
 ```{r}
-nat <- rev(rf$national) %||% list()
+nat <- rf$national %||% list()
 if (length(nat) && is.list(nat)) {
   cat(
     purrr::map_chr(
@@ -415,7 +415,7 @@ if (length(nat) && is.list(nat)) {
 
 ### Institutional
 ```{r}
-pres <- rev(cv$presentations) %||% list()
+pres <- cv$presentations %||% list()
 ipi <- pres$invited$institutional %||% list()
 if (length(ipi)) {
   cat(map_chr(ipi, ~ glue("- **{.x$year}**: *{.x$title}*. {.x$venue}")), sep = "\n")
@@ -424,7 +424,7 @@ if (length(ipi)) {
 
 ### National
 ```{r}
-ipn <- rev(pres$invited$national) %||% list()
+ipn <- pres$invited$national %||% list()
 if (length(ipn)) {
   cat(map_chr(ipn, ~ glue("- **{.x$year}**: *{.x$title}*. {.x$venue}")), sep = "\n")
 } else cat("_(none listed)_")
@@ -432,7 +432,7 @@ if (length(ipn)) {
 
 ## Conference Abstracts
 ```{r, results='asis'}
-abs <- rev(cv$presentations$abstracts) %||% list()
+abs <- cv$presentations$abstracts %||% list()
 
 if (length(abs)) {
   out <- map_chr(abs, function(a) {
@@ -450,7 +450,7 @@ if (length(abs)) {
 
 ## Textbooks or Chapters
 ```{r, results='asis'}
-tb <- rev(cv$presentations$textbook) %||% list()
+tb <- cv$presentations$textbook %||% list()
 
 if (length(tb)) {
   out <- map_chr(tb, function(t) {
