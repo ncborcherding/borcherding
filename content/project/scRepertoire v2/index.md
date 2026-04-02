@@ -2,22 +2,20 @@
 title: scRepertoire v2
 summary: A toolkit for single-cell immune profiling
 tags:
-- TCR
-- BCR
+- Repertoire
 - Single-Cell
-- Immunology
 - R
 - Software
 date: "2023-01-06T00:00:00Z"
 
 # Optional external URL for project (replaces project detail page).
-external_link: "https://github.com/ncborcherding/scRepertoire"
+external_link: "https://github.com/BorchLab/scRepertoire"
 
 image:
   caption: Attaching single-cell repertoires to gene expression data
   focal_point: Smart
 
-url_code: "https://github.com/ncborcherding/scRepertoire"
+url_code: "https://github.com/BorchLab/scRepertoire"
 #url_pdf: 
 #url_slides: ""
 #url_video: ""

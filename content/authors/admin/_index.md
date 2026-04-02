@@ -49,9 +49,12 @@ social:
   - icon: graduation-cap
     icon_pack: ai
     link: https://scholar.google.com/citations?user=_n4TRuIAAAAJ
+  - icon: orcid
+    icon_pack: ai
+    link: https://orcid.org/0000-0003-1427-6342
   - icon: github
     icon_pack: fab
-    link: https://github.com/ncborcherding
+    link: https://github.com/BorchLab
   - icon: linkedin
     icon_pack: fab
     link: https://www.linkedin.com/in/thehumanborch/
@@ -93,9 +96,9 @@ Beyond his laboratory and clinical roles, Nick is deeply invested in open data
 science. He develops widely used open-source software for immune repertoire 
 and single-cell analysis, including
 
-- [scRepertoire](https://github.com/ncborcherding/scRepertoire)
-- [escape](https://github.com/ncborcherding/escape)
-- [Trex](https://github.com/ncborcherding/Trex)
+- [scRepertoire](https://github.com/BorchLab/scRepertoire)
+- [escape](https://github.com/BorchLab/escape)
+- [Trex](https://github.com/BorchLab/Trex)
 - [Ibex](https://github.com/BorchLab/Ibex)
 - [immReferent](https://github.com/BorchLab/immReferent)
 

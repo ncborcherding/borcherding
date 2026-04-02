@@ -10,18 +10,15 @@ main:
   - name: Posts
     url: '#posts'
     weight: 20
-  - name: Projects
-    url: '#projects'
+  - name: Software
+    url: 'software/'
     weight: 30
   - name: Talks
     url: '#talks'
     weight: 40
   - name: Publications
     url: '#featured'
-    weight: 50
-
-# Link to a PDF of your resume/CV from the menu.
-# To enable, copy your resume/CV to `static/uploads/resume.pdf` and uncomment the lines below.
-#  - name: CV
-#    url: uploads/resume.pdf
-#    weight: 70
+    weight: 60
+  - name: CV
+    url: files/Borcherding_CV.pdf
+    weight: 70

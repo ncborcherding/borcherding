@@ -7,7 +7,7 @@
 
 theme: dev
 day_night: true
-font: ''
+font: 'Mukta'
 font_size: L
 
 # SEO
@@ -15,7 +15,7 @@ font_size: L
 site_type: Person
 local_business_type: ''
 org_name: ''
-description: ''
+description: 'Nick Borcherding - Physician-scientist and Assistant Professor at Washington University. Computational immunology, single-cell analysis, and open-source bioinformatics tools.'
 twitter: ''
 
 # Site header
@@ -108,7 +108,7 @@ map:
   api_key: ''
   zoom: 15
 marketing:
-  google_analytics: ''
+  google_analytics: 'G-KS9M8EV5G6'
   google_tag_manager: ''
   google_site_verification: ''
   baidu_site_verification: ''

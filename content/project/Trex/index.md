@@ -3,20 +3,19 @@ title: Trex
 summary: Autoencoder for single-cell TCR
 tags:
 - Deep Learning
-- TCR
-- Immunology
+- Repertoire
 - R
 - Software
 date: "2023-01-06T00:00:00Z"
 
 # Optional external URL for project (replaces project detail page).
-external_link: "https://github.com/ncborcherding/Trex"
+external_link: "https://github.com/BorchLab/Trex"
 
 image:
   caption: Approach to autoencoding cdr3 sequence for TCR
   focal_point: Smart
 
-url_code: "https://github.com/ncborcherding/Trex"
+url_code: "https://github.com/BorchLab/Trex"
 #url_pdf: ""
 #url_slides: ""
 #url_video: ""

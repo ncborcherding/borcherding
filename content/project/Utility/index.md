@@ -2,9 +2,9 @@
 title: Utility
 summary: Collection of Tumor-Infiltrating Lymphocyte Single-Cell Experiments with TCRs
 tags:
+- Data
 - Single-Cell
-- TCR
-- Immunology
+- Repertoire
 date: "2023-01-06T00:00:00Z"
 
 # Optional external URL for project (replaces project detail page).
@@ -17,7 +17,7 @@ url_code: "https://github.com/ncborcherding/utility/"
 ---
 
 The original intent of assembling a data set of publicly-available tumor-infiltrating T cells (TILs) with paired TCR sequencing was to expand 
-and improve the [scRepertoire](https://github.com/ncborcherding/scRepertoire) R package. However, after some discussion, we decided to release 
+and improve the [scRepertoire](https://github.com/BorchLab/scRepertoire) R package. However, after some discussion, we decided to release 
 the data set for everyone, a complete summary of the sequencing runs and the sample information can be found in the meta data of the Seurat object. 
 
 ### Folder Structure

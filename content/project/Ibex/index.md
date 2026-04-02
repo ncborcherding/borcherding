@@ -3,20 +3,19 @@ title: Ibex
 summary: Autoencoder for single-cell BCR
 tags:
 - Deep Learning
-- BCR
-- Immunology
+- Repertoire
 - R
 - Software
 date: "2023-01-06T00:00:00Z"
 
 # Optional external URL for project (replaces project detail page).
-external_link: "https://github.com/ncborcherding/Ibex"
+external_link: "https://github.com/BorchLab/Ibex"
 
 image:
   caption: Approach to autoencoding cdr3 sequence for BCR
   focal_point: Smart
 
-url_code: "https://github.com/ncborcherding/Ibex"
+url_code: "https://github.com/BorchLab/Ibex"
 url_pdf: "https://www.biorxiv.org/content/10.1101/2022.11.09.515787v1.full.pdf+html"
 #url_slides: ""
 #url_video: ""
