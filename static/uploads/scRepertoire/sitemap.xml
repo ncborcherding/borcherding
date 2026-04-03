@@ -18,8 +18,15 @@
 <url><loc>https://www.borch.dev/uploads/scRepertoire/articles/Running_Escape.html</loc></url>
 <url><loc>https://www.borch.dev/uploads/scRepertoire/articles/SC_Visualizations.html</loc></url>
 <url><loc>https://www.borch.dev/uploads/scRepertoire/articles/Trex.html</loc></url>
+<url><loc>https://www.borch.dev/uploads/scRepertoire/articles/dandelionR.html</loc></url>
 <url><loc>https://www.borch.dev/uploads/scRepertoire/articles/immApex.html</loc></url>
+<url><loc>https://www.borch.dev/uploads/scRepertoire/articles/immGLIPH.html</loc></url>
+<url><loc>https://www.borch.dev/uploads/scRepertoire/articles/immLynx.html</loc></url>
+<url><loc>https://www.borch.dev/uploads/scRepertoire/articles/immReferent.html</loc></url>
+<url><loc>https://www.borch.dev/uploads/scRepertoire/articles/immcantation.html</loc></url>
+<url><loc>https://www.borch.dev/uploads/scRepertoire/articles/immunarch.html</loc></url>
 <url><loc>https://www.borch.dev/uploads/scRepertoire/articles/index.html</loc></url>
+<url><loc>https://www.borch.dev/uploads/scRepertoire/articles/tcrpheno.html</loc></url>
 <url><loc>https://www.borch.dev/uploads/scRepertoire/articles/vignette.html</loc></url>
 <url><loc>https://www.borch.dev/uploads/scRepertoire/authors.html</loc></url>
 <url><loc>https://www.borch.dev/uploads/scRepertoire/index.html</loc></url>
@@ -30,6 +37,7 @@
 <url><loc>https://www.borch.dev/uploads/scRepertoire/reference/annotateInvariant.html</loc></url>
 <url><loc>https://www.borch.dev/uploads/scRepertoire/reference/clonalAbundance.html</loc></url>
 <url><loc>https://www.borch.dev/uploads/scRepertoire/reference/clonalBias.html</loc></url>
+<url><loc>https://www.borch.dev/uploads/scRepertoire/reference/clonalBin.html</loc></url>
 <url><loc>https://www.borch.dev/uploads/scRepertoire/reference/clonalCluster.html</loc></url>
 <url><loc>https://www.borch.dev/uploads/scRepertoire/reference/clonalCompare.html</loc></url>
 <url><loc>https://www.borch.dev/uploads/scRepertoire/reference/clonalDiversity.html</loc></url>
@@ -49,6 +57,8 @@
 <url><loc>https://www.borch.dev/uploads/scRepertoire/reference/combineTCR.html</loc></url>
 <url><loc>https://www.borch.dev/uploads/scRepertoire/reference/contig_list.html</loc></url>
 <url><loc>https://www.borch.dev/uploads/scRepertoire/reference/createHTOContigList.html</loc></url>
+<url><loc>https://www.borch.dev/uploads/scRepertoire/reference/dot-_bind_contig_list.html</loc></url>
+<url><loc>https://www.borch.dev/uploads/scRepertoire/reference/dot-_split_and_pad.html</loc></url>
 <url><loc>https://www.borch.dev/uploads/scRepertoire/reference/exportClones.html</loc></url>
 <url><loc>https://www.borch.dev/uploads/scRepertoire/reference/expression2List.html</loc></url>
 <url><loc>https://www.borch.dev/uploads/scRepertoire/reference/getCirclize.html</loc></url>
@@ -57,17 +67,15 @@
 <url><loc>https://www.borch.dev/uploads/scRepertoire/reference/highlightClones.html</loc></url>
 <url><loc>https://www.borch.dev/uploads/scRepertoire/reference/index.html</loc></url>
 <url><loc>https://www.borch.dev/uploads/scRepertoire/reference/loadContigs.html</loc></url>
-<url><loc>https://www.borch.dev/uploads/scRepertoire/reference/mini_contig_list.html</loc></url>
 <url><loc>https://www.borch.dev/uploads/scRepertoire/reference/percentAA.html</loc></url>
-<url><loc>https://www.borch.dev/uploads/scRepertoire/reference/percentGenes.html</loc></url>
+<url><loc>https://www.borch.dev/uploads/scRepertoire/reference/percentGeneUsage.html</loc></url>
 <url><loc>https://www.borch.dev/uploads/scRepertoire/reference/percentKmer.html</loc></url>
-<url><loc>https://www.borch.dev/uploads/scRepertoire/reference/percentVJ.html</loc></url>
 <url><loc>https://www.borch.dev/uploads/scRepertoire/reference/positionalEntropy.html</loc></url>
 <url><loc>https://www.borch.dev/uploads/scRepertoire/reference/positionalProperty.html</loc></url>
 <url><loc>https://www.borch.dev/uploads/scRepertoire/reference/quietVDJgenes.html</loc></url>
 <url><loc>https://www.borch.dev/uploads/scRepertoire/reference/scRep_example.html</loc></url>
 <url><loc>https://www.borch.dev/uploads/scRepertoire/reference/scRepertoire-package.html</loc></url>
 <url><loc>https://www.borch.dev/uploads/scRepertoire/reference/subsetClones.html</loc></url>
-<url><loc>https://www.borch.dev/uploads/scRepertoire/reference/vizGenes.html</loc></url>
+<url><loc>https://www.borch.dev/uploads/scRepertoire/reference/vizCirclize.html</loc></url>
 </urlset>
 

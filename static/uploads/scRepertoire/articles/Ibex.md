@@ -1,0 +1,583 @@
+# Combining Deep Learning and BCRs with Ibex
+
+## Introduction
+
+The idea behind Ibex is to combine BCR CDR3 amino acid information with
+phenotypic RNA/protein data to direct the use of single-cell sequencing
+towards antigen-specific discoveries. This is a growing field -
+specifically [TESSA](https://github.com/jcao89757/TESSA) uses amino acid
+characteristics and autoencoder as a means to get a dimensional
+reduction. Another option is
+[CoNGA](https://github.com/phbradley/conga), which produces an embedding
+using BCR and RNA. Ibex was designed to make a customizable approach to
+this combined approach using R.
+
+More information is available at the [Ibex GitHub
+Repo](https://github.com/BorchLab/Ibex).
+
+### Installation
+
+To run Ibex, open R and install Ibex from GitHub:
+
+``` r
+devtools::install_github("BorchLab/Ibex")
+```
+
+or via Bioconductor with
+
+``` r
+if (!require("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+BiocManager::install("Ibex")
+```
+
+### Load Libraries
+
+``` r
+suppressPackageStartupMessages({
+  library(bluster)
+  library(dplyr)
+  library(ggplot2)
+  library(Ibex)
+  library(kableExtra)
+  library(mumosa)
+  library(patchwork)
+  library(Peptides)
+  library(scater)
+  library(viridis)
+})
+```
+
+### The Data Set
+
+The data used here are derived from 10x Genomics’ 2k BEAM-Ab Mouse HEL
+data set, consisting of splenocytes from transgenic mice engineered to
+recognize Hen Egg Lysozyme (HEL). These splenocytes were labeled with a
+small antigen panel: SARS-TRI-S, gp120, H5N1, and a negative control.
+
+To illustrate the Ibex framework, we subset to a smaller set of 200
+cells (including some dominant clones) and convert the Seurat object
+into a SingleCellExperiment. The resulting “ibex_example” object stores
+all the necessary data—RNA expression, antigen capture (BEAM) features,
+BCR contig annotations, and computed dimensional reductions—ready for
+downstream Ibex analyses. The object is saved (`ibex_example.rda`),
+along with the contig information (`ibex_vdj.rda`), ensuring that the
+integrated data set can be readily reloaded and explored in subsequent
+steps. More information on the processing steps are available in the
+`inst/scripts` directory of the package.
+
+#### Loading the processed data
+
+For the purpose of the vignette, will use the built-in data set
+`ibex_example`, but will convert it into a Seurat object.
+
+### Getting Expanded Sequences
+
+The function
+[`combineExpandedBCR()`](https://rdrr.io/pkg/Ibex/man/combineExpandedBCR.html)
+extends the functionality of
+[`combineBCR()`](https://www.borch.dev/uploads/scRepertoire/reference/combineBCR.md)
+from the scRepertoire package by first concatenating the CDR1, CDR2, and
+CDR3 sequences into a single expanded variable. This approach retains
+additional information from the BCR variable regions before calling
+[`combineBCR()`](https://www.borch.dev/uploads/scRepertoire/reference/combineBCR.md)
+to consolidate BCR sequences into clones. This will allow for use of
+expanded sequence models which we will detail below.
+
+#### **Function Parameters**
+
+The
+[`combineExpandedBCR()`](https://rdrr.io/pkg/Ibex/man/combineExpandedBCR.html)
+function supports the following parameters:
+
+| Parameter | Description | Default |
+|----|----|----|
+| `input.data` | List of data frames containing BCR sequencing results. | **Required** |
+| `samples` | Character vector labeling each sample. | **Required** |
+| `ID` | Additional sample labeling (optional). | `NULL` |
+| `call.related.clones` | Whether to group related clones using nucleotide sequences and V genes. | `TRUE` |
+| `threshold` | Normalized edit distance for clone clustering. | `0.85` |
+| `removeNA` | Remove chains without values. | `FALSE` |
+| `removeMulti` | Remove barcodes with more than two chains. | `FALSE` |
+| `filterMulti` | Select highest-expressing light and heavy chains. | `TRUE` |
+| `filterNonproductive` | Remove nonproductive chains if the column exists. | `TRUE` |
+
+``` r
+combined.BCR <- combineExpandedBCR(input.data = list(ibex_vdj),
+                                   samples = "Sample1",
+                                   filterNonproductive = TRUE)
+head(combined.BCR[[1]])[,c(1,11)]
+```
+
+    ##                      barcode
+    ## 1 Sample1_AAACCTGTCAACGGGA-1
+    ## 2 Sample1_AAACGGGAGACAGGCT-1
+    ## 3 Sample1_AAAGATGAGTCCGGTC-1
+    ## 4 Sample1_AAAGATGGTAGAGGAA-1
+    ## 5 Sample1_AAAGATGGTATCACCA-1
+    ## 6 Sample1_AAAGATGGTATGGTTC-1
+    ##                                                      CTaa
+    ## 1 GDSITSD-SYSGS-CANWDGDYW_RASQSIGNNLH-YASQSIS-CQQSNSWPYTF
+    ## 2 GDSITSD-SYSGS-CANWDGDYW_RASQSIGNNLH-YASQSIS-CQQSNSWPYTF
+    ## 3 GDSITSD-SYSGS-CANWDGDYW_RASQSIGNNLH-YASQSIS-CQQSNSWPYTF
+    ## 4                              GDSITSD-SYSGS-CANWDGDYW_NA
+    ## 5 GDSITSD-SYSGS-CANWDGDYW_RASQSIGNNLH-YASQSIS-CQQSNSWPYTF
+    ## 6 GDSITSD-SYSGS-CANWDGDYW_RASQSIGNNLH-YASQSIS-CQQSNSWPYTF
+
+We can attach the expanded sequences to the Seurat or Single-Cell
+Experiment objects using the scRepertoire
+[`combineExpression()`](https://www.borch.dev/uploads/screpertoire/reference/combineexpression)
+function.
+
+### Available Models
+
+**Ibex** offers a diverse set of models built on various architectures
+and encoding methods. Currently, models are available for both heavy and
+light chain sequences in humans, as well as heavy chain models for mice.
+Models for CDR3-based sequences have been trained on sequences of 45
+residues or fewer, while models for CDR1/2/3-based sequences are
+specific to sequences of 90 amino acids or fewer.
+
+A full list of available models is provided below:
+
+``` r
+model.meta.data <-  read.csv(system.file("extdata", "metadata.csv", 
+                                               package = "Ibex"))[,c(1:2,8)]
+model.meta.data %>%
+  kable("html", escape = FALSE) %>%
+  kable_styling(full_width = FALSE) %>%
+  scroll_box(width = "100%", height = "400px")
+```
+
+| Title | Description | Species |
+|:---|:---|:---|
+| Human_Heavy_CNN_atchleyFactors_encoder.keras | Keras-based deep learning encoder for BCR sequences. Chain: Heavy, Architecture: CNN, Encoding Method: atchleyFactors | Homo sapiens |
+| Human_Heavy_CNN_crucianiProperties_encoder.keras | Keras-based deep learning encoder for BCR sequences. Chain: Heavy, Architecture: CNN, Encoding Method: crucianiProperties | Homo sapiens |
+| Human_Heavy_CNN_kideraFactors_encoder.keras | Keras-based deep learning encoder for BCR sequences. Chain: Heavy, Architecture: CNN, Encoding Method: kideraFactors | Homo sapiens |
+| Human_Heavy_CNN_MSWHIM_encoder.keras | Keras-based deep learning encoder for BCR sequences. Chain: Heavy, Architecture: CNN, Encoding Method: MSWHIM | Homo sapiens |
+| Human_Heavy_CNN_OHE_encoder.keras | Keras-based deep learning encoder for BCR sequences. Chain: Heavy, Architecture: CNN, Encoding Method: OHE | Homo sapiens |
+| Human_Heavy_CNN_tScales_encoder.keras | Keras-based deep learning encoder for BCR sequences. Chain: Heavy, Architecture: CNN, Encoding Method: tScales | Homo sapiens |
+| Human_Heavy_CNN.EXP_atchleyFactors_encoder.keras | Keras-based deep learning encoder for BCR sequences. Chain: Heavy, Architecture: CNN.EXP, Encoding Method: atchleyFactors | Homo sapiens |
+| Human_Heavy_CNN.EXP_crucianiProperties_encoder.keras | Keras-based deep learning encoder for BCR sequences. Chain: Heavy, Architecture: CNN.EXP, Encoding Method: crucianiProperties | Homo sapiens |
+| Human_Heavy_CNN.EXP_kideraFactors_encoder.keras | Keras-based deep learning encoder for BCR sequences. Chain: Heavy, Architecture: CNN.EXP, Encoding Method: kideraFactors | Homo sapiens |
+| Human_Heavy_CNN.EXP_MSWHIM_encoder.keras | Keras-based deep learning encoder for BCR sequences. Chain: Heavy, Architecture: CNN.EXP, Encoding Method: MSWHIM | Homo sapiens |
+| Human_Heavy_CNN.EXP_OHE_encoder.keras | Keras-based deep learning encoder for BCR sequences. Chain: Heavy, Architecture: CNN.EXP, Encoding Method: OHE | Homo sapiens |
+| Human_Heavy_CNN.EXP_tScales_encoder.keras | Keras-based deep learning encoder for BCR sequences. Chain: Heavy, Architecture: CNN.EXP, Encoding Method: tScales | Homo sapiens |
+| Human_Heavy_VAE_atchleyFactors_encoder.keras | Keras-based deep learning encoder for BCR sequences. Chain: Heavy, Architecture: VAE, Encoding Method: atchleyFactors | Homo sapiens |
+| Human_Heavy_VAE_crucianiProperties_encoder.keras | Keras-based deep learning encoder for BCR sequences. Chain: Heavy, Architecture: VAE, Encoding Method: crucianiProperties | Homo sapiens |
+| Human_Heavy_VAE_kideraFactors_encoder.keras | Keras-based deep learning encoder for BCR sequences. Chain: Heavy, Architecture: VAE, Encoding Method: kideraFactors | Homo sapiens |
+| Human_Heavy_VAE_MSWHIM_encoder.keras | Keras-based deep learning encoder for BCR sequences. Chain: Heavy, Architecture: VAE, Encoding Method: MSWHIM | Homo sapiens |
+| Human_Heavy_VAE_OHE_encoder.keras | Keras-based deep learning encoder for BCR sequences. Chain: Heavy, Architecture: VAE, Encoding Method: OHE | Homo sapiens |
+| Human_Heavy_VAE_tScales_encoder.keras | Keras-based deep learning encoder for BCR sequences. Chain: Heavy, Architecture: VAE, Encoding Method: tScales | Homo sapiens |
+| Human_Heavy_VAE.EXP_atchleyFactors_encoder.keras | Keras-based deep learning encoder for BCR sequences. Chain: Heavy, Architecture: VAE.EXP, Encoding Method: atchleyFactors | Homo sapiens |
+| Human_Heavy_VAE.EXP_crucianiProperties_encoder.keras | Keras-based deep learning encoder for BCR sequences. Chain: Heavy, Architecture: VAE.EXP, Encoding Method: crucianiProperties | Homo sapiens |
+| Human_Heavy_VAE.EXP_kideraFactors_encoder.keras | Keras-based deep learning encoder for BCR sequences. Chain: Heavy, Architecture: VAE.EXP, Encoding Method: kideraFactors | Homo sapiens |
+| Human_Heavy_VAE.EXP_MSWHIM_encoder.keras | Keras-based deep learning encoder for BCR sequences. Chain: Heavy, Architecture: VAE.EXP, Encoding Method: MSWHIM | Homo sapiens |
+| Human_Heavy_VAE.EXP_OHE_encoder.keras | Keras-based deep learning encoder for BCR sequences. Chain: Heavy, Architecture: VAE.EXP, Encoding Method: OHE | Homo sapiens |
+| Human_Heavy_VAE.EXP_tScales_encoder.keras | Keras-based deep learning encoder for BCR sequences. Chain: Heavy, Architecture: VAE.EXP, Encoding Method: tScales | Homo sapiens |
+| Human_Light_CNN_atchleyFactors_encoder.keras | Keras-based deep learning encoder for BCR sequences. Chain: Light, Architecture: CNN, Encoding Method: atchleyFactors | Homo sapiens |
+| Human_Light_CNN_crucianiProperties_encoder.keras | Keras-based deep learning encoder for BCR sequences. Chain: Light, Architecture: CNN, Encoding Method: crucianiProperties | Homo sapiens |
+| Human_Light_CNN_kideraFactors_encoder.keras | Keras-based deep learning encoder for BCR sequences. Chain: Light, Architecture: CNN, Encoding Method: kideraFactors | Homo sapiens |
+| Human_Light_CNN_MSWHIM_encoder.keras | Keras-based deep learning encoder for BCR sequences. Chain: Light, Architecture: CNN, Encoding Method: MSWHIM | Homo sapiens |
+| Human_Light_CNN_OHE_encoder.keras | Keras-based deep learning encoder for BCR sequences. Chain: Light, Architecture: CNN, Encoding Method: OHE | Homo sapiens |
+| Human_Light_CNN_tScales_encoder.keras | Keras-based deep learning encoder for BCR sequences. Chain: Light, Architecture: CNN, Encoding Method: tScales | Homo sapiens |
+| Human_Light_CNN.EXP_atchleyFactors_encoder.keras | Keras-based deep learning encoder for BCR sequences. Chain: Light, Architecture: CNN.EXP, Encoding Method: atchleyFactors | Homo sapiens |
+| Human_Light_CNN.EXP_crucianiProperties_encoder.keras | Keras-based deep learning encoder for BCR sequences. Chain: Light, Architecture: CNN.EXP, Encoding Method: crucianiProperties | Homo sapiens |
+| Human_Light_CNN.EXP_kideraFactors_encoder.keras | Keras-based deep learning encoder for BCR sequences. Chain: Light, Architecture: CNN.EXP, Encoding Method: kideraFactors | Homo sapiens |
+| Human_Light_CNN.EXP_MSWHIM_encoder.keras | Keras-based deep learning encoder for BCR sequences. Chain: Light, Architecture: CNN.EXP, Encoding Method: MSWHIM | Homo sapiens |
+| Human_Light_CNN.EXP_OHE_encoder.keras | Keras-based deep learning encoder for BCR sequences. Chain: Light, Architecture: CNN.EXP, Encoding Method: OHE | Homo sapiens |
+| Human_Light_CNN.EXP_tScales_encoder.keras | Keras-based deep learning encoder for BCR sequences. Chain: Light, Architecture: CNN.EXP, Encoding Method: tScales | Homo sapiens |
+| Human_Light_VAE_atchleyFactors_encoder.keras | Keras-based deep learning encoder for BCR sequences. Chain: Light, Architecture: VAE, Encoding Method: atchleyFactors | Homo sapiens |
+| Human_Light_VAE_crucianiProperties_encoder.keras | Keras-based deep learning encoder for BCR sequences. Chain: Light, Architecture: VAE, Encoding Method: crucianiProperties | Homo sapiens |
+| Human_Light_VAE_kideraFactors_encoder.keras | Keras-based deep learning encoder for BCR sequences. Chain: Light, Architecture: VAE, Encoding Method: kideraFactors | Homo sapiens |
+| Human_Light_VAE_MSWHIM_encoder.keras | Keras-based deep learning encoder for BCR sequences. Chain: Light, Architecture: VAE, Encoding Method: MSWHIM | Homo sapiens |
+| Human_Light_VAE_OHE_encoder.keras | Keras-based deep learning encoder for BCR sequences. Chain: Light, Architecture: VAE, Encoding Method: OHE | Homo sapiens |
+| Human_Light_VAE_tScales_encoder.keras | Keras-based deep learning encoder for BCR sequences. Chain: Light, Architecture: VAE, Encoding Method: tScales | Homo sapiens |
+| Human_Light_VAE.EXP_atchleyFactors_encoder.keras | Keras-based deep learning encoder for BCR sequences. Chain: Light, Architecture: VAE.EXP, Encoding Method: atchleyFactors | Homo sapiens |
+| Human_Light_VAE.EXP_crucianiProperties_encoder.keras | Keras-based deep learning encoder for BCR sequences. Chain: Light, Architecture: VAE.EXP, Encoding Method: crucianiProperties | Homo sapiens |
+| Human_Light_VAE.EXP_kideraFactors_encoder.keras | Keras-based deep learning encoder for BCR sequences. Chain: Light, Architecture: VAE.EXP, Encoding Method: kideraFactors | Homo sapiens |
+| Human_Light_VAE.EXP_MSWHIM_encoder.keras | Keras-based deep learning encoder for BCR sequences. Chain: Light, Architecture: VAE.EXP, Encoding Method: MSWHIM | Homo sapiens |
+| Human_Light_VAE.EXP_OHE_encoder.keras | Keras-based deep learning encoder for BCR sequences. Chain: Light, Architecture: VAE.EXP, Encoding Method: OHE | Homo sapiens |
+| Human_Light_VAE.EXP_tScales_encoder.keras | Keras-based deep learning encoder for BCR sequences. Chain: Light, Architecture: VAE.EXP, Encoding Method: tScales | Homo sapiens |
+| Mouse_Heavy_CNN_atchleyFactors_encoder.keras | Keras-based deep learning encoder for BCR sequences. Chain: Heavy, Architecture: CNN, Encoding Method: atchleyFactors | Mus musculus |
+| Mouse_Heavy_CNN_crucianiProperties_encoder.keras | Keras-based deep learning encoder for BCR sequences. Chain: Heavy, Architecture: CNN, Encoding Method: crucianiProperties | Mus musculus |
+| Mouse_Heavy_CNN_kideraFactors_encoder.keras | Keras-based deep learning encoder for BCR sequences. Chain: Heavy, Architecture: CNN, Encoding Method: kideraFactors | Mus musculus |
+| Mouse_Heavy_CNN_MSWHIM_encoder.keras | Keras-based deep learning encoder for BCR sequences. Chain: Heavy, Architecture: CNN, Encoding Method: MSWHIM | Mus musculus |
+| Mouse_Heavy_CNN_OHE_encoder.keras | Keras-based deep learning encoder for BCR sequences. Chain: Heavy, Architecture: CNN, Encoding Method: OHE | Mus musculus |
+| Mouse_Heavy_CNN_tScales_encoder.keras | Keras-based deep learning encoder for BCR sequences. Chain: Heavy, Architecture: CNN, Encoding Method: tScales | Mus musculus |
+| Mouse_Heavy_CNN.EXP_atchleyFactors_encoder.keras | Keras-based deep learning encoder for BCR sequences. Chain: Heavy, Architecture: CNN.EXP, Encoding Method: atchleyFactors | Mus musculus |
+| Mouse_Heavy_CNN.EXP_crucianiProperties_encoder.keras | Keras-based deep learning encoder for BCR sequences. Chain: Heavy, Architecture: CNN.EXP, Encoding Method: crucianiProperties | Mus musculus |
+| Mouse_Heavy_CNN.EXP_kideraFactors_encoder.keras | Keras-based deep learning encoder for BCR sequences. Chain: Heavy, Architecture: CNN.EXP, Encoding Method: kideraFactors | Mus musculus |
+| Mouse_Heavy_CNN.EXP_MSWHIM_autoencoder.keras | Keras-based deep learning encoder for BCR sequences. Chain: Heavy, Architecture: CNN.EXP, Encoding Method: MSWHIM | Mus musculus |
+| Mouse_Heavy_CNN.EXP_OHE_autoencoder.keras | Keras-based deep learning encoder for BCR sequences. Chain: Heavy, Architecture: CNN.EXP, Encoding Method: OHE | Mus musculus |
+| Mouse_Heavy_CNN.EXP_tScales_encoder.keras | Keras-based deep learning encoder for BCR sequences. Chain: Heavy, Architecture: CNN.EXP, Encoding Method: tScales | Mus musculus |
+| Mouse_Heavy_VAE_atchleyFactors_encoder.keras | Keras-based deep learning encoder for BCR sequences. Chain: Heavy, Architecture: VAE, Encoding Method: atchleyFactors | Mus musculus |
+| Mouse_Heavy_VAE_crucianiProperties_encoder.keras | Keras-based deep learning encoder for BCR sequences. Chain: Heavy, Architecture: VAE, Encoding Method: crucianiProperties | Mus musculus |
+| Mouse_Heavy_VAE_kideraFactors_encoder.keras | Keras-based deep learning encoder for BCR sequences. Chain: Heavy, Architecture: VAE, Encoding Method: kideraFactors | Mus musculus |
+| Mouse_Heavy_VAE_MSWHIM_encoder.keras | Keras-based deep learning encoder for BCR sequences. Chain: Heavy, Architecture: VAE, Encoding Method: MSWHIM | Mus musculus |
+| Mouse_Heavy_VAE_OHE_encoder.keras | Keras-based deep learning encoder for BCR sequences. Chain: Heavy, Architecture: VAE, Encoding Method: OHE | Mus musculus |
+| Mouse_Heavy_VAE_tScales_encoder.keras | Keras-based deep learning encoder for BCR sequences. Chain: Heavy, Architecture: VAE, Encoding Method: tScales | Mus musculus |
+| Mouse_Heavy_VAE.EXP_atchleyFactors_encoder.keras | Keras-based deep learning encoder for BCR sequences. Chain: Heavy, Architecture: VAE.EXP, Encoding Method: atchleyFactors | Mus musculus |
+| Mouse_Heavy_VAE.EXP_crucianiProperties_encoder.keras | Keras-based deep learning encoder for BCR sequences. Chain: Heavy, Architecture: VAE.EXP, Encoding Method: crucianiProperties | Mus musculus |
+| Mouse_Heavy_VAE.EXP_kideraFactors_encoder.keras | Keras-based deep learning encoder for BCR sequences. Chain: Heavy, Architecture: VAE.EXP, Encoding Method: kideraFactors | Mus musculus |
+| Mouse_Heavy_VAE.EXP_MSWHIM_encoder.keras | Keras-based deep learning encoder for BCR sequences. Chain: Heavy, Architecture: VAE.EXP, Encoding Method: MSWHIM | Mus musculus |
+| Mouse_Heavy_VAE.EXP_OHE_encoder.keras | Keras-based deep learning encoder for BCR sequences. Chain: Heavy, Architecture: VAE.EXP, Encoding Method: OHE | Mus musculus |
+| Mouse_Heavy_VAE.EXP_tScales_encoder.keras | Keras-based deep learning encoder for BCR sequences. Chain: Heavy, Architecture: VAE.EXP, Encoding Method: tScales | Mus musculus |
+
+All the models are available via a [Zenodo
+repository](https://zenodo.org/records/14919286), which Ibex will pull
+automatically and cache for future use locally. There is no need to
+download the models independent of the
+[`runIbex()`](https://rdrr.io/pkg/Ibex/man/runIbex.html) or
+[`Ibex_matrix()`](https://rdrr.io/pkg/Ibex/man/Ibex_matrix.html) calls.
+
+#### Choosing Between CNN and VAE
+
+**Convolutional Neural Networks (CNNs)**
+
+- **Pros**: Detect local sequence motifs effectively; relatively
+  straightforward and quick to train.
+- **Cons**: Can struggle to capture global context
+
+**Variational Autoencoders (VAEs)**
+
+- **Pros**: Model sequences within a probabilistic, continuous latent
+  space; suitable for generating novel variants.  
+- **Cons**: Training can be more complex (balancing reconstruction and
+  regularization losses); interpretability may be less direct.
+
+**Which to choose?**
+
+- **Use CNNs** if local motif detection and simpler training are
+  priorities.  
+- **Use VAEs** if you want a generative model capturing broader sequence
+  structures.
+
+#### Choosing Encoding Methods
+
+**One-Hot Encoding:** Represents each amino acid as a binary vector
+(e.g., a 20-length vector for the 20 standard residues).
+
+- **Pros**: Simple and assumption-free.
+- **Cons**: High-dimensional and doesn’t capture biochemical
+  similarities.
+
+**Atchley Factors:** Uses five numerical descriptors summarizing key
+physicochemical properties.
+
+- **Pros**: Compact and embeds biochemical information.
+- **Cons**: May overlook some residue-specific nuances.
+
+**Cruciani Properties:** Encodes amino acids via descriptors that
+reflect molecular shape, hydrophobicity, and electronic features.
+
+- **Pros**: Captures rich chemical details.
+- **Cons**: More complex to compute and less standardized.
+
+**Kidera Factors:** Provides ten orthogonal values derived from a broad
+set of physical and chemical properties.
+
+- **Pros**: Offers a balanced, low-dimensional representation.
+- **Cons**: Derived statistically, potentially averaging out finer
+  details.
+
+**MSWHIM:** Derives descriptors from 3D structural data, summarizing
+overall shape and surface properties.
+
+- **Pros**: Provides robust, rotation-invariant structural insight.
+- **Cons**: Requires 3D information and can be computationally
+  intensive.
+
+**tScales:** Encodes amino acids based on topological and structural
+features reflective of protein folding and interactions.
+
+- **Pros**: Captures contextual information from the overall sequence
+  structure.
+- **Cons**: Less commonly used, making standardization and tool support
+  a challenge.
+
+## Running Ibex
+
+The idea behind **Ibex** is to combine BCR CDR3 amino acid information
+with phenotypic RNA/protein data to direct the use of single-cell
+sequencing towards antigen-specific discoveries. This is a growing
+field - specifically [TESSA](https://github.com/jcao89757/TESSA) uses
+amino acid characteristics and autoencoder as a means to get a
+dimensional reduction. Another option is
+[CoNGA](https://github.com/phbradley/conga), which produces an embedding
+using BCR and RNA. **Ibex** was designed to make a customizable approach
+to this combined approach using R.
+
+### Ibex_matrix Function
+
+**Ibex** includes two primary functions:
+[`Ibex_matrix()`](https://rdrr.io/pkg/Ibex/man/Ibex_matrix.html) and
+[`runIbex()`](https://rdrr.io/pkg/Ibex/man/runIbex.html). The
+[`Ibex_matrix()`](https://rdrr.io/pkg/Ibex/man/Ibex_matrix.html)
+function serves as the backbone of the algorithm, returning encoded
+values based on user-selected parameters. In contrast to
+[`runIbex()`](https://rdrr.io/pkg/Ibex/man/runIbex.html), which filters
+input to include only B cells with attached BCR data,
+[`Ibex_matrix()`](https://rdrr.io/pkg/Ibex/man/Ibex_matrix.html)
+operates on all provided data. Additionally, it is compatible with the
+list output from the
+[`combineBCR()`](https://www.borch.dev/uploads/scRepertoire/reference/combineBCR.md)
+function (from the
+[scRepertoire](https://github.com/BorchLab/scRepertoire) package),
+whereas [`runIbex()`](https://rdrr.io/pkg/Ibex/man/runIbex.html) is
+designed for use with a single-cell object.
+
+#### Parameters
+
+- **chain**:  
+  Specifies the chain type. Options:
+  - `"Heavy"` for Ig Heavy Chain  
+  - `"Light"` for Ig Light Chain
+- **method**:  
+  Chooses the transformation method. Options:
+  - `"encoder"`: Applies a CNN/VAE-based transformation.  
+  - `"geometric"`: Uses a geometric transformation.
+- **encoder.model**:  
+  When using the `"encoder"` method, selects the specific model variant.
+  Options:
+  - `"CNN"`: CDR3 Convolutional Neural Network-based autoencoder  
+  - `"VAE"`: CDR3 Variational Autoencoder  
+  - `"CNN.EXP"`: CDR1/2/3 CNN  
+  - `"VAE.EXP"`: CDR1/2/3 VAE
+- **encoder.input**:  
+  Specifies the encoding input method. Options:
+  - `"atchleyFactors"`  
+  - `"crucianiProperties"`  
+  - `"kideraFactors"`  
+  - `"MSWHIM"`  
+  - `"tScales"`  
+  - `"OHE"`
+- **theta**:  
+  For the geometric transformation, defines the value of theta (default
+  is π/3).
+
+``` r
+Ibex_vectors <- Ibex_matrix(ibex_example, 
+                            chain = "Heavy",
+                            method = "encoder",
+                            encoder.model = "VAE", 
+                            encoder.input = "OHE", 
+                            species = "Mouse",
+                            verbose = FALSE)
+```
+
+    ## 1/7 ━━━━━━━━━━━━━━━━━━━━ 0s 22ms/step2/7 ━━━━━━━━━━━━━━━━━━━━ 0s 1ms/step7/7 ━━━━━━━━━━━━━━━━━━━━ 0s 3ms/step
+
+``` r
+ggplot(data = as.data.frame(Ibex_vectors), aes(Ibex_1, Ibex_2)) + 
+  geom_point(color = "grey", alpha = 0.7, size = 2) + 
+  theme_classic()
+```
+
+![](Ibex_files/figure-html/unnamed-chunk-7-1.png)
+
+``` r
+Ibex_vectors2 <- Ibex_matrix(ibex_example, 
+                             chain = "Heavy",
+                             method = "geometric",
+                             geometric.theta = pi, 
+                             verbose = FALSE)
+
+ggplot(as.data.frame(Ibex_vectors2), aes(x = Ibex_1, y = Ibex_2)) + 
+  geom_point(color = "grey", alpha = 0.7, size = 2) + 
+  theme_classic()
+```
+
+![](Ibex_files/figure-html/unnamed-chunk-7-2.png)
+
+### runIbex
+
+Additionally, [`runIbex()`](https://rdrr.io/pkg/Ibex/man/runIbex.html)
+can be used to append the Seurat or Single-cell Experiment object with
+the Ibex vectors and allow for further analysis. Importantly,
+[`runIbex()`](https://rdrr.io/pkg/Ibex/man/runIbex.html) will remove
+single cells that do not have recovered BCR data in the metadata of the
+object.
+
+``` r
+ibex_example <- runIbex(ibex_example, 
+                        chain = "Heavy",
+                        encoder.input = "kideraFactors", 
+                        reduction.name = "Ibex.KF", 
+                        species = "Mouse",
+                        verbose = FALSE)
+```
+
+    ## 1/7 ━━━━━━━━━━━━━━━━━━━━ 0s 20ms/step7/7 ━━━━━━━━━━━━━━━━━━━━ 0s 2ms/step
+
+### Using Ibex Vectors
+
+After [`runIbex()`](https://rdrr.io/pkg/Ibex/man/runIbex.html) we have
+the encoded values stored under **“Ibex…”**. Using the Ibex dimensions,
+we can calculate a UMAP based solely on the embedded heavy chain values.
+Here we will visualize both the Heavy/Light Chain amino acid sequence
+(via **CTaa**) and normalized counts associated with the
+**Anti-Hen-Egg-Lysozyme** antigen.
+
+``` r
+set.seed(123)
+#Generating UMAP from Ibex Neighbors
+ibex_example <- runUMAP(ibex_example, 
+                        dimred = "Ibex.KF",
+                        name = "ibexUMAP")
+#Ibex UMAP
+plot1 <- plotUMAP(ibex_example, color_by ="Anti-Hen-Egg-Lysozyme", dimred = "ibexUMAP") + 
+            theme(legend.position = "bottom")
+plot2 <- plotUMAP(ibex_example, color_by = "CTaa", dimred = "ibexUMAP") + 
+  scale_color_viridis(discrete = TRUE, option = "B") + 
+  guides(color = "none")
+
+plot1 + plot2
+```
+
+![](Ibex_files/figure-html/unnamed-chunk-9-1.png)
+
+In this workflow, we can combine these three dimension reductions into a
+single, integrated UMAP embedding using the
+[`runMultiUMAP()`](https://rdrr.io/pkg/mumosa/man/runMultiUMAP.html)
+function with a cosine metric. To further refine this integration, we
+apply
+[`rescaleByNeighbors()`](https://rdrr.io/pkg/mumosa/man/rescaleByNeighbors.html)
+to align the nearest neighbors across modalities, followed by clustering
+with
+[`clusterRows()`](https://rdrr.io/pkg/bluster/man/clusterRows.html),
+resulting in a “combined.clustering” that reflects all data types.
+Finally, we visualize this joint embedding as “MultiUMAP,” coloring
+points by expression of a specific protein marker (e.g.,
+Anti-Hen-Egg-Lysozyme), the integrated cluster assignments, or other
+relevant annotations. The result is a holistic representation of
+cellular diversity that leverages shared and unique signals from RNA,
+protein, and Ibex IGH latent features.
+
+``` r
+#Multimodal UMAP
+ibex_example <- mumosa::runMultiUMAP(ibex_example, 
+                                     dimreds=c("pca", "apca", "Ibex.KF"))
+#Multimodal Clustering
+output <- rescaleByNeighbors(ibex_example, 
+                             dimreds=c("pca", "apca", "Ibex.KF"))
+ibex_example$combined.clustering <- clusterRows(output, NNGraphParam())
+
+plot3 <- plotUMAP(ibex_example, 
+                  dimred = "MultiUMAP", 
+                  color_by = "Anti-Hen-Egg-Lysozyme") + 
+            theme(legend.position = "bottom")
+plot4 <- plotUMAP(ibex_example, 
+                  dimred = "MultiUMAP", 
+                  color_by = "combined.clustering") + 
+            theme(legend.position = "bottom")
+plot5 <- plotUMAP(ibex_example, 
+                  dimred = "MultiUMAP", 
+                  color_by = "CTaa") + 
+  scale_color_manual(values = viridis_pal(option = "B")(length(unique(ibex_example$CTaa)))) +
+  guides(color = "none")
+
+plot3 + plot4 + plot5
+```
+
+![](Ibex_files/figure-html/unnamed-chunk-10-1.png)
+
+### Comparing the outcome to just one modality
+
+We can also look at the differences in the UMAP generated from RNA, ADT,
+or Ibex as individual components. Remember, the clusters that we are
+displaying in UMAP are based on clusters defined by the weighted nearest
+neighbors calculated above.
+
+``` r
+ibex_example <- runUMAP(ibex_example, 
+                        dimred = 'pca', 
+                        name = "pcaUMAP")
+
+ibex_example <- runUMAP(ibex_example, 
+                        dimred = 'apca', 
+                        name = "beamUMAP")
+
+plot6 <- plotUMAP(ibex_example, 
+                  dimred = "pcaUMAP", 
+                  color_by = "combined.clustering") 
+plot7 <- plotUMAP(ibex_example, 
+                  dimred = "beamUMAP", 
+                  color_by = "combined.clustering") 
+plot8 <- plotUMAP(ibex_example, 
+                  dimred = "ibexUMAP", 
+                  color_by = "combined.clustering") 
+
+plot6 + plot7 + plot8 + plot_layout(guides = "collect") &  
+  theme(legend.position = "bottom")
+```
+
+![](Ibex_files/figure-html/unnamed-chunk-11-1.png)
+
+## CoNGA Reduction
+
+Single-cell B-cell receptor (BCR) sequencing enables the identification
+of clonotypes, which are groups of B cells sharing the same BCR
+sequence. Often, you want to link clonotypes to their gene expression
+profiles.
+
+A challenge arises, however, when a clonotype contains multiple cells
+(e.g., 10 cells sharing the same BCR). Including all cells for every
+clonotype can lead to over-representation of highly expanded clones or
+complicate analyses that require a one-to-one mapping between clonotypes
+and “cells.” Recent work
+[Schattgen,2021](https://pubmed.ncbi.nlm.nih.gov/34426704/) has proposed
+different strategies to summarize or represent a clonotype by a single
+expression profile. Two key strategies are common:
+
+**Distance Approach**
+
+- First, look at the PCA or count matrices
+- Identify the cell that has the minimum summed Euclidean distance to
+  all other cells in the clonotype.
+- This approach can help ensure that your single representation is an
+  actual cell, rather than a potentially non-biological average.
+
+**Mean Approach**
+
+- Simply take the average (mean) expression across all cells in the same
+  clonotype.
+- Conceptually, you collapse a multi-cell clone into one “virtual cell”
+  representing its average expression.
+
+``` r
+CoNGA.sce <- CoNGAfy(ibex_example, 
+                     method = "mean", 
+                     assay = c("RNA", "BEAM"))
+
+CoNGA.sce <- runIbex(CoNGA.sce, 
+                     encoder.input = "kideraFactors", 
+                     encoder.model = "VAE",
+                     reduction.name = "Ibex.KF", 
+                     species = "Mouse",
+                     verbose = FALSE)
+```
+
+    ## 1/2 ━━━━━━━━━━━━━━━━━━━━ 0s 20ms/step2/2 ━━━━━━━━━━━━━━━━━━━━ 0s 12ms/step
+
+``` r
+CoNGA.sce <- CoNGA.sce %>%
+                  runUMAP(dimred = "Ibex.KF", 
+                          name = "ibexUMAP")
+
+plot9 <- plotUMAP(CoNGA.sce, 
+                  dimred = "ibexUMAP", 
+                  color_by = "Anti-Hen-Egg-Lysozyme", 
+                  by.assay.type = "counts") 
+
+plot10 <- plotUMAP(CoNGA.sce, 
+                   dimred = "ibexUMAP", 
+                   color_by = "H5N1", 
+                   by.assay.type = "counts") 
+
+plot9 + plot10 & 
+  theme(legend.position = "bottom")
+```
+
+![](Ibex_files/figure-html/unnamed-chunk-12-1.png)

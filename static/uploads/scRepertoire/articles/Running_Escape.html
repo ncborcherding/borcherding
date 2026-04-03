@@ -4,162 +4,102 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Single-cell Gene Set Enrichment Analysis • scRepertoire</title>
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
-<script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="Single-cell Gene Set Enrichment Analysis">
-<!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
-<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]-->
+<script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Single-cell Gene Set Enrichment Analysis">
 </head>
-<body data-spy="scroll" data-target="#toc">
+<body>
+    <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
-    <div class="container template-article">
-      <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
-  <div class="container">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <span class="navbar-brand">
-        <a class="navbar-link" href="../index.html">scRepertoire</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.6.0</span>
-      </span>
-    </div>
+    <nav class="navbar navbar-expand-lg fixed-top bg-primary" data-bs-theme="dark" aria-label="Site navigation"><div class="container">
 
-    <div id="navbar" class="navbar-collapse collapse">
-      <ul class="nav navbar-nav">
-<li>
-  <a href="../index.html">Getting Started</a>
-</li>
-<li>
-  <a href="../articles/Installation.html">Install</a>
-</li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    Vignettes
+    <a class="navbar-brand me-2" href="../index.html">scRepertoire</a>
 
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-<li>
-      <a href="../articles/Loading.html">Loading Data</a>
-    </li>
-    <li>
-      <a href="../articles/Combining_Contigs.html">Combining Contigs into Clones</a>
-    </li>
-    <li>
-      <a href="../articles/Processing.html">Additional Processing</a>
-    </li>
-    <li class="divider">
-    </li>
-<li class="dropdown-header">Repertoire Analysis</li>
-    <li>
-      <a href="../articles/Clonal_Visualizations.html">Basic Clonal Analysis</a>
-    </li>
-    <li>
-      <a href="../articles/Clonal_Dynamics.html">Visualizing Clonal Dynamics</a>
-    </li>
-    <li>
-      <a href="../articles/Repertoire_Summary.html">Summarizing Repertoires</a>
-    </li>
-    <li>
-      <a href="../articles/Clonal_Diversity.html">Clonal Diversity, Rarefaction, and Overlap</a>
-    </li>
-    <li>
-      <a href="../articles/Clonal_Cluster.html">Clustering Sequences by Edit Distance</a>
-    </li>
-    <li class="divider">
-    </li>
-<li class="dropdown-header">Working with Single-Cell Objects</li>
-    <li>
-      <a href="../articles/Attaching_SC.html">Combining Clones and Single-Cell Objects</a>
-    </li>
-    <li>
-      <a href="../articles/SC_Visualizations.html">Visualizations for Single-Cell Objects</a>
-    </li>
-    <li>
-      <a href="../articles/Clonal_Bias.html">Quantifying Clonal Bias</a>
-    </li>
-    <li class="divider">
-    </li>
-<li class="dropdown-header">Deep Learning Integrations</li>
-    <li>
-      <a href="../articles/immApex.html">Making Deep Learning Models with immApex</a>
-    </li>
-    <li>
-      <a href="../articles/Trex.html">Combining Deep Learning and TCRs with Trex</a>
-    </li>
-    <li>
-      <a href="../articles/Ibex.html">Combining Deep Learning and BCRs with Ibex</a>
-    </li>
-    <li>
-      <a href="../articles/Running_Escape.html">Single-cell Gene Set Enrichment Analysis</a>
-    </li>
-    <li class="divider">
-    </li>
-<li class="dropdown-header">Other Workflow Integrations</li>
-    <li>
-      <a href="../articles/immcantation.html">Combining Immcantation and scRepertoire</a>
-    </li>
-    <li>
-      <a href="../articles/tcrpheno.html">TCRpheno applied to T cell fate</a>
-    </li>
-    <li>
-      <a href="../articles/immunarch.html">Using scRepertoire with immunarch</a>
-    </li>
-    <li>
-      <a href="../articles/dandelionR.html">VDJ Trajectory Analysis with dandelionR</a>
-    </li>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.7.2</small>
+
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div id="navbar" class="collapse navbar-collapse ms-3">
+      <ul class="navbar-nav me-auto">
+<li class="nav-item"><a class="nav-link" href="../index.html">Home</a></li>
+<li class="nav-item dropdown">
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-vignettes" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Vignettes</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-vignettes">
+<li><h6 class="dropdown-header" data-toc-skip>Getting Set Up</h6></li>
+    <li><a class="dropdown-item" href="../articles/Installation.html">Installation Instructions</a></li>
+    <li><a class="dropdown-item" href="../articles/Loading.html">Loading Data into scRepertoire</a></li>
+    <li><a class="dropdown-item" href="../articles/Combining_Contigs.html">Combining Contigs into Clones</a></li>
+    <li><a class="dropdown-item" href="../articles/Processing.html">Additional Processing Steps</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Repertoire Analysis</h6></li>
+    <li><a class="dropdown-item" href="../articles/Clonal_Visualizations.html">Basic Clonal Visualizations</a></li>
+    <li><a class="dropdown-item" href="../articles/Clonal_Dynamics.html">Visualizing Clonal Dynamics</a></li>
+    <li><a class="dropdown-item" href="../articles/Repertoire_Summary.html">Summarizing Repertoires</a></li>
+    <li><a class="dropdown-item" href="../articles/Clonal_Diversity.html">Comparing Clonal Diversity and Overlap</a></li>
+    <li><a class="dropdown-item" href="../articles/Clonal_Cluster.html">Clustering by Edit Distance</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Working with Single-Cell Objects</h6></li>
+    <li><a class="dropdown-item" href="../articles/Attaching_SC.html">Combining Clones and Single-Cell Objects</a></li>
+    <li><a class="dropdown-item" href="../articles/SC_Visualizations.html">Visualizations for Single-Cell Objects</a></li>
+    <li><a class="dropdown-item" href="../articles/Clonal_Bias.html">Quantifying Clonal Bias</a></li>
   </ul>
 </li>
-<li>
-  <a href="../news/index.html">News/Changelog</a>
+<li class="active nav-item dropdown">
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-extensions" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Extensions</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-extensions">
+<li><h6 class="dropdown-header" data-toc-skip>Related Packages</h6></li>
+    <li><a class="dropdown-item" href="../articles/immApex.html">Making Deep Learning Models with immApex</a></li>
+    <li><a class="dropdown-item" href="../articles/Trex.html">Combining Deep Learning and TCRs with Trex</a></li>
+    <li><a class="dropdown-item" href="../articles/Ibex.html">Combining Deep Learning and BCRs with Ibex</a></li>
+    <li><a class="dropdown-item" href="../articles/immLynx.html">Bridging Python TCR Tools with immLynx</a></li>
+    <li><a class="dropdown-item" href="../articles/immGLIPH.html">TCR Specificity Grouping with immGLIPH</a></li>
+    <li><a class="dropdown-item" href="../articles/immReferent.html">Immune Reference Data with immReferent</a></li>
+    <li><a class="dropdown-item" href="../articles/Running_Escape.html">Single-cell Gene Set Enrichment with escape</a></li>
+  </ul>
 </li>
-<li>
-  <a href="../reference/index.html">Reference</a>
+<li class="nav-item dropdown">
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-compatible-packages" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Compatible Packages</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-compatible-packages">
+<li><h6 class="dropdown-header" data-toc-skip>Third-Party Integrations</h6></li>
+    <li><a class="dropdown-item" href="../articles/immcantation.html">Combining Immcantation and scRepertoire</a></li>
+    <li><a class="dropdown-item" href="../articles/tcrpheno.html">TCRpheno Applied to T Cell Fate</a></li>
+    <li><a class="dropdown-item" href="../articles/immunarch.html">Downstream Analysis with immunarch</a></li>
+    <li><a class="dropdown-item" href="../articles/dandelionR.html">VDJ Trajectory Analysis with dandelionR</a></li>
+  </ul>
 </li>
-<li>
-  <a href="../articles/FAQ.html">FAQ</a>
-</li>
+<li class="nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
+<li class="nav-item"><a class="nav-link" href="../news/index.html">News</a></li>
+<li class="nav-item"><a class="nav-link" href="../articles/FAQ.html">FAQ</a></li>
       </ul>
-<ul class="nav navbar-nav navbar-right">
-<li>
-  <a href="https://github.com/BorchLab/scRepertoire/" class="external-link">
-    <span class="fab fa-github fa-lg"></span>
-
-  </a>
-</li>
+<ul class="navbar-nav">
+<li class="nav-item"><a class="external-link nav-link" href="https://github.com/BorchLab/scRepertoire" aria-label="GitHub"><span class="fa fa-github"></span></a></li>
       </ul>
 </div>
-<!--/.nav-collapse -->
+
+
   </div>
-<!--/.container -->
-</div>
-<!--/.navbar -->
+</nav><div class="container template-article">
 
 
 
-      </header><div class="row">
-  <div class="col-md-9 contents">
-    <div class="page-header toc-ignore">
-      <h1 data-toc-skip>Single-cell Gene Set Enrichment Analysis</h1>
+
+<div class="row">
+  <main id="main" class="col-md-9"><div class="page-header">
+
+      <h1>Single-cell Gene Set Enrichment Analysis</h1>
             
-            <h4 data-toc-skip class="date">Compiled: October 31,
-2025</h4>
+            <h4 data-toc-skip class="date">Compiled: April 03, 2026</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/BorchLab/scRepertoire/blob/HEAD/vignettes/articles/Running_Escape.Rmd" class="external-link"><code>vignettes/articles/Running_Escape.Rmd</code></a></small>
-      <div class="hidden name"><code>Running_Escape.Rmd</code></div>
-
+      <div class="d-none name"><code>Running_Escape.Rmd</code></div>
     </div>
 
     
@@ -394,7 +334,7 @@ caution.</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_classic</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>axis.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Running_Escape_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
+<p><img src="Running_Escape_files/figure-html/unnamed-chunk-8-1.png" class="r-plt" width="700"></p>
 <p>Multi-core support is for all methods is available through <a href="https://bioconductor.org/packages/release/bioc/html/BiocParallel.html" class="external-link">BiocParallel</a>.
 To add more cores, use the argument <strong>BPPARAM</strong> to
 <code>escape.matrix()</code>. Here we will use the
@@ -440,7 +380,7 @@ visualization/workflow we prefer - here we will use just
 <span><span class="fu"><a href="https://satijalab.org/seurat/reference/FeaturePlot.html" class="external-link">FeaturePlot</a></span><span class="op">(</span><span class="va">scRep_example</span>, <span class="st">"Proinflammatory"</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_gradient.html" class="external-link">scale_color_gradientn</a></span><span class="op">(</span>colors <span class="op">=</span> <span class="va">colorblind_vector</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Running_Escape_files/figure-html/unnamed-chunk-11-1.png" width="700"></p>
+<p><img src="Running_Escape_files/figure-html/unnamed-chunk-11-1.png" class="r-plt" width="700"></p>
 </div>
 <div class="section level3">
 <h3 id="performnormalization">performNormalization<a class="anchor" aria-label="anchor" href="#performnormalization"></a>
@@ -500,7 +440,7 @@ active identity as a default for visualizations.</p>
 <span>                  group.by <span class="op">=</span> <span class="st">"ident"</span>,</span>
 <span>                  gene.set.use <span class="op">=</span> <span class="st">"all"</span>,</span>
 <span>                  assay <span class="op">=</span> <span class="st">"escape.ssGSEA"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Running_Escape_files/figure-html/unnamed-chunk-14-1.png" width="700"></p>
+<p><img src="Running_Escape_files/figure-html/unnamed-chunk-14-1.png" class="r-plt" width="700"></p>
 <p>Most of the visualizations in <em>escape</em> have a defined set of
 parameters.</p>
 <p><strong>group.by</strong></p>
@@ -531,7 +471,7 @@ enrichment scores and the Ward2 methods for clustering using
 <span>                  scale <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>                  cluster.rows <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>                  cluster.columns <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Running_Escape_files/figure-html/unnamed-chunk-15-1.png" width="700"></p>
+<p><img src="Running_Escape_files/figure-html/unnamed-chunk-15-1.png" class="r-plt" width="700"></p>
 <p>Each visualization has an additional argument called **palette that
 supplies the coloring scheme to be used - available color palettes can
 be viewed with <code><a href="https://rdrr.io/r/grDevices/palettes.html" class="external-link">hcl.pals()</a></code>.</p>
@@ -570,7 +510,7 @@ be viewed with <code><a href="https://rdrr.io/r/grDevices/palettes.html" class="
 <code class="sourceCode R"><span><span class="fu">heatmapEnrichment</span><span class="op">(</span><span class="va">scRep_example</span>, </span>
 <span>                  assay <span class="op">=</span> <span class="st">"escape.ssGSEA"</span>,</span>
 <span>                  palette <span class="op">=</span> <span class="st">"Spectral"</span><span class="op">)</span> </span></code></pre></div>
-<p><img src="Running_Escape_files/figure-html/unnamed-chunk-17-1.png" width="700"></p>
+<p><img src="Running_Escape_files/figure-html/unnamed-chunk-17-1.png" class="r-plt" width="700"></p>
 <p>Alternatively, we can add an additional layer to the ggplot object
 that is returned by the visualizations using something like
 <code><a href="https://ggplot2.tidyverse.org/reference/scale_gradient.html" class="external-link">scale_fill_gradientn()</a></code> for continuous values or
@@ -580,7 +520,7 @@ that is returned by the visualizations using something like
 <span>                  group.by <span class="op">=</span> <span class="st">"ident"</span>,</span>
 <span>                  assay <span class="op">=</span> <span class="st">"escape.UCell"</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_gradient.html" class="external-link">scale_fill_gradientn</a></span><span class="op">(</span>colors <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rev.html" class="external-link">rev</a></span><span class="op">(</span><span class="fu">brewer.pal</span><span class="op">(</span><span class="fl">11</span>, <span class="st">"RdYlBu"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> </span></code></pre></div>
-<p><img src="Running_Escape_files/figure-html/unnamed-chunk-18-1.png" width="700"></p>
+<p><img src="Running_Escape_files/figure-html/unnamed-chunk-18-1.png" class="r-plt" width="700"></p>
 </div>
 <div class="section level3">
 <h3 id="geyserenrichment">geyserEnrichment<a class="anchor" aria-label="anchor" href="#geyserenrichment"></a>
@@ -594,7 +534,7 @@ interval summaries referring to the 66% and 95%.</p>
 <code class="sourceCode R"><span><span class="fu">geyserEnrichment</span><span class="op">(</span><span class="va">scRep_example</span>, </span>
 <span>                 assay <span class="op">=</span> <span class="st">"escape.ssGSEA"</span>,</span>
 <span>                 gene.set <span class="op">=</span> <span class="st">"T1-Interferon"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Running_Escape_files/figure-html/unnamed-chunk-19-1.png" width="700"></p>
+<p><img src="Running_Escape_files/figure-html/unnamed-chunk-19-1.png" class="r-plt" width="700"></p>
 <p>To show the additional parameters that appear in visualizations of
 individual enrichment gene sets - we can reorder the groups by the mean
 of the gene set using <strong>order.by</strong> = “mean”.</p>
@@ -603,7 +543,7 @@ of the gene set using <strong>order.by</strong> = “mean”.</p>
 <span>                 assay <span class="op">=</span> <span class="st">"escape.ssGSEA"</span>,</span>
 <span>                 gene.set <span class="op">=</span> <span class="st">"T1-Interferon"</span>, </span>
 <span>                 order.by <span class="op">=</span> <span class="st">"mean"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Running_Escape_files/figure-html/unnamed-chunk-20-1.png" width="700"></p>
+<p><img src="Running_Escape_files/figure-html/unnamed-chunk-20-1.png" class="r-plt" width="700"></p>
 <p>What if we had 2 separate samples or groups within the data? Another
 parameter we can use is <strong>facet.by</strong> to allow for direct
 visualization of an additional variable.</p>
@@ -612,7 +552,7 @@ visualization of an additional variable.</p>
 <span>                 assay <span class="op">=</span> <span class="st">"escape.ssGSEA"</span>,</span>
 <span>                 gene.set <span class="op">=</span> <span class="st">"T1-Interferon"</span>, </span>
 <span>                 facet.by <span class="op">=</span> <span class="st">"Type"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Running_Escape_files/figure-html/unnamed-chunk-21-1.png" width="700"></p>
+<p><img src="Running_Escape_files/figure-html/unnamed-chunk-21-1.png" class="r-plt" width="700"></p>
 <p>Lastly, we can select the way the color is applied to the plot using
 the <strong>color.by</strong> parameter. Here we can set it to the gene
 set of interest <em>“HALLMARK-INTERFERON-GAMMA-RESPONSE”</em>.</p>
@@ -621,7 +561,7 @@ set of interest <em>“HALLMARK-INTERFERON-GAMMA-RESPONSE”</em>.</p>
 <span>                 assay <span class="op">=</span> <span class="st">"escape.ssGSEA"</span>,</span>
 <span>                 gene.set <span class="op">=</span> <span class="st">"T1-Interferon"</span>, </span>
 <span>                 color.by  <span class="op">=</span> <span class="st">"T1-Interferon"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Running_Escape_files/figure-html/unnamed-chunk-22-1.png" width="700"></p>
+<p><img src="Running_Escape_files/figure-html/unnamed-chunk-22-1.png" class="r-plt" width="700"></p>
 </div>
 <div class="section level3">
 <h3 id="ridgeenrichment">ridgeEnrichment<a class="anchor" aria-label="anchor" href="#ridgeenrichment"></a>
@@ -634,7 +574,7 @@ the median value for the respective grouping.</p>
 <code class="sourceCode R"><span><span class="fu">ridgeEnrichment</span><span class="op">(</span><span class="va">scRep_example</span>, </span>
 <span>                assay <span class="op">=</span> <span class="st">"escape.UCell"</span>,</span>
 <span>                gene.set <span class="op">=</span> <span class="st">"T2-Interferon"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Running_Escape_files/figure-html/unnamed-chunk-23-1.png" width="700"></p>
+<p><img src="Running_Escape_files/figure-html/unnamed-chunk-23-1.png" class="r-plt" width="700"></p>
 <p>We can get the relative position of individual cells along the x-axis
 using the <strong>add.rug</strong> parameter.</p>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
@@ -643,7 +583,7 @@ using the <strong>add.rug</strong> parameter.</p>
 <span>                gene.set <span class="op">=</span> <span class="st">"T2-Interferon"</span>,</span>
 <span>                add.rug <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>                scale <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Running_Escape_files/figure-html/unnamed-chunk-24-1.png" width="700"></p>
+<p><img src="Running_Escape_files/figure-html/unnamed-chunk-24-1.png" class="r-plt" width="700"></p>
 </div>
 <div class="section level3">
 <h3 id="splitenrichment">splitEnrichment<a class="anchor" aria-label="anchor" href="#splitenrichment"></a>
@@ -660,7 +600,7 @@ relative distribution across all samples.</p>
 <span>                assay <span class="op">=</span> <span class="st">"escape.ssGSEA"</span>,</span>
 <span>                gene.set <span class="op">=</span> <span class="st">"Lipid-mediators"</span>, </span>
 <span>                split.by <span class="op">=</span> <span class="st">"Type"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Running_Escape_files/figure-html/unnamed-chunk-25-1.png" width="700"></p>
+<p><img src="Running_Escape_files/figure-html/unnamed-chunk-25-1.png" class="r-plt" width="700"></p>
 <p>If selecting a <strong>split.by</strong> variable with more than 2
 levels, <code>splitEnrichment()</code> will convert the violin plots to
 dodge.</p>
@@ -670,7 +610,7 @@ dodge.</p>
 <span>                gene.set <span class="op">=</span> <span class="st">"Lipid-mediators"</span>, </span>
 <span>                split.by <span class="op">=</span> <span class="st">"ident"</span>, </span>
 <span>                group.by <span class="op">=</span> <span class="st">"Patient"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Running_Escape_files/figure-html/unnamed-chunk-26-1.png" width="700"></p>
+<p><img src="Running_Escape_files/figure-html/unnamed-chunk-26-1.png" class="r-plt" width="700"></p>
 </div>
 <div class="section level3">
 <h3 id="gseaenrichment">gseaEnrichment<a class="anchor" aria-label="anchor" href="#gseaenrichment"></a>
@@ -697,7 +637,7 @@ phenotypes) to derive NES and p.</li>
 <span>               group.by     <span class="op">=</span> <span class="st">"ident"</span>,</span>
 <span>               summary.fun  <span class="op">=</span> <span class="st">"mean"</span>,</span>
 <span>               nperm        <span class="op">=</span> <span class="fl">50</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Running_Escape_files/figure-html/unnamed-chunk-27-1.png" width="700"></p>
+<p><img src="Running_Escape_files/figure-html/unnamed-chunk-27-1.png" class="r-plt" width="700"></p>
 </div>
 <div class="section level3">
 <h3 id="densityenrichment">densityEnrichment<a class="anchor" aria-label="anchor" href="#densityenrichment"></a>
@@ -744,7 +684,7 @@ R package</a>. We just need to define which gene set to plot on the
 <span>                  assay <span class="op">=</span> <span class="st">"escape.ssGSEA"</span>,</span>
 <span>                  x.axis <span class="op">=</span> <span class="st">"T2-Interferon"</span>,</span>
 <span>                  y.axis <span class="op">=</span> <span class="st">"Lipid-mediators"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Running_Escape_files/figure-html/unnamed-chunk-29-1.png" width="700"></p>
+<p><img src="Running_Escape_files/figure-html/unnamed-chunk-29-1.png" class="r-plt" width="700"></p>
 <p>The scatter plot can also be converted into a hexbin, another method
 for summarizing the individual cell distributions along the x and y
 axis, by setting <strong>style</strong> = “hex”.</p>
@@ -754,7 +694,7 @@ axis, by setting <strong>style</strong> = “hex”.</p>
 <span>                  x.axis <span class="op">=</span> <span class="st">"T2-Interferon"</span>,</span>
 <span>                  y.axis <span class="op">=</span> <span class="st">"Lipid-mediators"</span>,</span>
 <span>                  style <span class="op">=</span> <span class="st">"hex"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Running_Escape_files/figure-html/unnamed-chunk-30-1.png" width="700"></p>
+<p><img src="Running_Escape_files/figure-html/unnamed-chunk-30-1.png" class="r-plt" width="700"></p>
 <hr>
 </div>
 </div>
@@ -787,7 +727,7 @@ and <strong>y.axis</strong> are the components to plot.</p>
 <span>              dimRed <span class="op">=</span> <span class="st">"escape.PCA"</span>,</span>
 <span>              x.axis <span class="op">=</span> <span class="st">"PC1"</span>,</span>
 <span>              y.axis <span class="op">=</span> <span class="st">"PC2"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Running_Escape_files/figure-html/unnamed-chunk-32-1.png" width="700"></p>
+<p><img src="Running_Escape_files/figure-html/unnamed-chunk-32-1.png" class="r-plt" width="700"></p>
 <p><code>pcaEnrichment()</code> can plot additional information on the
 principal component analysis.</p>
 <p><strong>add.percent.contribution</strong> will add the relative
@@ -806,7 +746,7 @@ underlying differences in enrichment across different cells.</p>
 <span>              add.percent.contribution <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>              display.factors <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>              number.of.factors <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Running_Escape_files/figure-html/unnamed-chunk-33-1.png" width="700"></p>
+<p><img src="Running_Escape_files/figure-html/unnamed-chunk-33-1.png" class="r-plt" width="700"></p>
 </div>
 <div class="section level3">
 <h3 id="precomputed-rank-lists">Precomputed Rank Lists<a class="anchor" aria-label="anchor" href="#precomputed-rank-lists"></a>
@@ -916,17 +856,17 @@ types.</p>
 <span><span class="fu">enrichItPlot</span><span class="op">(</span><span class="va">GSEA.results</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>strip.background <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>        strip.text.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>              </span></code></pre></div>
-<p><img src="Running_Escape_files/figure-html/unnamed-chunk-35-1.png" width="700"></p>
+<p><img src="Running_Escape_files/figure-html/unnamed-chunk-35-1.png" class="r-plt" width="700"></p>
 <div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## (2) Dot plot – colored by –log10 padj, sized by core-hits</span></span>
 <span><span class="fu">enrichItPlot</span><span class="op">(</span><span class="va">GSEA.results</span>, <span class="st">"dot"</span>, top <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>strip.background <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>        strip.text.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>   </span></code></pre></div>
-<p><img src="Running_Escape_files/figure-html/unnamed-chunk-35-2.png" width="700"></p>
+<p><img src="Running_Escape_files/figure-html/unnamed-chunk-35-2.png" class="r-plt" width="700"></p>
 <div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## (3) C-net plot – network of pathways ↔ leading-edge genes</span></span>
 <span><span class="fu">enrichItPlot</span><span class="op">(</span><span class="va">GSEA.results</span>, <span class="st">"cnet"</span>, top <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> </span></code></pre></div>
-<p><img src="Running_Escape_files/figure-html/unnamed-chunk-35-3.png" width="700"></p>
+<p><img src="Running_Escape_files/figure-html/unnamed-chunk-35-3.png" class="r-plt" width="700"></p>
 </div>
 </div>
 <div class="section level3">
@@ -967,29 +907,22 @@ enrichment scores.</p>
 <span><span class="co">## PPS                         PPS</span></span></code></pre>
 </div>
 </div>
-  </div>
-
-  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
-
-      </div>
-
+  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
+    </nav></aside>
 </div>
 
 
 
-      <footer><div class="copyright">
-  <p></p>
-<p>Developed by Nick Borcherding, Qile Yang, Ksenia Safina.</p>
+    <footer><div class="pkgdown-footer-left">
+  <p>Developed by Nick Borcherding, Qile Yang, Ksenia Safina.</p>
 </div>
 
-<div class="pkgdown">
-  <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+<div class="pkgdown-footer-right">
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
-      </footer>
+    </footer>
 </div>
-
 
 
 

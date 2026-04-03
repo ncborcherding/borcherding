@@ -1,5 +1,5 @@
 pandoc: 3.6.4
-pkgdown: 2.1.3
+pkgdown: 2.2.0
 pkgdown_sha: ~
 articles:
   articles/Attaching_SC: Attaching_SC.html
@@ -14,6 +14,9 @@ articles:
   articles/Ibex: Ibex.html
   articles/immApex: immApex.html
   articles/immcantation: immcantation.html
+  articles/immGLIPH: immGLIPH.html
+  articles/immLynx: immLynx.html
+  articles/immReferent: immReferent.html
   articles/immunarch: immunarch.html
   articles/Installation: Installation.html
   articles/Loading: Loading.html
@@ -24,7 +27,7 @@ articles:
   articles/tcrpheno: tcrpheno.html
   articles/Trex: Trex.html
   vignette: vignette.html
-last_built: 2025-10-31T15:12Z
+last_built: 2026-04-03T15:49Z
 urls:
   reference: https://www.borch.dev/uploads/scRepertoire/reference
   article: https://www.borch.dev/uploads/scRepertoire/articles
