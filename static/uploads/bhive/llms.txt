@@ -2,7 +2,7 @@
 
 ## B-cell Hybrid Immune Variant Engine
 
-![](https://github.com/BorchLab/bHive/blob/main/www/bhive_hex.png)
+![](reference/figures/logo.png)
 
 ### Overview
 
@@ -114,7 +114,7 @@ data:
 5.  **Final assignment** – data points assigned to nearest antibody by
     affinity or distance
 
-![](https://github.com/BorchLab/bHive/blob/main/www/iterativeGraphic.png)
+![](https://github.com/BorchLab/bHIVE/blob/main/www/iterativeGraphic.png)
 
 ### Immune Modules
 

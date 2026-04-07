@@ -19,10 +19,8 @@
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-tutorials" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Tutorials</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-tutorials"><li><a class="dropdown-item" href="../articles/bHIVE.html">Getting Started</a></li>
-    <li><hr class="dropdown-divider"></li>
     <li><a class="dropdown-item" href="../articles/articles/immune-modules.html">Immune Modules</a></li>
     <li><a class="dropdown-item" href="../articles/articles/advanced-workflows.html">Advanced Tuning &amp; Workflows</a></li>
-    <li><hr class="dropdown-divider"></li>
     <li><a class="dropdown-item" href="../articles/articles/foundations.html">Algorithm &amp; Biological Foundations</a></li>
   </ul></li>
 <li class="nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
@@ -93,6 +91,11 @@
 <li>Added <code>%||%</code> operator <code>@name null-coalesce</code> to avoid illegal characters in Rd <code>\name</code> field</li>
 <li>Moved tutorial vignettes to <code>vignettes/articles/</code> (pkgdown-only, not installed with package) to reduce installed size</li>
 <li>Added pkgdown configuration (<code>_pkgdown.yml</code>) with 7 reference groups and structured article hierarchy</li>
+</ul></div>
+<div class="section level3">
+<h3 id="testing-0-99-1">Testing<a class="anchor" aria-label="anchor" href="#testing-0-99-1"></a></h3>
+<ul><li>Added comprehensive unit tests for all 12 R6 module classes (ImmuneRepertoire, ImmuneAlgorithm, AINet, SHMEngine, IdiotypicNetwork, GerminalCenter, Microenvironment, VDJLibrary, ActivationGate, MemoryPool, ClassSwitcher, ConvergentSelector) and C++ backend functions</li>
+<li>Test coverage increased from ~26% to ~85% (681 tests, 0 failures)</li>
 </ul></div>
 <div class="section level3">
 <h3 id="bioccheck-compliance-0-99-1">BiocCheck Compliance<a class="anchor" aria-label="anchor" href="#bioccheck-compliance-0-99-1"></a></h3>
