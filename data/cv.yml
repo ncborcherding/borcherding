@@ -299,10 +299,15 @@ research_funding:
     title: Paracrine non-canonical Wnt signaling in breast cancer
     sponsor: NIH F30 CA206255
     role: Principal Investigator
-  - years: 2025-
+  - years: 2025-Present
     title: Harnessing Single-Cell T Cell-Receptor Sequencing to Accelerate Diagnosis in Inflammatory Arthritis
     sponsor: Arthritis Research Program Focused Research Award, Department of Defense
     role: Co-Investigator
+  - years: 2026-Present
+    title: Paired TCR Sequencing for Early Diagnosis of Psoriatic Arthritis
+    sponsor: Arthritis National Research Foundation
+    role: Principal Investigator
+
 presentations:
   invited:
     institutional:
