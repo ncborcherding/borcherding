@@ -7,8 +7,6 @@ summary: "Revisiting Artificial Immune Systems through the lens of modern immuno
 
 *On revisiting Artificial Immune Systems and the case for borrowing more biology, not less.*
 
-<img align="center" src="comparison.svg" alt="Side-by-side comparison: classical AIS uses uniform random sampling, single-threshold activation, and a two-state lifecycle. Modern immunology uses V(D)J recombination from a gene library, two-signal conjunctive activation, and a branching lifecycle with anergic and exhausted off-states." />
-
 Long before backpropagation and transformers, an adaptive learning system was already running inside every vertebrate on the planet. It identifies threats it has never seen. It does this without labeled data. It tells self from non-self in a feature space larger than any image dataset we have ever built. It also remembers. The immune system is the original adaptive learning machine. For a brief window in the late 1990s and early 2000s, it inspired its own corner of computer science: **Artificial Immune Systems**, or AIS.
 
 For a moment, AIS looked like a real contender alongside neural networks and genetic algorithms. Negative selection algorithms offered principled anomaly detection. Clonal selection algorithms gave a clean evolutionary metaphor for optimization. Idiotypic networks hinted at self-organizing memory. Then deep learning ate the world. AIS receded into specialty journals. A generation of ML researchers grew up barely aware the field existed.
