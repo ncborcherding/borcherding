@@ -1,7 +1,7 @@
 ---
 title: "The Immune System Was the Original Learning Machine. Why Don't Our Algorithms Act Like It?"
 output: html_document
-date: "2026-05-01"
+date: "2026-04-30"
 summary: "Revisiting Artificial Immune Systems through the lens of modern immunology and what we get out of doing it."
 ---
 
