@@ -100,11 +100,11 @@ Run germinal center selection on a repertoire.
 
 - `y`:
 
-  Target vector (factor or numeric) or NULL for clustering.
+  Factor target vector or NULL for clustering.
 
 - `task`:
 
-  Character: "clustering", "classification", or "regression".
+  Character: "clustering" or "classification".
 
 - `affinityFunc`:
 

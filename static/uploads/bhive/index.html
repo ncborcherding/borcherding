@@ -11,9 +11,9 @@
 <script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="bHIVE - B-cell Hybrid Immune Variant Engine">
-<meta name="description" content="Modular Artificial Immune System framework for clustering, classification, and regression in R. C++ backend via RcppArmadillo with composable biologically-inspired modules.
+<meta name="description" content="Modular Artificial Immune System framework for clustering and classification in R. C++ backend via RcppArmadillo with composable biologically-inspired modules.
 ">
-<meta property="og:description" content="Modular Artificial Immune System framework for clustering, classification, and regression in R. C++ backend via RcppArmadillo with composable biologically-inspired modules.
+<meta property="og:description" content="Modular Artificial Immune System framework for clustering and classification in R. C++ backend via RcppArmadillo with composable biologically-inspired modules.
 ">
 <meta property="og:image" content="https://www.borch.dev/uploads/bhive/logo.png">
 </head>
@@ -25,7 +25,7 @@
 
     <a class="navbar-brand me-2" href="index.html">bHIVE</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -73,7 +73,7 @@
 <div class="section level3">
 <h3 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
 </h3>
-<p><strong>bHIVE</strong> is an R package implementing a modular Artificial Immune System (AIS) framework for clustering, classification, and regression. Built on <a href="https://www.dca.fee.unicamp.br/~vonzuben/research/lnunes_dout/artigos/DMHA.PDF" class="external-link">AI-Net</a> (de Castro &amp; Von Zuben 2001), bHIVE extends the classical algorithm with biologically-grounded modules drawn from modern immunology: somatic hypermutation, idiotypic network regulation, germinal center selection, and microenvironment-driven adaptation.</p>
+<p><strong>bHIVE</strong> is an R package implementing a modular Artificial Immune System (AIS) framework for clustering and classification. Built on <a href="https://www.dca.fee.unicamp.br/~vonzuben/research/lnunes_dout/artigos/DMHA.PDF" class="external-link">AI-Net</a> (de Castro &amp; Von Zuben 2001), bHIVE extends the classical algorithm with biologically-grounded modules drawn from modern immunology: somatic hypermutation, idiotypic network regulation, germinal center selection, and microenvironment-driven adaptation.</p>
 <p>Performance-critical operations (affinity/distance matrices, clonal selection, network suppression, mutation) are implemented in C++ via <a href="https://cran.r-project.org/package=RcppArmadillo" class="external-link">RcppArmadillo</a>, with parallelization support through <a href="https://bioconductor.org/packages/BiocParallel/" class="external-link">BiocParallel</a>.</p>
 </div>
 <div class="section level3">
@@ -81,7 +81,7 @@
 </h3>
 <ul>
 <li>
-<strong>Three tasks</strong> – clustering, classification, and regression on numeric matrices</li>
+<strong>Two tasks</strong> – clustering and classification on numeric matrices</li>
 <li>
 <strong>C++ backend</strong> – BLAS-optimized bulk affinity/distance computation</li>
 <li>
@@ -91,7 +91,7 @@
 <li>
 <strong>Hyperparameter tuning</strong> – <code><a href="reference/swarmbHIVE.html">swarmbHIVE()</a></code> with grid search and BiocParallel</li>
 <li>
-<strong>Gradient refinement</strong> – <code><a href="reference/refineB.html">refineB()</a></code> post-processing with 5 optimizers and 8 loss functions</li>
+<strong>Gradient refinement</strong> – <code><a href="reference/refineB.html">refineB()</a></code> post-processing with 5 optimizers and several classification-aware loss functions</li>
 <li>
 <strong>Composable immune modules</strong> – mix and match biological mechanisms via dependency injection</li>
 <li>
@@ -124,12 +124,7 @@
 <span><span class="co"># Classification</span></span>
 <span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/bHIVE.html">bHIVE</a></span><span class="op">(</span><span class="va">X</span>, y <span class="op">=</span> <span class="va">iris</span><span class="op">$</span><span class="va">Species</span>, task <span class="op">=</span> <span class="st">"classification"</span>,</span>
 <span>             nAntibodies <span class="op">=</span> <span class="fl">30</span>, maxIter <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span>Predicted <span class="op">=</span> <span class="va">res</span><span class="op">$</span><span class="va">assignments</span>, Actual <span class="op">=</span> <span class="va">iris</span><span class="op">$</span><span class="va">Species</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Regression</span></span>
-<span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/bHIVE.html">bHIVE</a></span><span class="op">(</span><span class="va">X</span><span class="op">[</span>, <span class="fl">2</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, y <span class="op">=</span> <span class="va">iris</span><span class="op">$</span><span class="va">Sepal.Length</span>, task <span class="op">=</span> <span class="st">"regression"</span>,</span>
-<span>             nAntibodies <span class="op">=</span> <span class="fl">30</span>, maxIter <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">cor</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">predictions</span>, <span class="va">iris</span><span class="op">$</span><span class="va">Sepal.Length</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span>Predicted <span class="op">=</span> <span class="va">res</span><span class="op">$</span><span class="va">assignments</span>, Actual <span class="op">=</span> <span class="va">iris</span><span class="op">$</span><span class="va">Species</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="r6-api-with-modules">R6 API with Modules<a class="anchor" aria-label="anchor" href="#r6-api-with-modules"></a>
@@ -182,53 +177,53 @@
 <col width="45%">
 <col width="35%">
 </colgroup>
-<thead><tr class="header">
+<thead><tr>
 <th align="left">Module</th>
 <th align="left">Biological Basis</th>
 <th align="left">What It Does</th>
 </tr></thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td align="left"><code>SHMEngine</code></td>
 <td align="left">Somatic hypermutation</td>
 <td align="left">5 mutation strategies: uniform, airs, hotspot, energy, adaptive</td>
 </tr>
-<tr class="even">
+<tr>
 <td align="left"><code>IdiotypicNetwork</code></td>
 <td align="left">Ab-Ab network regulation</td>
 <td align="left">Bell-shaped activation dynamics replacing epsilon-threshold suppression</td>
 </tr>
-<tr class="odd">
+<tr>
 <td align="left"><code>GerminalCenter</code></td>
 <td align="left">Tfh-B cell interaction</td>
 <td align="left">Task-aware quality selection with resource competition</td>
 </tr>
-<tr class="even">
+<tr>
 <td align="left"><code>Microenvironment</code></td>
 <td align="left">Tissue microenvironment cues</td>
 <td align="left">Density-dependent zone classification and mutation rate modulation</td>
 </tr>
-<tr class="odd">
+<tr>
 <td align="left"><code>VDJLibrary</code></td>
 <td align="left">V(D)J recombination</td>
 <td align="left">Combinatorial gene library initialization (PCA, cluster, random partition)</td>
 </tr>
-<tr class="even">
+<tr>
 <td align="left"><code>ActivationGate</code></td>
 <td align="left">Two-signal activation</td>
 <td align="left">Costimulatory filtering (density, danger signal, or label entropy)</td>
 </tr>
-<tr class="odd">
+<tr>
 <td align="left"><code>MemoryPool</code></td>
 <td align="left">Immunological memory</td>
 <td align="left">Archive high-affinity antibodies and recall on distribution shift</td>
 </tr>
-<tr class="even">
+<tr>
 <td align="left"><code>ClassSwitcher</code></td>
 <td align="left">Isotype class switching</td>
 <td align="left">IgM (broad) / IgG (specific) / IgA (boundary) kernel width modulation</td>
 </tr>
-<tr class="odd">
+<tr>
 <td align="left"><code>ConvergentSelector</code></td>
 <td align="left">Public clonotypes</td>
 <td align="left">Cross-repertoire consensus for ensemble methods</td>
@@ -276,33 +271,33 @@
 <col width="31%">
 <col width="34%">
 </colgroup>
-<thead><tr class="header">
+<thead><tr>
 <th align="left">Affinity</th>
 <th align="left">Formula</th>
 <th align="left">Use Case</th>
 </tr></thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td align="left"><code>gaussian</code></td>
 <td align="left">exp(-alpha ||x - a||^2)</td>
 <td align="left">General purpose (default)</td>
 </tr>
-<tr class="even">
+<tr>
 <td align="left"><code>laplace</code></td>
 <td align="left">exp(-alpha ||x - a||)</td>
 <td align="left">Heavier tails than Gaussian</td>
 </tr>
-<tr class="odd">
+<tr>
 <td align="left"><code>polynomial</code></td>
 <td align="left">(x . a + c)^p</td>
 <td align="left">Non-Euclidean similarity</td>
 </tr>
-<tr class="even">
+<tr>
 <td align="left"><code>cosine</code></td>
 <td align="left">(x . a) / (||x|| ||a||)</td>
 <td align="left">Direction-based similarity</td>
 </tr>
-<tr class="odd">
+<tr>
 <td align="left"><code>hamming</code></td>
 <td align="left">1 - (mismatches / d)</td>
 <td align="left">Categorical/binary features</td>
@@ -310,32 +305,32 @@
 </tbody>
 </table>
 <table class="table">
-<thead><tr class="header">
+<thead><tr>
 <th align="left">Distance</th>
 <th align="left">Notes</th>
 </tr></thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td align="left"><code>euclidean</code></td>
 <td align="left">Default; L2 norm</td>
 </tr>
-<tr class="even">
+<tr>
 <td align="left"><code>manhattan</code></td>
 <td align="left">L1 norm</td>
 </tr>
-<tr class="odd">
+<tr>
 <td align="left"><code>minkowski</code></td>
 <td align="left">Generalized Lp (parameter p)</td>
 </tr>
-<tr class="even">
+<tr>
 <td align="left"><code>cosine</code></td>
 <td align="left">1 - cosine similarity</td>
 </tr>
-<tr class="odd">
+<tr>
 <td align="left"><code>mahalanobis</code></td>
 <td align="left">Accounts for feature covariance (requires Sigma)</td>
 </tr>
-<tr class="even">
+<tr>
 <td align="left"><code>hamming</code></td>
 <td align="left">Count of differing features</td>
 </tr>

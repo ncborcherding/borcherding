@@ -10,7 +10,7 @@ combinations. Evaluates each combination using different metrics:
 swarmbHIVE(
   X,
   y = NULL,
-  task = c("clustering", "classification", "regression"),
+  task = c("clustering", "classification"),
   grid,
   metric = NULL,
   maxIter = 50,
@@ -28,13 +28,12 @@ swarmbHIVE(
 
 - y:
 
-  Optional. A target vector: factor for classification, numeric for
-  regression. If `NULL`, clustering is performed.
+  Optional. A factor target vector for classification. If `NULL`,
+  clustering is performed.
 
 - task:
 
-  Character. One of `"clustering"`, `"classification"`, or
-  `"regression"`.
+  Character. One of `"clustering"` or `"classification"`.
 
 - grid:
 
@@ -48,8 +47,6 @@ swarmbHIVE(
   Character. Name of the evaluation metric. Options:
 
   - **Classification**: "accuracy", "balanced_accuracy", "f1", "kappa"
-
-  - **Regression**: "rmse", "mae", "r2"
 
   - **Clustering**: "silhouette", "davies_bouldin", "calinski_harabasz"
 
@@ -79,8 +76,8 @@ A list:
 ## Details
 
 \- \*\*Classification\*\*: "accuracy", "balanced_accuracy", "f1",
-"kappa" - \*\*Regression\*\*: "rmse", "mae", "r2" - \*\*Clustering\*\*:
-"silhouette", "davies_bouldin", or "calinski_harabasz"
+"kappa" - \*\*Clustering\*\*: "silhouette", "davies_bouldin", or
+"calinski_harabasz"
 
 \*\*Note\*\*: Some metrics require additional packages or assumptions
 (e.g., multi-class classification for "f1" is calculated as a
@@ -118,7 +115,7 @@ tuning_results <- swarmbHIVE(X = X,
 #> Evaluating combo 8/8: nAntibodies=20, beta=5, epsilon=0.050
 #> Best parameters found:
 #>   nAntibodies beta epsilon metric_value
-#> 8          20    5    0.05    0.8733333
+#> 5          10    3    0.05    0.8933333
 
 # For clustering with silhouette
 set.seed(42)
@@ -142,9 +139,9 @@ res_clust <- swarmbHIVE(X_clust,
 #> Evaluating combo 8/8: nAntibodies=10, beta=5, epsilon=0.050
 #> Best parameters found:
 #>   nAntibodies beta epsilon metric_value
-#> 3           5    5    0.01    0.1047978
+#> 5           5    3    0.05    0.1351727
 res_clust$best_params
 #>   nAntibodies beta epsilon metric_value
-#> 3           5    5    0.01    0.1047978
+#> 5           5    3    0.05    0.1351727
 
 ```

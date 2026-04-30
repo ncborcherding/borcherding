@@ -23,15 +23,15 @@ combination using a task-specific metric.
 
 ### Available Metrics
 
-| Task           | Metrics                                                   | Direction                     |
-|:---------------|:----------------------------------------------------------|:------------------------------|
-| Clustering     | `"silhouette"`, `"davies_bouldin"`, `"calinski_harabasz"` | Higher is better (except D-B) |
-| Classification | `"accuracy"`, `"balanced_accuracy"`, `"f1"`, `"kappa"`    | Higher is better              |
-| Regression     | `"rmse"`, `"mae"`, `"r2"`                                 | Lower is better (except R^2)  |
+| Task | Metrics | Direction |
+|:---|:---|:---|
+| Clustering | `"silhouette"`, `"davies_bouldin"`, `"calinski_harabasz"` | Higher is better (except D-B) |
+| Classification | `"accuracy"`, `"balanced_accuracy"`, `"f1"`, `"kappa"` | Higher is better |
 
 ### Clustering Tuning
 
 ``` r
+
 data(iris)
 X <- as.matrix(iris[, 1:4])
 
@@ -59,15 +59,17 @@ ggplot(tuning$results, aes(x = nAntibodies, y = metric_value,
 ![](advanced-workflows_files/figure-html/swarm-clustering-1.png)
 
 ``` r
+
 tuning$best_params
 ```
 
-    ##   nAntibodies beta epsilon metric_value
-    ## 8          20    3    0.05    0.2079148
+    ##    nAntibodies beta epsilon metric_value
+    ## 10          10    5    0.05    0.2514718
 
 ### Classification Tuning
 
 ``` r
+
 y <- iris$Species
 grid_cls <- expand.grid(
   nAntibodies = c(15, 30, 50),
@@ -82,8 +84,8 @@ tuning_cls <- swarmbHIVE(X = X, y = y, task = "classification",
 tuning_cls$best_params
 ```
 
-    ##   nAntibodies beta epsilon metric_value
-    ## 6          50    5    0.01         0.96
+    ##    nAntibodies beta epsilon metric_value
+    ## 12          50    3    0.05    0.9733333
 
 ### Parallelization with BiocParallel
 
@@ -92,6 +94,7 @@ accepts a `BPPARAM` argument for parallel execution. This is especially
 useful when the grid is large:
 
 ``` r
+
 library(BiocParallel)
 
 # Use 4 cores
@@ -113,6 +116,7 @@ hierarchical compression of the data.
 ### Basic Multilayer Clustering
 
 ``` r
+
 set.seed(42)
 res <- honeycombHIVE(X = X, task = "clustering",
                      layers = 3, nAntibodies = 30,
@@ -143,6 +147,7 @@ prototypes for the next layer:
 | `"median"`   | Coordinate-wise median              |
 
 ``` r
+
 set.seed(42)
 res_centroid <- honeycombHIVE(X = X, task = "clustering", layers = 2,
                               nAntibodies = 20, collapseMethod = "centroid",
@@ -157,6 +162,7 @@ cat("Centroid clusters:", length(unique(res_centroid[[2]]$membership)), "\n")
     ## Centroid clusters: 10
 
 ``` r
+
 cat("Medoid clusters:  ", length(unique(res_medoid[[2]]$membership)), "\n")
 ```
 
@@ -170,33 +176,34 @@ after each layer’s bHIVE pass. This fine-tunes prototype positions
 before collapsing.
 
 ``` r
-library(MASS)
-data(Boston)
-X_bos <- as.matrix(Boston[, -14])
-y_bos <- Boston$medv
+
+data(iris)
+X_iris <- as.matrix(iris[, 1:4])
+y_iris <- iris$Species
 
 set.seed(42)
-res_plain <- honeycombHIVE(X = X_bos, y = y_bos, task = "regression",
-                           layers = 3, nAntibodies = 50, verbose = FALSE)
+res_plain <- honeycombHIVE(X = X_iris, y = y_iris, task = "classification",
+                           layers = 3, nAntibodies = 30, verbose = FALSE)
 
-res_refined <- honeycombHIVE(X = X_bos, y = y_bos, task = "regression",
-                             layers = 3, nAntibodies = 50,
+res_refined <- honeycombHIVE(X = X_iris, y = y_iris, task = "classification",
+                             layers = 3, nAntibodies = 30,
                              refine = TRUE, refineOptimizer = "adam",
-                             refineLoss = "mse", refineSteps = 5,
-                             refineLR = 0.01, verbose = FALSE)
+                             refineLoss = "categorical_crossentropy",
+                             refineSteps = 5, refineLR = 0.01, verbose = FALSE)
 
-cor_plain   <- cor(res_plain[[3]]$predictions, y_bos)
-cor_refined <- cor(res_refined[[3]]$predictions, y_bos)
-cat("Correlation (plain):  ", round(cor_plain, 3), "\n")
+acc_plain   <- mean(res_plain[[3]]$predictions   == as.character(y_iris))
+acc_refined <- mean(res_refined[[3]]$predictions == as.character(y_iris))
+cat("Accuracy (plain):  ", round(acc_plain, 3), "\n")
 ```
 
-    ## Correlation (plain):   0.568
+    ## Accuracy (plain):   0.333
 
 ``` r
-cat("Correlation (refined):", round(cor_refined, 3), "\n")
+
+cat("Accuracy (refined):", round(acc_refined, 3), "\n")
 ```
 
-    ## Correlation (refined): 0.608
+    ## Accuracy (refined): 0.333
 
 ## Gradient Refinement with refineB
 
@@ -217,20 +224,18 @@ functions.
 
 ### Loss Functions
 
-| Loss                         | Tasks          | Description                     |
-|:-----------------------------|:---------------|:--------------------------------|
-| `"mse"`                      | All            | Mean squared error              |
-| `"mae"`                      | All            | Mean absolute error             |
-| `"categorical_crossentropy"` | Classification | Cross-entropy loss              |
-| `"binary_crossentropy"`      | Classification | Binary cross-entropy            |
-| `"kullback_leibler"`         | Classification | KL divergence                   |
-| `"cosine"`                   | Classification | Cosine distance loss            |
-| `"poisson"`                  | Regression     | Poisson deviance                |
-| `"huber"`                    | Regression     | Huber loss (robust to outliers) |
+| Loss | Tasks | Description |
+|:---|:---|:---|
+| `"mae"` | All | Mean absolute error (sign-based pull/push) |
+| `"categorical_crossentropy"` | Classification | Cross-entropy loss |
+| `"binary_crossentropy"` | Classification | Binary cross-entropy |
+| `"kullback_leibler"` | Classification | KL divergence |
+| `"cosine"` | Classification | Cosine distance loss |
 
 ### Comparing Optimizers
 
 ``` r
+
 X <- as.matrix(iris[, 1:4])
 y <- iris$Species
 
@@ -312,18 +317,19 @@ bHIVE provides two caret-compatible model objects for use with
 ### Basic caret Workflow
 
 ``` r
+
 library(caret)
 
-data(Boston)
-X_bos <- as.matrix(Boston[, -14])
-y_bos <- Boston$medv
+data(iris)
+X_iris <- as.matrix(iris[, 1:4])
+y_iris <- iris$Species
 
 set.seed(42)
-idx <- sample(nrow(X_bos), nrow(X_bos) * 0.7)
-X_train <- X_bos[idx, ]
-X_test  <- X_bos[-idx, ]
-y_train <- y_bos[idx]
-y_test  <- y_bos[-idx]
+idx <- sample(nrow(X_iris), nrow(X_iris) * 0.7)
+X_train <- X_iris[idx, ]
+X_test  <- X_iris[-idx, ]
+y_train <- y_iris[idx]
+y_test  <- y_iris[-idx]
 
 ctrl <- trainControl(method = "cv", number = 3)
 
@@ -350,18 +356,16 @@ ggplot(model) +
 ### Prediction on Held-Out Data
 
 ``` r
-preds <- predict(model, newdata = X_test)
 
-ggplot(data.frame(Actual = y_test, Predicted = preds),
-       aes(x = Actual, y = Predicted)) +
-  geom_point(alpha = 0.6) +
-  geom_smooth(method = "lm", color = "steelblue", se = FALSE) +
-  labs(title = "caret bHIVE: Predicted vs Actual",
-       x = "Actual (medv)", y = "Predicted") +
-  theme_minimal()
+preds <- predict(model, newdata = X_test)
+table(Predicted = preds, Actual = y_test)
 ```
 
-![](advanced-workflows_files/figure-html/caret-predict-1.png)
+    ##             Actual
+    ## Predicted    setosa versicolor virginica
+    ##   setosa         12          2         0
+    ##   versicolor      0         13        18
+    ##   virginica       0          0         0
 
 ### honeycombHIVE caret Model
 
@@ -369,6 +373,7 @@ The multilayer caret model adds layer count and refinement parameters to
 the tuning grid:
 
 ``` r
+
 model_hc <- train(
   x = X_train, y = y_train,
   method = honeycombHIVEmodel,
@@ -378,10 +383,9 @@ model_hc <- train(
     beta        = 5,
     epsilon     = 0.05,
     layers      = c(2, 3),
-    refineOptimizer  = "adam",
-    refineSteps      = 5,
-    refineLR         = 0.01,
-    refineHuberDelta = 1.0
+    refineOptimizer = "adam",
+    refineSteps     = 5,
+    refineLR        = 0.01
   ),
   verbose = FALSE
 )
@@ -396,16 +400,17 @@ honeycombHIVE results.
 
 ### Plot Types
 
-| Type        | Description                                                          |
-|:------------|:---------------------------------------------------------------------|
+| Type | Description |
+|:---|:---|
 | `"scatter"` | 2D scatter with optional dimensionality reduction (PCA, UMAP, t-SNE) |
-| `"boxplot"` | Feature distributions by group with prototype overlay                |
-| `"violin"`  | Violin plots with prototype markers                                  |
-| `"density"` | Density curves with prototype reference lines                        |
+| `"boxplot"` | Feature distributions by group with prototype overlay |
+| `"violin"` | Violin plots with prototype markers |
+| `"density"` | Density curves with prototype reference lines |
 
 ### Scatter Plot with PCA
 
 ``` r
+
 X <- as.matrix(iris[, 1:4])
 
 set.seed(42)
@@ -425,6 +430,7 @@ visualizeHIVE(result = res, X = iris[, 1:4],
 ### Violin Plot for Classification
 
 ``` r
+
 set.seed(42)
 res_cls <- honeycombHIVE(X = X, y = iris$Species,
                          task = "classification",
@@ -438,25 +444,6 @@ visualizeHIVE(result = res_cls, X = iris[, 1:4],
 ```
 
 ![](advanced-workflows_files/figure-html/viz-violin-1.png)
-
-### Density Plot for Regression
-
-``` r
-set.seed(42)
-X_scaled <- as.data.frame(scale(X))
-res_reg <- honeycombHIVE(X = X_scaled,
-                         y = as.numeric(iris$Sepal.Length),
-                         task = "regression", layers = 2,
-                         nAntibodies = 12, beta = 5,
-                         maxIter = 10, verbose = FALSE)
-
-visualizeHIVE(result = res_reg, X = X_scaled,
-              plot_type = "density", feature = "Petal.Width",
-              title = "Density: Petal Width",
-              layer = 2, task = "regression")
-```
-
-![](advanced-workflows_files/figure-html/viz-density-1.png)
 
 ## Combining Modules with honeycombHIVE
 
@@ -484,10 +471,11 @@ A typical advanced workflow:
     to understand results
 
 ``` r
+
 sessionInfo()
 ```
 
-    ## R version 4.5.3 (2026-03-11)
+    ## R version 4.6.0 (2026-04-24)
     ## Platform: x86_64-pc-linux-gnu
     ## Running under: Ubuntu 24.04.4 LTS
     ## 
@@ -508,38 +496,39 @@ sessionInfo()
     ## [1] stats     graphics  grDevices utils     datasets  methods   base     
     ## 
     ## other attached packages:
-    ## [1] caret_7.0-1       lattice_0.22-9    MASS_7.3-65       viridis_0.6.5    
-    ## [5] viridisLite_0.4.3 ggplot2_4.0.2     bHIVE_0.99.1      BiocStyle_2.38.0 
+    ## [1] caret_7.0-1       lattice_0.22-9    viridis_0.6.5     viridisLite_0.4.3
+    ## [5] ggplot2_4.0.3     bHIVE_0.99.2      BiocStyle_2.40.0 
     ## 
     ## loaded via a namespace (and not attached):
-    ##  [1] tidyselect_1.2.1     timeDate_4052.112    dplyr_1.2.1         
-    ##  [4] farver_2.1.2         S7_0.2.1             fastmap_1.2.0       
-    ##  [7] pROC_1.19.0.1        digest_0.6.39        rpart_4.1.24        
-    ## [10] timechange_0.4.0     lifecycle_1.0.5      cluster_2.1.8.2     
-    ## [13] survival_3.8-6       magrittr_2.0.5       compiler_4.5.3      
-    ## [16] rlang_1.2.0          sass_0.4.10          tools_4.5.3         
-    ## [19] yaml_2.3.12          data.table_1.18.2.1  knitr_1.51          
-    ## [22] askpass_1.2.1        labeling_0.4.3       htmlwidgets_1.6.4   
-    ## [25] reticulate_1.45.0    plyr_1.8.9           RColorBrewer_1.1-3  
-    ## [28] BiocParallel_1.44.0  Rtsne_0.17           purrr_1.2.1         
-    ## [31] withr_3.0.2          desc_1.4.3           stats4_4.5.3        
-    ## [34] nnet_7.3-20          grid_4.5.3           future_1.70.0       
-    ## [37] globals_0.19.1       scales_1.4.0         iterators_1.0.14    
-    ## [40] cli_3.6.5            rmarkdown_2.31       ragg_1.5.2          
-    ## [43] generics_0.1.4       umap_0.2.10.0        otel_0.2.0          
-    ## [46] future.apply_1.20.2  RSpectra_0.16-2      reshape2_1.4.5      
-    ## [49] cachem_1.1.0         stringr_1.6.0        splines_4.5.3       
-    ## [52] parallel_4.5.3       BiocManager_1.30.27  vctrs_0.7.2         
-    ## [55] hardhat_1.4.3        Matrix_1.7-4         jsonlite_2.0.0      
-    ## [58] bookdown_0.46        listenv_0.10.1       systemfonts_1.3.2   
-    ## [61] clusterCrit_1.3.0    foreach_1.5.2        gower_1.0.2         
-    ## [64] jquerylib_0.1.4      recipes_1.3.2        parallelly_1.46.1   
-    ## [67] glue_1.8.0           pkgdown_2.2.0        codetools_0.2-20    
-    ## [70] stringi_1.8.7        lubridate_1.9.5      gtable_0.3.6        
-    ## [73] tibble_3.3.1         pillar_1.11.1        htmltools_0.5.9     
-    ## [76] ipred_0.9-15         openssl_2.3.5        lava_1.9.0          
-    ## [79] R6_2.6.1             textshaping_1.0.5    evaluate_1.0.5      
-    ## [82] png_0.1-9            bslib_0.10.0         class_7.3-23        
-    ## [85] Rcpp_1.1.1           gridExtra_2.3        nlme_3.1-168        
-    ## [88] prodlim_2026.03.11   mgcv_1.9-4           xfun_0.57           
-    ## [91] ModelMetrics_1.2.2.2 fs_2.0.1             pkgconfig_2.0.3
+    ##  [1] pROC_1.19.0.1        gridExtra_2.3        rlang_1.2.0         
+    ##  [4] magrittr_2.0.5       otel_0.2.0           e1071_1.7-17        
+    ##  [7] compiler_4.6.0       png_0.1-9            systemfonts_1.3.2   
+    ## [10] vctrs_0.7.3          reshape2_1.4.5       stringr_1.6.0       
+    ## [13] pkgconfig_2.0.3      fastmap_1.2.0        labeling_0.4.3      
+    ## [16] rmarkdown_2.31       prodlim_2026.03.11   ragg_1.5.2          
+    ## [19] purrr_1.2.2          xfun_0.57            cachem_1.1.0        
+    ## [22] jsonlite_2.0.0       recipes_1.3.2        BiocParallel_1.46.0 
+    ## [25] clusterCrit_1.3.0    parallel_4.6.0       cluster_2.1.8.2     
+    ## [28] R6_2.6.1             bslib_0.10.0         stringi_1.8.7       
+    ## [31] RColorBrewer_1.1-3   reticulate_1.46.0    parallelly_1.47.0   
+    ## [34] rpart_4.1.27         lubridate_1.9.5      jquerylib_0.1.4     
+    ## [37] Rcpp_1.1.1-1.1       bookdown_0.46        iterators_1.0.14    
+    ## [40] knitr_1.51           future.apply_1.20.2  Matrix_1.7-5        
+    ## [43] splines_4.6.0        nnet_7.3-20          timechange_0.4.0    
+    ## [46] tidyselect_1.2.1     yaml_2.3.12          timeDate_4052.112   
+    ## [49] codetools_0.2-20     listenv_0.10.1       tibble_3.3.1        
+    ## [52] plyr_1.8.9           withr_3.0.2          S7_0.2.2            
+    ## [55] askpass_1.2.1        evaluate_1.0.5       Rtsne_0.17          
+    ## [58] future_1.70.0        desc_1.4.3           survival_3.8-6      
+    ## [61] proxy_0.4-29         pillar_1.11.1        BiocManager_1.30.27 
+    ## [64] foreach_1.5.2        stats4_4.6.0         generics_0.1.4      
+    ## [67] scales_1.4.0         globals_0.19.1       class_7.3-23        
+    ## [70] glue_1.8.1           tools_4.6.0          data.table_1.18.2.1 
+    ## [73] RSpectra_0.16-2      ModelMetrics_1.2.2.2 gower_1.0.2         
+    ## [76] fs_2.1.0             grid_4.6.0           umap_0.2.10.0       
+    ## [79] ipred_0.9-15         nlme_3.1-169         cli_3.6.6           
+    ## [82] textshaping_1.0.5    lava_1.9.0           dplyr_1.2.1         
+    ## [85] gtable_0.3.6         sass_0.4.10          digest_0.6.39       
+    ## [88] htmlwidgets_1.6.4    farver_2.1.2         htmltools_0.5.9     
+    ## [91] pkgdown_2.2.0        lifecycle_1.0.5      hardhat_1.4.3       
+    ## [94] openssl_2.4.0        MASS_7.3-65

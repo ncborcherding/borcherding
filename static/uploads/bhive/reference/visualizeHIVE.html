@@ -11,7 +11,7 @@ specify one or more layers to visualize and choose from several plot types:"><me
 
     <a class="navbar-brand me-2" href="../index.html">bHIVE</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -61,7 +61,7 @@ specify one or more layers to visualize and choose from several plot types:</p>
 <span>  transformation_method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"PCA"</span>, <span class="st">"UMAP"</span>, <span class="st">"tSNE"</span>, <span class="st">"none"</span><span class="op">)</span>,</span>
 <span>  title <span class="op">=</span> <span class="st">"HIVE Results"</span>,</span>
 <span>  layer <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>  task <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"clustering"</span>, <span class="st">"classification"</span>, <span class="st">"regression"</span><span class="op">)</span>,</span>
+<span>  task <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"clustering"</span>, <span class="st">"classification"</span><span class="op">)</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -122,8 +122,8 @@ outputs, specify one or more layer indices.</p></dd>
 
 <dt id="arg-task">task<a class="anchor" aria-label="anchor" href="#arg-task"></a></dt>
 <dd><p>Character. The prediction task for the result: one of
-<code>"clustering"</code>, <code>"classification"</code>,
- or <code>"regression"</code>. This is used to determine how grouping is computed.</p></dd>
+<code>"clustering"</code> or <code>"classification"</code>. This is used to determine
+how grouping is computed.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
@@ -192,16 +192,6 @@ each layer are combined and faceted by layer.</p>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Set `drop = FALSE` to consider such groups for position adjustment purposes.</span>
 <span class="r-plt img"><img src="visualizeHIVE-2.png" alt="" width="1050" height="750"></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># For regression: prototype grouping is overridden to a constant.</span></span></span>
-<span class="r-in"><span><span class="fu">visualizeHIVE</span><span class="op">(</span>result <span class="op">=</span> <span class="va">res</span>,</span></span>
-<span class="r-in"><span>              X <span class="op">=</span> <span class="va">iris</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>,</span></span>
-<span class="r-in"><span>              plot_type <span class="op">=</span> <span class="st">"density"</span>,</span></span>
-<span class="r-in"><span>              feature <span class="op">=</span> <span class="st">"Sepal.Width"</span>,</span></span>
-<span class="r-in"><span>              title <span class="op">=</span> <span class="st">"Sepal Width Density (Layer 1)"</span>,</span></span>
-<span class="r-in"><span>              layer <span class="op">=</span> <span class="fl">1</span>,</span></span>
-<span class="r-in"><span>              task <span class="op">=</span> <span class="st">"regression"</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="visualizeHIVE-3.png" alt="" width="1050" height="750"></span>
-<span class="r-in"><span>              </span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

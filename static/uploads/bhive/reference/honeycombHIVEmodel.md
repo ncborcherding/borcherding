@@ -40,12 +40,7 @@ and evaluation.
 
 - `refineLR`: Learning rate for refinement.
 
-- `refineHuberDelta`: Delta parameter used if the "huber" loss is
-  chosen.
-
 ## Supported Tasks
-
-- `"Regression"`: Predicts numeric target values.
 
 - `"Classification"`: Assigns class labels to input observations.
 
@@ -81,8 +76,7 @@ if (FALSE) { # \dontrun{
       layers = c(1, 2),
       refineOptimizer = "adam",
       refineSteps = 5,
-      refineLR = 0.01,
-      refineHuberDelta = 1.0
+      refineLR = 0.01
     )
   )
   print(model)

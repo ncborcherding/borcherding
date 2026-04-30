@@ -7,8 +7,7 @@
 ### Overview
 
 **bHIVE** is an R package implementing a modular Artificial Immune
-System (AIS) framework for clustering, classification, and regression.
-Built on
+System (AIS) framework for clustering and classification. Built on
 [AI-Net](https://www.dca.fee.unicamp.br/~vonzuben/research/lnunes_dout/artigos/DMHA.PDF)
 (de Castro & Von Zuben 2001), bHIVE extends the classical algorithm with
 biologically-grounded modules drawn from modern immunology: somatic
@@ -23,8 +22,7 @@ parallelization support through
 
 ### Key Features
 
-- **Three tasks** – clustering, classification, and regression on
-  numeric matrices
+- **Two tasks** – clustering and classification on numeric matrices
 - **C++ backend** – BLAS-optimized bulk affinity/distance computation
 - **Two APIs** – functional
   ([`bHIVE()`](https://www.borch.dev/uploads/bhive/reference/bHIVE.md))
@@ -37,7 +35,8 @@ parallelization support through
   with grid search and BiocParallel
 - **Gradient refinement** –
   [`refineB()`](https://www.borch.dev/uploads/bhive/reference/refineB.md)
-  post-processing with 5 optimizers and 8 loss functions
+  post-processing with 5 optimizers and several classification-aware
+  loss functions
 - **Composable immune modules** – mix and match biological mechanisms
   via dependency injection
 - **caret compatible** – `bHIVEmodel` and `honeycombHIVEmodel` for
@@ -46,6 +45,7 @@ parallelization support through
 ## Installation
 
 ``` r
+
 devtools::install_github("BorchLab/bHIVE")
 ```
 
@@ -56,6 +56,7 @@ devtools::install_github("BorchLab/bHIVE")
 The simplest way to use bHIVE. Works like any R modeling function:
 
 ``` r
+
 library(bHIVE)
 data(iris)
 X <- as.matrix(iris[, 1:4])
@@ -68,11 +69,6 @@ table(res$assignments)
 res <- bHIVE(X, y = iris$Species, task = "classification",
              nAntibodies = 30, maxIter = 20)
 table(Predicted = res$assignments, Actual = iris$Species)
-
-# Regression
-res <- bHIVE(X[, 2:4], y = iris$Sepal.Length, task = "regression",
-             nAntibodies = 30, maxIter = 20)
-cor(res$predictions, iris$Sepal.Length)
 ```
 
 ### R6 API with Modules
@@ -81,6 +77,7 @@ For full control, compose an `AINet` with any combination of immune
 modules:
 
 ``` r
+
 # Adaptive mutation + idiotypic network regulation
 model <- AINet$new(
   nAntibodies = 20,
@@ -121,21 +118,22 @@ data:
 Each module is an R6 class that can be injected into `AINet` via its
 constructor. All modules are optional – use only what you need.
 
-| Module               | Biological Basis             | What It Does                                                               |
-|:---------------------|:-----------------------------|:---------------------------------------------------------------------------|
-| `SHMEngine`          | Somatic hypermutation        | 5 mutation strategies: uniform, airs, hotspot, energy, adaptive            |
-| `IdiotypicNetwork`   | Ab-Ab network regulation     | Bell-shaped activation dynamics replacing epsilon-threshold suppression    |
-| `GerminalCenter`     | Tfh-B cell interaction       | Task-aware quality selection with resource competition                     |
-| `Microenvironment`   | Tissue microenvironment cues | Density-dependent zone classification and mutation rate modulation         |
-| `VDJLibrary`         | V(D)J recombination          | Combinatorial gene library initialization (PCA, cluster, random partition) |
-| `ActivationGate`     | Two-signal activation        | Costimulatory filtering (density, danger signal, or label entropy)         |
-| `MemoryPool`         | Immunological memory         | Archive high-affinity antibodies and recall on distribution shift          |
-| `ClassSwitcher`      | Isotype class switching      | IgM (broad) / IgG (specific) / IgA (boundary) kernel width modulation      |
-| `ConvergentSelector` | Public clonotypes            | Cross-repertoire consensus for ensemble methods                            |
+| Module | Biological Basis | What It Does |
+|:---|:---|:---|
+| `SHMEngine` | Somatic hypermutation | 5 mutation strategies: uniform, airs, hotspot, energy, adaptive |
+| `IdiotypicNetwork` | Ab-Ab network regulation | Bell-shaped activation dynamics replacing epsilon-threshold suppression |
+| `GerminalCenter` | Tfh-B cell interaction | Task-aware quality selection with resource competition |
+| `Microenvironment` | Tissue microenvironment cues | Density-dependent zone classification and mutation rate modulation |
+| `VDJLibrary` | V(D)J recombination | Combinatorial gene library initialization (PCA, cluster, random partition) |
+| `ActivationGate` | Two-signal activation | Costimulatory filtering (density, danger signal, or label entropy) |
+| `MemoryPool` | Immunological memory | Archive high-affinity antibodies and recall on distribution shift |
+| `ClassSwitcher` | Isotype class switching | IgM (broad) / IgG (specific) / IgA (boundary) kernel width modulation |
+| `ConvergentSelector` | Public clonotypes | Cross-repertoire consensus for ensemble methods |
 
 ### Multilayer & Tuning
 
 ``` r
+
 # honeycombHIVE: hierarchical prototype refinement
 res <- honeycombHIVE(X, y = iris$Species, task = "classification",
                      layers = 3, nAntibodies = 30,
@@ -154,6 +152,7 @@ Fine-tune antibody positions after training with
 [`refineB()`](https://www.borch.dev/uploads/bhive/reference/refineB.md):
 
 ``` r
+
 res <- bHIVE(X, y = iris$Species, task = "classification",
              nAntibodies = 20, maxIter = 20)
 

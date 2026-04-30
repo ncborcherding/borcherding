@@ -82,11 +82,11 @@ Fit the algorithm to data. Must be overridden by subclasses.
 
 - `y`:
 
-  Optional target vector (factor or numeric).
+  Optional factor target for classification.
 
 - `task`:
 
-  Character: "clustering", "classification", or "regression".
+  Character: "clustering" or "classification".
 
 - `...`:
 

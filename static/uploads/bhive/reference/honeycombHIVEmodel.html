@@ -11,7 +11,7 @@ hyperparameter tuning, cross-validation, and performance evaluation."><meta prop
 
     <a class="navbar-brand me-2" href="../index.html">bHIVE</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -79,14 +79,12 @@ hyperparameter tuning, cross-validation, and performance evaluation.</p>
           (e.g. "sgd", "momentum", "adagrad", "adam", "rmsprop").</p></li>
 <li><p><code>refineSteps</code>: Number of gradient update steps in refinement.</p></li>
 <li><p><code>refineLR</code>: Learning rate for refinement.</p></li>
-<li><p><code>refineHuberDelta</code>: Delta parameter used if the "huber" loss is chosen.</p></li>
 </ul></div>
     <div class="section level2">
     <h2 id="supported-tasks">Supported Tasks<a class="anchor" aria-label="anchor" href="#supported-tasks"></a></h2>
 
 
-<p></p><ul><li><p><code>"Regression"</code>: Predicts numeric target values.</p></li>
-<li><p><code>"Classification"</code>: Assigns class labels to input observations.</p></li>
+<p></p><ul><li><p><code>"Classification"</code>: Assigns class labels to input observations.</p></li>
 <li><p><code>"Clustering"</code>: Groups data points based on similarity
           (though typically <code>caret</code> is used for supervised tasks).</p></li>
 </ul></div>
@@ -118,8 +116,7 @@ hyperparameter tuning, cross-validation, and performance evaluation.</p>
 <span class="r-in"><span>      layers <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>      refineOptimizer <span class="op">=</span> <span class="st">"adam"</span>,</span></span>
 <span class="r-in"><span>      refineSteps <span class="op">=</span> <span class="fl">5</span>,</span></span>
-<span class="r-in"><span>      refineLR <span class="op">=</span> <span class="fl">0.01</span>,</span></span>
-<span class="r-in"><span>      refineHuberDelta <span class="op">=</span> <span class="fl">1.0</span></span></span>
+<span class="r-in"><span>      refineLR <span class="op">=</span> <span class="fl">0.01</span></span></span>
 <span class="r-in"><span>    <span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span></span>

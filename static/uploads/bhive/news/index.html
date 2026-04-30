@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">bHIVE</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -39,6 +39,17 @@
       <small>Source: <a href="https://github.com/BorchLab/bHIVE/blob/main/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.99.2" id="bhive-0992">bHIVE 0.99.2<a class="anchor" aria-label="anchor" href="#bhive-0992"></a></h2>
+<div class="section level3">
+<h3 id="breaking-changes-0-99-2">Breaking Changes<a class="anchor" aria-label="anchor" href="#breaking-changes-0-99-2"></a></h3>
+<ul><li>Removed regression task support across the package. The previous regression implementation was unreliable and is being redesigned. <code><a href="../reference/bHIVE.html">bHIVE()</a></code>, <code><a href="../reference/honeycombHIVE.html">honeycombHIVE()</a></code>, <code><a href="../reference/swarmbHIVE.html">swarmbHIVE()</a></code>, <code><a href="../reference/refineB.html">refineB()</a></code>, <code>AINet</code>, <code>GerminalCenter</code>, <code>bHIVEmodel</code>, <code>honeycombHIVEmodel</code>, and <code><a href="../reference/visualizeHIVE.html">visualizeHIVE()</a></code> no longer accept <code>task = "regression"</code> or numeric <code>y</code>.</li>
+<li>Removed regression-only loss functions (<code>mse</code>, <code>huber</code>, <code>poisson</code>) and regression metrics (<code>rmse</code>, <code>mae</code>, <code>r2</code>) from <code><a href="../reference/swarmbHIVE.html">swarmbHIVE()</a></code>.</li>
+<li>Removed <code>refineHuberDelta</code> parameter from <code><a href="../reference/honeycombHIVE.html">honeycombHIVE()</a></code> and <code>honeycombHIVEmodel</code>.</li>
+<li>
+<code>final_assignment_cpp()</code> no longer accepts <code>antibody_values</code> or <code>overall_mean</code> arguments.</li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.99.1" id="bhive-0991">bHIVE 0.99.1<a class="anchor" aria-label="anchor" href="#bhive-0991"></a></h2>
 <div class="section level3">
@@ -105,7 +116,7 @@
 <li>Removed <code><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages()</a></code> calls from vignettes</li>
 <li>Removed <code>LazyData: true</code> from DESCRIPTION</li>
 <li>Updated R dependency to &gt;= 4.5.0</li>
-<li>Updated biocViews to <code>Software, Clustering, Classification, Regression,   Network</code>
+<li>Updated biocViews to <code>Software, Clustering, Classification, Regression, Network</code>
 </li>
 <li>Added class-level <code>@param</code> documentation for all R6 initialize() arguments across 11 module classes</li>
 <li>Added <code>@param ... Not used.</code> to all R6 <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> methods</li>

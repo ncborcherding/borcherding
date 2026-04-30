@@ -1,8 +1,8 @@
 # bHIVE: B-cell Hybrid Immune Variant Engine
 
 The bHIVE package implements an Artificial Immune Network (AI-Net)
-algorithm for clustering, classification, and regression tasks. Inspired
-by biological immune systems, it employs clonal selection, mutation, and
+algorithm for clustering and classification tasks. Inspired by
+biological immune systems, it employs clonal selection, mutation, and
 network suppression to analyze and model datasets. This package provides
 flexible functionality, including affinity metrics, mutation strategies,
 and hyperparameter tuning.

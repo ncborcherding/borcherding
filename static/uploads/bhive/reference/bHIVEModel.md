@@ -1,8 +1,8 @@
 # B-cell-based Hybrid Immune Virtual Evolution (bHIVE) for caret
 
 A wrapper for integrating the B-cell Hybrid Immune Variant Engine
-(bHIVE) algorithm with the `caret` package. Supports both classification
-and regression tasks, providing compatibility with
+(bHIVE) algorithm with the `caret` package. Supports classification
+tasks, providing compatibility with
 [`caret::train()`](https://rdrr.io/pkg/caret/man/train.html) for model
 training and validation.
 
@@ -19,8 +19,8 @@ A list containing the components required for integration with the
 
 ## Details
 
-The `bHIVEmodel` wrapper facilitates the use of bHIVE for classification
-and regression. It defines the model label, parameter grid, fitting
+The `bHIVEmodel` wrapper facilitates the use of bHIVE for
+classification. It defines the model label, parameter grid, fitting
 function, and prediction methods to conform to the `caret` model
 specification.
 
@@ -38,8 +38,7 @@ specification.
 
 - `type`:
 
-  Character vector. Specifies the supported tasks: "Classification" and
-  "Regression".
+  Character vector. Specifies the supported tasks: "Classification".
 
 - `parameters`:
 
@@ -63,8 +62,7 @@ specification.
 
 - `predict`:
 
-  Function. Generates predictions for new data (classification labels or
-  regression values).
+  Function. Generates predictions for new data (classification labels).
 
 - `prob`:
 
@@ -92,8 +90,7 @@ specification.
 
   - `x`: Feature matrix or data frame.
 
-  - `y`: Target vector (factor for classification, numeric for
-    regression).
+  - `y`: Factor target vector for classification.
 
   - `len`: Number of grid points for each parameter.
 
@@ -119,6 +116,7 @@ specification.
   (classification only).
 
 ## Example Usage
+
 
     library(caret)
 

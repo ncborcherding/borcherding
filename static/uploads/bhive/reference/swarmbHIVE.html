@@ -11,7 +11,7 @@ combinations. Evaluates each combination using different metrics:"><meta propert
 
     <a class="navbar-brand me-2" href="../index.html">bHIVE</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -55,7 +55,7 @@ combinations. Evaluates each combination using different metrics:</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">swarmbHIVE</span><span class="op">(</span></span>
 <span>  <span class="va">X</span>,</span>
 <span>  y <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  task <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"clustering"</span>, <span class="st">"classification"</span>, <span class="st">"regression"</span><span class="op">)</span>,</span>
+<span>  task <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"clustering"</span>, <span class="st">"classification"</span><span class="op">)</span>,</span>
 <span>  <span class="va">grid</span>,</span>
 <span>  metric <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  maxIter <span class="op">=</span> <span class="fl">50</span>,</span>
@@ -74,14 +74,12 @@ observations, columns = features).</p></dd>
 
 
 <dt id="arg-y">y<a class="anchor" aria-label="anchor" href="#arg-y"></a></dt>
-<dd><p>Optional. A target vector: factor for classification, numeric for
-regression.
-  If <code>NULL</code>, clustering is performed.</p></dd>
+<dd><p>Optional. A factor target vector for classification.
+If <code>NULL</code>, clustering is performed.</p></dd>
 
 
 <dt id="arg-task">task<a class="anchor" aria-label="anchor" href="#arg-task"></a></dt>
-<dd><p>Character. One of <code>"clustering"</code>, <code>"classification"</code>,
-or <code>"regression"</code>.</p></dd>
+<dd><p>Character. One of <code>"clustering"</code> or <code>"classification"</code>.</p></dd>
 
 
 <dt id="arg-grid">grid<a class="anchor" aria-label="anchor" href="#arg-grid"></a></dt>
@@ -92,7 +90,6 @@ Should have columns: <code>nAntibodies</code>, <code>beta</code>, <code>epsilon<
 
 <dt id="arg-metric">metric<a class="anchor" aria-label="anchor" href="#arg-metric"></a></dt>
 <dd><p>Character. Name of the evaluation metric. Options:</p><ul><li><p><strong>Classification</strong>: "accuracy", "balanced_accuracy", "f1", "kappa"</p></li>
-<li><p><strong>Regression</strong>: "rmse", "mae", "r2"</p></li>
 <li><p><strong>Clustering</strong>: "silhouette", "davies_bouldin", "calinski_harabasz"</p></li>
 </ul></dd>
 
@@ -121,7 +118,6 @@ for parallelization. The function supports <code>SerialParam</code>, <code>Multi
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>- **Classification**: "accuracy", "balanced_accuracy", "f1", "kappa"
-- **Regression**: "rmse", "mae", "r2"
 - **Clustering**: "silhouette", "davies_bouldin", or "calinski_harabasz"</p>
 <p>**Note**: Some metrics require additional packages or assumptions
 (e.g., multi-class classification for "f1" is calculated as a macro-average).</p>
@@ -158,7 +154,7 @@ for parallelization. The function supports <code>SerialParam</code>, <code>Multi
 <span class="r-out co"><span class="r-pr">#&gt;</span> Evaluating combo 8/8: nAntibodies=20, beta=5, epsilon=0.050</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Best parameters found:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   nAntibodies beta epsilon metric_value</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8          20    5    0.05    0.8733333</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5          10    3    0.05    0.8933333</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># For clustering with silhouette</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span></span></span>
@@ -182,10 +178,10 @@ for parallelization. The function supports <code>SerialParam</code>, <code>Multi
 <span class="r-out co"><span class="r-pr">#&gt;</span> Evaluating combo 8/8: nAntibodies=10, beta=5, epsilon=0.050</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Best parameters found:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   nAntibodies beta epsilon metric_value</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3           5    5    0.01    0.1047978</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5           5    3    0.05    0.1351727</span>
 <span class="r-in"><span><span class="va">res_clust</span><span class="op">$</span><span class="va">best_params</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   nAntibodies beta epsilon metric_value</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3           5    5    0.01    0.1047978</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5           5    3    0.05    0.1351727</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>

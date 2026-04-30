@@ -3,42 +3,42 @@
 ## Introduction
 
 The **bHIVE** package implements an Artificial Immune Network (AI-Net)
-algorithm for clustering, classification, and regression tasks. Inspired
-by biological immune systems, bHIVE uses principles like clonal
-selection, mutation, and suppression to analyze and model data.
+algorithm for clustering and classification tasks. Inspired by
+biological immune systems, bHIVE uses principles like clonal selection,
+mutation, and suppression to analyze and model data.
 
-This vignette demonstrates how to: 1. Perform clustering,
-classification, and regression using `bHIVE`. 2. Tune hyperparameters
-using `swarmbHIVE`. 3. Use the `caret` wrapper for easy integration with
+This vignette demonstrates how to: 1. Perform clustering and
+classification using `bHIVE`. 2. Tune hyperparameters using
+`swarmbHIVE`. 3. Use the `caret` wrapper for easy integration with
 machine learning workflows. 4. Use multilayered immune networks with
-`honeycombHIVE` 4. Visualize results with `ggplot2`.
+`honeycombHIVE` 5. Visualize results with `ggplot2`.
 
 ### Parameters for `bHIVE()`
 
 The behavior of the `bHIVE` function can be fine-tuned using a range of
 hyperparameters. Below is a description of the key parameters:
 
-| **Parameter**        | **Description**                                                                                                                                                                                                                                            |
-|----------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `X`                  | A numeric matrix or data frame of input features (rows are observations, columns are features).                                                                                                                                                            |
-| `y`                  | (Optional) Target vector for classification (factor) or regression (numeric). If `NULL`, clustering is performed.                                                                                                                                          |
-| `task`               | Specifies the task: `"clustering"`, `"classification"`, or `"regression"`.                                                                                                                                                                                 |
-| `nAntibodies`        | Number of initial antibodies in the population. Larger values increase diversity but add computational cost.                                                                                                                                               |
-| `beta`               | Clone multiplier. Determines how many clones are generated for top-matching antibodies.                                                                                                                                                                    |
-| `epsilon`            | Suppression threshold. Antibodies closer than `epsilon` are considered redundant and removed.                                                                                                                                                              |
-| `maxIter`            | Maximum number of iterations for the algorithm.                                                                                                                                                                                                            |
-| `affinityFunc`       | Affinity (similarity) function. Options include `"gaussian"`, `"laplace"`, `"polynomial"`, `"cosine"`, `"hamming"`.                                                                                                                                        |
-| `distFunc`           | Distance function for clustering and suppression. Options include `"euclidean"`, `"manhattan"`, `"cosine"`, `"minkowski"`, `"hamming"`.                                                                                                                    |
-| `affinityParams`     | A list of optional parameters for the affinity/distance functions.                                                                                                                                                                                         |
-| `mutationDecay`      | Factor controlling how the mutation rate decays over iterations. Default is `1.0` (no decay).                                                                                                                                                              |
-| `mutationMin`        | Minimum mutation rate to avoid zero mutation.                                                                                                                                                                                                              |
-| `maxClones`          | Maximum number of clones per antibody. Default is unlimited (`Inf`).                                                                                                                                                                                       |
-| `stopTolerance`      | Tolerance for stopping the algorithm if the antibody population size stabilizes.                                                                                                                                                                           |
-| `noImprovementLimit` | Number of iterations without improvement before early stopping.                                                                                                                                                                                            |
-| `initMethod`         | Method for initializing antibodies. Options: `"sample"` (randomly selects rows from `X`), `"random"` (Gaussian noise), `"random_uniform"` (samples uniformly in \[min, max\] of each column), or `"kmeans++"` (kmeans++-like initialization for coverage). |
-| `k`                  | Number of top-matching antibodies to consider during cloning.                                                                                                                                                                                              |
-| `seed`               | Random seed for reproducibility.                                                                                                                                                                                                                           |
-| `verbose`            | Logical. If `TRUE`, prints progress messages for each iteration.                                                                                                                                                                                           |
+| **Parameter** | **Description** |
+|----|----|
+| `X` | A numeric matrix or data frame of input features (rows are observations, columns are features). |
+| `y` | (Optional) Factor target vector for classification. If `NULL`, clustering is performed. |
+| `task` | Specifies the task: `"clustering"` or `"classification"`. |
+| `nAntibodies` | Number of initial antibodies in the population. Larger values increase diversity but add computational cost. |
+| `beta` | Clone multiplier. Determines how many clones are generated for top-matching antibodies. |
+| `epsilon` | Suppression threshold. Antibodies closer than `epsilon` are considered redundant and removed. |
+| `maxIter` | Maximum number of iterations for the algorithm. |
+| `affinityFunc` | Affinity (similarity) function. Options include `"gaussian"`, `"laplace"`, `"polynomial"`, `"cosine"`, `"hamming"`. |
+| `distFunc` | Distance function for clustering and suppression. Options include `"euclidean"`, `"manhattan"`, `"cosine"`, `"minkowski"`, `"hamming"`. |
+| `affinityParams` | A list of optional parameters for the affinity/distance functions. |
+| `mutationDecay` | Factor controlling how the mutation rate decays over iterations. Default is `1.0` (no decay). |
+| `mutationMin` | Minimum mutation rate to avoid zero mutation. |
+| `maxClones` | Maximum number of clones per antibody. Default is unlimited (`Inf`). |
+| `stopTolerance` | Tolerance for stopping the algorithm if the antibody population size stabilizes. |
+| `noImprovementLimit` | Number of iterations without improvement before early stopping. |
+| `initMethod` | Method for initializing antibodies. Options: `"sample"` (randomly selects rows from `X`), `"random"` (Gaussian noise), `"random_uniform"` (samples uniformly in \[min, max\] of each column), or `"kmeans++"` (kmeans++-like initialization for coverage). |
+| `k` | Number of top-matching antibodies to consider during cloning. |
+| `seed` | Random seed for reproducibility. |
+| `verbose` | Logical. If `TRUE`, prints progress messages for each iteration. |
 
 #### How `bHIVE` Works
 
@@ -57,6 +57,7 @@ The following example demonstrates how to configure the `bHIVE` function
 for clustering, emphasizing the impact of key parameters:
 
 ``` r
+
 # Load the Iris dataset
 data(iris)
 X <- as.matrix(iris[, 1:4])
@@ -85,6 +86,7 @@ data points based on their features. In this example, we cluster the
 numeric features of the Iris dataset using `bHIVE`.
 
 ``` r
+
 # Load Iris dataset
 data(iris)
 X <- as.matrix(iris[, 1:4])
@@ -124,6 +126,7 @@ assigned to predefined categories based on their features. Here, we
 classify the species of Iris flowers using `bHIVE`.
 
 ``` r
+
 # Classification setup
 y <- iris$Species
 
@@ -158,6 +161,7 @@ ggplot(iris, aes(x = Sepal.Length,
 Comparing predicted vs actual
 
 ``` r
+
 table(Predicted = res$assignments, Actual = y)
 ```
 
@@ -167,43 +171,6 @@ table(Predicted = res$assignments, Actual = y)
     ##   versicolor      0         37         1
     ##   virginica       0         13        49
 
-### Regression
-
-**Regression** is a supervised learning task where the goal is to
-predict continuous numeric outcomes. In this example, we use the Boston
-housing dataset to predict the median home value (medv) using `bHIVE`.
-
-``` r
-library(MASS)
-data(Boston)
-X <- as.matrix(Boston[, -14])
-y <- Boston$medv
-
-# Perform regression
-set.seed(42)
-res <- bHIVE(X = X, 
-             y = y, 
-             task = "regression", 
-             nAntibodies = 300, 
-             beta = 4, 
-             epsilon = 0.08, 
-             k = 5,
-             initMethod = "random",
-             verbose = FALSE)
-
-# Visualize regression results
-Boston$Predicted <- res$assignments
-ggplot(Boston, aes(x = y, y = Predicted)) +
-    geom_point() +
-    geom_smooth(method = "lm", color = "blue", se = FALSE) +
-    labs(title = "Regression Results with bHIVE", 
-         x = "Actual Values (medv)", 
-         y = "Predicted Values") +
-    theme_minimal()
-```
-
-![](bHIVE_files/figure-html/unnamed-chunk-6-1.png)
-
 ### Hyperparameter Tuning
 
 Tuning hyperparameters is crucial for optimizing the performance of
@@ -211,6 +178,7 @@ machine learning algorithms. In this example, we perform hyperparameter
 tuning for clustering using `swarmbHIVE`.
 
 ``` r
+
 grid <- expand.grid(
     nAntibodies = c(10, 20),
     beta = c(3, 5),
@@ -241,25 +209,31 @@ ggplot(tuning_results$results, aes(x = nAntibodies,
     theme_minimal()
 ```
 
-![](bHIVE_files/figure-html/unnamed-chunk-7-1.png)
+![](bHIVE_files/figure-html/unnamed-chunk-6-1.png)
 
 Best parameters
 
 ``` r
+
 tuning_results$best_params
 ```
 
     ##   nAntibodies beta epsilon metric_value
-    ## 1          10    3    0.01    0.3966252
+    ## 5          10    3    0.05     0.375698
 
 ### Using the `caret` wrapper
 
 The `bHIVE` package provides a `caret` wrapper for seamless integration
 with the `caret` framework, allowing for easy cross-validation and
-hyperparameter tuning. Here, we demonstrate regression on the Boston
-housing dataset.
+hyperparameter tuning. Here, we demonstrate classification on the iris
+dataset.
 
 ``` r
+
+data(iris)
+X <- as.matrix(iris[, 1:4])
+y <- iris$Species
+
 # Splitting Training and Validation Data Sets
 set.seed(42)
 sample.idx <- sample(nrow(X), nrow(X)*0.7)
@@ -283,14 +257,14 @@ model <- train(x = x_test,
 
 # Visualize caret results
 ggplot(model) +
-    labs(title = "Caret Tuning Results for bHIVE", 
-         x = "Hyperparameter Combination", 
+    labs(title = "Caret Tuning Results for bHIVE",
+         x = "Hyperparameter Combination",
          y = "Performance Metric") +
     scale_color_viridis(discrete = TRUE) +
     theme_minimal()
 ```
 
-![](bHIVE_files/figure-html/unnamed-chunk-9-1.png)
+![](bHIVE_files/figure-html/unnamed-chunk-8-1.png)
 
 #### Applying the caret-based model
 
@@ -299,19 +273,16 @@ To use the best performing model from the above, we just using the
 separated validation data set (**X_val**).
 
 ``` r
-df <- data.frame(y = y_val,
-                 Predicted = predict(model, newdata = x_val))
 
-ggplot(df, aes(x = y, y = Predicted)) +
-    geom_point() +
-    geom_smooth(method = "lm", color = "blue", se = FALSE) +
-    labs(title = "Regression Results with bHIVE", 
-         x = "Actual Values (medv)", 
-         y = "Predicted Values") +
-    theme_minimal()
+preds <- predict(model, newdata = x_val)
+table(Predicted = preds, Actual = y_val)
 ```
 
-![](bHIVE_files/figure-html/unnamed-chunk-10-1.png)
+    ##             Actual
+    ## Predicted    setosa versicolor virginica
+    ##   setosa         11          0        13
+    ##   versicolor      0         14         5
+    ##   virginica       1          1         0
 
 ### honeycombHIVE: Multilayered bHIVES
 
@@ -332,6 +303,7 @@ becomes a new observation. This new representation serves as the input
 for the next layer, similar to neural network architecture.
 
 ``` r
+
 # Load the Iris dataset
 data(iris)
 X <- as.matrix(iris[, 1:4])
@@ -373,12 +345,12 @@ for (i in seq_along(res)) {
 }
 ```
 
-![](bHIVE_files/figure-html/unnamed-chunk-11-1.png)![](bHIVE_files/figure-html/unnamed-chunk-11-2.png)![](bHIVE_files/figure-html/unnamed-chunk-11-3.png)
+![](bHIVE_files/figure-html/unnamed-chunk-10-1.png)![](bHIVE_files/figure-html/unnamed-chunk-10-2.png)![](bHIVE_files/figure-html/unnamed-chunk-10-3.png)
 
-Note: If you use `task = "classification"` or `task = "regression"`,
-honeycombHIVE will generate multi-layer predictions. You can compare
-each layer’s predictions against the true labels/outcomes to see if
-performance improves or if the data become too collapsed.
+Note: If you use `task = "classification"`, honeycombHIVE will generate
+multi-layer predictions. You can compare each layer’s predictions
+against the true labels to see if performance improves or if the data
+become too collapsed.
 
 ### Gradient-based Refinement
 
@@ -404,6 +376,7 @@ to the basic parameters:
     squared gradient average with **rmsprop_decay**)
 
 ``` r
+
 # Prepare the Iris dataset
 X <- as.matrix(iris[, 1:4])
 y <- iris$Species
@@ -459,7 +432,7 @@ refined_df <- do.call(rbind, refined_list)
 refined_df$optimizer <- factor(refined_df$optimizer, levels = optimizers)
 ```
 
-![](bHIVE_files/figure-html/unnamed-chunk-13-1.png)
+![](bHIVE_files/figure-html/unnamed-chunk-12-1.png)
 
 **Interpretation** \* Data points are shown in a light transparency,
 colored by their cluster assignments (as determined by the original
@@ -472,59 +445,41 @@ positions.
 ### Applying Refinement to honeycombHIVE
 
 ``` r
-data(Boston)
-X <- as.matrix(Boston[, -14])
-y <- Boston$medv
 
+data(iris)
+X <- as.matrix(iris[, 1:4])
+y <- iris$Species
 
-res_reg <- honeycombHIVE(X = X, 
-                         y = y, 
-                         layers = 3,
-                         task = "regression", 
-                         nAntibodies = 50, 
-                         beta = 5, 
-                         epsilon = 0.01,
-                         verbose = FALSE)
+res_class <- honeycombHIVE(X = X,
+                           y = y,
+                           layers = 3,
+                           task = "classification",
+                           nAntibodies = 30,
+                           beta = 5,
+                           epsilon = 0.01,
+                           verbose = FALSE)
 
-res_reg_refine <- honeycombHIVE(X = X,
-                                y = y,
-                                task = "regression",
-                                layers = 3, 
-                                nAntibodies = 50, 
-                                beta = 5, 
-                                epsilon = 0.01,
-                                refine = TRUE, 
-                                refineOptimizer = "adam",
-                                refineLoss = "mse",        
-                                refineSteps = 3,           
-                                refineLR = 0.01,            
-                                verbose = FALSE)
+res_class_refine <- honeycombHIVE(X = X,
+                                  y = y,
+                                  task = "classification",
+                                  layers = 3,
+                                  nAntibodies = 30,
+                                  beta = 5,
+                                  epsilon = 0.01,
+                                  refine = TRUE,
+                                  refineOptimizer = "adam",
+                                  refineLoss = "categorical_crossentropy",
+                                  refineSteps = 3,
+                                  refineLR = 0.01,
+                                  verbose = FALSE)
 
-Boston$Predicted <- res_reg[[3]]$predictions
-Boston$Predicted_Refined <- res_reg_refine[[3]]$predictions
-
-ggplot(Boston, aes(x = y, y = Predicted)) +
-    geom_point() +
-    geom_smooth(method = "lm", color = "blue", se = FALSE) +
-    labs(title = "Regression Results with bHIVE", 
-         x = "Actual Values (medv)", 
-         y = "Predicted Values") +
-    theme_minimal()
+table(Refined = res_class_refine[[3]]$predictions,
+      Actual  = y)
 ```
 
-![](bHIVE_files/figure-html/unnamed-chunk-14-1.png)
-
-``` r
-ggplot(Boston, aes(x = y, y = Predicted_Refined)) +
-    geom_point() +
-    geom_smooth(method = "lm", color = "blue", se = FALSE) +
-    labs(title = "Regression Results with bHIVE", 
-         x = "Actual Values (medv)", 
-         y = "Predicted Values") +
-    theme_minimal()
-```
-
-![](bHIVE_files/figure-html/unnamed-chunk-14-2.png)
+    ##         Actual
+    ## Refined  setosa versicolor virginica
+    ##   setosa     50         50        50
 
 ## Visualizing Results with visualizeHIVE
 
@@ -541,6 +496,7 @@ dimensions. Data points are colored by cluster membership (treated as
 discrete) and prototypes are overlaid as black points.
 
 ``` r
+
 data(iris)
 X <- as.matrix(iris[, 1:4])
 
@@ -565,7 +521,7 @@ visualizeHIVE(result = res,
               transformation_method = "PCA")
 ```
 
-![](bHIVE_files/figure-html/unnamed-chunk-15-1.png)
+![](bHIVE_files/figure-html/unnamed-chunk-14-1.png)
 
 This scatterplot shows the data projected onto the first two principal
 components. Each data point is colored according to its cluster
@@ -582,6 +538,7 @@ is used to color the violins, and prototype values are overlaid as black
 points.
 
 ``` r
+
 set.seed(42)
 res_class <- honeycombHIVE(X = X, 
                            y = iris$Species, 
@@ -601,65 +558,28 @@ visualizeHIVE(result = res_class,
               task = "classification")
 ```
 
-![](bHIVE_files/figure-html/unnamed-chunk-16-1.png)
+![](bHIVE_files/figure-html/unnamed-chunk-15-1.png)
 
 The violin plot shows the distribution of **Sepal.Width** for each
 predicted class. Discrete color scales ensure that class labels are
 clearly distinguished, and the black markers indicate the prototype
 (group summary) for each group.
 
-### Example 3: Density Plot for Regression Results
-
-For regression tasks the grouping is set to a constant so that all data
-points are in one group. This density plot displays the distribution of
-“Sepal.Width” in layer 1, with prototype values indicated by dashed
-vertical lines.
-
-``` r
-set.seed(42)
-X_scaled <- as.data.frame(scale(X))
-
-res_reg <- honeycombHIVE(
-  X = X_scaled, 
-  y = as.numeric(iris$Sepal.Length), 
-  task = "regression", 
-  layers = 2, 
-  nAntibodies = 12, 
-  beta = 5, 
-  maxIter = 10, 
-  verbose = FALSE)
-
-visualizeHIVE(result = res_reg,
-              X = X_scaled,
-              plot_type = "density",
-              feature = "Sepal.Length",
-              title = "Density Plot: Sepal.Width",
-              layer = 2,
-              task = "regression")
-```
-
-![](bHIVE_files/figure-html/unnamed-chunk-17-1.png)
-
-Since this is a regression task, all observations are grouped together
-(“All”). The density plot shows the overall distribution of Sepal.Width,
-with the prototype positions marked by dashed lines. This helps
-visualize the central tendency of the prototypes relative to the overall
-data distribution.
-
 ## Conclusions
 
-The `bHIVE` package is a versatile tool for clustering, classification,
-and regression tasks. Its integration with caret simplifies
+The `bHIVE` package is a versatile tool for clustering and
+classification tasks. Its integration with caret simplifies
 hyperparameter tuning and cross-validation, making it suitable for a
 variety of datasets and use cases. If you have any questions, comments,
 or suggestions, please visit the [GitHub
 repository](https://github.com/BorchLab/bHIVE).
 
 ``` r
+
 sessionInfo()
 ```
 
-    ## R version 4.5.3 (2026-03-11)
+    ## R version 4.6.0 (2026-04-24)
     ## Platform: x86_64-pc-linux-gnu
     ## Running under: Ubuntu 24.04.4 LTS
     ## 
@@ -680,38 +600,39 @@ sessionInfo()
     ## [1] stats     graphics  grDevices utils     datasets  methods   base     
     ## 
     ## other attached packages:
-    ## [1] MASS_7.3-65       caret_7.0-1       lattice_0.22-9    viridis_0.6.5    
-    ## [5] viridisLite_0.4.3 ggplot2_4.0.2     bHIVE_0.99.1      BiocStyle_2.38.0 
+    ## [1] caret_7.0-1       lattice_0.22-9    viridis_0.6.5     viridisLite_0.4.3
+    ## [5] ggplot2_4.0.3     bHIVE_0.99.2      BiocStyle_2.40.0 
     ## 
     ## loaded via a namespace (and not attached):
-    ##  [1] tidyselect_1.2.1     timeDate_4052.112    dplyr_1.2.1         
-    ##  [4] farver_2.1.2         S7_0.2.1             fastmap_1.2.0       
-    ##  [7] pROC_1.19.0.1        digest_0.6.39        rpart_4.1.24        
-    ## [10] timechange_0.4.0     lifecycle_1.0.5      cluster_2.1.8.2     
-    ## [13] survival_3.8-6       magrittr_2.0.5       compiler_4.5.3      
-    ## [16] rlang_1.2.0          sass_0.4.10          tools_4.5.3         
-    ## [19] yaml_2.3.12          data.table_1.18.2.1  knitr_1.51          
-    ## [22] labeling_0.4.3       askpass_1.2.1        htmlwidgets_1.6.4   
-    ## [25] reticulate_1.45.0    plyr_1.8.9           RColorBrewer_1.1-3  
-    ## [28] BiocParallel_1.44.0  Rtsne_0.17           purrr_1.2.1         
-    ## [31] withr_3.0.2          desc_1.4.3           stats4_4.5.3        
-    ## [34] nnet_7.3-20          grid_4.5.3           future_1.70.0       
-    ## [37] globals_0.19.1       scales_1.4.0         iterators_1.0.14    
-    ## [40] cli_3.6.5            rmarkdown_2.31       ragg_1.5.2          
-    ## [43] generics_0.1.4       umap_0.2.10.0        otel_0.2.0          
-    ## [46] future.apply_1.20.2  RSpectra_0.16-2      reshape2_1.4.5      
-    ## [49] cachem_1.1.0         stringr_1.6.0        splines_4.5.3       
-    ## [52] parallel_4.5.3       BiocManager_1.30.27  vctrs_0.7.2         
-    ## [55] hardhat_1.4.3        Matrix_1.7-4         jsonlite_2.0.0      
-    ## [58] bookdown_0.46        listenv_0.10.1       systemfonts_1.3.2   
-    ## [61] clusterCrit_1.3.0    foreach_1.5.2        gower_1.0.2         
-    ## [64] jquerylib_0.1.4      recipes_1.3.2        parallelly_1.46.1   
-    ## [67] glue_1.8.0           pkgdown_2.2.0        codetools_0.2-20    
-    ## [70] stringi_1.8.7        lubridate_1.9.5      gtable_0.3.6        
-    ## [73] tibble_3.3.1         pillar_1.11.1        htmltools_0.5.9     
-    ## [76] ipred_0.9-15         openssl_2.3.5        lava_1.9.0          
-    ## [79] R6_2.6.1             textshaping_1.0.5    evaluate_1.0.5      
-    ## [82] png_0.1-9            bslib_0.10.0         class_7.3-23        
-    ## [85] Rcpp_1.1.1           gridExtra_2.3        nlme_3.1-168        
-    ## [88] prodlim_2026.03.11   mgcv_1.9-4           xfun_0.57           
-    ## [91] ModelMetrics_1.2.2.2 fs_2.0.1             pkgconfig_2.0.3
+    ##  [1] pROC_1.19.0.1        gridExtra_2.3        rlang_1.2.0         
+    ##  [4] magrittr_2.0.5       otel_0.2.0           e1071_1.7-17        
+    ##  [7] compiler_4.6.0       png_0.1-9            systemfonts_1.3.2   
+    ## [10] vctrs_0.7.3          reshape2_1.4.5       stringr_1.6.0       
+    ## [13] pkgconfig_2.0.3      fastmap_1.2.0        labeling_0.4.3      
+    ## [16] rmarkdown_2.31       prodlim_2026.03.11   ragg_1.5.2          
+    ## [19] purrr_1.2.2          xfun_0.57            cachem_1.1.0        
+    ## [22] jsonlite_2.0.0       recipes_1.3.2        BiocParallel_1.46.0 
+    ## [25] clusterCrit_1.3.0    parallel_4.6.0       cluster_2.1.8.2     
+    ## [28] R6_2.6.1             bslib_0.10.0         stringi_1.8.7       
+    ## [31] RColorBrewer_1.1-3   reticulate_1.46.0    parallelly_1.47.0   
+    ## [34] rpart_4.1.27         lubridate_1.9.5      jquerylib_0.1.4     
+    ## [37] Rcpp_1.1.1-1.1       bookdown_0.46        iterators_1.0.14    
+    ## [40] knitr_1.51           future.apply_1.20.2  Matrix_1.7-5        
+    ## [43] splines_4.6.0        nnet_7.3-20          timechange_0.4.0    
+    ## [46] tidyselect_1.2.1     yaml_2.3.12          timeDate_4052.112   
+    ## [49] codetools_0.2-20     listenv_0.10.1       tibble_3.3.1        
+    ## [52] plyr_1.8.9           withr_3.0.2          S7_0.2.2            
+    ## [55] askpass_1.2.1        evaluate_1.0.5       Rtsne_0.17          
+    ## [58] future_1.70.0        desc_1.4.3           survival_3.8-6      
+    ## [61] proxy_0.4-29         pillar_1.11.1        BiocManager_1.30.27 
+    ## [64] foreach_1.5.2        stats4_4.6.0         generics_0.1.4      
+    ## [67] scales_1.4.0         globals_0.19.1       class_7.3-23        
+    ## [70] glue_1.8.1           tools_4.6.0          data.table_1.18.2.1 
+    ## [73] RSpectra_0.16-2      ModelMetrics_1.2.2.2 gower_1.0.2         
+    ## [76] fs_2.1.0             grid_4.6.0           umap_0.2.10.0       
+    ## [79] ipred_0.9-15         nlme_3.1-169         cli_3.6.6           
+    ## [82] textshaping_1.0.5    lava_1.9.0           dplyr_1.2.1         
+    ## [85] gtable_0.3.6         sass_0.4.10          digest_0.6.39       
+    ## [88] htmlwidgets_1.6.4    farver_2.1.2         htmltools_0.5.9     
+    ## [91] pkgdown_2.2.0        lifecycle_1.0.5      hardhat_1.4.3       
+    ## [94] openssl_2.4.0        MASS_7.3-65

@@ -17,7 +17,7 @@ visualizeHIVE(
   transformation_method = c("PCA", "UMAP", "tSNE", "none"),
   title = "HIVE Results",
   layer = 1,
-  task = c("clustering", "classification", "regression"),
+  task = c("clustering", "classification"),
   ...
 )
 ```
@@ -78,9 +78,9 @@ visualizeHIVE(
 
 - task:
 
-  Character. The prediction task for the result: one of `"clustering"`,
-  `"classification"`, or `"regression"`. This is used to determine how
-  grouping is computed.
+  Character. The prediction task for the result: one of `"clustering"`
+  or `"classification"`. This is used to determine how grouping is
+  computed.
 
 - ...:
 
@@ -150,15 +150,4 @@ visualizeHIVE(result = res,
 #> Warning: Groups with fewer than two datapoints have been dropped.
 #> ℹ Set `drop = FALSE` to consider such groups for position adjustment purposes.
 
-
-# For regression: prototype grouping is overridden to a constant.
-visualizeHIVE(result = res,
-              X = iris[, 1:4],
-              plot_type = "density",
-              feature = "Sepal.Width",
-              title = "Sepal Width Density (Layer 1)",
-              layer = 1,
-              task = "regression")
-
-              
 ```

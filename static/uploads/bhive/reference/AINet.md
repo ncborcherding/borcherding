@@ -167,12 +167,11 @@ Fit the AINet algorithm to data.
 
 - `y`:
 
-  Optional target: factor (classification) or numeric (regression).
+  Optional factor target for classification.
 
 - `task`:
 
-  Character: "clustering", "classification", or "regression". Inferred
-  from y if NULL.
+  Character: "clustering" or "classification". Inferred from y if NULL.
 
 - `...`:
 

@@ -14,13 +14,12 @@ refineB(
   X,
   y = NULL,
   assignments,
-  task = c("clustering", "classification", "regression"),
+  task = c("clustering", "classification"),
   loss = c("categorical_crossentropy", "binary_crossentropy", "kullback_leibler",
-    "cosine", "mse", "mae", "poisson", "huber"),
+    "cosine", "mae"),
   steps = 5,
   lr = 0.01,
   push_away = TRUE,
-  huber_delta = 1,
   verbose = TRUE,
   optimizer = c("sgd", "momentum", "adagrad", "adam", "rmsprop"),
   momentum_coef = 0.9,
@@ -43,8 +42,7 @@ refineB(
 
 - y:
 
-  Optional. Factor (classification), numeric (regression), or NULL
-  (clustering).
+  Optional. Factor (classification) or NULL (clustering).
 
 - assignments:
 
@@ -53,12 +51,12 @@ refineB(
 
 - task:
 
-  One of `c("clustering", "classification", "regression")`.
+  One of `c("clustering", "classification")`.
 
 - loss:
 
   One of
-  `c("categorical_crossentropy", "binary_crossentropy", "kullback_leibler", "cosine", "mse", "mae", "poisson", "huber")`.
+  `c("categorical_crossentropy", "binary_crossentropy", "kullback_leibler", "cosine", "mae")`.
 
 - steps:
 
@@ -72,10 +70,6 @@ refineB(
 
   Logical (for classification). Whether to push prototypes away from
   differently-labeled samples.
-
-- huber_delta:
-
-  Numeric. The delta threshold if using huber loss.
 
 - verbose:
 
@@ -117,7 +111,7 @@ Updated matrix `A` of shape (nAb x d).
 
 The user must provide: - A numeric matrix `A` of antibody/prototype
 positions (nAb x nFeatures). - A numeric matrix/data frame `X` of data
-(nSamples x nFeatures). - Optional `y` for classification/regression. If
+(nSamples x nFeatures). - Optional `y` for classification. If
 `task="clustering"`, `y` can be NULL or ignored. - An integer or
 character vector `assignments` (length=nSamples) giving the antibody
 index (or label) to which each data point is assigned.
@@ -129,19 +123,11 @@ Pull prototypes toward data points if they share the antibody's dominant
 label; push away otherwise. - \*\*"binary_crossentropy"\*\*: Similar to
 categorical CE, but we interpret factor y as binary (two classes). Pull
 for same label, push for different label. - \*\*"kullback_leibler"\*\*:
-Very rough approach that treats “dominant label vs. others” as p and q
+Very rough approach that treats "dominant label vs. others" as p and q
 distributions, pushing/pulling prototypes. - \*\*"cosine"\*\*:
 Interpreted as trying to maximize cosine similarity for same-label
-points and minimize for different-label points.
-
-\### Regression (numeric y) - \*\*"mse"\*\*: Mean squared error
-approximation in feature space (pull prototypes toward assigned
-points). - \*\*"mae"\*\*: Mean absolute error approach (sign-based
-pull). - \*\*"poisson"\*\*: Poisson deviance (toy approach that scales
-the gradient by (pred - y)/pred if we stored a predicted rate; here we
-do a naive version). - \*\*"huber"\*\*: Combines L1 and L2 regions, uses
-a delta cutoff. We adapt it to a naive per-point gradient in feature
-space.
+points and minimize for different-label points. - \*\*"mae"\*\*:
+Sign-based pull/push.
 
 \## Available Optimizers - \*\*"sgd"\*\*: Basic stochastic gradient
 descent. - \*\*"momentum"\*\*: SGD with momentum. - \*\*"adagrad"\*\*:
@@ -165,7 +151,7 @@ assignments <- as.integer(factor(res$assignments,
 A_refined <- refineB(res$antibodies, X, y = y,
                      assignments = assignments,
                      task = "classification",
-                     loss = "mse", optimizer = "adam",
+                     loss = "categorical_crossentropy", optimizer = "adam",
                      steps = 3, lr = 0.01, verbose = FALSE)
 dim(A_refined)
 #> [1] 10  4

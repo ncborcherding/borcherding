@@ -13,7 +13,7 @@ applying gradient-based updates using a user-chosen loss function and optimizer.
 
     <a class="navbar-brand me-2" href="../index.html">bHIVE</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -60,13 +60,12 @@ applying gradient-based updates using a user-chosen loss function and optimizer.
 <span>  <span class="va">X</span>,</span>
 <span>  y <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  <span class="va">assignments</span>,</span>
-<span>  task <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"clustering"</span>, <span class="st">"classification"</span>, <span class="st">"regression"</span><span class="op">)</span>,</span>
+<span>  task <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"clustering"</span>, <span class="st">"classification"</span><span class="op">)</span>,</span>
 <span>  loss <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"categorical_crossentropy"</span>, <span class="st">"binary_crossentropy"</span>, <span class="st">"kullback_leibler"</span>,</span>
-<span>    <span class="st">"cosine"</span>, <span class="st">"mse"</span>, <span class="st">"mae"</span>, <span class="st">"poisson"</span>, <span class="st">"huber"</span><span class="op">)</span>,</span>
+<span>    <span class="st">"cosine"</span>, <span class="st">"mae"</span><span class="op">)</span>,</span>
 <span>  steps <span class="op">=</span> <span class="fl">5</span>,</span>
 <span>  lr <span class="op">=</span> <span class="fl">0.01</span>,</span>
 <span>  push_away <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  huber_delta <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  optimizer <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"sgd"</span>, <span class="st">"momentum"</span>, <span class="st">"adagrad"</span>, <span class="st">"adam"</span>, <span class="st">"rmsprop"</span><span class="op">)</span>,</span>
 <span>  momentum_coef <span class="op">=</span> <span class="fl">0.9</span>,</span>
@@ -90,7 +89,7 @@ applying gradient-based updates using a user-chosen loss function and optimizer.
 
 
 <dt id="arg-y">y<a class="anchor" aria-label="anchor" href="#arg-y"></a></dt>
-<dd><p>Optional. Factor (classification), numeric (regression), or NULL (clustering).</p></dd>
+<dd><p>Optional. Factor (classification) or NULL (clustering).</p></dd>
 
 
 <dt id="arg-assignments">assignments<a class="anchor" aria-label="anchor" href="#arg-assignments"></a></dt>
@@ -99,12 +98,12 @@ applying gradient-based updates using a user-chosen loss function and optimizer.
 
 
 <dt id="arg-task">task<a class="anchor" aria-label="anchor" href="#arg-task"></a></dt>
-<dd><p>One of <code>c("clustering", "classification", "regression")</code>.</p></dd>
+<dd><p>One of <code>c("clustering", "classification")</code>.</p></dd>
 
 
 <dt id="arg-loss">loss<a class="anchor" aria-label="anchor" href="#arg-loss"></a></dt>
 <dd><p>One of <code>c("categorical_crossentropy", "binary_crossentropy",
-"kullback_leibler", "cosine", "mse", "mae", "poisson", "huber")</code>.</p></dd>
+"kullback_leibler", "cosine", "mae")</code>.</p></dd>
 
 
 <dt id="arg-steps">steps<a class="anchor" aria-label="anchor" href="#arg-steps"></a></dt>
@@ -118,10 +117,6 @@ applying gradient-based updates using a user-chosen loss function and optimizer.
 <dt id="arg-push-away">push_away<a class="anchor" aria-label="anchor" href="#arg-push-away"></a></dt>
 <dd><p>Logical (for classification). Whether to push prototypes away
 from differently-labeled samples.</p></dd>
-
-
-<dt id="arg-huber-delta">huber_delta<a class="anchor" aria-label="anchor" href="#arg-huber-delta"></a></dt>
-<dd><p>Numeric. The delta threshold if using huber loss.</p></dd>
 
 
 <dt id="arg-verbose">verbose<a class="anchor" aria-label="anchor" href="#arg-verbose"></a></dt>
@@ -162,7 +157,7 @@ gradient-based optimization approach.</p></dd>
     <p>The user must provide:
 - A numeric matrix <code>A</code> of antibody/prototype positions (nAb x nFeatures).
 - A numeric matrix/data frame <code>X</code> of data (nSamples x nFeatures).
-- Optional <code>y</code> for classification/regression. If <code>task="clustering"</code>,
+- Optional <code>y</code> for classification. If <code>task="clustering"</code>,
   <code>y</code> can be NULL or ignored.
 - An integer or character vector <code>assignments</code> (length=nSamples) giving the
   antibody index (or label) to which each data point is assigned.</p>
@@ -172,18 +167,11 @@ gradient-based optimization approach.</p></dd>
   the antibody's dominant label; push away otherwise.
 - **"binary_crossentropy"**: Similar to categorical CE, but we interpret factor y
   as binary (two classes). Pull for same label, push for different label.
-- **"kullback_leibler"**: Very rough approach that treats “dominant label vs. others”
+- **"kullback_leibler"**: Very rough approach that treats "dominant label vs. others"
   as p and q distributions, pushing/pulling prototypes.
 - **"cosine"**: Interpreted as trying to maximize cosine similarity for same-label points
-  and minimize for different-label points.</p>
-<p>### Regression (numeric y)
-- **"mse"**: Mean squared error approximation in feature space (pull prototypes
-  toward assigned points).
-- **"mae"**: Mean absolute error approach (sign-based pull).
-- **"poisson"**: Poisson deviance (toy approach that scales the gradient by
-  (pred - y)/pred if we stored a predicted rate; here we do a naive version).
-- **"huber"**: Combines L1 and L2 regions, uses a delta cutoff. We adapt it
-  to a naive per-point gradient in feature space.</p>
+  and minimize for different-label points.
+- **"mae"**: Sign-based pull/push.</p>
 <p>## Available Optimizers
 - **"sgd"**: Basic stochastic gradient descent.
 - **"momentum"**: SGD with momentum.
@@ -208,7 +196,7 @@ Adam, or RMSProp.</p>
 <span class="r-in"><span><span class="va">A_refined</span> <span class="op">&lt;-</span> <span class="fu">refineB</span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">antibodies</span>, <span class="va">X</span>, y <span class="op">=</span> <span class="va">y</span>,</span></span>
 <span class="r-in"><span>                     assignments <span class="op">=</span> <span class="va">assignments</span>,</span></span>
 <span class="r-in"><span>                     task <span class="op">=</span> <span class="st">"classification"</span>,</span></span>
-<span class="r-in"><span>                     loss <span class="op">=</span> <span class="st">"mse"</span>, optimizer <span class="op">=</span> <span class="st">"adam"</span>,</span></span>
+<span class="r-in"><span>                     loss <span class="op">=</span> <span class="st">"categorical_crossentropy"</span>, optimizer <span class="op">=</span> <span class="st">"adam"</span>,</span></span>
 <span class="r-in"><span>                     steps <span class="op">=</span> <span class="fl">3</span>, lr <span class="op">=</span> <span class="fl">0.01</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">A_refined</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 10  4</span>

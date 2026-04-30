@@ -1,10 +1,10 @@
 # bHIVE: B-cell Hybrid Immune Variant Engine
 
-Implements an artificial immune network algorithm for clustering,
-classification, and regression tasks. The algorithm evolves a population
-of "antibodies" via clonal selection and mutation, applies network
-suppression to maintain diversity, and assigns data points based on
-affinity or distance metrics.
+Implements an artificial immune network algorithm for clustering and
+classification tasks. The algorithm evolves a population of "antibodies"
+via clonal selection and mutation, applies network suppression to
+maintain diversity, and assigns data points based on affinity or
+distance metrics.
 
 ## Usage
 
@@ -40,14 +40,13 @@ bHIVE(
 
 - y:
 
-  Optional. A target vector. Use for classification (factor) or
-  regression (numeric). If NULL, clustering will be performed.
+  Optional. A factor target vector for classification. If NULL,
+  clustering will be performed.
 
 - task:
 
-  Character. Specifies the task to perform: `"clustering"`,
-  `"classification"`, or `"regression"`. If NULL, it is inferred based
-  on `y`.
+  Character. Specifies the task to perform: `"clustering"` or
+  `"classification"`. If NULL, it is inferred based on `y`.
 
 - nAntibodies:
 
@@ -147,11 +146,7 @@ A list:
 - `antibodies`: Final antibody vectors (nAntibodies x nFeatures).
 
 - `assignments`: - For clustering: integer cluster IDs in
-  \[1..#Antibodies\]. - For classification: predicted labels. - For
-  regression: integer cluster index (in \[1..#Antibodies\]) if used in
-  synergy with `refineB`.
-
-- `predictions`: Only for regression, the numeric predictions per row.
+  \[1..#Antibodies\]. - For classification: predicted labels.
 
 - `task`: The chosen task.
 
@@ -191,18 +186,4 @@ table(res$assignments, y)
 #>   setosa         50          0         0
 #>   versicolor      0         35         4
 #>   virginica       0         15        46
-
-# Example 3: Regression
-y <- as.numeric(iris$Sepal.Length)
-res <- bHIVE(X = X, 
-             y = y, 
-             task = "regression", 
-             nAntibodies = 30, 
-             beta = 5, 
-             epsilon = 0.01, 
-             maxIter = 20, 
-             k = 3, 
-             verbose = FALSE)
-cor(res$assignments, y)
-#> [1] 0.1138299
 ```

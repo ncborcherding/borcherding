@@ -1,5 +1,27 @@
 # Changelog
 
+## bHIVE 0.99.2
+
+### Breaking Changes
+
+- Removed regression task support across the package. The previous
+  regression implementation was unreliable and is being redesigned.
+  [`bHIVE()`](https://www.borch.dev/uploads/bhive/reference/bHIVE.md),
+  [`honeycombHIVE()`](https://www.borch.dev/uploads/bhive/reference/honeycombHIVE.md),
+  [`swarmbHIVE()`](https://www.borch.dev/uploads/bhive/reference/swarmbHIVE.md),
+  [`refineB()`](https://www.borch.dev/uploads/bhive/reference/refineB.md),
+  `AINet`, `GerminalCenter`, `bHIVEmodel`, `honeycombHIVEmodel`, and
+  [`visualizeHIVE()`](https://www.borch.dev/uploads/bhive/reference/visualizeHIVE.md)
+  no longer accept `task = "regression"` or numeric `y`.
+- Removed regression-only loss functions (`mse`, `huber`, `poisson`) and
+  regression metrics (`rmse`, `mae`, `r2`) from
+  [`swarmbHIVE()`](https://www.borch.dev/uploads/bhive/reference/swarmbHIVE.md).
+- Removed `refineHuberDelta` parameter from
+  [`honeycombHIVE()`](https://www.borch.dev/uploads/bhive/reference/honeycombHIVE.md)
+  and `honeycombHIVEmodel`.
+- `final_assignment_cpp()` no longer accepts `antibody_values` or
+  `overall_mean` arguments.
+
 ## bHIVE 0.99.1
 
 ### C++ Backend
