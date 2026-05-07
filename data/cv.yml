@@ -109,7 +109,7 @@ service:
   - committee: Alpha Omega Alpha Selection Committee, Carver College of Medicine, University of Iowa.
     start: '2019'
     end: '2020'
-  - committee: Faculty Search Committee, Department of Pathology and Immunology, Washington University St Louis.
+  - committee: AI Faculty Search Committee, Department of Pathology and Immunology, Washington University St Louis.
     start: '2024'
     end: "Present"
   - committee: Residency Recruitment Committee, Department of Pathology and Immunology, Washington University St Louis.
@@ -125,11 +125,14 @@ service:
   - committee: Education Initiatives Committee, American Society for Histocompatibility and Immunogenetics
     start: '2024'
     end: "Present"
+  - committee: Abstract Reviewer, American Society for Histocompatibility and Immunogenetics
+    start: '2024'
+    end: "Present"
   - committee: Inferred Allele Review Sub-committee (IARC), AIRR Community of the Antibody Society
     start: '2025'
     end: "Present"
-  - committee: ' T-Cell Receptor and Immunoglobulin Nomenclature Sub-committee (TR-IG NSC) of the International Union of Immunological
-      Societies (IUIS)'
+  - committee: T-Cell Receptor and Immunoglobulin Nomenclature Sub-committee (TR-IG NSC) of the International Union of Immunological
+      Societies (IUIS)
     start: '2026'
     end: "Present"
 mentorship:
@@ -154,6 +157,11 @@ mentorship:
     start: '2025'
     end: "Present"
     topic: TCR profiling in solid organ transplant
+  - mentee: Lysander Elger
+    level: Undergraduate
+    start: '2026'
+    end: "Present"
+    topic: Spatial transcriptional profiling in neuropathy
   career:
   - mentee: Haewon Shin
     level: Graduate Student
