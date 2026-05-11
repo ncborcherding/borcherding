@@ -166,8 +166,8 @@ res <- bHIVE(X = X,
              verbose = FALSE)
 table(res$assignments)
 #> 
-#>  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 
-#>  1  1  6  1 14  1 15  3 33 24  6  1  6  1  9  8  1  3  3  9  2  1  1 
+#>  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 
+#> 15  6  2  1  2 14 16  4  2  2  1  6  6 13  2 41  4 13 
 
 # Example 2: Classification with Iris species
 y <- iris$Species
@@ -184,6 +184,6 @@ table(res$assignments, y)
 #>             y
 #>              setosa versicolor virginica
 #>   setosa         50          0         0
-#>   versicolor      0         35         4
-#>   virginica       0         15        46
+#>   versicolor      0         47         2
+#>   virginica       0          3        48
 ```

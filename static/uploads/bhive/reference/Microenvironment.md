@@ -187,5 +187,5 @@ table(env$zones)  # stable, explore, boundary
 #> boundary  explore   stable 
 #>        7        4        4 
 env$mutation_modifiers  # per-antibody rate scaling
-#>  [1] 1.0 2.0 0.3 1.0 1.0 1.0 0.3 1.0 2.0 0.3 1.0 0.3 1.0 2.0 2.0
+#>  [1] 2.0 1.0 0.3 1.0 2.0 1.0 2.0 1.0 1.0 1.0 1.0 0.3 0.3 2.0 0.3
 ```

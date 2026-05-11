@@ -206,20 +206,20 @@ resC <- honeycombHIVE(
 #> Iteration 8 | #Antibodies: 15 | noImproveCount: 8
 #> Iteration 9 | #Antibodies: 15 | noImproveCount: 9
 #> Iteration 10 | #Antibodies: 15 | noImproveCount: 10
-#> Layer 1 completed. Next layer will use 11 prototypes.
+#> Layer 1 completed. Next layer will use 12 prototypes.
 #> 
 #> === honeycombHIVE: Layer 2 / 3 (task=clustering) ===
-#> Iteration 1 | #Antibodies: 10 | noImproveCount: 0
-#> Iteration 2 | #Antibodies: 10 | noImproveCount: 1
-#> Iteration 3 | #Antibodies: 10 | noImproveCount: 2
-#> Iteration 4 | #Antibodies: 10 | noImproveCount: 3
-#> Iteration 5 | #Antibodies: 10 | noImproveCount: 4
-#> Iteration 6 | #Antibodies: 10 | noImproveCount: 5
-#> Iteration 7 | #Antibodies: 10 | noImproveCount: 6
-#> Iteration 8 | #Antibodies: 10 | noImproveCount: 7
-#> Iteration 9 | #Antibodies: 10 | noImproveCount: 8
-#> Iteration 10 | #Antibodies: 10 | noImproveCount: 9
-#> Layer 2 completed. Next layer will use 7 prototypes.
+#> Iteration 1 | #Antibodies: 11 | noImproveCount: 0
+#> Iteration 2 | #Antibodies: 11 | noImproveCount: 1
+#> Iteration 3 | #Antibodies: 11 | noImproveCount: 2
+#> Iteration 4 | #Antibodies: 11 | noImproveCount: 3
+#> Iteration 5 | #Antibodies: 11 | noImproveCount: 4
+#> Iteration 6 | #Antibodies: 11 | noImproveCount: 5
+#> Iteration 7 | #Antibodies: 11 | noImproveCount: 6
+#> Iteration 8 | #Antibodies: 11 | noImproveCount: 7
+#> Iteration 9 | #Antibodies: 11 | noImproveCount: 8
+#> Iteration 10 | #Antibodies: 11 | noImproveCount: 9
+#> Layer 2 completed. Next layer will use 6 prototypes.
 #> 
 #> === honeycombHIVE: Layer 3 / 3 (task=clustering) ===
 #> Iteration 1 | #Antibodies: 5 | noImproveCount: 0
@@ -232,5 +232,5 @@ resC <- honeycombHIVE(
 #> Iteration 8 | #Antibodies: 5 | noImproveCount: 7
 #> Iteration 9 | #Antibodies: 5 | noImproveCount: 8
 #> Iteration 10 | #Antibodies: 5 | noImproveCount: 9
-#> Layer 3 completed. Next layer will use 4 prototypes.
+#> Layer 3 completed. Next layer will use 5 prototypes.
 ```

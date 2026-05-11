@@ -160,5 +160,5 @@ alphas <- cs$switch_isotypes(rep, zones)
 table(rep$metadata$isotype)  # IgM, IgG, IgA distribution
 #> 
 #> IgA IgG IgM 
-#>   1   3   6 
+#>   4   4   2 
 ```

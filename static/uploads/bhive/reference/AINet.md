@@ -56,6 +56,7 @@ Create a new AINet algorithm instance.
       germinalCenter = NULL,
       microenvironment = NULL,
       memory = NULL,
+      classSwitcher = NULL,
       verbose = TRUE
     )
 
@@ -144,6 +145,10 @@ Create a new AINet algorithm instance.
 - `memory`:
 
   A MemoryPool instance or NULL.
+
+- `classSwitcher`:
+
+  A ClassSwitcher instance or NULL.
 
 - `verbose`:
 

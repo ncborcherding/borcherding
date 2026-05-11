@@ -33,6 +33,11 @@ quality-control selectors:
 
   Number of selection rounds per call.
 
+- `last_survivors`:
+
+  Integer vector of survivor indices (relative to the input repertoire)
+  from the most recent call to `select()`.
+
 ## Methods
 
 ### Public methods
@@ -116,7 +121,9 @@ Run germinal center selection on a repertoire.
 
 #### Returns
 
-Invisible self. Repertoire modified in place.
+Integer vector of survivor indices relative to the input repertoire
+(composed across all selection rounds). Also stored on
+`self$last_survivors` for inspection. Repertoire is modified in place.
 
 ------------------------------------------------------------------------
 

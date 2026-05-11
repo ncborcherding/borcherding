@@ -318,5 +318,5 @@ dim(aff)  # 20 x 10
 # Network suppression
 rep$suppress(epsilon = 1.5, method = "euclidean")
 rep$size()  # fewer antibodies after suppression
-#> [1] 8
+#> [1] 9
 ```

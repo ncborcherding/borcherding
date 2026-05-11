@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">bHIVE</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.3</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -39,6 +39,41 @@
       <small>Source: <a href="https://github.com/BorchLab/bHIVE/blob/main/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.99.3" id="bhive-0993">bHIVE 0.99.3<a class="anchor" aria-label="anchor" href="#bhive-0993"></a></h2>
+<div class="section level3">
+<h3 id="module-integration-0-99-3">Module Integration<a class="anchor" aria-label="anchor" href="#module-integration-0-99-3"></a></h3>
+<p>Modules previously accepted by <code>AINet$new()</code> were stored on the algorithm but never invoked by the fit loop. v0.99.3 wires every module into <code>AINet$fit()</code> so it affects predictions:</p>
+<ul><li>
+<code>init</code> (<code>VDJLibrary</code> or any object exposing <code>$generate(n, X)</code>) now controls initial-repertoire construction. When supplied, it overrides <code>initMethod</code>. This makes V(D)J combinatorial assembly the actual starting state rather than dead metadata.</li>
+<li>
+<code>idiotypic</code> (<code>IdiotypicNetwork</code>) is now invoked between clonal selection and network suppression. The bell-curve <code>idiotypic_dynamics_cpp</code> kernel culls antibodies in over-clumped niches (suppression) and isolated antibodies (insufficient stimulation). A safety net keeps the top-10% population when ill-tuned thresholds would kill every antibody, so the iteration can continue and downstream selection can penalize the config.</li>
+<li>
+<code>activation</code> (<code>ActivationGate</code>) now pre-screens antibodies in over-dense feature-space neighborhoods <em>out</em> of each round of clonal selection. Gated antibodies sit aside unchanged while selection runs on the sparse subset, then rejoin the repertoire. In classification mode their class labels are refreshed by majority-vote of their nearest data points so pre-allocated random labels do not poison final predictions.</li>
+<li>
+<code>microenvironment</code> (<code>Microenvironment</code>) is assessed each iteration after clonal selection. Its <code>mutation_modifiers</code> scale a per-antibody Gaussian jitter applied in feature units (<code>0.5%</code> of feature SD on iter 1, decaying with <code>mutationDecay</code>). Sparse-region antibodies explore outward, dense-region antibodies stabilize.</li>
+<li>
+<code>germinalCenter</code> (<code>GerminalCenter</code>) now runs Tfh-mediated quality selection after clonal-selection rejoin. Survivor indices are composed across selection rounds and mirrored onto <code>antibody_classes</code> and the adaptive-SHM moment matrices so external per-antibody state stays aligned. <code>GerminalCenter$select()</code> now returns the composed survivor vector (relative to the input repertoire) and exposes it as <code>$last_survivors</code>.</li>
+<li>
+<code>classSwitcher</code> (<code>ClassSwitcher</code>) runs after <code>microenvironment</code> and binds each antibody’s isotype (IgM/IgG/IgA) to its zone. The population-mean per-isotype alpha is then used as the <em>next</em> iteration’s affinity kernel width, modulating matching breadth based on the current density landscape. Requires <code>microenvironment</code> to be present.</li>
+<li>
+<code>memory</code> (<code>MemoryPool</code>) is invoked at two points. Pre-iteration, in clustering mode, relevant memory cells from prior fits are recalled (via <code>recall(X)</code>) and merged into the starting repertoire so prior knowledge seeds the search. Post-iteration, after orphan pruning, the surviving high-affinity antibodies are archived back into the pool (<code>archive()</code>) so they persist across fits. Classification archives also attach <code>class_label</code> to repertoire metadata so future consumers can read them back; recall is suppressed for classification to avoid label loss.</li>
+<li>
+<code>shm</code> (<code>SHMEngine</code>) is now dispatched inside <code>clonal_selection_iteration_cpp</code> rather than ignored. All five strategies — <code>uniform</code>, <code>airs</code>, <code>hotspot</code>, <code>energy</code>, <code>adaptive</code> — produce distinct mutation behavior. The adaptive strategy’s Adam-style first/second moment matrices are threaded through the C++ kernel and re-aligned in R after every subset/reorder operation (activation gating, germinal-center selection, idiotypic culling, network suppression) so per-antibody moment tracking stays consistent across iterations.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="c-backend-0-99-3">C++ Backend<a class="anchor" aria-label="anchor" href="#c-backend-0-99-3"></a></h3>
+<ul><li>
+<code>clonal_selection_iteration_cpp</code> now accepts SHM dispatch parameters (<code>shm_method</code>, <code>shm_c_rate</code>, <code>shm_temperature</code>, <code>shm_E_0</code>, <code>shm_base_rate</code>, <code>shm_beta1</code>, <code>shm_beta2</code>, <code>shm_adam_epsilon</code>) plus adaptive moment matrices <code>m1_state</code>/<code>m2_state</code>. The R wrapper provides defaults (<code>shm_method = "uniform"</code>, empty state matrices) so legacy callers that pass the original 15 arguments still get the previous behavior.</li>
+<li>New <code>src/shm.h</code> exposes the five SHM strategy helpers and a <code>mutate_by_method</code> dispatcher shared by <code>shm_mutate_cpp</code> and <code>clonal_selection_iteration_cpp</code>. The helpers are no longer <code>static</code>.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="new-behavior-0-99-3">New Behavior<a class="anchor" aria-label="anchor" href="#new-behavior-0-99-3"></a></h3>
+<ul><li>Orphan-antibody pruning: <code>AINet$fit()</code> now drops surviving antibodies that are not the nearest neighbor to any training point before computing the final assignment. Eliminates ghost antibodies that pass suppression but bind nothing, and tightens the relationship between cluster count and effective antibody count.</li>
+<li>
+<code>antibody_classes</code> is now pre-allocated before the iteration loop in classification mode (uniform random over <code>levels(y)</code>), so the new pre-selection gate logic has a value to index into on iteration 1 rather than referencing a not-yet-defined variable.</li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.99.2" id="bhive-0992">bHIVE 0.99.2<a class="anchor" aria-label="anchor" href="#bhive-0992"></a></h2>
 <div class="section level3">

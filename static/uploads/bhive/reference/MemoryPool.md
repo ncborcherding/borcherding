@@ -202,5 +202,5 @@ mp$size()  # number of archived memories
 #> [1] 10
 recalled <- mp$recall(X[1:5, ])
 nrow(recalled)  # memories relevant to query
-#> [1] 5
+#> [1] 6
 ```

@@ -63,8 +63,8 @@ ggplot(tuning$results, aes(x = nAntibodies, y = metric_value,
 tuning$best_params
 ```
 
-    ##    nAntibodies beta epsilon metric_value
-    ## 10          10    5    0.05    0.2514718
+    ##   nAntibodies beta epsilon metric_value
+    ## 1          10    3    0.01    0.3180419
 
 ### Classification Tuning
 
@@ -84,8 +84,8 @@ tuning_cls <- swarmbHIVE(X = X, y = y, task = "classification",
 tuning_cls$best_params
 ```
 
-    ##    nAntibodies beta epsilon metric_value
-    ## 12          50    3    0.05    0.9733333
+    ##   nAntibodies beta epsilon metric_value
+    ## 3          50    3    0.01         0.94
 
 ### Parallelization with BiocParallel
 
@@ -497,7 +497,7 @@ sessionInfo()
     ## 
     ## other attached packages:
     ## [1] caret_7.0-1       lattice_0.22-9    viridis_0.6.5     viridisLite_0.4.3
-    ## [5] ggplot2_4.0.3     bHIVE_0.99.2      BiocStyle_2.40.0 
+    ## [5] ggplot2_4.0.3     bHIVE_0.99.3      BiocStyle_2.40.0 
     ## 
     ## loaded via a namespace (and not attached):
     ##  [1] pROC_1.19.0.1        gridExtra_2.3        rlang_1.2.0         
@@ -523,7 +523,7 @@ sessionInfo()
     ## [61] proxy_0.4-29         pillar_1.11.1        BiocManager_1.30.27 
     ## [64] foreach_1.5.2        stats4_4.6.0         generics_0.1.4      
     ## [67] scales_1.4.0         globals_0.19.1       class_7.3-23        
-    ## [70] glue_1.8.1           tools_4.6.0          data.table_1.18.2.1 
+    ## [70] glue_1.8.1           tools_4.6.0          data.table_1.18.4   
     ## [73] RSpectra_0.16-2      ModelMetrics_1.2.2.2 gower_1.0.2         
     ## [76] fs_2.1.0             grid_4.6.0           umap_0.2.10.0       
     ## [79] ipred_0.9-15         nlme_3.1-169         cli_3.6.6           

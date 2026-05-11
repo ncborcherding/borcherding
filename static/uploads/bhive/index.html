@@ -25,7 +25,7 @@
 
     <a class="navbar-brand me-2" href="index.html">bHIVE</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.3</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -129,7 +129,7 @@
 <div class="section level3">
 <h3 id="r6-api-with-modules">R6 API with Modules<a class="anchor" aria-label="anchor" href="#r6-api-with-modules"></a>
 </h3>
-<p>For full control, compose an <code>AINet</code> with any combination of immune modules:</p>
+<p>For full control, compose an <code>AINet</code> with any combination of immune modules. Each module is optional and slots into the fit loop at the appropriate biological stage:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Adaptive mutation + idiotypic network regulation</span></span>
 <span><span class="va">model</span> <span class="op">&lt;-</span> <span class="va"><a href="reference/AINet.html">AINet</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span>
@@ -144,6 +144,27 @@
 <span></span>
 <span><span class="co"># Predict on new data</span></span>
 <span><span class="va">preds</span> <span class="op">&lt;-</span> <span class="va">model</span><span class="op">$</span><span class="fu">predict</span><span class="op">(</span><span class="va">X</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="op">]</span><span class="op">)</span></span></code></pre></div>
+<p>A richer composition uses microenvironment-aware exploration, Tfh-mediated quality selection, density-driven isotype switching, and a persistent memory pool:</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">me</span>  <span class="op">&lt;-</span> <span class="va"><a href="reference/Microenvironment.html">Microenvironment</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span>                              <span class="co"># zone classification</span></span>
+<span><span class="va">cs</span>  <span class="op">&lt;-</span> <span class="va"><a href="reference/ClassSwitcher.html">ClassSwitcher</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>alpha_IgM <span class="op">=</span> <span class="fl">0.1</span>, alpha_IgG <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>   <span class="co"># zone -&gt; kernel width</span></span>
+<span><span class="va">gc</span>  <span class="op">&lt;-</span> <span class="va"><a href="reference/GerminalCenter.html">GerminalCenter</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>nTfh <span class="op">=</span> <span class="fl">8</span>, selectionPressure <span class="op">=</span> <span class="fl">0.6</span><span class="op">)</span></span>
+<span><span class="va">mp</span>  <span class="op">&lt;-</span> <span class="va"><a href="reference/MemoryPool.html">MemoryPool</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>archive_threshold <span class="op">=</span> <span class="fl">0.05</span><span class="op">)</span>            <span class="co"># persists across fits</span></span>
+<span></span>
+<span><span class="va">model</span> <span class="op">&lt;-</span> <span class="va"><a href="reference/AINet.html">AINet</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span>
+<span>  nAntibodies <span class="op">=</span> <span class="fl">30</span>, maxIter <span class="op">=</span> <span class="fl">20</span>,</span>
+<span>  shm              <span class="op">=</span> <span class="va"><a href="reference/SHMEngine.html">SHMEngine</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>method <span class="op">=</span> <span class="st">"hotspot"</span><span class="op">)</span>,</span>
+<span>  microenvironment <span class="op">=</span> <span class="va">me</span>,</span>
+<span>  classSwitcher    <span class="op">=</span> <span class="va">cs</span>,            <span class="co"># requires microenvironment</span></span>
+<span>  germinalCenter   <span class="op">=</span> <span class="va">gc</span>,</span>
+<span>  memory           <span class="op">=</span> <span class="va">mp</span>,</span>
+<span>  verbose          <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">model</span><span class="op">$</span><span class="fu">fit</span><span class="op">(</span><span class="va">X</span>, <span class="va">iris</span><span class="op">$</span><span class="va">Species</span>, task <span class="op">=</span> <span class="st">"classification"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Memory persists -- a second fit will recall relevant cells (clustering only)</span></span>
+<span><span class="co"># and continue archiving high-affinity antibodies.</span></span>
+<span><span class="va">mp</span><span class="op">$</span><span class="fu">size</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -152,18 +173,24 @@
 <div class="section level3">
 <h3 id="algorithm">Algorithm<a class="anchor" aria-label="anchor" href="#algorithm"></a>
 </h3>
-<p>bHIVE evolves a population of antibody vectors to represent structure in data:</p>
+<p>bHIVE evolves a population of antibody vectors to represent structure in data. Each iteration runs a subset of the following stages — modules attach to specific stages and are skipped when absent:</p>
 <ol style="list-style-type: decimal">
 <li>
-<strong>Initialization</strong> – sample from data, random generation, kmeans++, or V(D)J combinatorial assembly</li>
+<strong>Initialization</strong> (once) – sample from data, random generation, kmeans++, or V(D)J combinatorial assembly via <code>VDJLibrary</code>. If a <code>MemoryPool</code> carries cells from a prior fit, relevant memory is recalled and merged into the starting repertoire (clustering only).</li>
 <li>
-<strong>Affinity computation</strong> – bulk n x m matrix via BLAS (Gaussian, Laplace, polynomial, cosine, Hamming)</li>
+<strong>Activation gating</strong> – <code>ActivationGate</code> sets aside antibodies in over-dense neighborhoods or below an affinity floor so clonal selection runs on the sparse subset; gated antibodies rejoin after.</li>
 <li>
-<strong>Clonal selection + mutation</strong> – top-k antibodies cloned; mutants generated via configurable SHM strategy</li>
+<strong>Clonal selection + SHM</strong> – top-k antibodies cloned per data point. Mutation dispatches through <code>SHMEngine</code> (<code>uniform</code>, <code>airs</code>, <code>hotspot</code>, <code>energy</code>, <code>adaptive</code>); the adaptive strategy threads per-antibody Adam-style moment matrices across iterations.</li>
 <li>
-<strong>Network regulation</strong> – suppress redundant antibodies via distance threshold or idiotypic network dynamics</li>
+<strong>Germinal center selection</strong> – <code>GerminalCenter</code> runs Tfh-mediated quality selection; survivors weighted by clustering compactness or classification purity.</li>
 <li>
-<strong>Final assignment</strong> – data points assigned to nearest antibody by affinity or distance</li>
+<strong>Microenvironment &amp; class switching</strong> – <code>Microenvironment</code> classifies each antibody into stable / explore / boundary zones and applies density-dependent jitter. <code>ClassSwitcher</code> binds each zone to an isotype (IgM/IgG/IgA) and sets the next iteration’s kernel width.</li>
+<li>
+<strong>Idiotypic regulation</strong> – <code>IdiotypicNetwork</code> runs bell-shaped Ab-Ab dynamics that cull both over-clumped and isolated antibodies. Falls back to a top-population safety net if ill-tuned thresholds would kill the repertoire.</li>
+<li>
+<strong>Network suppression</strong> – removes near-duplicate antibodies within an epsilon-ball under the chosen distance metric.</li>
+<li>
+<strong>Orphan pruning + final assignment</strong> (once) – antibodies that bind no training point are dropped; remaining cells produce cluster IDs or class predictions. <code>MemoryPool</code> archives high-affinity survivors back into the pool.</li>
 </ol>
 <p><img align="center" src="https://github.com/BorchLab/bHIVE/blob/main/www/iterativeGraphic.png"></p>
 </div>
@@ -234,7 +261,7 @@
 <div class="section level3">
 <h3 id="multilayer--tuning">Multilayer &amp; Tuning<a class="anchor" aria-label="anchor" href="#multilayer--tuning"></a>
 </h3>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># honeycombHIVE: hierarchical prototype refinement</span></span>
 <span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/honeycombHIVE.html">honeycombHIVE</a></span><span class="op">(</span><span class="va">X</span>, y <span class="op">=</span> <span class="va">iris</span><span class="op">$</span><span class="va">Species</span>, task <span class="op">=</span> <span class="st">"classification"</span>,</span>
 <span>                     layers <span class="op">=</span> <span class="fl">3</span>, nAntibodies <span class="op">=</span> <span class="fl">30</span>,</span>
@@ -250,7 +277,7 @@
 <h3 id="gradient-refinement">Gradient Refinement<a class="anchor" aria-label="anchor" href="#gradient-refinement"></a>
 </h3>
 <p>Fine-tune antibody positions after training with <code><a href="reference/refineB.html">refineB()</a></code>:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/bHIVE.html">bHIVE</a></span><span class="op">(</span><span class="va">X</span>, y <span class="op">=</span> <span class="va">iris</span><span class="op">$</span><span class="va">Species</span>, task <span class="op">=</span> <span class="st">"classification"</span>,</span>
 <span>             nAntibodies <span class="op">=</span> <span class="fl">20</span>, maxIter <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></span>
 <span></span>

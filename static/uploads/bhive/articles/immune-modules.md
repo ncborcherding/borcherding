@@ -71,8 +71,8 @@ do.call(rbind, results)
 
     ##     method  accuracy n_ab
     ## 1  uniform 0.9600000   14
-    ## 2     airs 0.8866667   13
-    ## 3 adaptive 0.8533333   15
+    ## 2     airs 0.9266667   15
+    ## 3 adaptive 0.9533333   15
 
 ## Idiotypic Network Regulation
 
@@ -108,14 +108,14 @@ model_idi$fit(X, task = "clustering")
 cat("Standard suppression:", model_std$repertoire$size(), "antibodies\n")
 ```
 
-    ## Standard suppression: 25 antibodies
+    ## Standard suppression: 24 antibodies
 
 ``` r
 
 cat("Idiotypic regulation:", model_idi$repertoire$size(), "antibodies\n")
 ```
 
-    ## Idiotypic regulation: 22 antibodies
+    ## Idiotypic regulation: 2 antibodies
 
 The idiotypic network typically produces a more parsimonious repertoire
 because regulation is based on the *network* of antibody-antibody
@@ -152,14 +152,14 @@ model_gc$fit(X, y, task = "classification")
 cat("Antibodies after GC selection:", model_gc$repertoire$size(), "\n")
 ```
 
-    ## Antibodies after GC selection: 28
+    ## Antibodies after GC selection: 10
 
 ``` r
 
 cat("Accuracy:", mean(model_gc$result$assignments == as.character(y)), "\n")
 ```
 
-    ## Accuracy: 0.9533333
+    ## Accuracy: 0.9333333
 
 ## Microenvironment
 
@@ -253,7 +253,7 @@ activated <- gate$evaluate(aff, X, A)
 cat("Activated interactions:", sum(activated), "/", length(activated), "\n")
 ```
 
-    ## Activated interactions: 499 / 1500
+    ## Activated interactions: 501 / 1500
 
 ## Memory Pool
 
@@ -316,15 +316,15 @@ data.frame(zone = zones, isotype = rep$metadata$isotype, alpha = alphas)
 
     ##        zone isotype alpha
     ## 1  boundary     IgA   1.0
-    ## 2   explore     IgM   0.1
-    ## 3   explore     IgM   0.1
-    ## 4  boundary     IgA   1.0
-    ## 5   explore     IgM   0.1
-    ## 6   explore     IgM   0.1
-    ## 7  boundary     IgA   1.0
-    ## 8  boundary     IgA   1.0
+    ## 2    stable     IgG   5.0
+    ## 3    stable     IgG   5.0
+    ## 4    stable     IgG   5.0
+    ## 5  boundary     IgA   1.0
+    ## 6    stable     IgG   5.0
+    ## 7   explore     IgM   0.1
+    ## 8    stable     IgG   5.0
     ## 9    stable     IgG   5.0
-    ## 10 boundary     IgA   1.0
+    ## 10  explore     IgM   0.1
 
 ## Convergent Selection
 
@@ -373,14 +373,14 @@ model$fit(X, y, task = "classification")
 cat("Final antibodies:", model$repertoire$size(), "\n")
 ```
 
-    ## Final antibodies: 23
+    ## Final antibodies: 1
 
 ``` r
 
 cat("Accuracy:", mean(model$result$assignments == as.character(y)), "\n")
 ```
 
-    ## Accuracy: 0.9333333
+    ## Accuracy: 0.3333333
 
 Not every module combination will improve every dataset. The modular
 design lets you experiment with different biological mechanisms and find
@@ -414,7 +414,7 @@ sessionInfo()
     ## [1] stats     graphics  grDevices utils     datasets  methods   base     
     ## 
     ## other attached packages:
-    ## [1] viridis_0.6.5     viridisLite_0.4.3 ggplot2_4.0.3     bHIVE_0.99.2     
+    ## [1] viridis_0.6.5     viridisLite_0.4.3 ggplot2_4.0.3     bHIVE_0.99.3     
     ## [5] BiocStyle_2.40.0 
     ## 
     ## loaded via a namespace (and not attached):

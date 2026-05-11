@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">bHIVE</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.3</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -67,7 +67,7 @@ Borcherding</h4>
 MO, USA<br><a class="author_email" href="mailto:#"></a><a href="mailto:ncborch@gmail.com" class="email">ncborch@gmail.com</a>
       </address>
                   
-            <h4 data-toc-skip class="date">2026-04-30</h4>
+            <h4 data-toc-skip class="date">2026-05-11</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/BorchLab/bHIVE/blob/main/vignettes/articles/advanced-workflows.Rmd" class="external-link"><code>vignettes/articles/advanced-workflows.Rmd</code></a></small>
       <div class="d-none name"><code>advanced-workflows.Rmd</code></div>
@@ -162,8 +162,8 @@ metric.</p>
 <p><img src="advanced-workflows_files/figure-html/swarm-clustering-1.png" class="r-plt" alt="" width="1050"></p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">tuning</span><span class="op">$</span><span class="va">best_params</span></span></code></pre></div>
-<pre><code><span><span class="co">##    nAntibodies beta epsilon metric_value</span></span>
-<span><span class="co">## 10          10    5    0.05    0.2514718</span></span></code></pre>
+<pre><code><span><span class="co">##   nAntibodies beta epsilon metric_value</span></span>
+<span><span class="co">## 1          10    3    0.01    0.3180419</span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="classification-tuning">Classification Tuning<a class="anchor" aria-label="anchor" href="#classification-tuning"></a>
@@ -181,8 +181,8 @@ metric.</p>
 <span>                         grid <span class="op">=</span> <span class="va">grid_cls</span>, metric <span class="op">=</span> <span class="st">"accuracy"</span>,</span>
 <span>                         maxIter <span class="op">=</span> <span class="fl">15</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="va">tuning_cls</span><span class="op">$</span><span class="va">best_params</span></span></code></pre></div>
-<pre><code><span><span class="co">##    nAntibodies beta epsilon metric_value</span></span>
-<span><span class="co">## 12          50    3    0.05    0.9733333</span></span></code></pre>
+<pre><code><span><span class="co">##   nAntibodies beta epsilon metric_value</span></span>
+<span><span class="co">## 3          50    3    0.01         0.94</span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="parallelization-with-biocparallel">Parallelization with BiocParallel<a class="anchor" aria-label="anchor" href="#parallelization-with-biocparallel"></a>
@@ -666,7 +666,7 @@ understand results</li>
 <span><span class="co">## </span></span>
 <span><span class="co">## other attached packages:</span></span>
 <span><span class="co">## [1] caret_7.0-1       lattice_0.22-9    viridis_0.6.5     viridisLite_0.4.3</span></span>
-<span><span class="co">## [5] ggplot2_4.0.3     bHIVE_0.99.2      BiocStyle_2.40.0 </span></span>
+<span><span class="co">## [5] ggplot2_4.0.3     bHIVE_0.99.3      BiocStyle_2.40.0 </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## loaded via a namespace (and not attached):</span></span>
 <span><span class="co">##  [1] pROC_1.19.0.1        gridExtra_2.3        rlang_1.2.0         </span></span>
@@ -692,7 +692,7 @@ understand results</li>
 <span><span class="co">## [61] proxy_0.4-29         pillar_1.11.1        BiocManager_1.30.27 </span></span>
 <span><span class="co">## [64] foreach_1.5.2        stats4_4.6.0         generics_0.1.4      </span></span>
 <span><span class="co">## [67] scales_1.4.0         globals_0.19.1       class_7.3-23        </span></span>
-<span><span class="co">## [70] glue_1.8.1           tools_4.6.0          data.table_1.18.2.1 </span></span>
+<span><span class="co">## [70] glue_1.8.1           tools_4.6.0          data.table_1.18.4   </span></span>
 <span><span class="co">## [73] RSpectra_0.16-2      ModelMetrics_1.2.2.2 gower_1.0.2         </span></span>
 <span><span class="co">## [76] fs_2.1.0             grid_4.6.0           umap_0.2.10.0       </span></span>
 <span><span class="co">## [79] ipred_0.9-15         nlme_3.1-169         cli_3.6.6           </span></span>

@@ -11,7 +11,7 @@ where antibodies compete for Tfh help, and only helped antibodies survive."><met
 
     <a class="navbar-brand me-2" href="../index.html">bHIVE</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.3</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -74,6 +74,11 @@ selectors:</p>
 
 <dt><code>rounds</code></dt>
 <dd><p>Number of selection rounds per call.</p></dd>
+
+
+<dt><code>last_survivors</code></dt>
+<dd><p>Integer vector of survivor indices (relative
+to the input repertoire) from the most recent call to <code>select()</code>.</p></dd>
 
 
 </dl><p></p></div>
@@ -156,7 +161,10 @@ selectors:</p>
 </div>
 <div class="section">
 <h4 id="returns">Returns<a class="anchor" aria-label="anchor" href="#returns"></a></h4>
-<p>Invisible self. Repertoire modified in place.</p>
+<p>Integer vector of survivor indices relative to the input
+  repertoire (composed across all selection rounds). Also stored on
+  <code>self$last_survivors</code> for inspection. Repertoire is modified
+  in place.</p>
 </div>
 
 </div><p></p><hr><a id="method-GerminalCenter-print"></a><div class="section">

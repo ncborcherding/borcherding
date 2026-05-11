@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">bHIVE</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.3</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -67,7 +67,7 @@ Borcherding</h4>
 MO, USA<br><a class="author_email" href="mailto:#"></a><a href="mailto:ncborch@gmail.com" class="email">ncborch@gmail.com</a>
       </address>
                   
-            <h4 data-toc-skip class="date">2026-04-30</h4>
+            <h4 data-toc-skip class="date">2026-05-11</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/BorchLab/bHIVE/blob/main/vignettes/articles/immune-modules.Rmd" class="external-link"><code>vignettes/articles/immune-modules.Rmd</code></a></small>
       <div class="d-none name"><code>immune-modules.Rmd</code></div>
@@ -171,8 +171,8 @@ gradients.</p>
 <span><span class="fu"><a href="https://rdrr.io/r/base/do.call.html" class="external-link">do.call</a></span><span class="op">(</span><span class="va">rbind</span>, <span class="va">results</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##     method  accuracy n_ab</span></span>
 <span><span class="co">## 1  uniform 0.9600000   14</span></span>
-<span><span class="co">## 2     airs 0.8866667   13</span></span>
-<span><span class="co">## 3 adaptive 0.8533333   15</span></span></code></pre>
+<span><span class="co">## 2     airs 0.9266667   15</span></span>
+<span><span class="co">## 3 adaptive 0.9533333   15</span></span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="idiotypic-network-regulation">Idiotypic Network Regulation<a class="anchor" aria-label="anchor" href="#idiotypic-network-regulation"></a>
@@ -205,10 +205,10 @@ repertoire structure.</p>
 <span><span class="va">model_idi</span><span class="op">$</span><span class="fu">fit</span><span class="op">(</span><span class="va">X</span>, task <span class="op">=</span> <span class="st">"clustering"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"Standard suppression:"</span>, <span class="va">model_std</span><span class="op">$</span><span class="va">repertoire</span><span class="op">$</span><span class="fu">size</span><span class="op">(</span><span class="op">)</span>, <span class="st">"antibodies\n"</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Standard suppression: 25 antibodies</span></span></code></pre>
+<pre><code><span><span class="co">## Standard suppression: 24 antibodies</span></span></code></pre>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"Idiotypic regulation:"</span>, <span class="va">model_idi</span><span class="op">$</span><span class="va">repertoire</span><span class="op">$</span><span class="fu">size</span><span class="op">(</span><span class="op">)</span>, <span class="st">"antibodies\n"</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Idiotypic regulation: 22 antibodies</span></span></code></pre>
+<pre><code><span><span class="co">## Idiotypic regulation: 2 antibodies</span></span></code></pre>
 <p>The idiotypic network typically produces a more parsimonious
 repertoire because regulation is based on the <em>network</em> of
 antibody-antibody interactions rather than pairwise distance alone.</p>
@@ -244,10 +244,10 @@ assigned data points)</li>
 <span><span class="op">)</span></span>
 <span><span class="va">model_gc</span><span class="op">$</span><span class="fu">fit</span><span class="op">(</span><span class="va">X</span>, <span class="va">y</span>, task <span class="op">=</span> <span class="st">"classification"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"Antibodies after GC selection:"</span>, <span class="va">model_gc</span><span class="op">$</span><span class="va">repertoire</span><span class="op">$</span><span class="fu">size</span><span class="op">(</span><span class="op">)</span>, <span class="st">"\n"</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Antibodies after GC selection: 28</span></span></code></pre>
+<pre><code><span><span class="co">## Antibodies after GC selection: 10</span></span></code></pre>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"Accuracy:"</span>, <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">model_gc</span><span class="op">$</span><span class="va">result</span><span class="op">$</span><span class="va">assignments</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span><span class="op">)</span>, <span class="st">"\n"</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Accuracy: 0.9533333</span></span></code></pre>
+<pre><code><span><span class="co">## Accuracy: 0.9333333</span></span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="microenvironment">Microenvironment<a class="anchor" aria-label="anchor" href="#microenvironment"></a>
@@ -344,7 +344,7 @@ only)</li>
 <span><span class="va">aff</span> <span class="op">&lt;-</span> <span class="va">rep</span><span class="op">$</span><span class="fu">affinity_matrix</span><span class="op">(</span><span class="va">X</span>, <span class="st">"gaussian"</span><span class="op">)</span></span>
 <span><span class="va">activated</span> <span class="op">&lt;-</span> <span class="va">gate</span><span class="op">$</span><span class="fu">evaluate</span><span class="op">(</span><span class="va">aff</span>, <span class="va">X</span>, <span class="va">A</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"Activated interactions:"</span>, <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">activated</span><span class="op">)</span>, <span class="st">"/"</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">activated</span><span class="op">)</span>, <span class="st">"\n"</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Activated interactions: 499 / 1500</span></span></code></pre>
+<pre><code><span><span class="co">## Activated interactions: 501 / 1500</span></span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="memory-pool">Memory Pool<a class="anchor" aria-label="anchor" href="#memory-pool"></a>
@@ -411,15 +411,15 @@ real B cell isotype switching:</p>
 <span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>zone <span class="op">=</span> <span class="va">zones</span>, isotype <span class="op">=</span> <span class="va">rep</span><span class="op">$</span><span class="va">metadata</span><span class="op">$</span><span class="va">isotype</span>, alpha <span class="op">=</span> <span class="va">alphas</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##        zone isotype alpha</span></span>
 <span><span class="co">## 1  boundary     IgA   1.0</span></span>
-<span><span class="co">## 2   explore     IgM   0.1</span></span>
-<span><span class="co">## 3   explore     IgM   0.1</span></span>
-<span><span class="co">## 4  boundary     IgA   1.0</span></span>
-<span><span class="co">## 5   explore     IgM   0.1</span></span>
-<span><span class="co">## 6   explore     IgM   0.1</span></span>
-<span><span class="co">## 7  boundary     IgA   1.0</span></span>
-<span><span class="co">## 8  boundary     IgA   1.0</span></span>
+<span><span class="co">## 2    stable     IgG   5.0</span></span>
+<span><span class="co">## 3    stable     IgG   5.0</span></span>
+<span><span class="co">## 4    stable     IgG   5.0</span></span>
+<span><span class="co">## 5  boundary     IgA   1.0</span></span>
+<span><span class="co">## 6    stable     IgG   5.0</span></span>
+<span><span class="co">## 7   explore     IgM   0.1</span></span>
+<span><span class="co">## 8    stable     IgG   5.0</span></span>
 <span><span class="co">## 9    stable     IgG   5.0</span></span>
-<span><span class="co">## 10 boundary     IgA   1.0</span></span></code></pre>
+<span><span class="co">## 10  explore     IgM   0.1</span></span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="convergent-selection">Convergent Selection<a class="anchor" aria-label="anchor" href="#convergent-selection"></a>
@@ -462,10 +462,10 @@ classification task:</p>
 <span><span class="va">model</span><span class="op">$</span><span class="fu">fit</span><span class="op">(</span><span class="va">X</span>, <span class="va">y</span>, task <span class="op">=</span> <span class="st">"classification"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"Final antibodies:"</span>, <span class="va">model</span><span class="op">$</span><span class="va">repertoire</span><span class="op">$</span><span class="fu">size</span><span class="op">(</span><span class="op">)</span>, <span class="st">"\n"</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Final antibodies: 23</span></span></code></pre>
+<pre><code><span><span class="co">## Final antibodies: 1</span></span></code></pre>
 <div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"Accuracy:"</span>, <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">model</span><span class="op">$</span><span class="va">result</span><span class="op">$</span><span class="va">assignments</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span><span class="op">)</span>, <span class="st">"\n"</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Accuracy: 0.9333333</span></span></code></pre>
+<pre><code><span><span class="co">## Accuracy: 0.3333333</span></span></code></pre>
 <p>Not every module combination will improve every dataset. The modular
 design lets you experiment with different biological mechanisms and find
 the combination that works best for your data and task.</p>
@@ -496,7 +496,7 @@ the combination that works best for your data and task.</p>
 <span><span class="co">## [1] stats     graphics  grDevices utils     datasets  methods   base     </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## other attached packages:</span></span>
-<span><span class="co">## [1] viridis_0.6.5     viridisLite_0.4.3 ggplot2_4.0.3     bHIVE_0.99.2     </span></span>
+<span><span class="co">## [1] viridis_0.6.5     viridisLite_0.4.3 ggplot2_4.0.3     bHIVE_0.99.3     </span></span>
 <span><span class="co">## [5] BiocStyle_2.40.0 </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## loaded via a namespace (and not attached):</span></span>
