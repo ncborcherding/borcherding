@@ -71,6 +71,7 @@ editorial:
     year: '2025'
   ad_hoc_reviews:
   - Cancer Discovery
+  - Communications Biology
   - Human Immunology
   - Journal of Clinical Investigations
   - Journal of Immunology
@@ -117,6 +118,9 @@ service:
     end: "Present"
   - committee: Graduate Fellowship Review, Division of Biology & Biomedical Sciences, Washington University St Louis.
     start: '2025'
+    end: "Present"
+  - committee: Trainee Research Symposium Planning Committee, Department of Pathology and Immunology, Washington University St Louis.
+    start: '2026'
     end: "Present"
   national:
   - committee: First Aid/USMLErx Student Council
@@ -284,7 +288,7 @@ clinical_trials:
   role: Site Investigator
   description: Industry-sponsored FDA trial to validate an AI tool for aiding in immunosubtraction interpretation
   start: '2025'
-  end: "Present"
+  end: "2026"
 research_funding:
   institutional:
   - years: '2017'
