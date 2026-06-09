@@ -219,7 +219,7 @@ tuning_results$best_params
 ```
 
     ##   nAntibodies beta epsilon metric_value
-    ## 7          10    5    0.05    0.3264228
+    ## 1          10    3    0.01    0.1875808
 
 ### Using the `caret` wrapper
 
@@ -610,10 +610,10 @@ sessionInfo()
     ## [10] vctrs_0.7.3          reshape2_1.4.5       stringr_1.6.0       
     ## [13] pkgconfig_2.0.3      fastmap_1.2.0        labeling_0.4.3      
     ## [16] rmarkdown_2.31       prodlim_2026.03.11   ragg_1.5.2          
-    ## [19] purrr_1.2.2          xfun_0.57            cachem_1.1.0        
-    ## [22] jsonlite_2.0.0       recipes_1.3.2        BiocParallel_1.46.0 
+    ## [19] purrr_1.2.2          xfun_0.58            cachem_1.1.0        
+    ## [22] jsonlite_2.0.0       recipes_1.3.3        BiocParallel_1.46.0 
     ## [25] clusterCrit_1.3.0    parallel_4.6.0       cluster_2.1.8.2     
-    ## [28] R6_2.6.1             bslib_0.10.0         stringi_1.8.7       
+    ## [28] R6_2.6.1             bslib_0.11.0         stringi_1.8.7       
     ## [31] RColorBrewer_1.1-3   reticulate_1.46.0    parallelly_1.47.0   
     ## [34] rpart_4.1.27         lubridate_1.9.5      jquerylib_0.1.4     
     ## [37] Rcpp_1.1.1-1.1       bookdown_0.46        iterators_1.0.14    
@@ -631,8 +631,8 @@ sessionInfo()
     ## [73] RSpectra_0.16-2      ModelMetrics_1.2.2.2 gower_1.0.2         
     ## [76] fs_2.1.0             grid_4.6.0           umap_0.2.10.0       
     ## [79] ipred_0.9-15         nlme_3.1-169         cli_3.6.6           
-    ## [82] textshaping_1.0.5    lava_1.9.0           dplyr_1.2.1         
+    ## [82] textshaping_1.0.5    lava_1.9.1           dplyr_1.2.1         
     ## [85] gtable_0.3.6         sass_0.4.10          digest_0.6.39       
     ## [88] htmlwidgets_1.6.4    farver_2.1.2         htmltools_0.5.9     
     ## [91] pkgdown_2.2.0        lifecycle_1.0.5      hardhat_1.4.3       
-    ## [94] openssl_2.4.0        MASS_7.3-65
+    ## [94] openssl_2.4.1        MASS_7.3-65

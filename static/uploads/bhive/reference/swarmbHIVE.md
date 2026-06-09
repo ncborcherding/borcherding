@@ -115,7 +115,7 @@ tuning_results <- swarmbHIVE(X = X,
 #> Evaluating combo 8/8: nAntibodies=20, beta=5, epsilon=0.050
 #> Best parameters found:
 #>   nAntibodies beta epsilon metric_value
-#> 4          20    5    0.01    0.8666667
+#> 8          20    5    0.05    0.7933333
 
 # For clustering with silhouette
 set.seed(42)
@@ -139,9 +139,9 @@ res_clust <- swarmbHIVE(X_clust,
 #> Evaluating combo 8/8: nAntibodies=10, beta=5, epsilon=0.050
 #> Best parameters found:
 #>   nAntibodies beta epsilon metric_value
-#> 5           5    3    0.05   0.09680709
+#> 3           5    5    0.01    0.1636253
 res_clust$best_params
 #>   nAntibodies beta epsilon metric_value
-#> 5           5    3    0.05   0.09680709
+#> 3           5    5    0.01    0.1636253
 
 ```
