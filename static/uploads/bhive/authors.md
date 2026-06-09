@@ -10,12 +10,12 @@ Source:
 [`DESCRIPTION`](https://github.com/BorchLab/bHIVE/blob/main/DESCRIPTION)
 
 Borcherding N (2026). *bHIVE: B-cell Hybrid Immune Variant Engine*. R
-package version 0.99.3, <https://www.borch.dev/uploads/bhive/>.
+package version 0.99.4, <https://www.borch.dev/uploads/bhive/>.
 
     @Manual{,
       title = {bHIVE: B-cell Hybrid Immune Variant Engine},
       author = {Nick Borcherding},
       year = {2026},
-      note = {R package version 0.99.3},
+      note = {R package version 0.99.4},
       url = {https://www.borch.dev/uploads/bhive/},
     }
