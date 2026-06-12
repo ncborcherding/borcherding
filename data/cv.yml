@@ -139,6 +139,9 @@ service:
       Societies (IUIS)
     start: '2026'
     end: "Present"
+  - committee: AIRR Community Executive Committee
+    start: '2026'
+    end: "Present"
 mentorship:
   research:
   - mentee: Qile Yang
@@ -357,6 +360,9 @@ presentations:
     - year: '2026'
       title: Pre-Transplant T Cell Receptor Network Topology Predicts Kidney Allograft Outcome Independet of HLA Mismatch
       venue: ACLPS Annual Meeting, St Louis, MO
+    - year: '2026'
+      title: Pre-Transplant T Cell Receptor Network Topology Predicts Kidney Allograft Outcome Independet of HLA Mismatch
+      venue: AIRR-VIII Annual Meeting, New Haven, CT
   abstracts:
   - year: '2014'
     title: Wnt5a/ROR1 Axis in Triple Negative Breast Cancer Progression and Potential Therapy
