@@ -38,15 +38,15 @@ Start with step size. An antibody that already binds well should not throw itsel
 
 The `airs` strategy, named for the Artificial Immune Recognition System of Watkins and Timmis, scales the noise variance directly. The mutation rate is
 
-$$r = c \cdot e^{-a/T}$$
+**r = c · e<sup>−a/T</sup>**
 
-where $a$ is affinity, $T$ is a temperature, and $c$ is a scale. A poorly matched antibody ($a \to 0$) mutates at the full rate $c$. A well matched one ($a \to 1$) settles toward $c \cdot e^{-1/T}$. The temperature controls how sharply the rate falls off. This is a fitness-dependent learning rate, the same idea as decaying your step size as the loss improves, written in the vocabulary of binding.
+where *a* is affinity, *T* is a temperature, and *c* is a scale. A poorly matched antibody (*a* → 0) mutates at the full rate *c*. A well matched one (*a* → 1) settles toward c · e<sup>−1/T</sup>. The temperature controls how sharply the rate falls off. This is a fitness-dependent learning rate, the same idea as decaying your step size as the loss improves, written in the vocabulary of binding.
 
 The `energy` strategy reinforces the same intuition with a hard ceiling instead of a soft variance. It gives each antibody a mutational budget
 
-$$E = E_0 (1-a)^2$$
+**E = E₀ (1 − a)²**
 
-and draws a step whose length cannot exceed $\sqrt{E} = \sqrt{E_0}\,(1-a)$. The direction is random and the magnitude is uniform up to that cap. This is a trust region. The cell is allowed to move, but only within a ball whose radius shrinks as it matures. The quadratic form is deliberate. It echoes models in which the metabolic cost of hypermutation grows with the square of the mutation load, so a high-affinity cell that has already paid for many mutations can afford very few more.
+and draws a step whose length cannot exceed √E = √E₀ (1 − a). The direction is random and the magnitude is uniform up to that cap. This is a trust region. The cell is allowed to move, but only within a ball whose radius shrinks as it matures. The quadratic form is deliberate. It echoes models in which the metabolic cost of hypermutation grows with the square of the mutation load, so a high-affinity cell that has already paid for many mutations can afford very few more.
 
 The difference between the two is the difference between a soft and a hard constraint. AIRS lets a low-affinity antibody, on rare draws, take a small step or a large one, because variance only sets the spread. Energy guarantees the step stays inside the ball. If you care about controlling worst-case moves, the trust region is the safer object. If you want smooth annealing, the variance schedule is cleaner. Same biology, two engineering choices.
 
@@ -58,17 +58,17 @@ Step size is only half the answer. The other half is direction, and this is wher
 
 bHIVE's `hotspot` strategy ports this idea directly. It computes the gradient
 
-$$g = x - a$$
+**g = x − a**
 
-the vector from the antibody $a$ toward the data point $x$ it is trying to recognize. Features where the antibody is far from the target have large $|g_i|$. The strategy turns those magnitudes into per-feature mutation rates, so the rate on feature $i$ rises with $|g_i|$. Coordinates that are already correct barely move. Coordinates that are wrong get hammered. Computationally, this is feature-weighted, coordinate-wise mutation. Biologically, it is AID on a hotspot. The match is exact in spirit. Spend your mutational budget where the error is.
+the vector from the antibody *a* toward the data point *x* it is trying to recognize. Features where the antibody is far from the target have large |gᵢ|. The strategy turns those magnitudes into per-feature mutation rates, so the rate on feature *i* rises with |gᵢ|. Coordinates that are already correct barely move. Coordinates that are wrong get hammered. Computationally, this is feature-weighted, coordinate-wise mutation. Biologically, it is AID on a hotspot. The match is exact in spirit. Spend your mutational budget where the error is.
 
 The `adaptive` strategy goes one step further and remembers. Instead of reacting to the current gradient alone, it keeps two running averages across maturation rounds, a first moment for direction and a second moment for per-feature scale:
 
-$$m_1 \leftarrow \beta_1 m_1 + (1-\beta_1)\, g, \qquad m_2 \leftarrow \beta_2 m_2 + (1-\beta_2)\, g^2$$
+**m₁ ← β₁ m₁ + (1 − β₁) g&nbsp;&nbsp;&nbsp;&nbsp;m₂ ← β₂ m₂ + (1 − β₂) g²**
 
 then bias-corrects them and takes the step
 
-$$\Delta = \text{lr} \cdot \frac{\hat{m}_1}{\sqrt{\hat{m}_2} + \epsilon}, \qquad \text{lr} = (1-a)\cdot \text{base\_rate}$$
+**Δ = lr · m̂₁ / (√m̂₂ + ε),&nbsp;&nbsp;&nbsp;&nbsp;lr = (1 − a) · base_rate**
 
 This is not *like* Adam. It is Adam, the optimizer Kingma and Ba published in 2015, with affinity supplying the learning rate. The first moment smooths the direction so a single noisy round does not throw the cell off course. The second moment rescales each feature by how variable its gradient has been, so stable directions take confident steps and noisy ones take cautious ones. bHIVE threads these moment matrices through every iteration of clonal selection, one per antibody, so each cell carries its own optimizer state.
 
