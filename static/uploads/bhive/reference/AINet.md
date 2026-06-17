@@ -49,6 +49,8 @@ Create a new AINet algorithm instance.
       stopTolerance = 0,
       noImprovementLimit = Inf,
       initMethod = "sample",
+      consolidate = TRUE,
+      consolidationSteps = 10L,
       shm = NULL,
       init = NULL,
       activation = NULL,
@@ -117,6 +119,17 @@ Create a new AINet algorithm instance.
 - `initMethod`:
 
   Character. Initialization method.
+
+- `consolidate`:
+
+  Logical. For clustering, run Lloyd-style consolidation (an M-step)
+  after affinity maturation so antibodies are pulled onto the data
+  manifold and become true data-space prototypes. Has no effect on
+  classification. Default TRUE.
+
+- `consolidationSteps`:
+
+  Integer. Maximum consolidation iterations.
 
 - `shm`:
 
@@ -213,7 +226,7 @@ model$fit(X, task = "clustering")
 table(model$result$assignments)
 #> 
 #>  1  2  3  4  5  6  7  8  9 10 11 12 13 14 
-#> 14 12 22  7 14  8 12  4 14 11 11 14  1  6 
+#> 10 10 23  7 14 10 10  8 12  9 18 10  3  6 
 
 # Classification
 model2 <- AINet$new(nAntibodies = 20, maxIter = 10, verbose = FALSE)

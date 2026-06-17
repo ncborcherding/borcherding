@@ -708,7 +708,7 @@ settings depend on your data.
     ## [1] stats     graphics  grDevices utils     datasets  methods   base     
     ## 
     ## other attached packages:
-    ## [1] viridis_0.6.5     viridisLite_0.4.3 ggplot2_4.0.3     bHIVE_0.99.4     
+    ## [1] viridis_0.6.5     viridisLite_0.4.3 ggplot2_4.0.3     bHIVE_0.99.5     
     ## [5] BiocStyle_2.40.0 
     ## 
     ## loaded via a namespace (and not attached):

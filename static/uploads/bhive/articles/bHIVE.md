@@ -601,7 +601,7 @@ sessionInfo()
     ## 
     ## other attached packages:
     ## [1] caret_7.0-1       lattice_0.22-9    viridis_0.6.5     viridisLite_0.4.3
-    ## [5] ggplot2_4.0.3     bHIVE_0.99.4      BiocStyle_2.40.0 
+    ## [5] ggplot2_4.0.3     bHIVE_0.99.5      BiocStyle_2.40.0 
     ## 
     ## loaded via a namespace (and not attached):
     ##  [1] pROC_1.19.0.1        gridExtra_2.3        rlang_1.2.0         

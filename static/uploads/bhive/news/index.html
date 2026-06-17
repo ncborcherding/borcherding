@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">bHIVE</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.5</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -39,6 +39,19 @@
       <small>Source: <a href="https://github.com/BorchLab/bHIVE/blob/main/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.99.5" id="bhive-0995">bHIVE 0.99.5<a class="anchor" aria-label="anchor" href="#bhive-0995"></a></h2>
+<div class="section level3">
+<h3 id="performance-0-99-5">Performance<a class="anchor" aria-label="anchor" href="#performance-0-99-5"></a></h3>
+<ul><li>
+<code>clonal_selection_iteration_cpp</code> no longer recomputes the full n-length affinity column on every accepted mutation. That recompute was nested inside the per-point loop, so with acceptances scaling in the number of points the routine ran in O(n^2) in the cell count, the dominant cost at CyTOF and scRNA scale. Each point now computes its own 1 x m affinity row against the current antibody set. This is the same O(n<em>m</em>d) work per iteration but linear in n, and it is numerically identical because a point still sees every mutation made by earlier points in the pass. Clustering and classification fits drop from roughly 101s to 1s at n=2000, and per-fit cost now scales linearly (a 16,000-cell fit runs in about 8s instead of an extrapolated 1.8 hours).</li>
+</ul></div>
+<div class="section level3">
+<h3 id="new-behavior-0-99-5">New Behavior<a class="anchor" aria-label="anchor" href="#new-behavior-0-99-5"></a></h3>
+<ul><li>Affinity/distance metric guard in <code>AINet$new()</code>. Clonal selection matures antibodies to maximize <code>affinityFunc</code>, but cluster assignment uses <code>distFunc</code>. When the two used different geometries the model optimized one space and read out in another. A cosine versus non-cosine mismatch now warns and aligns the distance to the affinity’s natural metric (cosine to cosine, otherwise the Euclidean family). Without it, cosine affinity scores angle only and never constrains antibody magnitude, so antibodies drifted far off the data manifold and every point collapsed onto a single antibody (one cluster, ARI 0).</li>
+<li>Clustering consolidation, controlled by <code>consolidate</code> (default <code>TRUE</code>) and <code>consolidationSteps</code> (default 10). After affinity maturation, <code>AINet$fit()</code> seeds an assignment by affinity, which stays robust to off-manifold antibodies, then runs Euclidean Lloyd refinement so prototypes become true data-space centroids rather than affinity-maximizing directions that may sit far off the data. The repertoire keeps the matured antibodies and their metadata, so memory archiving and isotype state are unchanged. Only <code>result$antibodies</code> reports the consolidated prototypes. Set <code>consolidate = FALSE</code> to recover the raw affinity-assignment behavior. The metric guard and default-on consolidation change clustering output, so cached benchmarks should be regenerated.</li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.99.4" id="bhive-0994">bHIVE 0.99.4<a class="anchor" aria-label="anchor" href="#bhive-0994"></a></h2>
 <div class="section level3">

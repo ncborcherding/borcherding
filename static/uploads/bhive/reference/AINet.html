@@ -13,7 +13,7 @@ network regulation, germinal center selection, and more."><meta property="og:ima
 
     <a class="navbar-brand me-2" href="../index.html">bHIVE</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.5</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -89,6 +89,8 @@ network regulation, germinal center selection, and more.</p>
 <span>  stopTolerance <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>  noImprovementLimit <span class="op">=</span> <span class="cn">Inf</span>,</span>
 <span>  initMethod <span class="op">=</span> <span class="st">"sample"</span>,</span>
+<span>  consolidate <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  consolidationSteps <span class="op">=</span> <span class="fl">10L</span>,</span>
 <span>  shm <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  init <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  activation <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -157,6 +159,17 @@ network regulation, germinal center selection, and more.</p>
 
 <dt><code>initMethod</code></dt>
 <dd><p>Character. Initialization method.</p></dd>
+
+
+<dt><code>consolidate</code></dt>
+<dd><p>Logical. For clustering, run Lloyd-style
+consolidation (an M-step) after affinity maturation so antibodies are
+pulled onto the data manifold and become true data-space prototypes.
+Has no effect on classification. Default TRUE.</p></dd>
+
+
+<dt><code>consolidationSteps</code></dt>
+<dd><p>Integer. Maximum consolidation iterations.</p></dd>
 
 
 <dt><code>shm</code></dt>
@@ -261,7 +274,7 @@ Inferred from y if NULL.</p></dd>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">model</span><span class="op">$</span><span class="va">result</span><span class="op">$</span><span class="va">assignments</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  1  2  3  4  5  6  7  8  9 10 11 12 13 14 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14 12 22  7 14  8 12  4 14 11 11 14  1  6 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10 10 23  7 14 10 10  8 12  9 18 10  3  6 </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Classification</span></span></span>
 <span class="r-in"><span><span class="va">model2</span> <span class="op">&lt;-</span> <span class="va">AINet</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>nAntibodies <span class="op">=</span> <span class="fl">20</span>, maxIter <span class="op">=</span> <span class="fl">10</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
