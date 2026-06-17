@@ -616,7 +616,7 @@ sessionInfo()
     ## [28] R6_2.6.1             bslib_0.11.0         stringi_1.8.7       
     ## [31] RColorBrewer_1.1-3   reticulate_1.46.0    parallelly_1.47.0   
     ## [34] rpart_4.1.27         lubridate_1.9.5      jquerylib_0.1.4     
-    ## [37] Rcpp_1.1.1-1.1       bookdown_0.46        iterators_1.0.14    
+    ## [37] Rcpp_1.1.1-1.1       bookdown_0.47        iterators_1.0.14    
     ## [40] knitr_1.51           future.apply_1.20.2  Matrix_1.7-5        
     ## [43] splines_4.6.0        nnet_7.3-20          timechange_0.4.0    
     ## [46] tidyselect_1.2.1     yaml_2.3.12          timeDate_4052.112   
@@ -635,4 +635,4 @@ sessionInfo()
     ## [85] gtable_0.3.6         sass_0.4.10          digest_0.6.39       
     ## [88] htmlwidgets_1.6.4    farver_2.1.2         htmltools_0.5.9     
     ## [91] pkgdown_2.2.0        lifecycle_1.0.5      hardhat_1.4.3       
-    ## [94] openssl_2.4.1        MASS_7.3-65
+    ## [94] openssl_2.4.2        MASS_7.3-65

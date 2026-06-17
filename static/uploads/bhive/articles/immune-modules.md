@@ -420,7 +420,7 @@ sessionInfo()
     ## loaded via a namespace (and not attached):
     ##  [1] sass_0.4.10         generics_0.1.4      lattice_0.22-9     
     ##  [4] digest_0.6.39       magrittr_2.0.5      evaluate_1.0.5     
-    ##  [7] grid_4.6.0          RColorBrewer_1.1-3  bookdown_0.46      
+    ##  [7] grid_4.6.0          RColorBrewer_1.1-3  bookdown_0.47      
     ## [10] fastmap_1.2.0       jsonlite_2.0.0      Matrix_1.7-5       
     ## [13] umap_0.2.10.0       RSpectra_0.16-2     gridExtra_2.3      
     ## [16] BiocManager_1.30.27 scales_1.4.0        codetools_0.2-20   
@@ -438,4 +438,4 @@ sessionInfo()
     ## [52] tidyselect_1.2.1    knitr_1.51          farver_2.1.2       
     ## [55] htmltools_0.5.9     rmarkdown_2.31      clusterCrit_1.3.0  
     ## [58] compiler_4.6.0      S7_0.2.2            askpass_1.2.1      
-    ## [61] openssl_2.4.1
+    ## [61] openssl_2.4.2
