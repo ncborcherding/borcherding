@@ -279,7 +279,10 @@ if (length(con)) {
 ```{r}
 ed <- cv$editorial %||% list()
 if (!is.null(ed$review_board) && length(ed$review_board)) {
-  cat(map_chr(ed$review_board, ~ glue("{.x$journal} ({.x$year })", "")), sep = ", ")
+  cat(map_chr(ed$review_board, ~ {
+    if (!is.null(.x$role)) glue("{.x$journal} ({.x$role}, {.x$year})")
+    else glue("{.x$journal} ({.x$year})")
+  }), sep = ", ")
 } else {
   cat("_(none listed)_")
 }
