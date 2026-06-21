@@ -37,6 +37,12 @@ summaryLength = 0
 buildDrafts = false
 buildFuture = false
 
+# Skip non-renderable sources. Notably data/pubs.bib: Hugo tries to unmarshal
+# every file under data/ and cannot parse BibTeX, which aborts the build. The
+# Phase 2 pipeline already emits data/publications.yaml and data/pub_meta.yaml
+# from the .bib, so the raw .bib is input-only and safe to ignore here.
+ignoreFiles = ['\.bib$', '\.Rmd$', '\.Rmarkdown$', '\.ipynb$', '_cache$']
+
 # -- Theme module import (Blowfish) ------------------------------------------
 [module]
   [[module.imports]]
@@ -177,28 +183,26 @@ buildFuture = false
         ]
 
 # -- Main menu ---------------------------------------------------------------
-# CV points to the static PDF (works now). Home links to "/" (works now).
-# Research/Software/Publications/Posts/Talks use `url` (not pageRef) so they
-# render as real, clickable links. Their target pages do not exist yet, so
-# they will 404 until the corresponding sections are built in later phases.
-# (pageRef silently drops the href when the page is missing, which would make
-#  the items unclickable; url keeps them clickable and 404 honestly.)
+# Single-page landing (Phase 3): About/Research/Software/Publications/Contact
+# are sections on "/", so the menu links to in-page anchors (#about, etc.) that
+# resolve to the section ids rendered by layouts/index.html. Posts and Talks are
+# real list pages. CV points to the static PDF.
 [menu]
   [[menu.main]]
-    name = "Home"
-    pageRef = "/"
+    name = "About"
+    url = "/#about"
     weight = 10
   [[menu.main]]
     name = "Research"
-    url = "/research/"
+    url = "/#research"
     weight = 20
   [[menu.main]]
     name = "Software"
-    url = "/software/"
+    url = "/#software"
     weight = 30
   [[menu.main]]
     name = "Publications"
-    url = "/publications/"
+    url = "/#publications"
     weight = 40
   [[menu.main]]
     name = "Posts"
@@ -208,6 +212,10 @@ buildFuture = false
     name = "Talks"
     url = "/talks/"
     weight = 60
+  [[menu.main]]
+    name = "Contact"
+    url = "/#contact"
+    weight = 65
   [[menu.main]]
     name = "CV"
     url = "files/Borcherding_CV.pdf"

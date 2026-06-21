@@ -1,0 +1,167 @@
+/* =============================================================================
+   Editorial-minimal landing — Phase 3 STRUCTURAL CSS ONLY.
+   Light structural rules so the page is readable and not ugly. The full
+   visual system (typeface, ink-blue accent, warm off-white, motion) lands
+   in a later phase. Keep this restrained.
+   ========================================================================== */
+
+.editorial-home {
+  max-width: 48rem;
+  margin: 0 auto;
+}
+
+/* -- Hero ------------------------------------------------------------------ */
+.hero {
+  padding: 3rem 0 2.5rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+.hero-name {
+  font-size: 2.5rem;
+  line-height: 1.1;
+  margin: 0 0 0.25rem;
+}
+.hero-role {
+  font-size: 1.15rem;
+  margin: 0 0 0.15rem;
+}
+.hero-org {
+  margin: 0 0 1rem;
+  opacity: 0.85;
+}
+.hero-statement {
+  font-size: 1.1rem;
+  max-width: 42rem;
+  margin: 0 0 1.25rem;
+}
+.hero-social {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+  font-size: 0.95rem;
+}
+.btn-cv {
+  display: inline-block;
+  padding: 0.5rem 1.1rem;
+  border: 1px solid currentColor;
+  border-radius: 0.25rem;
+  text-decoration: none;
+  font-size: 0.95rem;
+}
+
+/* -- Numbered sections ----------------------------------------------------- */
+.sec {
+  padding: 2.5rem 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+.sec-head {
+  font-size: 1.5rem;
+  margin: 0 0 1.25rem;
+}
+.sec-num {
+  font-variant-numeric: tabular-nums;
+  opacity: 0.45;
+  margin-right: 0.6rem;
+}
+.sec-intro,
+.sec .lead {
+  font-size: 1.05rem;
+}
+.sec .lead {
+  font-weight: 600;
+}
+
+/* -- About interests ------------------------------------------------------- */
+.interests {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 0.75rem;
+  margin-top: 1rem;
+}
+.interests li {
+  padding: 0.2rem 0.6rem;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 1rem;
+  font-size: 0.85rem;
+}
+
+/* -- Research blocks ------------------------------------------------------- */
+.research-blocks {
+  display: grid;
+  gap: 1.5rem;
+}
+.research-block h3 {
+  margin: 0 0 0.35rem;
+  font-size: 1.1rem;
+}
+.research-block p {
+  margin: 0;
+}
+
+/* -- Software grid --------------------------------------------------------- */
+.software-grid {
+  list-style: none;
+  padding: 0;
+  margin: 1.25rem 0 0;
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+}
+.software-card {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 0.4rem;
+  padding: 1rem;
+}
+.software-name {
+  margin: 0 0 0.4rem;
+  font-size: 1.05rem;
+}
+.software-desc {
+  margin: 0 0 0.6rem;
+  font-size: 0.92rem;
+}
+.software-meta {
+  margin: 0;
+  font-size: 0.82rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  opacity: 0.85;
+}
+
+/* -- Contact --------------------------------------------------------------- */
+.contact {
+  display: grid;
+  grid-template-columns: 8rem 1fr;
+  gap: 0.5rem 1rem;
+  margin: 0;
+}
+.contact dt {
+  font-weight: 600;
+  opacity: 0.7;
+}
+.contact dd {
+  margin: 0;
+}
+.contact-social {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.placeholder-note {
+  opacity: 0.6;
+  font-style: italic;
+}
+
+@media (max-width: 36rem) {
+  .contact {
+    grid-template-columns: 1fr;
+    gap: 0.15rem 0;
+  }
+  .contact dd {
+    margin-bottom: 0.75rem;
+  }
+}

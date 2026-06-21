@@ -1,0 +1,102 @@
+{{ define "main" }}
+  {{/*
+    Editorial-minimal single-page landing (Phase 3 structure).
+    Identity (name/role/org) comes from site params to avoid duplication;
+    editorial copy comes from this page's front matter (content-blowfish/_index.md).
+    Visual system (fonts, ink-blue accent, motion) lands in a later phase.
+  */}}
+  {{ $author := site.Params.Author }}
+  {{ $contact := .Params.contact }}
+  {{ $social := .Params.social }}
+
+  <article class="editorial-home">
+
+    {{/* ---------------------------------------------------------------- Hero */}}
+    <header class="hero" id="top">
+      <h1 class="hero-name">{{ $author.name | default site.Title }}</h1>
+      <p class="hero-role">Assistant Professor of Pathology &amp; Immunology</p>
+      <p class="hero-org">
+        <a href="{{ .Params.contact.org_url }}" rel="noopener">{{ .Params.contact.org }}</a>
+      </p>
+      {{ with .Params.research_statement }}
+        <p class="hero-statement">{{ . }}</p>
+      {{ end }}
+
+      <nav class="hero-social" aria-label="Profiles">
+        {{ range $social }}
+          <a href="{{ .url }}" rel="me noopener">{{ .name }}</a>
+        {{ end }}
+      </nav>
+
+      <p class="hero-cv">
+        <a class="btn-cv" href="{{ "files/Borcherding_CV.pdf" | relURL }}">Download CV</a>
+      </p>
+    </header>
+
+    {{/* --------------------------------------------------------- 01 · About */}}
+    <section class="sec" id="about">
+      <h2 class="sec-head"><span class="sec-num">01</span> About</h2>
+      {{ with .Params.about }}
+        <p class="lead">{{ .lead }}</p>
+        <p>{{ .body }}</p>
+        {{ with .interests }}
+          <ul class="interests">
+            {{ range . }}<li>{{ . }}</li>{{ end }}
+          </ul>
+        {{ end }}
+      {{ end }}
+    </section>
+
+    {{/* ------------------------------------------------------ 02 · Research */}}
+    <section class="sec" id="research">
+      <h2 class="sec-head"><span class="sec-num">02</span> Research</h2>
+      <div class="research-blocks">
+        {{ range .Params.research_areas }}
+          <div class="research-block">
+            <h3>{{ .title }}</h3>
+            <p>{{ .body }}</p>
+          </div>
+        {{ end }}
+      </div>
+    </section>
+
+    {{/* ------------------------------------------------------ 03 · Software */}}
+    <section class="sec" id="software">
+      <h2 class="sec-head"><span class="sec-num">03</span> Software</h2>
+      <p class="sec-intro">
+        Open-source tools for immune repertoire analysis and single-cell genomics,
+        maintained under <a href="https://github.com/BorchLab" rel="noopener">BorchLab</a>.
+      </p>
+      {{ partial "home/software.html" . }}
+    </section>
+
+    {{/* -------------------------------------------- 04 · Selected publications */}}
+    <section class="sec" id="publications">
+      <h2 class="sec-head"><span class="sec-num">04</span> Selected publications</h2>
+      <!-- Phase 4 fills this from data/pub_meta.yaml featured + data/publications.yaml -->
+      <p class="placeholder-note">Featured publications are coming soon.</p>
+    </section>
+
+    {{/* ------------------------------------------------------- 05 · Contact */}}
+    <section class="sec" id="contact">
+      <h2 class="sec-head"><span class="sec-num">05</span> Contact</h2>
+      <dl class="contact">
+        <dt>Email</dt>
+        <dd><a href="mailto:{{ $contact.email }}">{{ $contact.email }}</a></dd>
+        <dt>Location</dt>
+        <dd>{{ $contact.location }}</dd>
+        <dt>Institution</dt>
+        <dd><a href="{{ $contact.org_url }}" rel="noopener">{{ $contact.org }}</a></dd>
+        <dt>Elsewhere</dt>
+        <dd>
+          <nav class="contact-social" aria-label="Profiles">
+            {{ range $social }}
+              <a href="{{ .url }}" rel="me noopener">{{ .name }}</a>
+            {{ end }}
+          </nav>
+        </dd>
+      </dl>
+    </section>
+
+  </article>
+{{ end }}

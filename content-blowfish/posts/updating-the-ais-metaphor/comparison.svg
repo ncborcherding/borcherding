@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 920 620" xmlns="http://www.w3.org/2000/svg" role="img" font-family="system-ui, -apple-system, sans-serif">
+  <title>Classical AIS vs Modern Immunology</title>
+  <desc>Side-by-side comparison across three rows: repertoire generation, lymphocyte activation, and cell lifecycle with branching off-states.</desc>
+
+  <text x="460" y="32" text-anchor="middle" font-size="20" font-weight="700" fill="#0f172a">What AIS models vs. what immunology does</text>
+
+  <text x="230" y="64" text-anchor="middle" font-size="14" font-weight="600" letter-spacing="1.5" fill="#64748b">CLASSICAL AIS</text>
+  <text x="690" y="64" text-anchor="middle" font-size="14" font-weight="600" letter-spacing="1.5" fill="#0d9488">MODERN IMMUNOLOGY</text>
+
+  <line x1="460" y1="76" x2="460" y2="600" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="3 5"/>
+
+  <text x="20" y="110" font-size="11" font-weight="600" letter-spacing="1.2" fill="#94a3b8">REPERTOIRE</text>
+
+  <rect x="60" y="120" width="340" height="120" rx="6" fill="#f8fafc" stroke="#cbd5e1"/>
+  <g fill="#475569">
+    <circle cx="98" cy="155" r="3.5"/>
+    <circle cx="142" cy="195" r="3.5"/>
+    <circle cx="178" cy="148" r="3.5"/>
+    <circle cx="215" cy="218" r="3.5"/>
+    <circle cx="252" cy="170" r="3.5"/>
+    <circle cx="295" cy="200" r="3.5"/>
+    <circle cx="330" cy="160" r="3.5"/>
+    <circle cx="368" cy="210" r="3.5"/>
+    <circle cx="120" cy="225" r="3.5"/>
+    <circle cx="190" cy="180" r="3.5"/>
+    <circle cx="270" cy="225" r="3.5"/>
+    <circle cx="350" cy="190" r="3.5"/>
+    <circle cx="80" cy="190" r="3.5"/>
+    <circle cx="230" cy="145" r="3.5"/>
+    <circle cx="305" cy="155" r="3.5"/>
+  </g>
+  <text x="230" y="262" text-anchor="middle" font-size="13" font-weight="500" fill="#0f172a">Uniform random sampling</text>
+
+  <g>
+    <rect x="500" y="135" width="40" height="22" rx="3" fill="#f0fdfa" stroke="#0d9488"/>
+    <rect x="500" y="163" width="40" height="22" rx="3" fill="#f0fdfa" stroke="#0d9488"/>
+    <rect x="500" y="191" width="40" height="22" rx="3" fill="#f0fdfa" stroke="#0d9488"/>
+    <rect x="500" y="219" width="40" height="22" rx="3" fill="#f0fdfa" stroke="#0d9488"/>
+    <text x="520" y="150" text-anchor="middle" font-size="11" font-weight="600" fill="#0d9488">V</text>
+    <text x="520" y="178" text-anchor="middle" font-size="11" font-weight="600" fill="#0d9488">V</text>
+    <text x="520" y="206" text-anchor="middle" font-size="11" font-weight="600" fill="#0d9488">V</text>
+    <text x="520" y="234" text-anchor="middle" font-size="11" font-weight="600" fill="#0d9488">V</text>
+
+    <rect x="610" y="149" width="40" height="22" rx="3" fill="#f0fdfa" stroke="#0d9488"/>
+    <rect x="610" y="177" width="40" height="22" rx="3" fill="#f0fdfa" stroke="#0d9488"/>
+    <rect x="610" y="205" width="40" height="22" rx="3" fill="#f0fdfa" stroke="#0d9488"/>
+    <text x="630" y="164" text-anchor="middle" font-size="11" font-weight="600" fill="#0d9488">D</text>
+    <text x="630" y="192" text-anchor="middle" font-size="11" font-weight="600" fill="#0d9488">D</text>
+    <text x="630" y="220" text-anchor="middle" font-size="11" font-weight="600" fill="#0d9488">D</text>
+
+    <rect x="720" y="163" width="40" height="22" rx="3" fill="#f0fdfa" stroke="#0d9488"/>
+    <rect x="720" y="191" width="40" height="22" rx="3" fill="#f0fdfa" stroke="#0d9488"/>
+    <text x="740" y="178" text-anchor="middle" font-size="11" font-weight="600" fill="#0d9488">J</text>
+    <text x="740" y="206" text-anchor="middle" font-size="11" font-weight="600" fill="#0d9488">J</text>
+
+    <rect x="800" y="177" width="60" height="22" rx="3" fill="#0d9488"/>
+    <text x="830" y="192" text-anchor="middle" font-size="11" font-weight="600" fill="white">VDJ</text>
+
+    <g stroke="#0d9488" stroke-width="0.6" opacity="0.22" fill="none">
+      <line x1="540" y1="146" x2="610" y2="160"/>
+      <line x1="540" y1="146" x2="610" y2="188"/>
+      <line x1="540" y1="146" x2="610" y2="216"/>
+      <line x1="540" y1="174" x2="610" y2="160"/>
+      <line x1="540" y1="174" x2="610" y2="216"/>
+      <line x1="540" y1="202" x2="610" y2="160"/>
+      <line x1="540" y1="202" x2="610" y2="188"/>
+      <line x1="540" y1="202" x2="610" y2="216"/>
+      <line x1="540" y1="230" x2="610" y2="160"/>
+      <line x1="540" y1="230" x2="610" y2="188"/>
+      <line x1="540" y1="230" x2="610" y2="216"/>
+      <line x1="650" y1="160" x2="720" y2="174"/>
+      <line x1="650" y1="160" x2="720" y2="202"/>
+      <line x1="650" y1="188" x2="720" y2="202"/>
+      <line x1="650" y1="216" x2="720" y2="174"/>
+      <line x1="650" y1="216" x2="720" y2="202"/>
+      <line x1="760" y1="202" x2="800" y2="188"/>
+    </g>
+
+    <g stroke="#0d9488" stroke-width="1.5" fill="none">
+      <line x1="540" y1="174" x2="610" y2="188"/>
+      <line x1="650" y1="188" x2="720" y2="174"/>
+      <line x1="760" y1="174" x2="800" y2="188"/>
+    </g>
+  </g>
+  <text x="690" y="262" text-anchor="middle" font-size="13" font-weight="500" fill="#0f172a">V(D)J recombination, gene library</text>
+
+  <text x="20" y="300" font-size="11" font-weight="600" letter-spacing="1.2" fill="#94a3b8">ACTIVATION</text>
+
+  <rect x="60" y="310" width="340" height="100" rx="6" fill="#f8fafc" stroke="#cbd5e1"/>
+  <line x1="80" y1="360" x2="380" y2="360" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3 3"/>
+  <text x="380" y="356" text-anchor="end" font-size="10" fill="#94a3b8">threshold</text>
+  <circle cx="120" cy="385" r="6" fill="#475569"/>
+  <circle cx="180" cy="395" r="6" fill="#475569"/>
+  <circle cx="240" cy="335" r="6" fill="#0f172a"/>
+  <text x="240" y="328" text-anchor="middle" font-size="9" fill="#0f172a">activated</text>
+  <circle cx="300" cy="380" r="6" fill="#475569"/>
+  <circle cx="350" cy="345" r="6" fill="#0f172a"/>
+  <text x="230" y="430" text-anchor="middle" font-size="13" font-weight="500" fill="#0f172a">One signal, one threshold</text>
+
+  <g>
+    <rect x="490" y="320" width="100" height="28" rx="14" fill="#f0fdfa" stroke="#0d9488"/>
+    <text x="540" y="338" text-anchor="middle" font-size="11" font-weight="600" fill="#0d9488">Antigen</text>
+    <rect x="490" y="372" width="100" height="28" rx="14" fill="#f0fdfa" stroke="#0d9488"/>
+    <text x="540" y="390" text-anchor="middle" font-size="11" font-weight="600" fill="#0d9488">Costim</text>
+
+    <path d="M 590 334 L 670 360" stroke="#0d9488" stroke-width="1.5" fill="none"/>
+    <path d="M 590 386 L 670 360" stroke="#0d9488" stroke-width="1.5" fill="none"/>
+
+    <circle cx="680" cy="360" r="14" fill="#0d9488"/>
+    <text x="680" y="365" text-anchor="middle" font-size="11" font-weight="700" fill="white">AND</text>
+
+    <path d="M 694 360 L 760 360" stroke="#0d9488" stroke-width="1.5" fill="none" marker-end="url(#arrow)"/>
+    <rect x="765" y="346" width="100" height="28" rx="4" fill="#0d9488"/>
+    <text x="815" y="364" text-anchor="middle" font-size="11" font-weight="600" fill="white">Activated</text>
+  </g>
+  <text x="690" y="430" text-anchor="middle" font-size="13" font-weight="500" fill="#0f172a">Two signals, conjunctive gate</text>
+
+  <text x="20" y="470" font-size="11" font-weight="600" letter-spacing="1.2" fill="#94a3b8">LIFECYCLE</text>
+
+  <g>
+    <rect x="100" y="506" width="100" height="36" rx="4" fill="#f8fafc" stroke="#cbd5e1"/>
+    <text x="150" y="529" text-anchor="middle" font-size="12" font-weight="500" fill="#0f172a">Active</text>
+    <path d="M 200 524 L 260 524" stroke="#94a3b8" stroke-width="1.2" fill="none" marker-end="url(#arrow-gray)"/>
+    <rect x="260" y="506" width="100" height="36" rx="4" fill="#f8fafc" stroke="#cbd5e1" stroke-dasharray="3 3"/>
+    <text x="310" y="529" text-anchor="middle" font-size="12" font-weight="500" fill="#475569">Deleted</text>
+  </g>
+  <text x="230" y="595" text-anchor="middle" font-size="13" font-weight="500" fill="#0f172a">Two states</text>
+
+  <g font-size="10" font-weight="500">
+    <rect x="490" y="478" width="70" height="26" rx="4" fill="#f0fdfa" stroke="#0d9488"/>
+    <text x="525" y="495" text-anchor="middle" fill="#0d9488">Immature</text>
+
+    <rect x="580" y="478" width="70" height="26" rx="4" fill="#f0fdfa" stroke="#0d9488"/>
+    <text x="615" y="495" text-anchor="middle" fill="#0d9488">Mature</text>
+
+    <rect x="670" y="478" width="70" height="26" rx="4" fill="#f0fdfa" stroke="#0d9488"/>
+    <text x="705" y="495" text-anchor="middle" fill="#0d9488">Effector</text>
+
+    <rect x="760" y="478" width="70" height="26" rx="4" fill="#0d9488"/>
+    <text x="795" y="495" text-anchor="middle" fill="white">Memory</text>
+
+    <path d="M 560 491 L 580 491" stroke="#0d9488" stroke-width="1.2" fill="none" marker-end="url(#arrow)"/>
+    <path d="M 650 491 L 670 491" stroke="#0d9488" stroke-width="1.2" fill="none" marker-end="url(#arrow)"/>
+    <path d="M 740 491 L 760 491" stroke="#0d9488" stroke-width="1.2" fill="none" marker-end="url(#arrow)"/>
+
+    <rect x="540" y="540" width="70" height="26" rx="4" fill="#f8fafc" stroke="#0d9488" stroke-dasharray="3 3"/>
+    <text x="575" y="557" text-anchor="middle" fill="#0d9488">Anergic</text>
+
+    <rect x="645" y="540" width="70" height="26" rx="4" fill="#f8fafc" stroke="#0d9488" stroke-dasharray="3 3"/>
+    <text x="680" y="557" text-anchor="middle" fill="#0d9488">Exhausted</text>
+
+    <path d="M 525 504 L 555 540" stroke="#0d9488" stroke-width="1" stroke-dasharray="2 2" fill="none"/>
+    <path d="M 615 504 L 595 540" stroke="#0d9488" stroke-width="1" stroke-dasharray="2 2" fill="none"/>
+    <path d="M 615 504 L 660 540" stroke="#0d9488" stroke-width="1" stroke-dasharray="2 2" fill="none"/>
+    <path d="M 705 504 L 695 540" stroke="#0d9488" stroke-width="1" stroke-dasharray="2 2" fill="none"/>
+  </g>
+  <text x="690" y="595" text-anchor="middle" font-size="13" font-weight="500" fill="#0f172a">Branching path with off-states</text>
+
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#0d9488"/>
+    </marker>
+    <marker id="arrow-gray" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#94a3b8"/>
+    </marker>
+  </defs>
+</svg>
