@@ -12,7 +12,7 @@
   <article class="editorial-home">
 
     {{/* ---------------------------------------------------------------- Hero */}}
-    <header class="hero" id="top">
+    <header class="hero reveal" id="top">
       <h1 class="hero-name">{{ $author.name | default site.Title }}</h1>
       <p class="hero-role">Assistant Professor of Pathology &amp; Immunology</p>
       <p class="hero-org">
@@ -34,7 +34,7 @@
     </header>
 
     {{/* --------------------------------------------------------- 01 · About */}}
-    <section class="sec" id="about">
+    <section class="sec reveal" id="about">
       <h2 class="sec-head"><span class="sec-num">01</span> About</h2>
       {{ with .Params.about }}
         <p class="lead">{{ .lead }}</p>
@@ -48,7 +48,7 @@
     </section>
 
     {{/* ------------------------------------------------------ 02 · Research */}}
-    <section class="sec" id="research">
+    <section class="sec reveal" id="research">
       <h2 class="sec-head"><span class="sec-num">02</span> Research</h2>
       <div class="research-blocks">
         {{ range .Params.research_areas }}
@@ -61,7 +61,7 @@
     </section>
 
     {{/* ------------------------------------------------------ 03 · Software */}}
-    <section class="sec" id="software">
+    <section class="sec reveal" id="software">
       <h2 class="sec-head"><span class="sec-num">03</span> Software</h2>
       <p class="sec-intro">
         Open-source tools for immune repertoire analysis and single-cell genomics,
@@ -71,13 +71,13 @@
     </section>
 
     {{/* -------------------------------------------- 04 · Selected publications */}}
-    <section class="sec" id="publications">
+    <section class="sec reveal" id="publications">
       <h2 class="sec-head"><span class="sec-num">04</span> Selected publications</h2>
       {{ partial "home/featured-pubs.html" . }}
     </section>
 
     {{/* ------------------------------------------------------- 05 · Contact */}}
-    <section class="sec" id="contact">
+    <section class="sec reveal" id="contact">
       <h2 class="sec-head"><span class="sec-num">05</span> Contact</h2>
       <dl class="contact">
         <dt>Email</dt>

@@ -115,7 +115,7 @@ ignoreFiles = ['\.bib$', '\.Rmd$', '\.Rmarkdown$', '\.ipynb$', '_cache$']
 
 # -- Theme parameters --------------------------------------------------------
 [params]
-  colorScheme = "blowfish"
+  colorScheme = "borch"
   defaultAppearance = "light"   # light, with the dark toggle available
   autoSwitchAppearance = false  # honor defaultAppearance; user toggles manually
 
