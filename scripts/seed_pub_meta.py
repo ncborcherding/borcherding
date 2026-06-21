@@ -125,7 +125,7 @@ def candidate_pmids(post, by_doi, by_title, title_of_pmid):
     return cands
 
 
-def no_match_reason(post, by_doi):
+def no_match_reason(post):
     doi = normalize_doi(post.get("doi", ""))
     reason = "no pubmed url; "
     reason += f"doi '{doi}' not in bib; " if doi else "no doi; "
@@ -251,7 +251,7 @@ def assign_pmids(folders, by_doi, by_title, title_of_pmid):
                               for p, m, _ in cands if p in assigned)
             reason = f"all candidate PMIDs already claimed: {taken}"
         else:
-            reason = no_match_reason(post, by_doi)
+            reason = no_match_reason(post)
         unmatched.append((folder, title, reason))
 
     return assigned, unmatched, notes

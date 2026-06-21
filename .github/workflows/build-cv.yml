@@ -25,7 +25,7 @@ jobs:
 
       - name: Install Python deps
         run: |
-          pip install biopython bibtexparser requests pyyaml
+          pip install biopython "bibtexparser<2" requests pyyaml
 
       - name: Update pubs from MyNCBI (paginate + filter preprints)
         env:
