@@ -13,6 +13,14 @@
 
     {{/* ---------------------------------------------------------------- Hero */}}
     <header class="hero reveal" id="top">
+      {{ with resources.Get "images/portrait.jpg" }}
+        {{ $sm := (.Resize "160x webp q85").RelPermalink }}
+        {{ $lg := (.Resize "320x webp q85").RelPermalink }}
+        <img class="hero-portrait" src="{{ $sm }}"
+             srcset="{{ $sm }} 1x, {{ $lg }} 2x"
+             width="160" height="160"
+             alt="Nick Borcherding" loading="eager" decoding="async" />
+      {{ end }}
       <h1 class="hero-name">{{ $author.name | default site.Title }}</h1>
       <p class="hero-role">Assistant Professor of Pathology &amp; Immunology</p>
       <p class="hero-org">

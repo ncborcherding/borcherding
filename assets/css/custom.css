@@ -168,6 +168,16 @@ a:hover {
   padding: 1rem 0 2.75rem;
   border-bottom: 1px solid var(--rule);
 }
+.hero-portrait {
+  display: block;
+  width: 8rem;
+  height: 8rem;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 0 0 1.4rem;
+  border: 1px solid var(--rule);
+  box-shadow: 0 8px 24px -12px rgba(20, 30, 45, 0.35);
+}
 .hero-name {
   font-family: var(--font-serif);
   font-weight: 600;
