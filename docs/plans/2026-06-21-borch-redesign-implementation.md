@@ -237,6 +237,7 @@ Filter `publications` whose PMID is `featured: true` in `pub_meta.yaml`; render 
 - Fonts: Newsreader (display/headings) + Inter or Mukta (body), self-hosted from `data/fonts/` or `static/fonts/` (avoid Google Fonts CDN for privacy — there's a `privacy_pack` heritage). `@font-face` in custom.css.
 - Color: define CSS vars — `--bg: #FAF8F4` (warm off-white), `--ink: #15171A`, `--accent: #1F3A5F` (ink-blue), hairline `--rule: #DFD9CF`. Dark mode vars: warm near-black `#16140F`/off-white ink, same accent lightened.
 - Apply accent to links, `.sec-num`, rules; large confident heading sizes; generous `line-height`.
+- **REQUIRED (from Phase 4 review):** convert hardcoded color literals in `assets/css/custom.css` (pub filter input border, chip borders `rgba(0,0,0,0.2)`, year-head/entry hairlines `rgba(0,0,0,0.08/0.05)`, active chip `rgba(0,0,0,0.85)`/`#fff`) to the new CSS vars/tokens so dark mode renders correctly. These currently assume a light canvas and break in dark mode. Add explicit `.dark`/`prefers-color-scheme` overrides.
 
 **Verification:** preview light + dark. Expected: serif headings, off-white canvas, ink-blue accents, readable contrast (check WCAG AA via the preview/inspect tooling — body text ≥ 4.5:1).
 
