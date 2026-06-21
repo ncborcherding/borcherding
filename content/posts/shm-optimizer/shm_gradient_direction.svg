@@ -1,0 +1,62 @@
+<svg viewBox="0 0 920 500" xmlns="http://www.w3.org/2000/svg" role="img" font-family="system-ui, -apple-system, sans-serif">
+  <title>The gradient points the way: hotspot and adaptive strategies</title>
+  <desc>Left panel: the hotspot strategy weights per-feature mutation rate by gradient magnitude, the analog of AID concentrating mutations on WRCY hotspot motifs. A sequence strip marks hotspot positions and a bar chart shows the mutation rate concentrated there. Right panel: the adaptive strategy is the Adam optimizer, tracking a first moment (mean gradient) and second moment (mean squared gradient) to set a per-feature step.</desc>
+  <text x="460" y="30" text-anchor="middle" font-size="20" font-weight="700" fill="#0f172a">The gradient points the way</text>
+  <text x="460" y="52" text-anchor="middle" font-size="13" fill="#64748b">Both strategies read g = x − a, the direction from antibody toward the antigen</text>
+  <line x1="460" y1="74" x2="460" y2="446" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="3 5"/>
+  <text x="225" y="92" text-anchor="middle" font-size="11" font-weight="600" letter-spacing="1.5" fill="#0d9488">HOTSPOT &#8226; AID TARGETS WRCY</text>
+  <text x="225" y="112" text-anchor="middle" font-size="13" fill="#0f766e">r&#7522; ∝ |x&#7522; − a&#7522;|</text>
+  <text x="64" y="146" text-anchor="end" font-size="10" font-weight="600" letter-spacing="1" fill="#94a3b8">f&#7522;</text>
+  <g font-size="11" text-anchor="middle">
+    <rect x="70" y="128" width="32" height="26" rx="3" fill="#f8fafc" stroke="#cbd5e1"/><text x="86" y="146" fill="#475569">f1</text>
+    <rect x="112" y="128" width="32" height="26" rx="3" fill="#fef3c7" stroke="#f59e0b"/><text x="128" y="146" fill="#92400e">f2</text>
+    <rect x="154" y="128" width="32" height="26" rx="3" fill="#f8fafc" stroke="#cbd5e1"/><text x="170" y="146" fill="#475569">f3</text>
+    <rect x="196" y="128" width="32" height="26" rx="3" fill="#f8fafc" stroke="#cbd5e1"/><text x="212" y="146" fill="#475569">f4</text>
+    <rect x="238" y="128" width="32" height="26" rx="3" fill="#fef3c7" stroke="#f59e0b"/><text x="254" y="146" fill="#92400e">f5</text>
+    <rect x="280" y="128" width="32" height="26" rx="3" fill="#f8fafc" stroke="#cbd5e1"/><text x="296" y="146" fill="#475569">f6</text>
+    <rect x="322" y="128" width="32" height="26" rx="3" fill="#fef3c7" stroke="#f59e0b"/><text x="338" y="146" fill="#92400e">f7</text>
+    <rect x="364" y="128" width="32" height="26" rx="3" fill="#f8fafc" stroke="#cbd5e1"/><text x="380" y="146" fill="#475569">f8</text>
+  </g>
+  <text x="225" y="174" text-anchor="middle" font-size="10" font-style="italic" fill="#b45309">amber = high |gradient| = hotspot, where AID strikes</text>
+  <line x1="60" y1="400" x2="410" y2="400" stroke="#94a3b8" stroke-width="1"/>
+  <text x="46" y="320" text-anchor="middle" font-size="10" fill="#64748b" transform="rotate(-90 46 320)">rate r&#7522;  →</text>
+  <g>
+    <rect x="73" y="380" width="26" height="20" fill="#cbd5e1"/>
+    <rect x="115" y="310" width="26" height="90" fill="#f59e0b"/>
+    <rect x="157" y="370" width="26" height="30" fill="#cbd5e1"/>
+    <rect x="199" y="385" width="26" height="15" fill="#cbd5e1"/>
+    <rect x="241" y="325" width="26" height="75" fill="#f59e0b"/>
+    <rect x="283" y="375" width="26" height="25" fill="#cbd5e1"/>
+    <rect x="325" y="315" width="26" height="85" fill="#f59e0b"/>
+    <rect x="367" y="382" width="26" height="18" fill="#cbd5e1"/>
+  </g>
+  <text x="225" y="420" text-anchor="middle" font-size="11" fill="#475569">mutation concentrates on the features that are wrong</text>
+  <text x="690" y="92" text-anchor="middle" font-size="11" font-weight="600" letter-spacing="1.5" fill="#7c3aed">ADAPTIVE &#8226; THE ADAM OPTIMIZER</text>
+  <rect x="500" y="108" width="380" height="120" rx="6" fill="#faf5ff" stroke="#7c3aed"/>
+  <text x="520" y="138" font-size="13" fill="#7c3aed">m&#8321; ← &#946;&#8321; m&#8321; + (1 − &#946;&#8321;) g</text>
+  <text x="520" y="166" font-size="13" fill="#7c3aed">m&#8322; ← &#946;&#8322; m&#8322; + (1 − &#946;&#8322;) g&#178;</text>
+  <text x="520" y="194" font-size="13" fill="#7c3aed">step = lr · m&#770;&#8321; / (√m&#770;&#8322; + &#949;)</text>
+  <text x="520" y="218" font-size="12" fill="#9333ea">lr = (1 − a) · base_rate</text>
+  <defs>
+    <marker id="arr2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6 Z" fill="#7c3aed"/>
+    </marker>
+  </defs>
+  <rect x="615" y="262" width="120" height="44" rx="6" fill="#f5f3ff" stroke="#7c3aed"/>
+  <text x="675" y="282" text-anchor="middle" font-size="12" font-weight="600" fill="#7c3aed">gradient g</text>
+  <text x="675" y="298" text-anchor="middle" font-size="10" fill="#9333ea">x − a</text>
+  <line x1="675" y1="306" x2="585" y2="338" stroke="#7c3aed" stroke-width="1.2" marker-end="url(#arr2)"/>
+  <line x1="675" y1="306" x2="765" y2="338" stroke="#7c3aed" stroke-width="1.2" marker-end="url(#arr2)"/>
+  <rect x="470" y="340" width="180" height="44" rx="6" fill="#faf5ff" stroke="#7c3aed"/>
+  <text x="560" y="360" text-anchor="middle" font-size="12" font-weight="600" fill="#7c3aed">m&#8321;: momentum</text>
+  <text x="560" y="376" text-anchor="middle" font-size="10" fill="#9333ea">running mean direction</text>
+  <rect x="700" y="340" width="180" height="44" rx="6" fill="#faf5ff" stroke="#7c3aed"/>
+  <text x="790" y="360" text-anchor="middle" font-size="12" font-weight="600" fill="#7c3aed">m&#8322;: per-feature scale</text>
+  <text x="790" y="376" text-anchor="middle" font-size="10" fill="#9333ea">running squared gradient</text>
+  <line x1="560" y1="384" x2="660" y2="418" stroke="#7c3aed" stroke-width="1.2" marker-end="url(#arr2)"/>
+  <line x1="790" y1="384" x2="690" y2="418" stroke="#7c3aed" stroke-width="1.2" marker-end="url(#arr2)"/>
+  <rect x="600" y="420" width="150" height="24" rx="6" fill="#7c3aed"/>
+  <text x="675" y="437" text-anchor="middle" font-size="12" font-weight="600" fill="#ffffff">per-feature step</text>
+  <text x="460" y="472" text-anchor="middle" font-size="12" fill="#475569">Hotspot mutates where the antibody is most wrong, like AID on WRCY motifs. Adaptive rescales each feature, which is Adam.</text>
+  <text x="460" y="492" text-anchor="middle" font-size="12" font-style="italic" fill="#64748b">Evolution found preconditioned, momentum-aware descent before we named it.</text>
+</svg>
