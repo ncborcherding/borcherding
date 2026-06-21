@@ -296,6 +296,20 @@ Using the finding from Task 0.1, push `redesign-editorial`, open a Netlify deplo
 
 ---
 
+## Phase 1 outcome notes (2026-06-21)
+
+- **Isolation mechanism changed:** both planned approaches leaked Wowchemy modules (Hugo always reads `config/_default/` as base). Final approach: a separate config root `config-blowfish/_default/hugo.toml` built with `hugo --configDir config-blowfish`, plus an isolated `content-blowfish/` contentDir. Phase 3 builds content under `content-blowfish/`; Phase 6 cutover swaps configDir+contentDir to default.
+- **Wowchemy no longer builds locally on Hugo 0.163.3** (pre-existing incompat: `publishdate` parse, `_build` key, `WC_POST_CSS` getenv policy). The real fallback is the **live Netlify site pinned at HUGO_VERSION 0.87.0**, not a local build. Acceptable — we never need a local Wowchemy build.
+- **Go toolchain required:** Hugo Modules need `go` (installed locally via brew, go 1.26.4). Phase 6 must confirm Netlify build image provides Go for `hugo mod`.
+- **Blowfish ↔ Hugo version:** Blowfish v2.103.0 warns (non-fatal) on Hugo 0.163. Watch for a hard failure on future bumps; pin if needed.
+
+## Phase 2 outcome notes (2026-06-21)
+
+- Bib has **91** entries (not ~88). `publications.yaml` = 91, verified == bib count.
+- Overlay `pub_meta.yaml`: 83 seeded, 4 unmatched (all `featured:false` — older editorial pieces + one brand-new preprint not yet in the bib). All **7 featured** pubs preserved. Seeder auto-reconciled 4 stale/copy-pasted PMIDs in legacy folders (printed under RECONCILED).
+- **All 91 bib entries lack DOI** (MyNCBI pull populates pmid/year, never doi). Site links use PubMed. If DOI links are wanted later, `update_pubs_from_ncbi.py` must fetch them.
+- **CARRY INTO PHASE 4 (Task 4.1):** three titles contain HTML markup (`<i>`/`<sub>`, PMIDs 31619506, 33627663, 40687995 — gene names, subscripts). The publications layout must render titles with `| safeHTML` (or markdownify) so these show as intended italics/subscripts, not literal tags. Do NOT strip in the script.
+
 ## Risk register
 
 - **Hugo bump breaks Netlify cache plugin** → drop the plugin (Task 6.1).
