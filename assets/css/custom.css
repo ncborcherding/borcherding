@@ -189,8 +189,12 @@ a:hover {
 @media (min-width: 640px) {
   .hero {
     flex-direction: row; /* desktop: text left, portrait right */
-    align-items: center;
+    align-items: flex-start; /* top-align portrait with the name */
     gap: 2.5rem;
+  }
+  /* Optical nudge so the portrait's top lines up with the name's cap height */
+  .hero-portrait {
+    margin-top: 0.5rem;
   }
 }
 .hero-name {
