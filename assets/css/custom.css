@@ -579,13 +579,16 @@ header nav a,
    so a reduced-motion visitor is never stuck at opacity:0.
    ========================================================================== */
 @media (prefers-reduced-motion: no-preference) {
-  .reveal {
+  /* Hide-then-reveal ONLY when JS is confirmed present (html.js set by the
+     inline head script). Without JS, .reveal is never hidden, so no-JS
+     visitors and crawlers always see content. */
+  html.js .reveal {
     opacity: 0;
     transform: translateY(8px);
     transition: opacity 400ms var(--ease), transform 400ms var(--ease);
     will-change: opacity, transform;
   }
-  .reveal.is-visible {
+  html.js .reveal.is-visible {
     opacity: 1;
     transform: none;
   }
