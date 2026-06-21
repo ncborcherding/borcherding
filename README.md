@@ -1,44 +1,98 @@
-<p align="center"><a href="https://wowchemy.com/templates/" target="_blank" rel="noopener"><img src="https://wowchemy.com/uploads/readmes/academic_logo_200px.png" alt="Hugo Academic Template for Wowchemy Website Builder"></a></p>
+# borch.dev
 
-# Academic Template for [Hugo](https://github.com/gohugoio/hugo)
+Personal academic site for Nick Borcherding, built with [Hugo](https://gohugo.io)
+and the [Blowfish](https://github.com/nunocoracao/blowfish) theme. The site is a
+single-page editorial landing (About, Research, Software, Publications, Contact)
+plus list pages for posts and talks, and a publications view driven entirely
+from a BibTeX source of truth.
 
-The Hugo **Academic Resumé Template** empowers you to create your job-winning online resumé and showcase your academic publications.
+## Stack
 
-[Check out the latest demo](https://academic-demo.netlify.app/) of what you'll get in less than 10 minutes, or [view the showcase](https://wowchemy.com/user-stories/).
+- **Hugo** (extended), theme imported as a Hugo module via `go.mod`. Requires
+  Go on the build machine to resolve the module.
+- **Blowfish** theme with local overrides in `layouts/` and a custom visual
+  system (self-hosted Inter + Newsreader fonts, an ink-blue accent, a `borch`
+  color scheme) in `assets/`.
+- **Netlify** for hosting and deploys.
 
-[**Wowchemy**](https://wowchemy.com) makes it easy to create a beautiful website for free. Edit your site in Markdown, Jupyter, or RStudio (via Blogdown), generate it with Hugo, and deploy with GitHub or Netlify. Customize anything on your site with widgets, themes, and language packs.
+### Layout of the repo
 
-- 👉 [**Get Started**](https://wowchemy.com/templates/)
-- 📚 [View the **documentation**](https://wowchemy.com/docs/)
-- 💬 [Chat with the **Wowchemy community**](https://discord.gg/z8wNYzb) or [**Hugo community**](https://discourse.gohugo.io)
-- 🐦 Twitter: [@wowchemy](https://twitter.com/wowchemy) [@GeorgeCushen](https://twitter.com/GeorgeCushen) [#MadeWithWowchemy](https://twitter.com/search?q=(%23MadeWithWowchemy%20OR%20%23MadeWithAcademic)&src=typed_query)
-- 💡 [Request a **feature** or report a **bug** for _Wowchemy_](https://github.com/wowchemy/wowchemy-hugo-modules/issues)
-- ⬆️ **Updating Wowchemy?** View the [Update Guide](https://wowchemy.com/docs/guide/update/) and [Release Notes](https://wowchemy.com/updates/)
+```
+config/_default/hugo.toml   site config (the only config root Hugo reads)
+content/                    _index.md (home copy + software data), posts/, talks/, publications/
+layouts/                    overrides on top of the Blowfish theme
+assets/                     custom CSS/JS (theme color scheme, fonts, motion)
+static/fonts/               self-hosted woff2
+static/files/               Borcherding_CV.pdf (rendered from cv.qmd in CI)
+static/uploads/             managed by a separate deploy pipeline — do not edit by hand
+data/                       publication pipeline inputs/outputs (see below)
+scripts/                    publication + CV pipeline scripts
+cv.qmd                      Quarto CV, rendered to PDF in CI
+```
 
-## Crowd-funded open-source software
+## Publications: one source, two outputs
 
-To help us develop this template and software sustainably under the MIT license, we ask all individuals and businesses that use it to help support its ongoing maintenance and development via sponsorship.
+Publications are data-driven, not per-paper content folders. A single BibTeX
+file feeds both the website and the CV.
 
-### [❤️ Click here to unlock rewards with sponsorship](https://wowchemy.com/plans/)
+```
+data/pubs.bib  ──(scripts/bib_to_yaml.py)──▶  data/publications.yaml  ──▶  site /publications/
+      │                                                                └──▶  cv.qmd ──▶ CV PDF
+      └── data/pub_meta.yaml  (hand-curated overlay, keyed by PMID)
+```
 
-## Ecosystem
+- **`data/pubs.bib`** is the canonical publication list. CI refreshes it from
+  MyNCBI (`scripts/update_pubs_from_ncbi.py`).
+- **`scripts/bib_to_yaml.py`** converts the bib into `data/publications.yaml`,
+  which both the site and the CV consume.
+- **`data/pub_meta.yaml`** is a hand-maintained overlay keyed by PMID. It holds
+  the things the bib does not: the `featured` flag, tags, extra links, abstract,
+  and highlight text. (`scripts/seed_pub_meta.py` was a one-time seeder from the
+  old Wowchemy folders; it is not part of CI.)
 
-* **[Hugo Academic CLI](https://github.com/wowchemy/hugo-academic-cli):** Automatically import publications from BibTeX
+### Featuring or curating a publication
 
-[![Screenshot](https://raw.githubusercontent.com/wowchemy/wowchemy-hugo-modules/main/academic.png)](https://wowchemy.com)
+Edit `data/pub_meta.yaml`. Find (or add) the entry for the paper's PMID and set
+the overlay fields, e.g.:
 
-## Demo image credits
+```yaml
+'40123456':
+  featured: true
+  tags: [single-cell, TCR]
+  highlight: One-line takeaway shown on the publications page.
+  links:
+    pdf: https://...
+```
 
-- [Open book](https://unsplash.com/photos/J4kK8b9Fgj8)
-- [Course](https://unsplash.com/photos/JKUTrJ4vK00)
+Do not edit `data/publications.yaml` by hand — it is regenerated from the bib.
+Put durable, hand-curated metadata in `pub_meta.yaml`.
 
-## Latest news
-<!--START_SECTION:news-->
-* [Hugo vs Quarto: Which One is Better for 2023?](https:&#x2F;&#x2F;hugoblox.com&#x2F;blog&#x2F;hugo-vs-quarto&#x2F;)
-* [Easily make an academic CV website to get more cites and grow your audience 🚀](https:&#x2F;&#x2F;hugoblox.com&#x2F;blog&#x2F;easily-make-academic-website&#x2F;)
-* [What&#39;s new in v5.2?](https:&#x2F;&#x2F;hugoblox.com&#x2F;blog&#x2F;whats-new-in-v5.2&#x2F;)
-* [What&#39;s new in v5.1?](https:&#x2F;&#x2F;hugoblox.com&#x2F;blog&#x2F;whats-new-in-v5.1&#x2F;)
-* [Version 5.0 (February 2021)](https:&#x2F;&#x2F;hugoblox.com&#x2F;blog&#x2F;version-5.0-february-2021&#x2F;)
-<!--END_SECTION:news-->
+## Build and preview locally
 
-[![Analytics](https://ga-beacon.appspot.com/UA-78646709-2/starter-academic/readme?pixel)](https://github.com/igrigorik/ga-beacon)
+Requires Hugo extended and Go (for the theme module).
+
+```bash
+hugo server            # live preview at http://localhost:1313
+hugo --gc --minify     # production-style build into public/
+```
+
+The production build command matches what Netlify runs.
+
+## Deploy
+
+Netlify builds from `netlify.toml`:
+
+```toml
+command = "hugo --gc --minify -b $URL"
+[build.environment]
+HUGO_VERSION = "0.163.3"
+```
+
+Because the theme is a Hugo module, the build needs Go available. Netlify's
+default build image includes Go; confirm on the first deploy after a Hugo
+version bump.
+
+The CV PDF at `static/files/Borcherding_CV.pdf` is rendered separately by the
+`Build CV` GitHub Action (`.github/workflows/build-cv.yml`): it refreshes
+`pubs.bib` from MyNCBI, regenerates `publications.yaml`, then renders `cv.qmd`
+to PDF with Quarto and commits the artifact.
