@@ -13,32 +13,35 @@
 
     {{/* ---------------------------------------------------------------- Hero */}}
     <header class="hero reveal" id="top">
+      <div class="hero-text">
+        <h1 class="hero-name">{{ $author.name | default site.Title }}</h1>
+        <p class="hero-role">Assistant Professor of Pathology &amp; Immunology</p>
+        <p class="hero-org">
+          <a href="{{ .Params.contact.org_url }}" rel="noopener">{{ .Params.contact.org }}</a>
+        </p>
+        {{ with .Params.research_statement }}
+          <p class="hero-statement">{{ . }}</p>
+        {{ end }}
+
+        <nav class="hero-social" aria-label="Profiles">
+          {{ range $social }}
+            <a href="{{ .url }}" rel="me noopener">{{ .name }}</a>
+          {{ end }}
+        </nav>
+
+        <p class="hero-cv">
+          <a class="btn-cv" href="{{ "files/Borcherding_CV.pdf" | relURL }}">Download CV</a>
+        </p>
+      </div>
+
       {{ with resources.Get "images/portrait.jpg" }}
-        {{ $sm := (.Resize "160x webp q85").RelPermalink }}
-        {{ $lg := (.Resize "320x webp q85").RelPermalink }}
+        {{ $sm := (.Resize "240x webp q85").RelPermalink }}
+        {{ $lg := (.Resize "480x webp q85").RelPermalink }}
         <img class="hero-portrait" src="{{ $sm }}"
              srcset="{{ $sm }} 1x, {{ $lg }} 2x"
-             width="160" height="160"
+             width="240" height="240"
              alt="Nick Borcherding" loading="eager" decoding="async" />
       {{ end }}
-      <h1 class="hero-name">{{ $author.name | default site.Title }}</h1>
-      <p class="hero-role">Assistant Professor of Pathology &amp; Immunology</p>
-      <p class="hero-org">
-        <a href="{{ .Params.contact.org_url }}" rel="noopener">{{ .Params.contact.org }}</a>
-      </p>
-      {{ with .Params.research_statement }}
-        <p class="hero-statement">{{ . }}</p>
-      {{ end }}
-
-      <nav class="hero-social" aria-label="Profiles">
-        {{ range $social }}
-          <a href="{{ .url }}" rel="me noopener">{{ .name }}</a>
-        {{ end }}
-      </nav>
-
-      <p class="hero-cv">
-        <a class="btn-cv" href="{{ "files/Borcherding_CV.pdf" | relURL }}">Download CV</a>
-      </p>
     </header>
 
     {{/* --------------------------------------------------------- 01 · About */}}
