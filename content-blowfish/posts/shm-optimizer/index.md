@@ -1,19 +1,16 @@
 ---
 title: "Somatic Hypermutation Is an Optimizer"
-output: html_document
 date: "2026-06-15"
 summary: "From random noise to Adam. The immune system's mutation engine maps onto the search algorithms we already use."
-image:
-  caption: ""
-  focal_point: ""
-  preview_only: true
+tags: ["immunology", "machine learning", "artificial immune systems"]
+draft: false
 ---
 
 <img align="center" src="shm_optimizer_spectrum.svg" alt="The five SHMEngine strategies arranged from least to most structured, each mapping one immune mutation mechanism onto one search primitive. Uniform noise sits at the bottom, the Adam optimizer at the top, and every strategy keeps a mutation only if it raises affinity. The operator that diversifies antibodies is, formally, an optimizer choosing a step." />
 
 A germinal center is a search loop. B cells enter, mutate their receptors, and compete for limited help from follicular helper T cells. Winners cycle back and mutate again. Losers die. Over a week or two, average binding affinity climbs by orders of magnitude. Strip away the anatomy and the cytokines, and what remains is a population of candidate solutions, a fitness function, a mutation operator, and a selection rule. That is an optimizer.
 
-[The last post](https://www.borch.dev/post/updating-the-ais-metaphor/) argued that Artificial Immune Systems left most of modern immunology on the table. This post takes one of those mechanisms, somatic hypermutation, and shows what happens when you import it for real. In [bHIVE](https://github.com/BorchLab/bHive), somatic hypermutation is not one trick. It is five, and each one is a search algorithm you already know.
+[The last post](/posts/updating-the-ais-metaphor/) argued that Artificial Immune Systems left most of modern immunology on the table. This post takes one of those mechanisms, somatic hypermutation, and shows what happens when you import it for real. In [bHIVE](https://github.com/BorchLab/bHive), somatic hypermutation is not one trick. It is five, and each one is a search algorithm you already know.
 
 ## The operator classical AIS forgot to vary
 
