@@ -165,3 +165,115 @@
     margin-bottom: 0.75rem;
   }
 }
+
+/* =============================================================================
+   Publications — Phase 4 structural CSS only (light touch).
+   ========================================================================== */
+.pub-count {
+  font-size: 0.95rem;
+  opacity: 0.8;
+  margin: 0.5rem 0 0;
+}
+
+/* Filter controls */
+.pub-filter {
+  margin: 1.5rem 0 2rem;
+}
+.pub-filter-label {
+  display: block;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  opacity: 0.7;
+  margin-bottom: 0.35rem;
+}
+.pub-filter input[type="search"] {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.5rem 0.7rem;
+  font: inherit;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+.pub-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.75rem;
+}
+.pub-chip {
+  font: inherit;
+  font-size: 0.85rem;
+  padding: 0.2rem 0.6rem;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 999px;
+  background: transparent;
+  cursor: pointer;
+}
+.pub-chip.is-active {
+  background: rgba(0, 0, 0, 0.85);
+  color: #fff;
+  border-color: rgba(0, 0, 0, 0.85);
+}
+
+/* List + entries */
+.pub-year-head {
+  font-size: 1.4rem;
+  margin: 1.75rem 0 0.5rem;
+  padding-bottom: 0.25rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+.pub-entries {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.pub {
+  padding: 0.85rem 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+.pub-authors {
+  margin: 0 0 0.2rem;
+  font-size: 0.92rem;
+  opacity: 0.9;
+}
+.pub-me {
+  font-weight: 700;
+}
+.pub-title {
+  margin: 0 0 0.2rem;
+  font-weight: 600;
+  line-height: 1.35;
+}
+.pub-cite {
+  margin: 0 0 0.35rem;
+  font-size: 0.9rem;
+  opacity: 0.85;
+}
+.pub-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin: 0;
+  font-size: 0.85rem;
+}
+.pub-empty {
+  margin: 1.5rem 0;
+  opacity: 0.7;
+}
+.pub-abstract {
+  margin: 0.4rem 0 0.2rem;
+  font-size: 0.9rem;
+}
+.pub-abstract summary {
+  cursor: pointer;
+  opacity: 0.8;
+}
+.pub-abstract p {
+  margin: 0.5rem 0 0;
+  line-height: 1.5;
+}
+.pub-seeall {
+  margin: 1.25rem 0 0;
+  font-weight: 600;
+}

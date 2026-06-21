@@ -1,0 +1,34 @@
+{{/*
+  Selected (featured) publications for the landing page.
+
+  Renders only publications whose PMID has featured:true in data/pub_meta.yaml,
+  in year-descending order. Each item reuses the shared entry partial for the
+  citation, then adds a native <details> abstract expander when an
+  abstract/highlight exists in the overlay (omitted otherwise).
+*/}}
+{{ $pubs := site.Data.publications.publications }}
+{{ $meta := site.Data.pub_meta }}
+{{ $total := len $pubs }}
+
+{{/* Collect featured pubs (pub already sorted year desc in the data file). */}}
+{{ $featured := slice }}
+{{ range $pubs }}
+  {{ $m := index $meta (string .pmid) }}
+  {{ if and $m $m.featured }}
+    {{ $featured = $featured | append (dict "pub" . "meta" $m) }}
+  {{ end }}
+{{ end }}
+
+<ul class="pub-entries pub-featured">
+  {{ range $featured }}
+    {{ $pub := .pub }}
+    {{ $m := .meta }}
+    {{ $abstract := "" }}
+    {{ with $m.abstract }}{{ $abstract = . }}{{ else }}{{ with $m.highlight }}{{ $abstract = . }}{{ end }}{{ end }}
+    {{ partial "publications/entry.html" (dict "pub" $pub "meta" $m "abstract" $abstract) }}
+  {{ end }}
+</ul>
+
+<p class="pub-seeall">
+  <a href="{{ "publications/" | relURL }}">See all {{ $total }} publications &rarr;</a>
+</p>

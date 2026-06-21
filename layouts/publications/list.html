@@ -1,0 +1,77 @@
+{{ define "main" }}
+  {{/*
+    Full publications listing, data-driven from data/publications.yaml with
+    the data/pub_meta.yaml overlay. Grouped by year descending. Every entry is
+    rendered through partials/publications/entry.html (shared with the landing
+    page featured block).
+
+    Progressive enhancement: the complete list is present in static HTML. The
+    filter input + year chips below are additive — with JS disabled the page is
+    a plain, fully usable list. The script only hides non-matching entries.
+  */}}
+  {{ $pubs := site.Data.publications.publications }}
+  {{ $meta := site.Data.pub_meta }}
+  {{ $total := len $pubs }}
+
+  <article class="editorial-home publications-page">
+    <header class="hero">
+      <h1 class="hero-name">{{ .Title }}</h1>
+      {{ with .Content }}<div class="hero-statement">{{ . }}</div>{{ end }}
+      <p class="pub-count"><span id="pub-count">{{ $total }}</span> publications</p>
+    </header>
+
+    {{/* ---- Progressive-enhancement filter controls ---- */}}
+    <div class="pub-filter" data-pub-filter>
+      <label class="pub-filter-search">
+        <span class="pub-filter-label">Filter publications</span>
+        <input
+          type="search"
+          id="pub-search"
+          placeholder="Search title, author, journal…"
+          autocomplete="off"
+          aria-controls="pub-list" />
+      </label>
+      {{/* Year chips, derived from the data, descending */}}
+      {{ $years := slice }}
+      {{ range $pubs }}{{ $years = $years | append .year }}{{ end }}
+      {{ $years = uniq $years }}
+      <div class="pub-chips" role="group" aria-label="Filter by year">
+        <button type="button" class="pub-chip is-active" data-year="all">All</button>
+        {{ range $years }}
+          <button type="button" class="pub-chip" data-year="{{ . }}">{{ . }}</button>
+        {{ end }}
+      </div>
+    </div>
+
+    {{/* ---- The list itself, grouped by year (descending) ----
+         Data is a raw slice, so we group manually: collect the distinct
+         years in descending order, then filter the slice for each year. */}}
+    <div id="pub-list" class="pub-list">
+      {{ $allYears := slice }}
+      {{ range $pubs }}{{ $allYears = $allYears | append .year }}{{ end }}
+      {{ $yearsDesc := sort ($allYears | uniq) "value" "desc" }}
+      {{ range $yearsDesc }}
+        {{ $year := . }}
+        {{ $group := where $pubs "year" $year }}
+        <section class="pub-year-group" data-year-group="{{ $year }}">
+          <h2 class="pub-year-head">{{ $year }}</h2>
+          <ul class="pub-entries">
+            {{ range $group }}
+              {{ $pub := . }}
+              {{ $m := index $meta (string $pub.pmid) }}
+              {{ partial "publications/entry.html" (dict "pub" $pub "meta" $m) }}
+            {{ end }}
+          </ul>
+        </section>
+      {{ end }}
+    </div>
+
+    <p class="pub-empty" data-pub-empty hidden>No publications match your filter.</p>
+  </article>
+
+  {{ $filterJS := resources.Get "js/pub-filter.js" }}
+  {{ with $filterJS }}
+    {{ $js := . | minify | fingerprint }}
+    <script src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}" defer></script>
+  {{ end }}
+{{ end }}
