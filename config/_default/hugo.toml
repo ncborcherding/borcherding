@@ -199,6 +199,10 @@ ignoreFiles = ['\.bib$', '\.Rmd$', '\.Rmarkdown$', '\.ipynb$', '_cache$']
     url = "/#contact"
     weight = 65
   [[menu.main]]
+    name = "Disclosures"
+    url = "/disclosures/"
+    weight = 67
+  [[menu.main]]
     name = "CV"
     url = "files/Borcherding_CV.pdf"
     weight = 70
