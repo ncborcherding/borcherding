@@ -34,44 +34,14 @@
         </p>
       </div>
 
-      {{/* Right column: portrait with the at-a-glance metrics stacked beneath it. */}}
-      <div class="hero-aside">
-        {{ with resources.Get "images/portrait.jpg" }}
-          {{ $sm := (.Resize "240x webp q85").RelPermalink }}
-          {{ $lg := (.Resize "480x webp q85").RelPermalink }}
-          <img class="hero-portrait" src="{{ $sm }}"
-               srcset="{{ $sm }} 1x, {{ $lg }} 2x"
-               width="240" height="240"
-               alt="Nick Borcherding" loading="eager" decoding="async" />
-        {{ end }}
-
-        {{ $m := site.Data.metrics }}
-        <section class="metrics" aria-label="At a glance">
-          <div class="metric">
-            <span class="metric-num">{{ len site.Data.publications.publications }}</span>
-            <span class="metric-label">Publications</span>
-          </div>
-          {{ with $m.citations_display }}
-            <div class="metric">
-              <span class="metric-num">{{ . }}</span>
-              <span class="metric-label">Citations</span>
-            </div>
-          {{ end }}
-          {{ with $m.h_index }}
-            <div class="metric">
-              <span class="metric-num">{{ . }}</span>
-              <span class="metric-label">h-index</span>
-            </div>
-          {{ end }}
-          {{/* Total GitHub stars summed across the BorchLab packages. */}}
-          {{ with $m.package_stars }}
-            <div class="metric">
-              <span class="metric-num">{{ . }}</span>
-              <span class="metric-label">Package stars &#9733;</span>
-            </div>
-          {{ end }}
-        </section>
-      </div>
+      {{ with resources.Get "images/portrait.jpg" }}
+        {{ $sm := (.Resize "240x webp q85").RelPermalink }}
+        {{ $lg := (.Resize "480x webp q85").RelPermalink }}
+        <img class="hero-portrait" src="{{ $sm }}"
+             srcset="{{ $sm }} 1x, {{ $lg }} 2x"
+             width="240" height="240"
+             alt="Nick Borcherding" loading="eager" decoding="async" />
+      {{ end }}
     </header>
 
     {{/* --------------------------------------------------------- 01 · About */}}

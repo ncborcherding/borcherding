@@ -176,14 +176,8 @@ a:hover {
   flex: 1 1 auto;
   min-width: 0;
 }
-.hero-aside {
-  flex: none;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1.5rem;
-}
 .hero-portrait {
+  flex: none;
   display: block;
   width: clamp(8.5rem, 22vw, 12rem);
   height: clamp(8.5rem, 22vw, 12rem);
@@ -194,12 +188,12 @@ a:hover {
 }
 @media (min-width: 640px) {
   .hero {
-    flex-direction: row; /* desktop: text left, portrait + stats right */
+    flex-direction: row; /* desktop: text left, portrait right */
     align-items: flex-start;
     gap: 3rem;
   }
   /* Optical nudge so the portrait's top lines up with the name's cap height */
-  .hero-aside {
+  .hero-portrait {
     margin-top: 0.5rem;
   }
 }
@@ -261,36 +255,6 @@ a:hover {
   background: var(--accent);
   color: var(--bg);
   text-decoration: none;
-}
-
-/* -- At-a-glance metrics (stacked under the hero portrait) ------------------ */
-.metrics {
-  width: 100%;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1.1rem 1.25rem;
-  padding-top: 0.5rem;
-  border-top: 1px solid var(--rule);
-}
-.metric {
-  display: flex;
-  flex-direction: column;
-  gap: 0.15rem;
-}
-.metric-num {
-  font-family: var(--font-serif);
-  font-weight: 600;
-  font-size: clamp(1.6rem, 4vw, 2rem);
-  line-height: 1;
-  color: var(--accent);
-  font-variant-numeric: tabular-nums;
-}
-.metric-label {
-  font-size: 0.7rem;
-  font-weight: 500;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  color: var(--muted);
 }
 
 /* -- Numbered sections + hairline motif ------------------------------------ */
