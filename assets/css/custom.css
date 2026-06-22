@@ -417,6 +417,11 @@ a:hover {
   flex-wrap: wrap;
   gap: 0.4rem 1.25rem;
 }
+.contact-disclosures {
+  margin: 1.5rem 0 0;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
 
 .placeholder-note {
   color: var(--muted);
