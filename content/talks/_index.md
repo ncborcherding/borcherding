@@ -8,7 +8,8 @@ analysis, and clinical immunogenetics.
 
 ### 2026
 
-- **Pre-Transplant T Cell Receptor Network Topology Predicts Kidney Allograft Outcome Independent of HLA Mismatch** — Academy of Clinical Laboratory Physicians and Scientists Annual Meeting, St. Louis, MO. June 2026.
+- **Pre-Transplant T Cell Receptor Network Topology Predicts Kidney Allograft Outcome Independent of HLA Mismatch** — AIRR Community Meeting VIII, New Haven, CT. June 2026. [Slides](/files/2026_AIRR_Presentation.pdf)
+- **Pre-transplant TCR Network Topology Predicts Kidney Allograft Rejection** — Academy of Clinical Laboratory Physicians and Scientists Annual Meeting, St. Louis, MO. June 2026. [Slides](/files/2026_ACLPS_Presentation.pdf)
 
 ### 2025
 
