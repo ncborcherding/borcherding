@@ -1,0 +1,10 @@
+{{/*
+  extend-footer.html — Blowfish footer hook.
+  Bundles the editorial scroll-reveal script site-wide (minified, fingerprinted,
+  deferred). The script is reduced-motion-safe and a no-op when no `.reveal`
+  targets exist on a page.
+*/}}
+{{ with resources.Get "js/reveal.js" }}
+  {{ $js := . | minify | fingerprint }}
+  <script src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}" defer></script>
+{{ end }}

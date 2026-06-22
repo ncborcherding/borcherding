@@ -1,0 +1,8 @@
+{{/* Mark JS as available ASAP so the CSS scroll-reveal (html.js .reveal) only
+     hides content when JS can reveal it. No-JS visitors never see a blank page. */}}
+<script>document.documentElement.classList.add('js');</script>
+
+{{/* Crisp scalable favicon for modern browsers (PNG/ICO fallbacks are emitted
+     by the theme and overridden by the matching files in static/). */}}
+<link rel="icon" type="image/svg+xml" href="{{ "favicon.svg" | relURL }}">
+<link rel="mask-icon" href="{{ "favicon.svg" | relURL }}" color="#1F3A5F">

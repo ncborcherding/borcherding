@@ -1,0 +1,16 @@
+{{/* Software grid: real BorchLab packages from page front matter. */}}
+<ul class="software-grid">
+  {{ range .Params.software }}
+    <li class="software-card">
+      <h3 class="software-name">
+        <a href="{{ .url }}" rel="noopener">{{ .name }}</a>
+      </h3>
+      <p class="software-desc">{{ .desc }}</p>
+      <p class="software-meta">
+        {{ with .role }}<span class="software-role">{{ . }}</span>{{ end }}
+        {{ with .docs }}<a href="{{ . }}" rel="noopener">Docs</a>{{ end }}
+        {{ with .pub }}<a href="{{ . }}" rel="noopener">Publication</a>{{ end }}
+      </p>
+    </li>
+  {{ end }}
+</ul>

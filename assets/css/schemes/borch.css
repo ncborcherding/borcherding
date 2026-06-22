@@ -1,0 +1,62 @@
+/* =============================================================================
+   borch — editorial-minimal color scheme for Blowfish.
+
+   Blowfish/Tailwind drive light & dark from ONE neutral ramp plus a primary
+   ramp. The body is:
+     bg-neutral text-neutral-900  dark:bg-neutral-800 dark:text-neutral
+   So the ramp must read correctly from BOTH ends:
+     --color-neutral      (DEFAULT) -> light page background AND dark text
+     --color-neutral-900            -> light body text
+     --color-neutral-800            -> dark page background
+   We therefore build a WARM neutral ramp: light, paper-like off-white at the
+   top (50/DEFAULT), warm near-black (NOT pure black) at the bottom (800/900),
+   tinted muted greys between. The primary ramp is the restrained ink-blue
+   accent, lightened toward the 300/400 end so it stays legible on the dark
+   warm-near-black canvas.
+
+   Values are "R, G, B" triplets (Blowfish wraps them in rgba(var(--x), a)).
+   ========================================================================== */
+:root {
+  /* DEFAULT = warm paper. Doubles as dark-mode text, so it is a touch warmer
+     than pure paper to read as ink on the dark canvas. */
+  --color-neutral: 236, 230, 218;
+
+  /* Warm neutral ramp: paper -> ink. */
+  --color-neutral-50: 250, 248, 244;   /* canvas #FAF8F4  (light bg)        */
+  --color-neutral-100: 244, 240, 232;  /* raised paper                      */
+  --color-neutral-200: 228, 221, 206;  /* hairline rule #E4DDCE             */
+  --color-neutral-300: 205, 197, 182;  /* warm border                       */
+  --color-neutral-400: 154, 149, 139;  /* dark muted #9A958B                */
+  --color-neutral-500: 124, 122, 116;  /* mid muted                         */
+  --color-neutral-600: 92, 94, 99;     /* light muted text #5C5E63          */
+  --color-neutral-700: 45, 44, 40;     /* warm slate                        */
+  --color-neutral-800: 22, 20, 15;     /* dark canvas #16140F  (dark bg)    */
+  --color-neutral-900: 21, 23, 26;     /* ink #15171A  (light body text)    */
+
+  /* Primary = ink-blue accent.
+     Light mode reaches for ~600/700 (deep ink-blue); dark mode utilities
+     reach for ~300/400 (lightened #8FB2DC) so links/buttons stay legible on
+     the warm near-black canvas. */
+  --color-primary-50: 235, 241, 249;
+  --color-primary-100: 214, 226, 241;
+  --color-primary-200: 181, 203, 228;
+  --color-primary-300: 143, 178, 220;  /* dark-mode accent #8FB2DC          */
+  --color-primary-400: 100, 140, 191;
+  --color-primary-500: 51, 96, 150;
+  --color-primary-600: 33, 82, 138;    /* link ink-blue #21528A             */
+  --color-primary-700: 31, 58, 95;     /* accent ink-blue #1F3A5F           */
+  --color-primary-800: 26, 48, 78;
+  --color-primary-900: 20, 37, 60;
+
+  /* Secondary mirrors the ink-blue family (Blowfish expects it defined). */
+  --color-secondary-50: 235, 241, 249;
+  --color-secondary-100: 214, 226, 241;
+  --color-secondary-200: 181, 203, 228;
+  --color-secondary-300: 143, 178, 220;
+  --color-secondary-400: 100, 140, 191;
+  --color-secondary-500: 51, 96, 150;
+  --color-secondary-600: 33, 82, 138;
+  --color-secondary-700: 31, 58, 95;
+  --color-secondary-800: 26, 48, 78;
+  --color-secondary-900: 20, 37, 60;
+}

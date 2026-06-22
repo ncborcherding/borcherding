@@ -7,3 +7,13 @@ public/
 jsconfig.json
 node_modules/
 .DS_Store
+
+# Hugo build lock
+.hugo_build.lock
+
+# Python bytecode
+__pycache__/
+*.pyc
+
+# Local Claude Code preview config
+.claude/

@@ -1,0 +1,234 @@
+# =============================================================================
+# Site config (Blowfish theme).
+#
+# This is the default config root: `hugo` (and Netlify's
+# `hugo --gc --minify -b $URL`) reads config/_default/ with no extra flags.
+# Content lives in the default content/ tree; the theme is imported as a Hugo
+# module below.
+# =============================================================================
+
+baseURL = "https://borch.dev/"
+title = "Nick Borcherding"
+defaultContentLanguage = "en"
+themesDir = "themes"
+
+enableRobotsTXT = true
+enableEmoji = true
+summaryLength = 0
+
+buildDrafts = false
+buildFuture = false
+
+# Skip non-renderable sources. Notably data/pubs.bib: Hugo tries to unmarshal
+# every file under data/ and cannot parse BibTeX, which aborts the build. The
+# Phase 2 pipeline already emits data/publications.yaml and data/pub_meta.yaml
+# from the .bib, so the raw .bib is input-only and safe to ignore here.
+ignoreFiles = ['\.bib$', '\.Rmd$', '\.Rmarkdown$', '\.ipynb$', '_cache$']
+
+# -- Theme module import (Blowfish) ------------------------------------------
+[module]
+  [[module.imports]]
+    path = "github.com/nunocoracao/blowfish/v2"
+
+[pagination]
+  pagerSize = 100
+
+[imaging]
+  anchor = "Center"
+
+[taxonomies]
+  tag = "tags"
+  category = "categories"
+  author = "authors"
+  series = "series"
+
+[sitemap]
+  changefreq = "daily"
+  filename = "sitemap.xml"
+  priority = 0.5
+
+# Google Analytics (GA4). Blowfish only emits the tag on production builds
+# (HUGO_ENV=production, set by Netlify), so local `hugo server` never tracks.
+[services.googleAnalytics]
+  ID = "G-KS9M8EV5G6"
+
+[outputs]
+  home = ["HTML", "RSS", "JSON"]
+
+[related]
+  threshold = 0
+  toLower = false
+  [[related.indices]]
+    name = "tags"
+    weight = 100
+  [[related.indices]]
+    name = "categories"
+    weight = 100
+  [[related.indices]]
+    name = "series"
+    weight = 50
+  [[related.indices]]
+    name = "authors"
+    weight = 20
+  [[related.indices]]
+    name = "date"
+    weight = 10
+  [[related.indices]]
+    applyFilter = false
+    name = "fragmentrefs"
+    type = "fragments"
+    weight = 10
+
+# -- Markup (required by Blowfish) -------------------------------------------
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.parser]
+      wrapStandAloneImageWithinParagraph = false
+      [markup.goldmark.parser.attribute]
+        block = true
+    [markup.goldmark.renderer]
+      unsafe = true
+    [markup.goldmark.extensions]
+      [markup.goldmark.extensions.passthrough]
+        enable = true
+        [markup.goldmark.extensions.passthrough.delimiters]
+          block = [['\[', '\]'], ['$$', '$$']]
+          inline = [['\(', '\)']]
+  [markup.highlight]
+    noClasses = false
+  [markup.tableOfContents]
+    startLevel = 2
+    endLevel = 4
+
+# -- Theme parameters --------------------------------------------------------
+[params]
+  colorScheme = "borch"
+  defaultAppearance = "light"   # light, with the dark toggle available
+  autoSwitchAppearance = false  # honor defaultAppearance; user toggles manually
+
+  enableSearch = true
+  enableCodeCopy = true
+
+  disableImageOptimization = false
+  fingerprintAlgorithm = "sha512"
+
+  # Default social share card (1200x630) used for og:image / twitter:image
+  # site-wide when a page has no featured image. Lives in assets/.
+  defaultSocialImage = "og-card.png"
+
+  [params.verification]
+    google = ""   # paste the Google Search Console verification token here
+    bing = ""
+
+  [params.header]
+    layout = "basic"
+
+  [params.footer]
+    showMenu = true
+    showCopyright = true
+    showThemeAttribution = true
+    showAppearanceSwitcher = true
+    showScrollToTop = true
+
+  [params.homepage]
+    layout = "profile"     # profile homepage uses the author block below
+    showRecent = false
+    showRecentItems = 5
+    showMoreLink = false
+
+  [params.article]
+    showDate = true
+    showAuthor = true
+    showReadingTime = true
+    showWordCount = true
+    showHeadingAnchors = true
+    showPagination = true
+    showTaxonomies = false
+
+  [params.list]
+    showSummary = true
+    groupByYear = true
+
+# -- Language / author identity ----------------------------------------------
+[languages]
+  [languages.en]
+    disabled = false
+    locale = "en"
+    label = "English"
+    weight = 1
+    title = "Nick Borcherding"
+
+    [languages.en.params]
+      displayName = "EN"
+      isoCode = "en"
+      rtl = false
+      dateFormat = "2 January 2006"
+      description = "Nick Borcherding - Physician-scientist and Assistant Professor of Pathology & Immunology at Washington University School of Medicine in St. Louis. Computational immunology, single-cell analysis, and open-source bioinformatics tools."
+
+      [languages.en.params.author]
+        name = "Nick Borcherding"
+        headline = "Assistant Professor of Pathology & Immunology, Washington University School of Medicine in St. Louis"
+        bio = "Physician-scientist working at the intersection of computational immunology, clinical pathology, and transplant immunogenetics."
+        links = [
+          { orcid = "https://orcid.org/0000-0003-1427-6342" },
+          { github = "https://github.com/BorchLab" },
+          { linkedin = "https://www.linkedin.com/in/thehumanborch/" },
+          { link = "https://scholar.google.com/citations?user=_n4TRuIAAAAJ" },
+          { link = "https://pathology.wustl.edu/" },
+        ]
+
+# -- Menus -------------------------------------------------------------------
+# Streamlined top nav: the homepage is a single scroll (About/Research/Software/
+# Publications/Contact are sections on "/"), so we keep only the substantive
+# destinations in the header and push utility + writing links to the footer.
+[menu]
+  [[menu.main]]
+    name = "Research"
+    url = "/#research"
+    weight = 20
+  [[menu.main]]
+    name = "Software"
+    url = "/#software"
+    weight = 30
+  [[menu.main]]
+    name = "Publications"
+    url = "/#publications"
+    weight = 40
+  [[menu.main]]
+    name = "Talks"
+    url = "/talks/"
+    weight = 60
+  [[menu.main]]
+    name = "CV"
+    url = "files/Borcherding_CV.pdf"
+    weight = 70
+
+  # Footer: writing, utility, and social links (text, matching the hero style).
+  [[menu.footer]]
+    name = "Posts"
+    url = "/posts/"
+    weight = 10
+  [[menu.footer]]
+    name = "Contact"
+    url = "/#contact"
+    weight = 20
+  [[menu.footer]]
+    name = "Disclosures"
+    url = "/disclosures/"
+    weight = 30
+  [[menu.footer]]
+    name = "Google Scholar"
+    url = "https://scholar.google.com/citations?user=_n4TRuIAAAAJ"
+    weight = 40
+  [[menu.footer]]
+    name = "ORCID"
+    url = "https://orcid.org/0000-0003-1427-6342"
+    weight = 50
+  [[menu.footer]]
+    name = "GitHub"
+    url = "https://github.com/BorchLab"
+    weight = 60
+  [[menu.footer]]
+    name = "LinkedIn"
+    url = "https://www.linkedin.com/in/thehumanborch/"
+    weight = 70

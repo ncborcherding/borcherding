@@ -1,0 +1,643 @@
+/* =============================================================================
+   EDITORIAL-MINIMAL VISUAL SYSTEM — Phase 5.
+
+   Warm paper canvas, one restrained ink-blue accent, Newsreader display serif
+   over an Inter sans body, a section-numeral + hairline structural motif, and
+   subtle reduced-motion-safe reveal. Light/dark switch natively via Blowfish's
+   `html.dark` class; the Blowfish chrome inherits the palette from the `borch`
+   color scheme (assets/css/schemes/borch.css). Everything custom is themed
+   through the semantic tokens defined just below.
+   ========================================================================== */
+
+/* -- Self-hosted fonts (NO Google CDN — privacy) --------------------------- */
+/* woff2 live in static/fonts/ -> served at /fonts/*. Latin subsets only. */
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/inter-400.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("/fonts/inter-500.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("/fonts/inter-600.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/fonts/inter-700.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Newsreader";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/newsreader-400.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Newsreader";
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/newsreader-400-italic.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Newsreader";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("/fonts/newsreader-500.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Newsreader";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("/fonts/newsreader-600.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Newsreader";
+  font-style: italic;
+  font-weight: 600;
+  font-display: swap;
+  src: url("/fonts/newsreader-600-italic.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Newsreader";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/fonts/newsreader-700.woff2") format("woff2");
+}
+
+/* -- Semantic design tokens ------------------------------------------------ */
+:root {
+  --bg: #faf8f4; /* warm off-white canvas        */
+  --bg-raised: #f4f0e8; /* slightly raised paper        */
+  --ink: #15171a; /* primary text                 */
+  --muted: #5c5e63; /* secondary text               */
+  --accent: #1f3a5f; /* ink-blue (structure)         */
+  --link: #21528a; /* brighter ink-blue for links  */
+  --rule: #e4ddce; /* hairline rule                */
+  --rule-strong: #cdc5b6; /* heavier border               */
+
+  --font-serif: "Newsreader", Georgia, "Times New Roman", serif;
+  --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+  --measure: 50rem; /* prose max-width              */
+  --ease: cubic-bezier(0.2, 0, 0, 1);
+}
+
+html.dark {
+  --bg: #16140f; /* warm near-black (NOT pure)   */
+  --bg-raised: #1f1c16;
+  --ink: #ece6da;
+  --muted: #9a958b;
+  --accent: #8fb2dc; /* lightened ink-blue           */
+  --link: #8fb2dc;
+  --rule: rgba(255, 255, 255, 0.12);
+  --rule-strong: rgba(255, 255, 255, 0.2);
+}
+
+/* -- Global type & canvas -------------------------------------------------- */
+body {
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: "tnum" 1, "cv05" 1;
+}
+
+h1,
+h2,
+h3,
+h4,
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4 {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+}
+
+em,
+i,
+cite {
+  font-style: italic;
+}
+
+/* Editorial links: accent ink-blue, underline thickens in on hover. */
+a {
+  color: var(--link);
+  text-decoration-color: color-mix(in srgb, var(--link) 35%, transparent);
+  text-underline-offset: 0.16em;
+  text-decoration-thickness: 1px;
+  transition: text-decoration-color 160ms var(--ease),
+    text-decoration-thickness 160ms var(--ease), color 160ms var(--ease);
+}
+a:hover {
+  text-decoration-color: currentColor;
+  text-decoration-thickness: 2px;
+}
+
+/* =============================================================================
+   Landing — editorial single page
+   ========================================================================== */
+.editorial-home {
+  max-width: var(--measure);
+  margin: 0 auto;
+  color: var(--ink);
+}
+
+/* -- Hero ------------------------------------------------------------------ */
+.hero {
+  display: flex;
+  flex-direction: column-reverse; /* mobile: portrait on top, text below */
+  align-items: flex-start;
+  gap: 1.75rem;
+  padding: 1rem 0 2.75rem;
+  border-bottom: 1px solid var(--rule);
+}
+.hero-text {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.hero-portrait {
+  flex: none;
+  display: block;
+  width: clamp(8.5rem, 22vw, 12rem);
+  height: clamp(8.5rem, 22vw, 12rem);
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid var(--rule);
+  box-shadow: 0 8px 24px -12px rgba(20, 30, 45, 0.35);
+}
+@media (min-width: 640px) {
+  .hero {
+    flex-direction: row; /* desktop: text left, portrait right */
+    align-items: flex-start;
+    gap: 3rem;
+  }
+  /* Optical nudge so the portrait's top lines up with the name's cap height */
+  .hero-portrait {
+    margin-top: 0.5rem;
+  }
+}
+.hero-name {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: clamp(2.6rem, 7vw, 4.25rem);
+  line-height: 1.04;
+  letter-spacing: -0.02em;
+  margin: 0 0 0.4rem;
+  color: var(--ink);
+}
+.hero-role {
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin: 0 0 0.1rem;
+  color: var(--ink);
+}
+.hero-org {
+  margin: 0 0 1.25rem;
+  color: var(--muted);
+}
+.hero-org a {
+  color: inherit;
+}
+.hero-statement {
+  font-family: var(--font-serif);
+  font-size: clamp(1.2rem, 2.2vw, 1.5rem);
+  line-height: 1.5;
+  font-weight: 400;
+  max-width: 42rem;
+  margin: 0 0 1.5rem;
+  color: var(--ink);
+}
+.hero-social {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.4rem;
+  margin-bottom: 1.5rem;
+  font-size: 0.95rem;
+}
+.hero-cv {
+  margin: 0;
+}
+.btn-cv {
+  display: inline-block;
+  padding: 0.55rem 1.25rem;
+  border: 1px solid var(--accent);
+  border-radius: 0.3rem;
+  color: var(--accent);
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  transition: background-color 160ms var(--ease), color 160ms var(--ease),
+    transform 160ms var(--ease);
+}
+.btn-cv:hover {
+  background: var(--accent);
+  color: var(--bg);
+  text-decoration: none;
+}
+
+/* -- Numbered sections + hairline motif ------------------------------------ */
+.sec {
+  padding: 2.75rem 0;
+  border-bottom: 1px solid var(--rule);
+}
+.sec:last-child {
+  border-bottom: none;
+}
+
+/* Heading row: accent numeral, serif title, then a hairline filling the row. */
+.sec-head {
+  display: flex;
+  align-items: baseline;
+  gap: 0.85rem;
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 1.6rem;
+  margin: 0 0 1.5rem;
+  color: var(--ink);
+}
+.sec-head::after {
+  content: "";
+  flex: 1 1 auto;
+  height: 1px;
+  background: var(--rule);
+  align-self: center;
+  margin-left: 0.25rem;
+}
+.sec-num {
+  font-family: var(--font-sans);
+  font-variant-numeric: tabular-nums lining-nums;
+  font-feature-settings: "tnum" 1;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--accent);
+  margin: 0;
+  flex: 0 0 auto;
+  transform: translateY(-0.15em);
+}
+
+.sec-intro,
+.sec .lead {
+  font-size: 1.08rem;
+  color: var(--ink);
+}
+.sec .lead {
+  font-family: var(--font-serif);
+  font-size: 1.3rem;
+  line-height: 1.45;
+  font-weight: 400;
+  margin-top: 0;
+}
+.sec p {
+  color: var(--ink);
+}
+
+/* -- About interests ------------------------------------------------------- */
+.interests {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 0.6rem;
+  margin-top: 1.5rem;
+}
+.interests li {
+  padding: 0.25rem 0.7rem;
+  border: 1px solid var(--rule-strong);
+  border-radius: 1rem;
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
+/* -- Research blocks ------------------------------------------------------- */
+.research-blocks {
+  display: grid;
+  gap: 1.75rem;
+}
+.research-block h3 {
+  margin: 0 0 0.4rem;
+  font-size: 1.2rem;
+  color: var(--ink);
+}
+.research-block p {
+  margin: 0;
+  color: var(--ink);
+}
+
+/* -- Software grid --------------------------------------------------------- */
+.software-grid {
+  list-style: none;
+  padding: 0;
+  margin: 1.5rem 0 0;
+  display: grid;
+  gap: 1.1rem;
+  grid-template-columns: repeat(auto-fill, minmax(15.5rem, 1fr));
+}
+.software-card {
+  border: 1px solid var(--rule);
+  border-radius: 0.5rem;
+  padding: 1.15rem 1.25rem;
+  background: var(--bg-raised);
+  transition: transform 180ms var(--ease), box-shadow 180ms var(--ease),
+    border-color 180ms var(--ease);
+}
+.software-name {
+  font-family: var(--font-serif);
+  margin: 0 0 0.45rem;
+  font-size: 1.12rem;
+  color: var(--ink);
+}
+.software-name a {
+  color: inherit;
+  text-decoration: none;
+}
+.software-name a:hover {
+  color: var(--link);
+}
+.software-desc {
+  margin: 0 0 0.7rem;
+  font-size: 0.92rem;
+  color: var(--ink);
+}
+.software-meta {
+  margin: 0;
+  font-size: 0.82rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+  color: var(--muted);
+}
+.software-role {
+  color: var(--muted);
+}
+
+/* -- Contact --------------------------------------------------------------- */
+.contact {
+  display: grid;
+  grid-template-columns: 8rem 1fr;
+  gap: 0.6rem 1.25rem;
+  margin: 0;
+}
+.contact dt {
+  font-weight: 600;
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+  padding-top: 0.1rem;
+}
+.contact dd {
+  margin: 0;
+  color: var(--ink);
+}
+.contact-social {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.25rem;
+}
+.contact-disclosures {
+  margin: 1.5rem 0 0;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.placeholder-note {
+  color: var(--muted);
+  font-style: italic;
+}
+
+@media (max-width: 36rem) {
+  .contact {
+    grid-template-columns: 1fr;
+    gap: 0.15rem 0;
+  }
+  .contact dd {
+    margin-bottom: 0.85rem;
+  }
+}
+
+/* =============================================================================
+   Publications — list + featured block (Phase 4 literals now tokenized)
+   ========================================================================== */
+.pub-count {
+  font-size: 0.95rem;
+  color: var(--muted);
+  margin: 0.5rem 0 0;
+}
+
+/* Filter controls */
+.pub-filter {
+  margin: 1.75rem 0 2.25rem;
+}
+.pub-filter-label {
+  display: block;
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+  margin-bottom: 0.4rem;
+}
+.pub-filter input[type="search"] {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.55rem 0.75rem;
+  font: inherit;
+  color: var(--ink);
+  background: var(--bg-raised);
+  border: 1px solid var(--rule-strong);
+  border-radius: 5px;
+  transition: border-color 160ms var(--ease);
+}
+.pub-filter input[type="search"]:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+.pub-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.85rem;
+}
+.pub-chip {
+  font: inherit;
+  font-size: 0.84rem;
+  padding: 0.22rem 0.7rem;
+  border: 1px solid var(--rule-strong);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  transition: border-color 140ms var(--ease), color 140ms var(--ease),
+    background-color 140ms var(--ease);
+}
+.pub-chip:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.pub-chip.is-active {
+  background: var(--accent);
+  color: var(--bg);
+  border-color: var(--accent);
+}
+
+/* List + entries */
+.pub-year-head {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--ink);
+  margin: 2rem 0 0.5rem;
+  padding-bottom: 0.3rem;
+  border-bottom: 1px solid var(--rule);
+}
+.pub-entries {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.pub {
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--rule);
+}
+.pub-authors {
+  margin: 0 0 0.2rem;
+  font-size: 0.92rem;
+  color: var(--muted);
+}
+.pub-me {
+  font-weight: 700;
+  color: var(--ink);
+}
+.pub-title {
+  margin: 0 0 0.25rem;
+  font-weight: 600;
+  font-size: 1.02rem;
+  line-height: 1.4;
+  color: var(--ink);
+}
+.pub-cite {
+  margin: 0 0 0.4rem;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+.pub-journal {
+  font-style: italic;
+}
+.pub-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.9rem;
+  margin: 0;
+  font-size: 0.85rem;
+}
+.pub-empty {
+  margin: 1.5rem 0;
+  color: var(--muted);
+}
+.pub-abstract {
+  margin: 0.5rem 0 0.2rem;
+  font-size: 0.9rem;
+}
+.pub-abstract summary {
+  cursor: pointer;
+  color: var(--muted);
+}
+.pub-abstract summary:hover {
+  color: var(--link);
+}
+.pub-abstract p {
+  margin: 0.5rem 0 0;
+  line-height: 1.55;
+  color: var(--ink);
+}
+.pub-seeall {
+  margin: 1.5rem 0 0;
+  font-weight: 600;
+}
+
+/* =============================================================================
+   Posts / Talks lists & single pages — inherit the editorial palette/type
+   ========================================================================== */
+.prose {
+  color: var(--ink);
+}
+.prose a {
+  color: var(--link);
+}
+article h1,
+article h2,
+article h3,
+.article-title,
+.title {
+  font-family: var(--font-serif);
+}
+
+/* =============================================================================
+   Blowfish chrome — light touch so nav/footer inherit fonts & palette
+   ========================================================================== */
+header.sticky a,
+header nav a,
+.menu a {
+  font-family: var(--font-sans);
+}
+.prose a:hover {
+  text-decoration-thickness: 2px;
+}
+
+/* =============================================================================
+   Motion — SUBTLE, reduced-motion-safe.
+   Default (no JS / reduced motion): everything fully visible & static.
+   Only inside `prefers-reduced-motion: no-preference` do we hide-then-reveal,
+   so a reduced-motion visitor is never stuck at opacity:0.
+   ========================================================================== */
+@media (prefers-reduced-motion: no-preference) {
+  /* Hide-then-reveal ONLY when JS is confirmed present (html.js set by the
+     inline head script). Without JS, .reveal is never hidden, so no-JS
+     visitors and crawlers always see content. */
+  html.js .reveal {
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 400ms var(--ease), transform 400ms var(--ease);
+    will-change: opacity, transform;
+  }
+  html.js .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  .software-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--rule-strong);
+    box-shadow: 0 6px 18px -8px rgba(20, 30, 45, 0.25);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Belt-and-suspenders: never hide content for reduced-motion users. */
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

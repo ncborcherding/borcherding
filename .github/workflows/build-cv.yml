@@ -25,7 +25,7 @@ jobs:
 
       - name: Install Python deps
         run: |
-          pip install biopython bibtexparser requests
+          pip install biopython "bibtexparser<2" requests pyyaml
 
       - name: Update pubs from MyNCBI (paginate + filter preprints)
         env:
@@ -34,12 +34,16 @@ jobs:
         run: |
           python scripts/update_pubs_from_ncbi.py
 
-      - name: Commit pubs.bib (if changed)
+      - name: Regenerate publications.yaml from pubs.bib
+        run: |
+          python scripts/bib_to_yaml.py
+
+      - name: Commit data updates (if changed)
         run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
-          git add data/pubs.bib || true
-          git commit -m "chore: auto-update pubs.bib from MyNCBI" || echo "No changes"
+          git add data/pubs.bib data/publications.yaml || true
+          git commit -m "chore: auto-update pubs.bib + publications.yaml from MyNCBI" || echo "No changes"
           git push || true
 
       # --- R + Quarto + TinyTeX for PDF rendering ---

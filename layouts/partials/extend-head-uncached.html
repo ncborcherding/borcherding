@@ -1,0 +1,41 @@
+{{/* Rich Person structured data on the homepage for Google's Knowledge Graph
+     and academic entity recognition. Blowfish only emits a minimal WebSite
+     block, so this adds the entity detail (affiliation, sameAs, knowsAbout).
+     This partial receives the page context (uncached), so .IsHome works. */}}
+{{ if .IsHome }}
+  {{ $img := "" }}
+  {{ with resources.Get "og-card.png" }}{{ $img = .Permalink }}{{ end }}
+  {{ $org := .Params.contact.org | default "Washington University School of Medicine in St. Louis" }}
+  {{ $orgURL := .Params.contact.org_url | default "https://medicine.wustl.edu/" }}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "@id": "{{ site.Home.Permalink }}#person",
+    "name": "{{ site.Title }}",
+    "url": "{{ site.Home.Permalink }}",
+    {{ with $img }}"image": "{{ . }}",{{ end }}
+    "jobTitle": "Assistant Professor of Pathology & Immunology",
+    "worksFor": {
+      "@type": "Organization",
+      "name": "{{ $org }}",
+      "url": "{{ $orgURL }}"
+    },
+    "alumniOf": [
+      { "@type": "CollegeOrUniversity", "name": "University of Iowa" },
+      { "@type": "CollegeOrUniversity", "name": "Iowa State University" }
+    ],
+    "knowsAbout": [
+      "Computational immunology",
+      "Single-cell sequencing",
+      "Adaptive immune receptor repertoire analysis",
+      "Tumor immunology",
+      "Immunometabolism",
+      "Transplant immunogenetics"
+    ],
+    "sameAs": [
+      {{ range $i, $s := .Params.social }}{{ if $i }},{{ end }}{{ $s.url | jsonify }}{{ end }}
+    ]
+  }
+  </script>
+{{ end }}

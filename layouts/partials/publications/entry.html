@@ -1,0 +1,69 @@
+{{/*
+  Shared single-publication renderer used by both the full publications list
+  (publications/list.html) and the featured block on the landing page
+  (partials/home/featured-pubs.html).
+
+  Expects a dict context:
+    pub      -> one entry from site.Data.publications.publications
+    meta     -> the matching overlay from site.Data.pub_meta (may be nil)
+    abstract -> optional string; when set, a native <details> expander is
+                rendered inside this entry (used by the featured block).
+
+  Renders authors (Borcherding bolded), title (safeHTML so embedded
+  <i>/<sub> markup formats), journal/year citation line, and a links row
+  combining bib links (pubmed, doi) with overlay links.
+*/}}
+{{ $pub := .pub }}
+{{ $meta := .meta }}
+{{ $abstract := .abstract }}
+
+<li class="pub" data-year="{{ $pub.year }}">
+  <p class="pub-authors">
+    {{ range $i, $a := $pub.authors }}
+      {{- if $i }}, {{ end -}}
+      {{- if in $a "Borcherding" -}}
+        <strong class="pub-me">{{ $a }}</strong>
+      {{- else -}}
+        {{ $a }}
+      {{- end -}}
+    {{ end }}
+  </p>
+
+  <p class="pub-title">{{ $pub.title | safeHTML }}</p>
+
+  <p class="pub-cite">
+    <em class="pub-journal">{{ $pub.journal | safeHTML }}</em>
+    {{ with $pub.year }} <span class="pub-year">{{ . }}</span>{{ end }}
+    {{- with $pub.volume }}; {{ . }}{{ with $pub.number }}({{ . }}){{ end }}{{ with $pub.pages }}:{{ . }}{{ end }}{{ end -}}
+  </p>
+
+  {{/* ---- Links row: bib links first, then overlay links ---- */}}
+  {{ $links := slice }}
+  {{ with $pub.pubmed }}{{ $links = $links | append (dict "label" "PubMed" "url" .) }}{{ end }}
+  {{ with $pub.doi }}{{ if . }}{{ $links = $links | append (dict "label" "DOI" "url" (printf "https://doi.org/%s" .)) }}{{ end }}{{ end }}
+  {{ with $meta }}
+    {{ with .links }}
+      {{ $labels := dict "code" "Code" "pdf" "PDF" "project" "Project" "poster" "Poster" "slides" "Slides" "dataset" "Dataset" }}
+      {{ range $kind, $url := . }}
+        {{ if $url }}
+          {{ $label := index $labels $kind | default (title $kind) }}
+          {{ $links = $links | append (dict "label" $label "url" $url) }}
+        {{ end }}
+      {{ end }}
+    {{ end }}
+  {{ end }}
+  {{ with $links }}
+    <p class="pub-links">
+      {{ range . }}
+        <a href="{{ .url }}" target="_blank" rel="noopener">{{ .label }}</a>
+      {{ end }}
+    </p>
+  {{ end }}
+
+  {{ with $abstract }}
+    <details class="pub-abstract">
+      <summary>Abstract</summary>
+      <p>{{ . | safeHTML }}</p>
+    </details>
+  {{ end }}
+</li>
