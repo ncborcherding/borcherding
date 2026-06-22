@@ -76,6 +76,52 @@ def fetch_github_stars(repo: str):
         return None
 
 
+def fetch_bioc_downloads(packages):
+    """Sum all-time Bioconductor downloads across the given packages.
+
+    Bioconductor publishes a per-package stats table at
+    /packages/stats/bioc/<pkg>/<pkg>_stats.tab with rows
+    Package, Year, Month, Nb_of_distinct_IPs, Nb_of_downloads. The Month=="all"
+    rows are the yearly totals; summing them gives the all-time count. Packages
+    not on Bioconductor (404) are skipped. Returns (total:int, found:list) or
+    None if nothing could be fetched.
+    """
+    total, found = 0, []
+    for pkg in packages:
+        url = f"https://bioconductor.org/packages/stats/bioc/{pkg}/{pkg}_stats.tab"
+        try:
+            r = requests.get(url, headers={"User-Agent": UA}, timeout=30)
+            if r.status_code != 200 or "Nb_of_downloads" not in r.text:
+                continue
+            s = 0
+            for line in r.text.strip().splitlines()[1:]:
+                cols = line.split("\t")
+                if len(cols) >= 5 and cols[2] == "all":
+                    try:
+                        s += int(cols[4])
+                    except ValueError:
+                        pass
+            if s:
+                total += s
+                found.append(pkg)
+        except Exception as e:
+            logging.warning(f"Bioconductor fetch failed for {pkg}: {e}")
+    if not found:
+        return None
+    return total, found
+
+
+def _human(n: int) -> str:
+    """Compact display: 12,345 -> '12.3k', 2,100,000 -> '2.1M'."""
+    if n >= 1_000_000:
+        return f"{n/1_000_000:.1f}M".replace(".0M", "M")
+    if n >= 10_000:
+        return f"{n/1000:.0f}k"
+    if n >= 1_000:
+        return f"{n/1000:.1f}k".replace(".0k", "k")
+    return str(n)
+
+
 def main():
     data = load_existing()
 
@@ -96,6 +142,19 @@ def main():
         logging.info(f"scRepertoire stars: {stars}")
     else:
         logging.info("Keeping previous star count")
+
+    bioc_pkgs = os.getenv(
+        "BIOC_PACKAGES",
+        "scRepertoire,escape,immApex,immLynx,Trex,Ibex,immReferent",
+    ).split(",")
+    bioc = fetch_bioc_downloads([p.strip() for p in bioc_pkgs if p.strip()])
+    if bioc:
+        total, found = bioc
+        data["bioc_downloads"] = total
+        data["bioc_downloads_display"] = _human(total)
+        logging.info(f"Bioconductor downloads: {total:,} across {found}")
+    else:
+        logging.info("Keeping previous Bioconductor downloads (endpoint unavailable)")
 
     data["updated"] = datetime.date.today().isoformat()
 
