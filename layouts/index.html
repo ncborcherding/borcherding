@@ -63,20 +63,12 @@
               <span class="metric-label">h-index</span>
             </div>
           {{ end }}
-          {{/* Bioconductor downloads (auto from CI); falls back to scRepertoire
-               stars until the download total is fetched. */}}
-          {{ if $m.bioc_downloads_display }}
+          {{/* Total GitHub stars summed across the BorchLab packages. */}}
+          {{ with $m.package_stars }}
             <div class="metric">
-              <span class="metric-num">{{ $m.bioc_downloads_display }}</span>
-              <span class="metric-label">Bioc downloads</span>
+              <span class="metric-num">{{ . }}</span>
+              <span class="metric-label">Package stars &#9733;</span>
             </div>
-          {{ else }}
-            {{ with $m.screpertoire_stars }}
-              <div class="metric">
-                <span class="metric-num">{{ . }}</span>
-                <span class="metric-label">scRepertoire &#9733;</span>
-              </div>
-            {{ end }}
           {{ end }}
         </section>
       </div>

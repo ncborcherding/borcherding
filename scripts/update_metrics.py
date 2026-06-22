@@ -22,7 +22,10 @@ import requests
 import yaml
 
 SCHOLAR_USER = os.getenv("SCHOLAR_USER", "_n4TRuIAAAAJ")
-GITHUB_REPO = os.getenv("METRICS_GH_REPO", "BorchLab/scRepertoire")
+GH_ORG = os.getenv("METRICS_GH_ORG", "BorchLab")
+PACKAGES = os.getenv(
+    "STAR_PACKAGES", "scRepertoire,escape,immApex,immLynx,immGLIPH,Ibex"
+).split(",")
 OUT = "data/metrics.yaml"
 
 UA = ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
@@ -59,67 +62,33 @@ def fetch_scholar():
         return None
 
 
-def fetch_github_stars(repo: str):
-    """Return star count int, or None on failure."""
-    try:
-        headers = {"Accept": "application/vnd.github+json", "User-Agent": UA}
-        token = os.getenv("GITHUB_TOKEN", "").strip()
-        if token:
-            headers["Authorization"] = f"Bearer {token}"
-        r = requests.get(f"https://api.github.com/repos/{repo}", headers=headers, timeout=20)
-        if r.status_code != 200:
-            logging.warning(f"GitHub returned {r.status_code} for {repo}")
-            return None
-        return int(r.json().get("stargazers_count"))
-    except Exception as e:
-        logging.warning(f"GitHub fetch failed: {e}")
-        return None
+def fetch_total_stars(org: str, packages):
+    """Sum GitHub stars across the given org/packages.
 
-
-def fetch_bioc_downloads(packages):
-    """Sum all-time Bioconductor downloads across the given packages.
-
-    Bioconductor publishes a per-package stats table at
-    /packages/stats/bioc/<pkg>/<pkg>_stats.tab with rows
-    Package, Year, Month, Nb_of_distinct_IPs, Nb_of_downloads. The Month=="all"
-    rows are the yearly totals; summing them gives the all-time count. Packages
-    not on Bioconductor (404) are skipped. Returns (total:int, found:list) or
-    None if nothing could be fetched.
+    Returns (total:int, per_pkg:dict) or None if no repo could be read (so the
+    previous value is preserved instead of being zeroed).
     """
-    total, found = 0, []
+    headers = {"Accept": "application/vnd.github+json", "User-Agent": UA}
+    token = os.getenv("GITHUB_TOKEN", "").strip()
+    if token:
+        headers["Authorization"] = f"Bearer {token}"
+    total, per = 0, {}
     for pkg in packages:
-        url = f"https://bioconductor.org/packages/stats/bioc/{pkg}/{pkg}_stats.tab"
         try:
-            r = requests.get(url, headers={"User-Agent": UA}, timeout=30)
-            if r.status_code != 200 or "Nb_of_downloads" not in r.text:
+            r = requests.get(
+                f"https://api.github.com/repos/{org}/{pkg}", headers=headers, timeout=20
+            )
+            if r.status_code != 200:
+                logging.warning(f"GitHub {r.status_code} for {org}/{pkg}")
                 continue
-            s = 0
-            for line in r.text.strip().splitlines()[1:]:
-                cols = line.split("\t")
-                if len(cols) >= 5 and cols[2] == "all":
-                    try:
-                        s += int(cols[4])
-                    except ValueError:
-                        pass
-            if s:
-                total += s
-                found.append(pkg)
+            s = int(r.json().get("stargazers_count", 0))
+            per[pkg] = s
+            total += s
         except Exception as e:
-            logging.warning(f"Bioconductor fetch failed for {pkg}: {e}")
-    if not found:
+            logging.warning(f"GitHub fetch failed for {pkg}: {e}")
+    if not per:
         return None
-    return total, found
-
-
-def _human(n: int) -> str:
-    """Compact display: 12,345 -> '12.3k', 2,100,000 -> '2.1M'."""
-    if n >= 1_000_000:
-        return f"{n/1_000_000:.1f}M".replace(".0M", "M")
-    if n >= 10_000:
-        return f"{n/1000:.0f}k"
-    if n >= 1_000:
-        return f"{n/1000:.1f}k".replace(".0k", "k")
-    return str(n)
+    return total, per
 
 
 def main():
@@ -136,29 +105,19 @@ def main():
     else:
         logging.info("Keeping previous Scholar values")
 
-    stars = fetch_github_stars(GITHUB_REPO)
+    pkgs = [p.strip() for p in PACKAGES if p.strip()]
+    stars = fetch_total_stars(GH_ORG, pkgs)
     if stars is not None:
-        data["screpertoire_stars"] = stars
-        logging.info(f"scRepertoire stars: {stars}")
+        total, per = stars
+        data["package_stars"] = total
+        data["package_stars_by"] = per
+        logging.info(f"Package stars: {total} across {per}")
     else:
         logging.info("Keeping previous star count")
 
-    # NOTE: Bioconductor removed the machine-readable per-package _stats.tab
-    # endpoint (their own pages now link to a 404). The fetch below is kept as
-    # best-effort in case it is restored; until then bioc_downloads is seeded
-    # manually in data/metrics.yaml and preserved on fetch failure.
-    bioc_pkgs = os.getenv(
-        "BIOC_PACKAGES",
-        "scRepertoire,escape,immApex,immLynx,immGLIPH,Ibex",
-    ).split(",")
-    bioc = fetch_bioc_downloads([p.strip() for p in bioc_pkgs if p.strip()])
-    if bioc:
-        total, found = bioc
-        data["bioc_downloads"] = total
-        data["bioc_downloads_display"] = _human(total)
-        logging.info(f"Bioconductor downloads: {total:,} across {found}")
-    else:
-        logging.info("Keeping previous Bioconductor downloads (endpoint unavailable)")
+    # Retire fields from earlier metric designs so the file stays clean.
+    for stale in ("screpertoire_stars", "bioc_downloads", "bioc_downloads_display"):
+        data.pop(stale, None)
 
     data["updated"] = datetime.date.today().isoformat()
 
