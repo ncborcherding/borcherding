@@ -143,9 +143,13 @@ def main():
     else:
         logging.info("Keeping previous star count")
 
+    # NOTE: Bioconductor removed the machine-readable per-package _stats.tab
+    # endpoint (their own pages now link to a 404). The fetch below is kept as
+    # best-effort in case it is restored; until then bioc_downloads is seeded
+    # manually in data/metrics.yaml and preserved on fetch failure.
     bioc_pkgs = os.getenv(
         "BIOC_PACKAGES",
-        "scRepertoire,escape,immApex,immLynx,Trex,Ibex,immReferent",
+        "scRepertoire,escape,immApex,immLynx,immGLIPH,Ibex",
     ).split(",")
     bioc = fetch_bioc_downloads([p.strip() for p in bioc_pkgs if p.strip()])
     if bioc:
