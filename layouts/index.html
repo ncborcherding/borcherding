@@ -44,6 +44,33 @@
       {{ end }}
     </header>
 
+    {{/* ------------------------------------------------------- At a glance */}}
+    {{ $m := site.Data.metrics }}
+    <section class="metrics reveal" aria-label="At a glance">
+      <div class="metric">
+        <span class="metric-num">{{ len site.Data.publications.publications }}</span>
+        <span class="metric-label">Publications</span>
+      </div>
+      {{ with $m.citations_display }}
+        <div class="metric">
+          <span class="metric-num">{{ . }}</span>
+          <span class="metric-label">Citations</span>
+        </div>
+      {{ end }}
+      {{ with $m.h_index }}
+        <div class="metric">
+          <span class="metric-num">{{ . }}</span>
+          <span class="metric-label">h-index</span>
+        </div>
+      {{ end }}
+      {{ with $m.screpertoire_stars }}
+        <div class="metric">
+          <span class="metric-num">{{ . }}</span>
+          <span class="metric-label">scRepertoire &#9733;</span>
+        </div>
+      {{ end }}
+    </section>
+
     {{/* --------------------------------------------------------- 01 · About */}}
     <section class="sec reveal" id="about">
       <h2 class="sec-head"><span class="sec-num">01</span> About</h2>

@@ -38,12 +38,18 @@ jobs:
         run: |
           python scripts/bib_to_yaml.py
 
-      - name: Commit pubs.bib + publications.yaml (if changed)
+      - name: Refresh homepage metrics (Scholar citations/h-index + GitHub stars)
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}   # raises GitHub API rate limit
+        run: |
+          python scripts/update_metrics.py || echo "metrics refresh skipped"
+
+      - name: Commit data updates (if changed)
         run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
-          git add data/pubs.bib data/publications.yaml || true
-          git commit -m "chore: auto-update pubs.bib + publications.yaml from MyNCBI" || echo "No changes"
+          git add data/pubs.bib data/publications.yaml data/metrics.yaml || true
+          git commit -m "chore: auto-update pubs + metrics from MyNCBI/Scholar" || echo "No changes"
           git push || true
 
       # --- R + Quarto + TinyTeX for PDF rendering ---
