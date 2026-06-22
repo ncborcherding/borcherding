@@ -47,6 +47,11 @@ ignoreFiles = ['\.bib$', '\.Rmd$', '\.Rmarkdown$', '\.ipynb$', '_cache$']
   filename = "sitemap.xml"
   priority = 0.5
 
+# Google Analytics (GA4). Blowfish only emits the tag on production builds
+# (HUGO_ENV=production, set by Netlify), so local `hugo server` never tracks.
+[services.googleAnalytics]
+  ID = "G-KS9M8EV5G6"
+
 [outputs]
   home = ["HTML", "RSS", "JSON"]
 
