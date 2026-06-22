@@ -156,10 +156,8 @@ def is_preprint(pub: dict) -> bool:
         # Some preprints carry 'PubmedData' -> 'ArticleIdList' with DOI domain hints.
         pubdata = pub.get("PubmedData", {})
         for aid in pubdata.get("ArticleIdList", []):
-            if isinstance(aid, dict):
-                val = (aid.get("_") or "").lower()
-                if PREPRINT_RX.search(val):
-                    return True
+            if PREPRINT_RX.search(str(aid).lower()):
+                return True
 
         # Also scan 'ArticleTitle' just in case:
         title = (art.get("ArticleTitle") or "")
@@ -171,6 +169,54 @@ def is_preprint(pub: dict) -> bool:
     except Exception:
         pass
     return False
+
+
+def _attr(el, key: str) -> str:
+    """Read an attribute off a Biopython StringElement (e.g. IdType, Label).
+
+    Entrez.read() returns ArticleId / AbstractText items as StringElement
+    objects: str subclasses carrying an `.attributes` dict. Plain strings and
+    anything else degrade to "".
+    """
+    try:
+        return el.attributes.get(key, "")
+    except AttributeError:
+        return ""
+
+
+def extract_doi(pub: dict) -> str:
+    """Pull the DOI from PubmedData/ArticleIdList, falling back to ELocationID."""
+    for aid in pub.get("PubmedData", {}).get("ArticleIdList", []):
+        if _attr(aid, "IdType").lower() == "doi":
+            return str(aid).strip()
+    art = pub.get("MedlineCitation", {}).get("Article", {})
+    eloc = art.get("ELocationID", [])
+    if not isinstance(eloc, list):
+        eloc = [eloc]
+    for el in eloc:
+        if _attr(el, "EIdType").lower() == "doi":
+            return str(el).strip()
+    return ""
+
+
+def extract_abstract(art: dict) -> str:
+    """Join PubMed AbstractText into one string.
+
+    Structured abstracts arrive as a list of StringElements, each optionally
+    labeled (BACKGROUND/METHODS/RESULTS/...). Unstructured ones may be a single
+    string. Labels are prefixed so the section structure survives.
+    """
+    abst = art.get("Abstract", {}).get("AbstractText", [])
+    if isinstance(abst, (str, bytes)):
+        return html.unescape(str(abst)).strip()
+    parts = []
+    for seg in abst:
+        text = html.unescape(str(seg)).strip()
+        if not text:
+            continue
+        label = _attr(seg, "Label")
+        parts.append(f"{label}: {text}" if label and label.upper() != "UNLABELLED" else text)
+    return " ".join(parts).strip()
 
 
 def pub_to_bib_entry(pub: dict) -> Dict:
@@ -221,11 +267,9 @@ def pub_to_bib_entry(pub: dict) -> Dict:
     number = jnl.get("JournalIssue", {}).get("Issue", "")
     pages = art.get("Pagination", {}).get("MedlinePgn", "")
 
-    # DOI if available
-    doi = ""
-    for aid in pub.get("PubmedData", {}).get("ArticleIdList", []):
-        if isinstance(aid, dict) and aid.get("IdType", "").lower() == "doi":
-            doi = aid.get("_", "")
+    # DOI and abstract (robust to Biopython StringElement objects)
+    doi = extract_doi(pub)
+    abstract = extract_abstract(art)
 
     # BibTeX entry key
     key = f"PMID{pmid}" if pmid else f"ref{hash(title) & 0xffffffff}"
@@ -244,6 +288,8 @@ def pub_to_bib_entry(pub: dict) -> Dict:
     }
     if doi:
         entry["doi"] = doi
+    if abstract:
+        entry["abstract"] = abstract
 
     return entry
 

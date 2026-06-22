@@ -37,6 +37,7 @@ def main():
             "pages": e.get("pages", ""),
             "doi": e.get("doi", "").strip(),
             "pubmed": f"https://pubmed.ncbi.nlm.nih.gov/{pmid}/" if pmid else "",
+            "abstract": re.sub(r"\s+", " ", e.get("abstract", "")).strip(),
         })
     entries.sort(key=lambda x: (x["year"] or 0), reverse=True)
     with open(OUT_YAML, "w", encoding="utf-8") as f:
