@@ -177,16 +177,11 @@ ignoreFiles = ['\.bib$', '\.Rmd$', '\.Rmarkdown$', '\.ipynb$', '_cache$']
           { link = "https://pathology.wustl.edu/" },
         ]
 
-# -- Main menu ---------------------------------------------------------------
-# Single-page landing (Phase 3): About/Research/Software/Publications/Contact
-# are sections on "/", so the menu links to in-page anchors (#about, etc.) that
-# resolve to the section ids rendered by layouts/index.html. Posts and Talks are
-# real list pages. CV points to the static PDF.
+# -- Menus -------------------------------------------------------------------
+# Streamlined top nav: the homepage is a single scroll (About/Research/Software/
+# Publications/Contact are sections on "/"), so we keep only the substantive
+# destinations in the header and push utility + writing links to the footer.
 [menu]
-  [[menu.main]]
-    name = "About"
-    url = "/#about"
-    weight = 10
   [[menu.main]]
     name = "Research"
     url = "/#research"
@@ -200,22 +195,40 @@ ignoreFiles = ['\.bib$', '\.Rmd$', '\.Rmarkdown$', '\.ipynb$', '_cache$']
     url = "/#publications"
     weight = 40
   [[menu.main]]
-    name = "Posts"
-    url = "/posts/"
-    weight = 50
-  [[menu.main]]
     name = "Talks"
     url = "/talks/"
     weight = 60
   [[menu.main]]
-    name = "Contact"
-    url = "/#contact"
-    weight = 65
-  [[menu.main]]
-    name = "Disclosures"
-    url = "/disclosures/"
-    weight = 67
-  [[menu.main]]
     name = "CV"
     url = "files/Borcherding_CV.pdf"
+    weight = 70
+
+  # Footer: writing, utility, and social links (text, matching the hero style).
+  [[menu.footer]]
+    name = "Posts"
+    url = "/posts/"
+    weight = 10
+  [[menu.footer]]
+    name = "Contact"
+    url = "/#contact"
+    weight = 20
+  [[menu.footer]]
+    name = "Disclosures"
+    url = "/disclosures/"
+    weight = 30
+  [[menu.footer]]
+    name = "Google Scholar"
+    url = "https://scholar.google.com/citations?user=_n4TRuIAAAAJ"
+    weight = 40
+  [[menu.footer]]
+    name = "ORCID"
+    url = "https://orcid.org/0000-0003-1427-6342"
+    weight = 50
+  [[menu.footer]]
+    name = "GitHub"
+    url = "https://github.com/BorchLab"
+    weight = 60
+  [[menu.footer]]
+    name = "LinkedIn"
+    url = "https://www.linkedin.com/in/thehumanborch/"
     weight = 70
