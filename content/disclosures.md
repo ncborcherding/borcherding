@@ -1,5 +1,6 @@
 ---
 title: "Disclosures"
+description: "Conflict of interest and financial relationship disclosures for Nick Borcherding, including consulting, advisory roles, and licensed software."
 date: 2026-06-22
 showDate: false
 showReadingTime: false

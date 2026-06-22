@@ -107,6 +107,14 @@ ignoreFiles = ['\.bib$', '\.Rmd$', '\.Rmarkdown$', '\.ipynb$', '_cache$']
   disableImageOptimization = false
   fingerprintAlgorithm = "sha512"
 
+  # Default social share card (1200x630) used for og:image / twitter:image
+  # site-wide when a page has no featured image. Lives in assets/.
+  defaultSocialImage = "og-card.png"
+
+  [params.verification]
+    google = ""   # paste the Google Search Console verification token here
+    bing = ""
+
   [params.header]
     layout = "basic"
 
