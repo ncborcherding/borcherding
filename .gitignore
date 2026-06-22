@@ -10,3 +10,10 @@ node_modules/
 
 # Hugo build lock
 .hugo_build.lock
+
+# Python bytecode
+__pycache__/
+*.pyc
+
+# Local Claude Code preview config
+.claude/
