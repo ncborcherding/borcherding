@@ -23,8 +23,10 @@
   {{ range $featured }}
     {{ $pub := .pub }}
     {{ $m := .meta }}
+    {{/* Prefer the auto-extracted abstract from the NCBI pipeline, then the
+         curated overlay abstract/highlight as a fallback. */}}
     {{ $abstract := "" }}
-    {{ with $m.abstract }}{{ $abstract = . }}{{ else }}{{ with $m.highlight }}{{ $abstract = . }}{{ end }}{{ end }}
+    {{ with $pub.abstract }}{{ $abstract = . }}{{ else }}{{ with $m.abstract }}{{ $abstract = . }}{{ else }}{{ with $m.highlight }}{{ $abstract = . }}{{ end }}{{ end }}{{ end }}
     {{ partial "publications/entry.html" (dict "pub" $pub "meta" $m "abstract" $abstract) }}
   {{ end }}
 </ul>

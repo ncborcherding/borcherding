@@ -60,7 +60,7 @@
             {{ range $group }}
               {{ $pub := . }}
               {{ $m := index $meta (string $pub.pmid) }}
-              {{ partial "publications/entry.html" (dict "pub" $pub "meta" $m) }}
+              {{ partial "publications/entry.html" (dict "pub" $pub "meta" $m "abstract" $pub.abstract) }}
             {{ end }}
           </ul>
         </section>
