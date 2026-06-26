@@ -31,6 +31,7 @@ honeycombHIVE(
   maxIter = 10,
   collapseMethod = c("centroid", "medoid", "median", "mode"),
   minClusterSize = NULL,
+  smallClusterAction = c("merge", "keep", "drop"),
   distance = "euclidean",
   verbose = TRUE,
   refine = FALSE,
@@ -94,8 +95,20 @@ honeycombHIVE(
 
 - minClusterSize:
 
-  Minimum cluster size. Smaller clusters can be merged/discarded if not
-  NULL.
+  Minimum cluster size. Clusters with fewer members are handled per
+  `smallClusterAction`. `NULL` (default) keeps every cluster regardless
+  of size.
+
+- smallClusterAction:
+
+  One of `"merge"` (default), `"keep"`, or `"drop"`, controlling
+  clusters below `minClusterSize`. `"merge"` reassigns their members to
+  the nearest surviving prototype so no observation is lost (the rare
+  cluster is absorbed, not deleted). `"keep"` retains the small cluster
+  as its own prototype (use this to *preserve* rare populations).
+  `"drop"` is the legacy behavior that discards the cluster and its
+  members from subsequent layers. Ignored when `minClusterSize` is
+  `NULL`.
 
 - distance:
 
@@ -196,30 +209,30 @@ resC <- honeycombHIVE(
 )
 #> 
 #> === honeycombHIVE: Layer 1 / 3 (task=clustering) ===
-#> Iteration 1 | #Antibodies: 15 | noImproveCount: 1
-#> Iteration 2 | #Antibodies: 15 | noImproveCount: 2
-#> Iteration 3 | #Antibodies: 15 | noImproveCount: 3
-#> Iteration 4 | #Antibodies: 15 | noImproveCount: 4
-#> Iteration 5 | #Antibodies: 15 | noImproveCount: 5
-#> Iteration 6 | #Antibodies: 15 | noImproveCount: 6
-#> Iteration 7 | #Antibodies: 15 | noImproveCount: 7
-#> Iteration 8 | #Antibodies: 15 | noImproveCount: 8
-#> Iteration 9 | #Antibodies: 15 | noImproveCount: 9
-#> Iteration 10 | #Antibodies: 15 | noImproveCount: 10
-#> Layer 1 completed. Next layer will use 12 prototypes.
+#> Iteration 1 | #Antibodies: 14 | noImproveCount: 0
+#> Iteration 2 | #Antibodies: 14 | noImproveCount: 1
+#> Iteration 3 | #Antibodies: 14 | noImproveCount: 2
+#> Iteration 4 | #Antibodies: 14 | noImproveCount: 3
+#> Iteration 5 | #Antibodies: 14 | noImproveCount: 4
+#> Iteration 6 | #Antibodies: 14 | noImproveCount: 5
+#> Iteration 7 | #Antibodies: 14 | noImproveCount: 6
+#> Iteration 8 | #Antibodies: 14 | noImproveCount: 7
+#> Iteration 9 | #Antibodies: 14 | noImproveCount: 8
+#> Iteration 10 | #Antibodies: 14 | noImproveCount: 9
+#> Layer 1 completed. Next layer will use 14 prototypes.
 #> 
 #> === honeycombHIVE: Layer 2 / 3 (task=clustering) ===
-#> Iteration 1 | #Antibodies: 11 | noImproveCount: 0
-#> Iteration 2 | #Antibodies: 11 | noImproveCount: 1
-#> Iteration 3 | #Antibodies: 11 | noImproveCount: 2
-#> Iteration 4 | #Antibodies: 11 | noImproveCount: 3
-#> Iteration 5 | #Antibodies: 11 | noImproveCount: 4
-#> Iteration 6 | #Antibodies: 11 | noImproveCount: 5
-#> Iteration 7 | #Antibodies: 11 | noImproveCount: 6
-#> Iteration 8 | #Antibodies: 11 | noImproveCount: 7
-#> Iteration 9 | #Antibodies: 11 | noImproveCount: 8
-#> Iteration 10 | #Antibodies: 11 | noImproveCount: 9
-#> Layer 2 completed. Next layer will use 6 prototypes.
+#> Iteration 1 | #Antibodies: 9 | noImproveCount: 0
+#> Iteration 2 | #Antibodies: 9 | noImproveCount: 1
+#> Iteration 3 | #Antibodies: 9 | noImproveCount: 2
+#> Iteration 4 | #Antibodies: 9 | noImproveCount: 3
+#> Iteration 5 | #Antibodies: 9 | noImproveCount: 4
+#> Iteration 6 | #Antibodies: 9 | noImproveCount: 5
+#> Iteration 7 | #Antibodies: 9 | noImproveCount: 6
+#> Iteration 8 | #Antibodies: 9 | noImproveCount: 7
+#> Iteration 9 | #Antibodies: 9 | noImproveCount: 8
+#> Iteration 10 | #Antibodies: 9 | noImproveCount: 9
+#> Layer 2 completed. Next layer will use 9 prototypes.
 #> 
 #> === honeycombHIVE: Layer 3 / 3 (task=clustering) ===
 #> Iteration 1 | #Antibodies: 5 | noImproveCount: 0

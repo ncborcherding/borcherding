@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">bHIVE</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.6</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -39,6 +39,17 @@
       <small>Source: <a href="https://github.com/BorchLab/bHIVE/blob/main/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.99.6" id="bhive-0996">bHIVE 0.99.6<a class="anchor" aria-label="anchor" href="#bhive-0996"></a></h2>
+<div class="section level3">
+<h3 id="new-behavior-0-99-6">New Behavior<a class="anchor" aria-label="anchor" href="#new-behavior-0-99-6"></a></h3>
+<ul><li><p><strong>Unified engine.</strong> <code><a href="../reference/bHIVE.html">bHIVE()</a></code> is now a thin wrapper over the <code>AINet</code> R6 engine instead of a separate pure-R implementation. <code><a href="../reference/swarmbHIVE.html">swarmbHIVE()</a></code> and <code><a href="../reference/honeycombHIVE.html">honeycombHIVE()</a></code> call <code><a href="../reference/bHIVE.html">bHIVE()</a></code>, so they now inherit the C++ clonal-selection and suppression backends, Lloyd consolidation, input scaling, target-K, and all composable immunology modules. The old module-free R loop is retired. The return value gains <code>antibodies_unscaled</code> and (from <code><a href="../reference/bHIVE.html">bHIVE()</a></code>) a <code>model</code> handle; the historical <code>antibodies</code> / <code>assignments</code> / <code>task</code> fields are unchanged. <code><a href="../reference/swarmbHIVE.html">swarmbHIVE()</a></code> now forwards every grid column to <code><a href="../reference/bHIVE.html">bHIVE()</a></code>, so any <code>bHIVE</code>/<code>AINet</code> argument can be tuned, not just <code>nAntibodies</code>/<code>beta</code>/<code>epsilon</code>.</p></li>
+<li><p><strong>Input scaling.</strong> <code>AINet$new()</code> and <code><a href="../reference/bHIVE.html">bHIVE()</a></code> gain a <code>scale</code> argument (<code>"none"</code>, <code>"zscore"</code>, <code>"robust"</code>, <code>"arcsinh"</code>). The transform is learned at <code>fit()</code> and re-applied to new data at <code><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict()</a></code>. Because <code>epsilon</code>, mutation scale, and every distance live in feature units, scaling makes the same defaults behave consistently across datasets of different magnitude. <code>arcsinh</code> (cofactor <code>scaleCofactor</code>, default 5) is the standard mass-cytometry transform. <code>affinityParams$alpha = "auto"</code> sets the RBF/Laplace bandwidth by the median heuristic (alpha = 1 / median pairwise squared distance).</p></li>
+<li><p><strong>Target-K clustering.</strong> New <code>targetK</code> argument forces the clustering result to exactly K clusters. Affinity maturation still discovers where prototypes belong, but a seeded K-means refinement coerces the count: surviving antibodies are agglomerated (if more than K) or split with k-means++ (if fewer). This decouples the reported cluster count from the scale-sensitive emergent suppression dynamics.</p></li>
+<li><p><strong>Scale-free suppression.</strong> New <code>epsilonQuantile</code> argument recomputes the suppression threshold each iteration as a quantile of pairwise antibody distances, adapting to the repertoire’s own spread instead of a fixed feature-unit <code>epsilon</code>.</p></li>
+<li><p><strong>Rare-population protection.</strong> New <code>coverageBoost</code> (with <code>coverageQuantile</code>) seeds fresh antibodies among the worst-covered data points after maturation, countering the clonal-selection bias toward dense regions that otherwise leaves rare populations unrepresented. <code><a href="../reference/honeycombHIVE.html">honeycombHIVE()</a></code> gains <code>smallClusterAction</code> (<code>"merge"</code>, <code>"keep"</code>, <code>"drop"</code>): small clusters are now merged into the nearest prototype (no observations dropped) or kept as rare prototypes by default, instead of being silently deleted.</p></li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.99.5" id="bhive-0995">bHIVE 0.99.5<a class="anchor" aria-label="anchor" href="#bhive-0995"></a></h2>
 <div class="section level3">

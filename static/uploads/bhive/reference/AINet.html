@@ -13,7 +13,7 @@ network regulation, germinal center selection, and more."><meta property="og:ima
 
     <a class="navbar-brand me-2" href="../index.html">bHIVE</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.6</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -91,6 +91,12 @@ network regulation, germinal center selection, and more.</p>
 <span>  initMethod <span class="op">=</span> <span class="st">"sample"</span>,</span>
 <span>  consolidate <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  consolidationSteps <span class="op">=</span> <span class="fl">10L</span>,</span>
+<span>  scale <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"none"</span>, <span class="st">"zscore"</span>, <span class="st">"robust"</span>, <span class="st">"arcsinh"</span><span class="op">)</span>,</span>
+<span>  scaleCofactor <span class="op">=</span> <span class="fl">5</span>,</span>
+<span>  targetK <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  epsilonQuantile <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  coverageBoost <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  coverageQuantile <span class="op">=</span> <span class="fl">0.05</span>,</span>
 <span>  shm <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  init <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  activation <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -170,6 +176,57 @@ Has no effect on classification. Default TRUE.</p></dd>
 
 <dt><code>consolidationSteps</code></dt>
 <dd><p>Integer. Maximum consolidation iterations.</p></dd>
+
+
+<dt><code>scale</code></dt>
+<dd><p>Character. Per-feature input scaling applied at <code>fit()</code>
+and re-applied to new data at <code><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict()</a></code>. One of <code>"none"</code>
+(default, no transform), <code>"zscore"</code> (center/SD), <code>"robust"</code>
+(median / IQR, outlier-tolerant), or <code>"arcsinh"</code> (inverse
+hyperbolic sine with cofactor <code>scaleCofactor</code>, the standard
+mass-cytometry transform). Because <code>epsilon</code>, mutation scale, and
+all distances live in feature units, scaling makes the same defaults
+behave consistently across datasets of different magnitude.</p></dd>
+
+
+<dt><code>scaleCofactor</code></dt>
+<dd><p>Numeric. Cofactor for <code>scale = "arcsinh"</code>
+(<code>asinh(x / cofactor)</code>). Default 5 (CyTOF convention; use ~150 for
+fluorescence flow).</p></dd>
+
+
+<dt><code>targetK</code></dt>
+<dd><p>Integer or NULL. If set, force the clustering solution to
+exactly <code>targetK</code> clusters. Affinity maturation still discovers
+where prototypes belong, but the final consolidation seeds a K-means
+(Lloyd) refinement at exactly <code>targetK</code> centroids: surviving
+antibodies are agglomerated (if more than K) or split with k-means++ (if
+fewer than K) before refinement. This decouples the reported cluster
+count from the emergent suppression dynamics. NULL (default) keeps the
+emergent, self-selected K. Ignored for classification.</p></dd>
+
+
+<dt><code>epsilonQuantile</code></dt>
+<dd><p>Numeric in (0, 1) or NULL. If set, the suppression
+threshold is recomputed each iteration as this quantile of the pairwise
+distances among the current antibodies, making suppression scale-free
+and adaptive instead of using the fixed <code>epsilon</code>. NULL (default)
+uses the fixed <code>epsilon</code>.</p></dd>
+
+
+<dt><code>coverageBoost</code></dt>
+<dd><p>Logical. Clustering only. After maturation, find
+data points that no surviving antibody covers well (max affinity in the
+bottom <code>coverageQuantile</code> tail) and seed fresh antibodies there
+with k-means++. Counters the clonal-selection bias toward dense regions,
+which otherwise leaves rare populations unrepresented. Pairs naturally
+with <code>targetK</code>: the extra seeds give the forced-K refinement
+candidate prototypes for sparse populations. Default FALSE.</p></dd>
+
+
+<dt><code>coverageQuantile</code></dt>
+<dd><p>Numeric in (0, 1). Affinity-coverage tail that
+defines "poorly covered" points for <code>coverageBoost</code>. Default 0.05.</p></dd>
 
 
 <dt><code>shm</code></dt>

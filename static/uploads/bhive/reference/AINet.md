@@ -51,6 +51,12 @@ Create a new AINet algorithm instance.
       initMethod = "sample",
       consolidate = TRUE,
       consolidationSteps = 10L,
+      scale = c("none", "zscore", "robust", "arcsinh"),
+      scaleCofactor = 5,
+      targetK = NULL,
+      epsilonQuantile = NULL,
+      coverageBoost = FALSE,
+      coverageQuantile = 0.05,
       shm = NULL,
       init = NULL,
       activation = NULL,
@@ -130,6 +136,56 @@ Create a new AINet algorithm instance.
 - `consolidationSteps`:
 
   Integer. Maximum consolidation iterations.
+
+- `scale`:
+
+  Character. Per-feature input scaling applied at `fit()` and re-applied
+  to new data at [`predict()`](https://rdrr.io/r/stats/predict.html).
+  One of `"none"` (default, no transform), `"zscore"` (center/SD),
+  `"robust"` (median / IQR, outlier-tolerant), or `"arcsinh"` (inverse
+  hyperbolic sine with cofactor `scaleCofactor`, the standard
+  mass-cytometry transform). Because `epsilon`, mutation scale, and all
+  distances live in feature units, scaling makes the same defaults
+  behave consistently across datasets of different magnitude.
+
+- `scaleCofactor`:
+
+  Numeric. Cofactor for `scale = "arcsinh"` (`asinh(x / cofactor)`).
+  Default 5 (CyTOF convention; use ~150 for fluorescence flow).
+
+- `targetK`:
+
+  Integer or NULL. If set, force the clustering solution to exactly
+  `targetK` clusters. Affinity maturation still discovers where
+  prototypes belong, but the final consolidation seeds a K-means (Lloyd)
+  refinement at exactly `targetK` centroids: surviving antibodies are
+  agglomerated (if more than K) or split with k-means++ (if fewer
+  than K) before refinement. This decouples the reported cluster count
+  from the emergent suppression dynamics. NULL (default) keeps the
+  emergent, self-selected K. Ignored for classification.
+
+- `epsilonQuantile`:
+
+  Numeric in (0, 1) or NULL. If set, the suppression threshold is
+  recomputed each iteration as this quantile of the pairwise distances
+  among the current antibodies, making suppression scale-free and
+  adaptive instead of using the fixed `epsilon`. NULL (default) uses the
+  fixed `epsilon`.
+
+- `coverageBoost`:
+
+  Logical. Clustering only. After maturation, find data points that no
+  surviving antibody covers well (max affinity in the bottom
+  `coverageQuantile` tail) and seed fresh antibodies there with
+  k-means++. Counters the clonal-selection bias toward dense regions,
+  which otherwise leaves rare populations unrepresented. Pairs naturally
+  with `targetK`: the extra seeds give the forced-K refinement candidate
+  prototypes for sparse populations. Default FALSE.
+
+- `coverageQuantile`:
+
+  Numeric in (0, 1). Affinity-coverage tail that defines "poorly
+  covered" points for `coverageBoost`. Default 0.05.
 
 - `shm`:
 

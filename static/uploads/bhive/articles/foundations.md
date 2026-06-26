@@ -687,7 +687,7 @@ settings depend on your data.
 
 &nbsp;
 
-    ## R version 4.6.0 (2026-04-24)
+    ## R version 4.6.1 (2026-06-24)
     ## Platform: x86_64-pc-linux-gnu
     ## Running under: Ubuntu 24.04.4 LTS
     ## 
@@ -708,28 +708,28 @@ settings depend on your data.
     ## [1] stats     graphics  grDevices utils     datasets  methods   base     
     ## 
     ## other attached packages:
-    ## [1] viridis_0.6.5     viridisLite_0.4.3 ggplot2_4.0.3     bHIVE_0.99.5     
+    ## [1] viridis_0.6.5     viridisLite_0.4.3 ggplot2_4.0.3     bHIVE_0.99.6     
     ## [5] BiocStyle_2.40.0 
     ## 
     ## loaded via a namespace (and not attached):
     ##  [1] sass_0.4.10         generics_0.1.4      lattice_0.22-9     
     ##  [4] digest_0.6.39       magrittr_2.0.5      evaluate_1.0.5     
-    ##  [7] grid_4.6.0          RColorBrewer_1.1-3  bookdown_0.47      
+    ##  [7] grid_4.6.1          RColorBrewer_1.1-3  bookdown_0.47      
     ## [10] fastmap_1.2.0       jsonlite_2.0.0      Matrix_1.7-5       
-    ## [13] umap_0.2.10.0       RSpectra_0.16-2     gridExtra_2.3      
+    ## [13] umap_0.2.10.0       RSpectra_0.16-2     gridExtra_2.3.1    
     ## [16] BiocManager_1.30.27 scales_1.4.0        codetools_0.2-20   
     ## [19] textshaping_1.0.5   jquerylib_0.1.4     cli_3.6.6          
-    ## [22] rlang_1.2.0         withr_3.0.2         cachem_1.1.0       
+    ## [22] rlang_1.2.0         withr_3.0.3         cachem_1.1.0       
     ## [25] yaml_2.3.12         otel_0.2.0          Rtsne_0.17         
-    ## [28] tools_4.6.0         parallel_4.6.0      BiocParallel_1.46.0
+    ## [28] tools_4.6.1         parallel_4.6.1      BiocParallel_1.46.0
     ## [31] dplyr_1.2.1         reticulate_1.46.0   png_0.1-9          
     ## [34] vctrs_0.7.3         R6_2.6.1            lifecycle_1.0.5    
     ## [37] fs_2.1.0            htmlwidgets_1.6.4   ragg_1.5.2         
     ## [40] cluster_2.1.8.2     pkgconfig_2.0.3     desc_1.4.3         
     ## [43] pkgdown_2.2.0       pillar_1.11.1       bslib_0.11.0       
     ## [46] gtable_0.3.6        glue_1.8.1          Rcpp_1.1.1-1.1     
-    ## [49] systemfonts_1.3.2   xfun_0.58           tibble_3.3.1       
+    ## [49] systemfonts_1.3.2   xfun_0.59           tibble_3.3.1       
     ## [52] tidyselect_1.2.1    knitr_1.51          farver_2.1.2       
     ## [55] htmltools_0.5.9     rmarkdown_2.31      clusterCrit_1.3.0  
-    ## [58] compiler_4.6.0      S7_0.2.2            askpass_1.2.1      
+    ## [58] compiler_4.6.1      S7_0.2.2            askpass_1.2.1      
     ## [61] openssl_2.4.2

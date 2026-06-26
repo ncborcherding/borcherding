@@ -168,8 +168,8 @@ table(Predicted = res$assignments, Actual = y)
     ##             Actual
     ## Predicted    setosa versicolor virginica
     ##   setosa         50          0         0
-    ##   versicolor      0         37         1
-    ##   virginica       0         13        49
+    ##   versicolor      0         46         4
+    ##   virginica       0          4        46
 
 ### Hyperparameter Tuning
 
@@ -219,7 +219,7 @@ tuning_results$best_params
 ```
 
     ##   nAntibodies beta epsilon metric_value
-    ## 3          10    5    0.01     0.232441
+    ## 3          10    5    0.01    0.2957736
 
 ### Using the `caret` wrapper
 
@@ -280,9 +280,9 @@ table(Predicted = preds, Actual = y_val)
 
     ##             Actual
     ## Predicted    setosa versicolor virginica
-    ##   setosa         11          0        13
-    ##   versicolor      0         14         5
-    ##   virginica       1          1         0
+    ##   setosa          4          3         3
+    ##   versicolor      8          6        13
+    ##   virginica       0          6         2
 
 ### honeycombHIVE: Multilayered bHIVES
 
@@ -579,7 +579,7 @@ repository](https://github.com/BorchLab/bHIVE).
 sessionInfo()
 ```
 
-    ## R version 4.6.0 (2026-04-24)
+    ## R version 4.6.1 (2026-06-24)
     ## Platform: x86_64-pc-linux-gnu
     ## Running under: Ubuntu 24.04.4 LTS
     ## 
@@ -601,35 +601,35 @@ sessionInfo()
     ## 
     ## other attached packages:
     ## [1] caret_7.0-1       lattice_0.22-9    viridis_0.6.5     viridisLite_0.4.3
-    ## [5] ggplot2_4.0.3     bHIVE_0.99.5      BiocStyle_2.40.0 
+    ## [5] ggplot2_4.0.3     bHIVE_0.99.6      BiocStyle_2.40.0 
     ## 
     ## loaded via a namespace (and not attached):
-    ##  [1] pROC_1.19.0.1        gridExtra_2.3        rlang_1.2.0         
+    ##  [1] pROC_1.19.0.1        gridExtra_2.3.1      rlang_1.2.0         
     ##  [4] magrittr_2.0.5       otel_0.2.0           e1071_1.7-17        
-    ##  [7] compiler_4.6.0       png_0.1-9            systemfonts_1.3.2   
+    ##  [7] compiler_4.6.1       png_0.1-9            systemfonts_1.3.2   
     ## [10] vctrs_0.7.3          reshape2_1.4.5       stringr_1.6.0       
     ## [13] pkgconfig_2.0.3      fastmap_1.2.0        labeling_0.4.3      
     ## [16] rmarkdown_2.31       prodlim_2026.03.11   ragg_1.5.2          
-    ## [19] purrr_1.2.2          xfun_0.58            cachem_1.1.0        
+    ## [19] purrr_1.2.2          xfun_0.59            cachem_1.1.0        
     ## [22] jsonlite_2.0.0       recipes_1.3.3        BiocParallel_1.46.0 
-    ## [25] clusterCrit_1.3.0    parallel_4.6.0       cluster_2.1.8.2     
+    ## [25] clusterCrit_1.3.0    parallel_4.6.1       cluster_2.1.8.2     
     ## [28] R6_2.6.1             bslib_0.11.0         stringi_1.8.7       
     ## [31] RColorBrewer_1.1-3   reticulate_1.46.0    parallelly_1.47.0   
     ## [34] rpart_4.1.27         lubridate_1.9.5      jquerylib_0.1.4     
     ## [37] Rcpp_1.1.1-1.1       bookdown_0.47        iterators_1.0.14    
     ## [40] knitr_1.51           future.apply_1.20.2  Matrix_1.7-5        
-    ## [43] splines_4.6.0        nnet_7.3-20          timechange_0.4.0    
+    ## [43] splines_4.6.1        nnet_7.3-20          timechange_0.4.0    
     ## [46] tidyselect_1.2.1     yaml_2.3.12          timeDate_4052.112   
-    ## [49] codetools_0.2-20     listenv_0.10.1       tibble_3.3.1        
-    ## [52] plyr_1.8.9           withr_3.0.2          S7_0.2.2            
+    ## [49] codetools_0.2-20     listenv_1.0.0        tibble_3.3.1        
+    ## [52] plyr_1.8.9           withr_3.0.3          S7_0.2.2            
     ## [55] askpass_1.2.1        evaluate_1.0.5       Rtsne_0.17          
     ## [58] future_1.70.0        desc_1.4.3           survival_3.8-6      
     ## [61] proxy_0.4-29         pillar_1.11.1        BiocManager_1.30.27 
-    ## [64] foreach_1.5.2        stats4_4.6.0         generics_0.1.4      
+    ## [64] foreach_1.5.2        stats4_4.6.1         generics_0.1.4      
     ## [67] scales_1.4.0         globals_0.19.1       class_7.3-23        
-    ## [70] glue_1.8.1           tools_4.6.0          data.table_1.18.4   
+    ## [70] glue_1.8.1           tools_4.6.1          data.table_1.18.4   
     ## [73] RSpectra_0.16-2      ModelMetrics_1.2.2.2 gower_1.0.2         
-    ## [76] fs_2.1.0             grid_4.6.0           umap_0.2.10.0       
+    ## [76] fs_2.1.0             grid_4.6.1           umap_0.2.10.0       
     ## [79] ipred_0.9-15         nlme_3.1-169         cli_3.6.6           
     ## [82] textshaping_1.0.5    lava_1.9.1           dplyr_1.2.1         
     ## [85] gtable_0.3.6         sass_0.4.10          digest_0.6.39       

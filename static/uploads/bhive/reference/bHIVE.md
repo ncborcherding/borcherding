@@ -27,7 +27,11 @@ bHIVE(
   noImprovementLimit = Inf,
   initMethod = c("sample", "random", "random_uniform", "kmeans++"),
   k = 3,
-  verbose = TRUE
+  scale = c("none", "zscore", "robust", "arcsinh"),
+  targetK = NULL,
+  epsilonQuantile = NULL,
+  verbose = TRUE,
+  ...
 )
 ```
 
@@ -135,9 +139,37 @@ bHIVE(
   Integer. Number of top-matching antibodies (by affinity) to consider
   cloning for each data point.
 
+- scale:
+
+  Character. Per-feature input scaling: `"none"` (default), `"zscore"`,
+  `"robust"` (median/IQR), or `"arcsinh"` (CyTOF). Passed to
+  [`AINet`](https://www.borch.dev/uploads/bhive/reference/AINet.md);
+  makes `epsilon` and distances behave consistently across datasets of
+  different magnitude.
+
+- targetK:
+
+  Integer or NULL. If set, force the clustering result to exactly
+  `targetK` clusters via a seeded K-means refinement (the immune network
+  supplies the seeds). NULL (default) keeps the emergent cluster count.
+
+- epsilonQuantile:
+
+  Numeric in (0, 1) or NULL. If set, the suppression threshold adapts
+  each iteration to this quantile of pairwise antibody distances instead
+  of the fixed `epsilon`.
+
 - verbose:
 
   Logical. If `TRUE`, prints progress messages each iteration.
+
+- ...:
+
+  Additional arguments forwarded to
+  [`AINet`](https://www.borch.dev/uploads/bhive/reference/AINet.md),
+  including immunology modules (`shm`, `idiotypic`, `germinalCenter`,
+  `microenvironment`, `activation`, `memory`, `classSwitcher`, `init`)
+  and `consolidate` / `consolidationSteps`.
 
 ## Value
 
@@ -166,8 +198,10 @@ res <- bHIVE(X = X,
              verbose = FALSE)
 table(res$assignments)
 #> 
-#>  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 
-#> 15  6  2  1  2 14 16  4  2  2  1  6  6 13  2 41  4 13 
+#>  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 
+#>  4  5  1  1  6  4 11  7 16  5  7  3  8  3  1  6  5  1  5  3 12  1  5  9 12  3 
+#> 27 
+#>  6 
 
 # Example 2: Classification with Iris species
 y <- iris$Species
@@ -184,6 +218,6 @@ table(res$assignments, y)
 #>             y
 #>              setosa versicolor virginica
 #>   setosa         50          0         0
-#>   versicolor      0         47         2
-#>   virginica       0          3        48
+#>   versicolor      0         45         2
+#>   virginica       0          5        48
 ```
