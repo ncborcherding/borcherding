@@ -1,6 +1,6 @@
 ---
 title: "Nobody Orders a Test on a Healthy Person"
-date: "2026-09-01"
+date: "2026-08-24"
 summary: "AIRR-seq diagnostics have a validation problem, and the field is working on a different one. Four gates decide whether a repertoire test ever runs, and standardization is not one of them."
 tags: ["AIRR-seq", "diagnostics", "LDT", "clinical-translation", "TCR"]
 draft: false
