@@ -77,6 +77,7 @@ editorial:
   - Journal of Clinical Investigations
   - Journal of Immunology
   - Journal of Open Source Software
+  - 'Journal of Pathology: Clinical Research'
   - Journal of Transplantation
   - Nucleic Acids Research
   - 'Nucleic Acids Research: Genomics & Bioinformatics'
@@ -307,6 +308,10 @@ research_funding:
     title: Identification of novel alloantibody targets in lung transplant recipients using phage display immunoprecipitation
       and sequencing
     sponsor: Interdivision Translational Research Department of Pathology, Washington University
+    role: Principal Investigator
+  - years: 2026-2027
+    title: Deep Paired TCR Sequencing for Early Detection and Prediction of Kidney Transplant Rejection
+    sponsor: Longer Life Foundation
     role: Principal Investigator
   national:
   - years: 2015-2016
