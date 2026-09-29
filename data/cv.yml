@@ -136,7 +136,7 @@ service:
     end: "Present"
   - committee: Inferred Allele Review Sub-committee (IARC), AIRR Community of the Antibody Society
     start: '2025'
-    end: "Present"
+    end: "2026"
   - committee: T-Cell Receptor and Immunoglobulin Nomenclature Sub-committee (TR-IG NSC) of the International Union of Immunological
       Societies (IUIS)
     start: '2026'
@@ -331,6 +331,10 @@ research_funding:
   - years: 2026-Present
     title: Paired TCR Sequencing for Early Diagnosis of Psoriatic Arthritis
     sponsor: Arthritis National Research Foundation
+    role: Principal Investigator
+  - years: 2026-Present
+    title: Deep Paired TCRaβ Reveals Alloreactive Network Architecture in the Acute Kidney Transplant Window
+    sponsor: American Society for Histocompatibility and Immunogenetics
     role: Principal Investigator
 
 presentations:
