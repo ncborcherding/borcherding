@@ -1,0 +1,171 @@
+# Legacy URL map from the Wowchemy -> Blowfish migration (commit d78f6ba).
+#
+# Seeded by scripts/seed_legacy_redirects.py from the pre-migration tree, then
+# hand-maintained. Consumed by scripts/gen_redirects.py, which writes
+# static/_redirects. Netlify serves that file; Hugo just copies static/ across.
+#
+# Re-run gen_redirects.py after editing this file.
+
+# Old /publication/<slug>/ -> /publications/#pmid-<pmid>
+publication:
+  alam2022il17: '35402439'
+  alam2022single: '35361907'
+  amanat2021sars: '34192529'
+  andreatta2023t: '37638293'
+  baer2023fibrosis: '37563309'
+  borcherding2014ror1: '24752542'
+  borcherding2015paracrine: '25769722'
+  borcherding2015transcriptome: '26167451'
+  borcherding2018keeping: '29800567'
+  borcherding2018re: '29879416'
+  borcherding2018trgated: '30345029'
+  borcherding2019single: '30718356'
+  borcherding2020repurposing: '33239864'
+  borcherding2020screpertoire: '32789006'
+  borcherding2020transcriptomic: '32453712'
+  borcherding2021commentary: '34352082'
+  borcherding2021mapping: '33504936'
+  borcherding2022dietary: '36070756'
+  borcherding2022single: '35390145'
+  borcherding2023the: '37938702'
+  borcherding2024cd4: '39164479'
+  cheng2021anti: '33452311'
+  corvino2024type: '39529512'
+  crawford2020cd4: '32719138'
+  crawford2023il17: '37115755'
+  dong2022hsf1: '36245043'
+  fleagle2018application: '29283505'
+  fujiwara2021gpr171: '34615877'
+  gu2020ap: '33382976'
+  he2023cd5: '36795805'
+  herzog2023tumor: '37285399'
+  irac2024single: '38637691'
+  jianling2019metadherin: '31527591'
+  kim2021cd177: '34599187'
+  kim2022updates: '34831009'
+  kim2024leveraging: '39376916'
+  kim2024single: '38641668'
+  kluz2020cancer: '32042113'
+  kolb2016obesity: '27708283'
+  kolb2019obesity: '30518876'
+  kolb2021proteolysis: '33627663'
+  kolb2021understanding: '33523451'
+  kusner2016paracrine: '27308558'
+  lander2022stromal: '36165893'
+  lasrado2022dissecting: '35243228'
+  lefebvre2023molecular: '37654486'
+  liu2018novel: '29035388'
+  liu2019identification: '31449970'
+  liu2020contribution: '31923801'
+  liu2023context: '37236195'
+  maharjan2022natural: '35008370'
+  mahauad2015bone: '25860442'
+  mathew2021single: '34161770'
+  mazziotta2024cd8: '38776511'
+  merritt2021taz: '33913810'
+  nakai2024mitochondria: '39223312'
+  pandey2019ror1: '31137681'
+  pothuri2024intratumoral: '38504847'
+  rauckhorst2022mouse: '36100179'
+  reed2014niam: '25393878'
+  renavikar202012: '33193343'
+  reynolds2021comprehensive: '34348975'
+  rosina2022ejection: '35305295'
+  schaefer2016calpain: '27152965'
+  shrode2022isoflavone: '36289122'
+  sinha2018autoimmune: '30337675'
+  smazal2013dietary: '23677864'
+  subramani2021hypoglycemia: '34594558'
+  swami2020multivariable: '33120998'
+  upadhye2025myelin: '40022134'
+  vikas2018clinical: '30573992'
+  vikas2020therapeutic: '32457830'
+  wang2025tifab: '39626355'
+  westerhof2023multifunctional: '37490492'
+  wu2014ubiquitin: '25189770'
+  wu2020tfap2c: '31619506'
+  xie2015characterization: '25359465'
+  xiu2018stabilization: '29320732'
+  xiu2020coactivation: '31697816'
+  yang2025screpertoire: '40577285'
+  yu2025dandelionr: '40687995'
+  zhang2013nik: '23602409'
+  zhao2022tifab: '34877491'
+
+# No PMID in data/publications.yaml (thesis, book chapter, non-indexed journal).
+# These fall back to /publications/ with no anchor.
+publication_unmapped:
+  - borcherding2014noncanonical
+  - borcherding2017content
+  - borcherding2020big
+  - zhang2021il1
+
+# Old directories that were mixed-case. Hugo lowercased them, so the lowercase
+# form above is the real URL, but Netlify matches case-sensitively and some
+# inbound links may carry the original. Both get a rule.
+publication_case_variants:
+  alam2022il17: alam2022IL17
+  andreatta2023t: Andreatta2023T
+  borcherding2024cd4: borcherding2024CD4
+  crawford2023il17: crawford2023IL17
+  dong2022hsf1: dong2022HSF1
+  fujiwara2021gpr171: fujiwara2021GPR171
+  he2023cd5: he2023CD5
+  kim2021cd177: kim2021CD177
+  yang2025screpertoire: yang2025scRepertoire
+  yu2025dandelionr: yu2025dandelionR
+  zhang2021il1: zhang2021IL1
+
+# Old /tag/<slug>/. A "?q=..." value means /publications/ with the filter
+# prefilled; anything else is a literal path.
+tag:
+  alopecia: '?q=alopecia'
+  aml: '?q=aml'
+  atac-seq: '?q=atac-seq'
+  autoimmune: '?q=autoimmune'
+  autoimmunity: '?q=autoimmunity'
+  bcr: '?q=bcr'
+  breast-cancer: '?q=breast-cancer'
+  cancer: '?q=cancer'
+  clinical: '?q=clinical'
+  covid-19: '?q=covid-19'
+  ctcl: '?q=ctcl'
+  data: '/#software'
+  deep-learning: '/#software'
+  diagnostics: '?q=diagnostics'
+  flow-cytometry: '?q=flow-cytometry'
+  her2: '?q=her2'
+  immune-response: '?q=immune-response'
+  immunology: '?q=immunology'
+  immunotherapy: '?q=immunotherapy'
+  inflammation: '?q=inflammation'
+  macrophages: '?q=macrophages'
+  medical-education: '?q=medical-education'
+  metabolism: '?q=metabolism'
+  metabolomics: '?q=metabolomics'
+  methylation: '?q=methylation'
+  microenvironment: '?q=microenvironment'
+  mitochondria: '?q=mitochondria'
+  myeloid-neoplasia: '?q=myeloid-neoplasia'
+  noncanonical-wnt: '/publications/'
+  obesity: '?q=obesity'
+  oncofetal-antigen: '?q=oncofetal-antigen'
+  pathology: '?q=pathology'
+  platform: '?q=platform'
+  proteomics: '?q=proteomics'
+  r: '/publications/'
+  receptor-tyrosine-kinase: '?q=receptor-tyrosine-kinase'
+  repertoire: '/#software'
+  review: '?q=review'
+  sarcoma: '?q=sarcoma'
+  single-cell: '?q=single-cell'
+  software: '?q=software'
+  tcr: '?q=tcr'
+  treg: '?q=treg'
+  web-app: '?q=web-app'
+  wiki: '/publications/'
+  wnt-signaling: '?q=wnt-signaling'
+
+# Posts whose slug changed. The rest are covered by the /post/* splat.
+post:
+  binary-genes: /posts/binary-genetics/

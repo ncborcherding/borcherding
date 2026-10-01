@@ -521,6 +521,17 @@ a:hover {
   padding: 1rem 0;
   border-bottom: 1px solid var(--rule);
 }
+/* Landing target for the legacy /publication/<slug>/ redirects, which 301 to
+   /publications/#pmid-<id>. Marks the entry so the visitor sees which paper
+   they arrived at, and keeps it clear of the header when anchored. */
+.pub:target {
+  scroll-margin-top: 6rem;
+  background: var(--bg-raised);
+  box-shadow: inset 3px 0 0 var(--accent);
+  padding-left: 1rem;
+  margin-left: -1rem;
+  border-radius: 2px;
+}
 .pub-authors {
   margin: 0 0 0.2rem;
   font-size: 0.92rem;

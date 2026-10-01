@@ -17,7 +17,15 @@
 {{ $meta := .meta }}
 {{ $abstract := .abstract }}
 
-<li class="pub" data-year="{{ $pub.year }}">
+{{/* id anchors the legacy /publication/<slug>/ redirects (static/_redirects).
+     data-tags carries the curated vocabulary from pub_meta.yaml so the filter
+     can match on topic, not just on title text. Neither is visible. */}}
+{{ $tagSlugs := slice }}
+{{ with $meta }}{{ range .tags }}{{ $tagSlugs = $tagSlugs | append (urlize .) }}{{ end }}{{ end }}
+<li class="pub"
+    {{- with $pub.pmid }} id="pmid-{{ . }}"{{ end }}
+    data-year="{{ $pub.year }}"
+    {{- with $tagSlugs }} data-tags="{{ delimit . " " }}"{{ end }}>
   <p class="pub-authors">
     {{ range $i, $a := $pub.authors }}
       {{- if $i }}, {{ end -}}

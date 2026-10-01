@@ -5,7 +5,7 @@
   - breast cancer
   - inflammation
   links:
-    pdf: https://github.com/ncborcherding/borcherding/blob/master/content/publication/zhang2013nik/zhang2013nik.pdf
+    pdf: https://github.com/ncborcherding/borcherding/raw/93462c9dbadb5b9a2ac5e512755052464323f67c/content/publication/zhang2013nik/zhang2013nik.pdf
   highlight: IκB kinase α (IKKα) activity is required for ErbB2-induced mammary tumorigenesis.
   abstract: IκB kinase α (IKKα) activity is required for ErbB2-induced mammary tumorigenesis.
     Here, we show that IKKα and its activator, NF-κB-inducing kinase (NIK), support
@@ -23,7 +23,7 @@
   tags:
   - Obesity
   links:
-    pdf: https://github.com/ncborcherding/borcherding/blob/master/content/publication/smazal2013dietary/smazal2013dietary.pdf
+    pdf: https://github.com/ncborcherding/borcherding/raw/93462c9dbadb5b9a2ac5e512755052464323f67c/content/publication/smazal2013dietary/smazal2013dietary.pdf
   highlight: Diabetes is a rapidly growing epidemic affecting millions of Americans
     and has been implicated in a number of devastating secondary complications.
   abstract: Diabetes is a rapidly growing epidemic affecting millions of Americans
@@ -57,7 +57,7 @@
   - receptor tyrosine kinase
   - Wnt signaling
   links:
-    pdf: https://github.com/ncborcherding/borcherding/blob/master/content/publication/borcherding2014ror1/borcherding2014ror1.pdf
+    pdf: https://github.com/ncborcherding/borcherding/raw/93462c9dbadb5b9a2ac5e512755052464323f67c/content/publication/borcherding2014ror1/borcherding2014ror1.pdf
   highlight: Receptor tyrosine kinase-like orphan receptor 1 (ROR1) is a member of
     the ROR family consisting of ROR1 and ROR2.
   abstract: Receptor tyrosine kinase-like orphan receptor 1 (ROR1) is a member of
@@ -80,7 +80,7 @@
   - breast cancer
   - inflammation
   links:
-    pdf: https://github.com/ncborcherding/borcherding/blob/master/content/publication/wu2014ubiquitin/wu2014ubiquitin.pdf
+    pdf: https://github.com/ncborcherding/borcherding/raw/93462c9dbadb5b9a2ac5e512755052464323f67c/content/publication/wu2014ubiquitin/wu2014ubiquitin.pdf
   highlight: Metastatic spread is the leading cause of cancer mortality.
   abstract: Metastatic spread is the leading cause of cancer mortality. Breast cancer
     (BCa) metastatic recurrence can happen years after removal of the primary tumor.
@@ -99,7 +99,7 @@
   tags:
   - Immune Response
   links:
-    pdf: https://github.com/ncborcherding/borcherding/blob/master/content/publication/xie2015characterization/xie2015characterization.pdf
+    pdf: https://github.com/ncborcherding/borcherding/raw/93462c9dbadb5b9a2ac5e512755052464323f67c/content/publication/xie2015characterization/xie2015characterization.pdf
   highlight: Neutrophils play an essential role in the innate immune response to infection.
   abstract: Neutrophils play an essential role in the innate immune response to infection.
     Neutrophils migrate from the vasculature into the tissue in response to infection.
@@ -125,7 +125,7 @@
   tags:
   - cancer
   links:
-    pdf: https://github.com/ncborcherding/borcherding/blob/master/content/publication/reed2014niam/reed2014niam.pdf
+    pdf: https://github.com/ncborcherding/borcherding/raw/93462c9dbadb5b9a2ac5e512755052464323f67c/content/publication/reed2014niam/reed2014niam.pdf
   highlight: Nuclear Interactor of ARF and Mdm2 (NIAM, gene designation Tbrg1) is
     a largely unstudied inhibitor of cell proliferation that helps maintain chromosomal
     stability.
@@ -157,7 +157,7 @@
   - microenvironment
   - Wnt signaling
   links:
-    pdf: https://github.com/ncborcherding/borcherding/blob/master/content/publication/borcherding2015paracrine/borcherding2015paracrine.pdf
+    pdf: https://github.com/ncborcherding/borcherding/raw/93462c9dbadb5b9a2ac5e512755052464323f67c/content/publication/borcherding2015paracrine/borcherding2015paracrine.pdf
   highlight: It is not well understood how paracrine communication between basal and
     luminal cell populations in the mammary gland affects tumorigenesis.
   abstract: It is not well understood how paracrine communication between basal and
@@ -184,7 +184,7 @@
   - Methylation
   - Immune Response
   links:
-    pdf: https://github.com/ncborcherding/borcherding/blob/master/content/publication/mahauad2015bone/mahauad2015bone.pdf
+    pdf: https://github.com/ncborcherding/borcherding/raw/93462c9dbadb5b9a2ac5e512755052464323f67c/content/publication/mahauad2015bone/mahauad2015bone.pdf
 '26167451':
   featured: false
   tags:
@@ -193,7 +193,7 @@
   - receptor tyrosine kinase
   - Breast cancer
   links:
-    pdf: https://github.com/ncborcherding/borcherding/blob/master/content/publication/borcherding2015transcriptome/borcherding2015transcriptome.pdf
+    pdf: https://github.com/ncborcherding/borcherding/raw/93462c9dbadb5b9a2ac5e512755052464323f67c/content/publication/borcherding2015transcriptome/borcherding2015transcriptome.pdf
   highlight: Breast cancer is the leading cause of cancer-related mortality for females
     worldwide.
   abstract: Breast cancer is the leading cause of cancer-related mortality for females
@@ -218,14 +218,14 @@
   tags:
   - Autoimmune
   links:
-    pdf: https://github.com/ncborcherding/borcherding/blob/master/content/publication/schaefer2016calpain/schaefer2016calpain.pdf
+    pdf: https://github.com/ncborcherding/borcherding/raw/93462c9dbadb5b9a2ac5e512755052464323f67c/content/publication/schaefer2016calpain/schaefer2016calpain.pdf
 '27308558':
   featured: false
   tags:
   - cancer
   - Wnt Signaling
   links:
-    pdf: https://github.com/ncborcherding/borcherding/blob/master/content/publication/kusner2016paracrine/kusner2016paracrine.pdf
+    pdf: https://github.com/ncborcherding/borcherding/raw/93462c9dbadb5b9a2ac5e512755052464323f67c/content/publication/kusner2016paracrine/kusner2016paracrine.pdf
   highlight: Paracrine signaling between mammary epithelial cells has long been appreciated.
   abstract: Paracrine signaling between mammary epithelial cells has long been appreciated.
     Recently, we found that Wnt5a, a novel noncanonical Wnt ligand of luminal origin,
@@ -239,7 +239,7 @@
   - obesity
   - inflammation
   links:
-    pdf: https://github.com/ncborcherding/borcherding/blob/master/content/publication/kolb2016obesity/kolb2016obesity.pdf
+    pdf: https://github.com/ncborcherding/borcherding/raw/93462c9dbadb5b9a2ac5e512755052464323f67c/content/publication/kolb2016obesity/kolb2016obesity.pdf
   highlight: Obesity is associated with an increased risk of developing breast cancer
     and is also associated with worse clinical prognosis.
   abstract: Obesity is associated with an increased risk of developing breast cancer
@@ -265,7 +265,7 @@
   - HER2
   - methylation
   links:
-    pdf: https://github.com/ncborcherding/borcherding/blob/master/content/publication/liu2018novel/liu2018novel.pdf
+    pdf: https://github.com/ncborcherding/borcherding/raw/93462c9dbadb5b9a2ac5e512755052464323f67c/content/publication/liu2018novel/liu2018novel.pdf
   highlight: The transcriptional regulation of the human epidermal growth factor receptor-2
     (HER2) contributes to an enhanced HER2 expression in HER2-positive breast cancers
     with HER2 gene amplification and HER2-low or HER2-negative breast cancers following
@@ -295,7 +295,7 @@
   tags:
   - Medical education
   links:
-    pdf: https://github.com/ncborcherding/borcherding/blob/master/content/publication/fleagle2018application/fleagle2018application.pdf
+    pdf: https://github.com/ncborcherding/borcherding/raw/93462c9dbadb5b9a2ac5e512755052464323f67c/content/publication/fleagle2018application/fleagle2018application.pdf
   highlight: To improve student preparedness for anatomy laboratory dissection, the
     dental gross anatomy laboratory was transformed using flipped classroom pedagogy.
   abstract: To improve student preparedness for anatomy laboratory dissection, the
@@ -325,7 +325,7 @@
   tags:
   - cancer
   links:
-    pdf: https://github.com/ncborcherding/borcherding/blob/master/content/publication/xiu2018stabilization/xiu2018stabilization.pdf
+    pdf: https://github.com/ncborcherding/borcherding/raw/93462c9dbadb5b9a2ac5e512755052464323f67c/content/publication/xiu2018stabilization/xiu2018stabilization.pdf
   highlight: Canonical NF-κB signaling is constitutively activated in acute myeloid
     leukemia (AML) stem cells and is required for maintenance of the self-renewal
     of leukemia stem cells (LSCs).
@@ -351,7 +351,7 @@
   - Immunotherapy
   - Review
   links:
-    pdf: https://github.com/ncborcherding/borcherding/blob/master/content/publication/borcherding2018keeping/borcherding2018keeping.pdf
+    pdf: https://github.com/ncborcherding/borcherding/raw/93462c9dbadb5b9a2ac5e512755052464323f67c/content/publication/borcherding2018keeping/borcherding2018keeping.pdf
   highlight: Immune checkpoints are a diverse set of inhibitory signals to the immune
     system that play a functional role in adaptive immune response and self-tolerance.
   abstract: Immune checkpoints are a diverse set of inhibitory signals to the immune
@@ -382,7 +382,7 @@
   - Proteomics
   - Breast cancer
   links:
-    pdf: https://github.com/ncborcherding/borcherding/blob/master/content/publication/borcherding2018re/borcherding2018re.pdf
+    pdf: https://github.com/ncborcherding/borcherding/raw/93462c9dbadb5b9a2ac5e512755052464323f67c/content/publication/borcherding2018re/borcherding2018re.pdf
   highlight: E-cadherin is conventionally considered to be a good prognostic marker
     in cancer.
   abstract: E-cadherin is conventionally considered to be a good prognostic marker
@@ -410,7 +410,7 @@
   - Autoimmune
   - Immune Response
   links:
-    pdf: https://github.com/ncborcherding/borcherding/blob/master/content/publication/sinha2018autoimmune/sinha2018autoimmune.pdf
+    pdf: https://github.com/ncborcherding/borcherding/raw/93462c9dbadb5b9a2ac5e512755052464323f67c/content/publication/sinha2018autoimmune/sinha2018autoimmune.pdf
   highlight: Multiple GWAS studies have shown that the SNP rs2281808 TT variant, present
     within the SIRPG gene, is associated with autoimmune diseases, such as type 1
     diabetes.
@@ -436,7 +436,7 @@
   - Web App
   links:
     code: https://github.com/ncborcherding/TRGAted
-    pdf: https://github.com/ncborcherding/borcherding/blob/master/content/publication/borcherding2018trgated/borcherding2018trgated.pdf
+    pdf: https://github.com/ncborcherding/borcherding/raw/93462c9dbadb5b9a2ac5e512755052464323f67c/content/publication/borcherding2018trgated/borcherding2018trgated.pdf
   highlight: Reverse-phase protein arrays (RPPAs) are a highthroughput approach to
     protein quantification utilizing an antibody-based micro-to-nano scale dot blot.
   abstract: Reverse-phase protein arrays (RPPAs) are a highthroughput approach to
@@ -462,7 +462,7 @@
   - obesity
   - Inflammation
   links:
-    pdf: https://github.com/ncborcherding/borcherding/blob/master/content/publication/kolb2019obesity/kolb2019obesity.pdf
+    pdf: https://github.com/ncborcherding/borcherding/raw/93462c9dbadb5b9a2ac5e512755052464323f67c/content/publication/kolb2019obesity/kolb2019obesity.pdf
   highlight: Obesity is a risk factor for breast cancer and also predicts poor clinical
     outcomes regardless of menopausal status.
   abstract: Obesity is a risk factor for breast cancer and also predicts poor clinical
@@ -490,7 +490,7 @@
   - immunotherapy
   - Review
   links:
-    pdf: https://github.com/ncborcherding/borcherding/blob/master/content/publication/vikas2018clinical/vikas2018clinical.pdf
+    pdf: https://github.com/ncborcherding/borcherding/raw/93462c9dbadb5b9a2ac5e512755052464323f67c/content/publication/vikas2018clinical/vikas2018clinical.pdf
   highlight: Triple-negative breast cancer (TNBC) is a heterogeneous disease with
     poorer outcomes compared to other breast cancer subtypes.
   abstract: Triple-negative breast cancer (TNBC) is a heterogeneous disease with poorer
@@ -520,14 +520,14 @@
   - CTCL
   - Clinical
   links:
-    pdf: https://github.com/ncborcherding/borcherding/blob/master/content/publication/borcherding2019single/borcherding2019single.pdf
+    pdf: https://github.com/ncborcherding/borcherding/raw/93462c9dbadb5b9a2ac5e512755052464323f67c/content/publication/borcherding2019single/borcherding2019single.pdf
 '31137681':
   featured: false
   tags:
   - cancer
   - breast cancer
   links:
-    pdf: https://github.com/ncborcherding/borcherding/blob/master/content/publication/pandey2019ror1/pandey2019ror1.pdf
+    pdf: https://github.com/ncborcherding/borcherding/raw/93462c9dbadb5b9a2ac5e512755052464323f67c/content/publication/pandey2019ror1/pandey2019ror1.pdf
   highlight: Among all breast cancer types, basal-like breast cancer (BLBC) represents
     an aggressive subtype that lacks targeted therapy.
   abstract: Among all breast cancer types, basal-like breast cancer (BLBC) represents
@@ -551,7 +551,7 @@
   tags:
   - cancer
   links:
-    pdf: https://github.com/ncborcherding/borcherding/blob/master/content/publication/liu2019identification/liu2019identification.pdf
+    pdf: https://github.com/ncborcherding/borcherding/raw/93462c9dbadb5b9a2ac5e512755052464323f67c/content/publication/liu2019identification/liu2019identification.pdf
   highlight: Transforming growth factor-β (TGF-β) signaling plays fundamental roles
     in the development and homeostasis of somatic cells.
   abstract: Transforming growth factor-β (TGF-β) signaling plays fundamental roles
@@ -577,7 +577,7 @@
   tags:
   - cancer
   links:
-    pdf: https://github.com/ncborcherding/borcherding/blob/master/content/publication/jianling2019metadherin/jianling2019metadherin.pdf
+    pdf: https://github.com/ncborcherding/borcherding/raw/93462c9dbadb5b9a2ac5e512755052464323f67c/content/publication/jianling2019metadherin/jianling2019metadherin.pdf
   highlight: Ferroptosis is an iron-dependent, non-apoptotic form of regulated cell
     death driven by lipid hydroperoxides within biological membranes.
   abstract: Ferroptosis is an iron-dependent, non-apoptotic form of regulated cell
@@ -603,7 +603,7 @@
   - cancer
   - breast cancer
   links:
-    pdf: https://github.com/ncborcherding/borcherding/blob/master/content/publication/wu2020tfap2c/wu2020tfap2c.pdf
+    pdf: https://github.com/ncborcherding/borcherding/raw/93462c9dbadb5b9a2ac5e512755052464323f67c/content/publication/wu2020tfap2c/wu2020tfap2c.pdf
   highlight: The AP-2γ transcription factor, encoded by the TFAP2C gene, regulates
     the expression of estrogen receptor-alpha (ERα) and other genes associated with
     hormone response in luminal breast cancer.
@@ -631,7 +631,7 @@
   tags:
   - cancer
   links:
-    pdf: https://github.com/ncborcherding/borcherding/blob/master/content/publication/xiu2020coactivation/xiu2020coactivation.pdf
+    pdf: https://github.com/ncborcherding/borcherding/raw/93462c9dbadb5b9a2ac5e512755052464323f67c/content/publication/xiu2020coactivation/xiu2020coactivation.pdf
   highlight: NF-κB and Notch signaling can be simultaneously activated in a variety
     of B-cell lymphomas.
   abstract: NF-κB and Notch signaling can be simultaneously activated in a variety
@@ -661,7 +661,7 @@
   - breast cancer
   - HER2
   links:
-    pdf: https://github.com/ncborcherding/borcherding/blob/master/content/publication/liu2020contribution/liu2020contribution.pdf
+    pdf: https://github.com/ncborcherding/borcherding/raw/93462c9dbadb5b9a2ac5e512755052464323f67c/content/publication/liu2020contribution/liu2020contribution.pdf
 '32042113':
   featured: false
   tags:
@@ -669,7 +669,7 @@
   - breast cancer
   - Wnt signaling
   links:
-    pdf: https://github.com/ncborcherding/borcherding/blob/master/content/publication/kluz2020cancer/kluz2020cancer.pdf
+    pdf: https://github.com/ncborcherding/borcherding/raw/93462c9dbadb5b9a2ac5e512755052464323f67c/content/publication/kluz2020cancer/kluz2020cancer.pdf
   highlight: Aiming to identify immune molecules with a novel function in cancer pathogenesis,
     we found the cluster of differentiation 177 (CD177), a known neutrophil antigen,
     to be positively correlated with relapse-free, metastasis-free, or overall survival
@@ -695,7 +695,7 @@
   - Immunotherapy
   - Review
   links:
-    pdf: https://github.com/ncborcherding/borcherding/blob/master/content/publication/zhang2021IL1/zhang2021IL1.pdf
+    pdf: https://github.com/ncborcherding/borcherding/raw/93462c9dbadb5b9a2ac5e512755052464323f67c/content/publication/zhang2021IL1/zhang2021IL1.pdf
   highlight: Interleukin 1 (IL-1) has long been known for its pleiotropic effects
     on inflammation that plays a complex, and sometimes contrasting, role in different
     stages of cancer development.
@@ -724,7 +724,7 @@
   - autoimmune
   - TCR
   links:
-    pdf: https://github.com/ncborcherding/borcherding/blob/master/content/publication/borcherding2020transcriptomic/borcherding2020transcriptomic.pdf
+    pdf: https://github.com/ncborcherding/borcherding/raw/93462c9dbadb5b9a2ac5e512755052464323f67c/content/publication/borcherding2020transcriptomic/borcherding2020transcriptomic.pdf
   highlight: Alopecia areata (AA) is a common autoimmune condition, presenting initially
     with loss of hair without other overt skin changes.
   abstract: Alopecia areata (AA) is a common autoimmune condition, presenting initially
@@ -746,7 +746,7 @@
   - immunotherapy
   - Review
   links:
-    pdf: https://github.com/ncborcherding/borcherding/tree/master/content/publication/vikas2020therapeutic
+    pdf: https://github.com/ncborcherding/borcherding/raw/93462c9dbadb5b9a2ac5e512755052464323f67c/content/publication/vikas2020therapeutic/vikas2020therapeutic.pdf
   highlight: Immunotherapy has revolutionized the treatment of both hematological
     malignancies and solid tumors.
   abstract: Immunotherapy has revolutionized the treatment of both hematological malignancies
@@ -781,7 +781,7 @@
   - Immune Response
   - Immunotherapy
   links:
-    pdf: https://github.com/ncborcherding/borcherding/blob/master/content/publication/crawford2020cd4/crawford2020cd4.pdf
+    pdf: https://github.com/ncborcherding/borcherding/raw/93462c9dbadb5b9a2ac5e512755052464323f67c/content/publication/crawford2020cd4/crawford2020cd4.pdf
   highlight: Untoward effector CD4+ T cell responses are kept in check by immune regulatory
     mechanisms mediated by CD4+ and CD8+ T cells.
   abstract: Untoward effector CD4+ T cell responses are kept in check by immune regulatory
@@ -808,7 +808,7 @@
   - Software
   links:
     code: https://github.com/BorchLab/scRepertoire
-    pdf: https://github.com/ncborcherding/borcherding/blob/master/content/publication/borcherding2020screpertoire/borcherding2020screpertoire.pdf
+    pdf: https://github.com/ncborcherding/borcherding/raw/93462c9dbadb5b9a2ac5e512755052464323f67c/content/publication/borcherding2020screpertoire/borcherding2020screpertoire.pdf
   highlight: Single-cell sequencing is an emerging technology in the field of immunology
     and oncology that allows researchers to couple RNA quantification and other modalities,
     like immune cell receptor profiling at the level of an individual cell.
@@ -832,7 +832,7 @@
   - cancer
   - Immunotherapy
   links:
-    pdf: https://github.com/ncborcherding/borcherding/blob/master/content/publication/swami2020multivariable/swami2020multivariable.pdf
+    pdf: https://github.com/ncborcherding/borcherding/raw/93462c9dbadb5b9a2ac5e512755052464323f67c/content/publication/swami2020multivariable/swami2020multivariable.pdf
   highlight: Recently antibiotic exposure has been associated with worse outcomes
     in patients undergoing treatment with antibodies directed against programmed cell
     death protein-1 (PD-1).
@@ -859,7 +859,7 @@
   tags:
   - Autoimmune
   links:
-    pdf: https://github.com/ncborcherding/borcherding/blob/master/content/publication/renavikar202012/renavikar202012.pdf
+    pdf: https://github.com/ncborcherding/borcherding/raw/93462c9dbadb5b9a2ac5e512755052464323f67c/content/publication/renavikar202012/renavikar202012.pdf
   highlight: Autoimmune diseases are characterized by regulatory deficit in both the
     CD4+ and CD8+ T-cell compartments.
   abstract: Autoimmune diseases are characterized by regulatory deficit in both the
@@ -889,7 +889,7 @@
   - Immune Response
   links:
     code: https://github.com/ncborcherding/COVIDreview
-    pdf: https://github.com/ncborcherding/borcherding/blob/master/content/publication/borcherding2020repurposing/borcherding2020repurposing.pdf
+    pdf: https://github.com/ncborcherding/borcherding/raw/93462c9dbadb5b9a2ac5e512755052464323f67c/content/publication/borcherding2020repurposing/borcherding2020repurposing.pdf
   highlight: The novel coronavirus disease 2019 (COVID-19) pandemic has caused catastrophic
     damage to human life across the globe along with social and financial hardships.
   abstract: The novel coronavirus disease 2019 (COVID-19) pandemic has caused catastrophic
@@ -919,7 +919,7 @@
   - breast cancer
   - cancer
   links:
-    pdf: https://github.com/ncborcherding/borcherding/blob/master/content/publication/gu2020ap/gu2020ap.pdf
+    pdf: https://github.com/ncborcherding/borcherding/raw/93462c9dbadb5b9a2ac5e512755052464323f67c/content/publication/gu2020ap/gu2020ap.pdf
   highlight: Mammary gland ductal morphogenesis depends on the differentiation of
     mammary stem cells (MaSCs) into basal and luminal lineages.
   abstract: Mammary gland ductal morphogenesis depends on the differentiation of mammary
@@ -942,7 +942,7 @@
   - cancer
   - Immunotherapy
   links:
-    pdf: https://github.com/ncborcherding/borcherding/blob/master/content/publication/cheng2021anti/cheng2021anti.pdf
+    pdf: https://github.com/ncborcherding/borcherding/raw/93462c9dbadb5b9a2ac5e512755052464323f67c/content/publication/cheng2021anti/cheng2021anti.pdf
   highlight: The Toll-like receptor 8 (TLR8) agonist VTX-2337 (motolimod) is an anti-cancer
     immunotherapeutic agent that is believed to augment natural killer (NK) and dendritic
     cell (DC) activity.
@@ -974,7 +974,7 @@
   - Software
   links:
     code: https://github.com/ncborcherding/ccRCC
-    pdf: https://github.com/ncborcherding/borcherding/blob/master/content/publication/borcherding2021mapping/borcherding2021mapping.pdf
+    pdf: https://github.com/ncborcherding/borcherding/raw/93462c9dbadb5b9a2ac5e512755052464323f67c/content/publication/borcherding2021mapping/borcherding2021mapping.pdf
   highlight: Clear cell renal cell carcinoma (ccRCC) is one of the most immunologically
     distinct tumor types due to high response rate to immunotherapies, despite low
     tumor mutational burden.
@@ -1000,7 +1000,7 @@
   - Treg
   - Immune Response
   links:
-    pdf: https://github.com/ncborcherding/borcherding/blob/master/content/publication/kolb2021understanding/kolb2021understanding.pdf
+    pdf: https://github.com/ncborcherding/borcherding/raw/93462c9dbadb5b9a2ac5e512755052464323f67c/content/publication/kolb2021understanding/kolb2021understanding.pdf
   highlight: Regulatory T cells (Tregs) are critical in maintaining immune homeostasis
     under various pathophysiological conditions.
   abstract: Regulatory T cells (Tregs) are critical in maintaining immune homeostasis
@@ -1029,7 +1029,7 @@
   - TCR
   links:
     code: https://github.com/ncborcherding/BCLXL
-    pdf: https://github.com/ncborcherding/borcherding/blob/master/content/publication/kolb2021proteolysis/kolb2021proteolysis.pdf
+    pdf: https://github.com/ncborcherding/borcherding/raw/93462c9dbadb5b9a2ac5e512755052464323f67c/content/publication/kolb2021proteolysis/kolb2021proteolysis.pdf
   highlight: Regulatory T cells (Tregs) play an important role in maintaining immune
     homeostasis and, within tumors, their upregulation is common and promotes an immunosuppressive
     microenvironment.
@@ -1055,7 +1055,7 @@
   - ATAC-seq
   - sarcoma
   links:
-    pdf: https://github.com/ncborcherding/borcherding/blob/master/content/publication/merritt2021taz/merritt2021taz.pdf
+    pdf: https://github.com/ncborcherding/borcherding/raw/93462c9dbadb5b9a2ac5e512755052464323f67c/content/publication/merritt2021taz/merritt2021taz.pdf
   highlight: Epithelioid hemangioendothelioma (EHE) is a vascular sarcoma that metastasizes
     early in its clinical course and lacks an effective medical therapy.
   abstract: Epithelioid hemangioendothelioma (EHE) is a vascular sarcoma that metastasizes
@@ -1079,7 +1079,7 @@
   - BCR
   - Single-Cell
   links:
-    pdf: https://github.com/ncborcherding/borcherding/blob/master/content/publication/mathew2021single/mathew2021single.pdf
+    pdf: https://github.com/ncborcherding/borcherding/raw/93462c9dbadb5b9a2ac5e512755052464323f67c/content/publication/mathew2021single/mathew2021single.pdf
   highlight: B cell responses are critical for antiviral immunity.
   abstract: B cell responses are critical for antiviral immunity. However, a comprehensive
     picture of antigen-specific B cell differentiation, clonal proliferation, and
@@ -1103,7 +1103,7 @@
   - Immune Response
   - COVID-19
   links:
-    pdf: https://github.com/ncborcherding/borcherding/blob/master/content/publication/amanat2021sars/amanat2021sars.pdf
+    pdf: https://github.com/ncborcherding/borcherding/raw/93462c9dbadb5b9a2ac5e512755052464323f67c/content/publication/amanat2021sars/amanat2021sars.pdf
   highlight: In this study we profiled vaccine-induced polyclonal antibodies as well
     as plasmablast-derived mAbs from individuals who received SARS-CoV-2 spike mRNA
     vaccine.
@@ -1127,7 +1127,7 @@
   - Immune Response
   - COVID-19
   links:
-    pdf: https://github.com/ncborcherding/borcherding/blob/master/content/publication/reynolds2021comprehensive/reynolds2021comprehensive.pdf
+    pdf: https://github.com/ncborcherding/borcherding/raw/93462c9dbadb5b9a2ac5e512755052464323f67c/content/publication/reynolds2021comprehensive/reynolds2021comprehensive.pdf
   highlight: Infection with severe acute respiratory syndrome coronavirus-2 (SARS-CoV-2)
     or seasonal influenza may lead to respiratory failure requiring intubation and
     mechanical ventilation.
@@ -1161,14 +1161,14 @@
   - Immunotherapy
   - Autoimmune
   links:
-    pdf: https://github.com/ncborcherding/borcherding/blob/master/content/publication/borcherding2021commentary/borcherding2021commentary.pdf
+    pdf: https://github.com/ncborcherding/borcherding/raw/93462c9dbadb5b9a2ac5e512755052464323f67c/content/publication/borcherding2021commentary/borcherding2021commentary.pdf
 '34594558':
   featured: false
   tags:
   - cancer
   - Autoimmune
   links:
-    pdf: https://github.com/ncborcherding/borcherding/blob/master/content/publication/subramani2021hypoglycemia/subramani2021hypoglycemia.pdf
+    pdf: https://github.com/ncborcherding/borcherding/raw/93462c9dbadb5b9a2ac5e512755052464323f67c/content/publication/subramani2021hypoglycemia/subramani2021hypoglycemia.pdf
   highlight: Type 1 diabetes and insulinoma can co-occur in pediatric patients and
     may present with episodes of hypo- and hyperglycemia, significant glycemic variability,
     and weight gain.
@@ -1184,7 +1184,7 @@
   - TCR
   links:
     code: https://github.com/ncborcherding/scTregs
-    pdf: https://github.com/ncborcherding/borcherding/blob/master/content/publication/kim2021CD177/kim2021CD177.pdf
+    pdf: https://github.com/ncborcherding/borcherding/raw/93462c9dbadb5b9a2ac5e512755052464323f67c/content/publication/kim2021CD177/kim2021CD177.pdf
   highlight: Regulatory T (Treg) cells are one of the major immunosuppressive cell
     types in cancer and a potential target for immunotherapy, but targeting tumor-infiltrating
     (TI) Treg cells has been challenging.
@@ -1208,7 +1208,7 @@
   - cancer
   - Immunotherapy
   links:
-    pdf: https://github.com/ncborcherding/borcherding/blob/master/content/publication/fujiwara2021GPR171/fujiwara2021GPR171.pdf
+    pdf: https://github.com/ncborcherding/borcherding/raw/93462c9dbadb5b9a2ac5e512755052464323f67c/content/publication/fujiwara2021GPR171/fujiwara2021GPR171.pdf
   highlight: The recently identified G-protein-coupled receptor GPR171 and its ligand
     BigLEN are thought to regulate food uptake and anxiety.
   abstract: The recently identified G-protein-coupled receptor GPR171 and its ligand
@@ -1230,7 +1230,7 @@
   - Immunotherapy
   - Review
   links:
-    pdf: https://github.com/ncborcherding/borcherding/blob/master/content/publication/kim2022updates/kim2022updates.pdf
+    pdf: https://github.com/ncborcherding/borcherding/raw/93462c9dbadb5b9a2ac5e512755052464323f67c/content/publication/kim2022updates/kim2022updates.pdf
   highlight: Several clinicopathological features of clear cell renal cell carcinomas
     (ccRCC) contribute to make an "atypical" cancer, including resistance to chemotherapy,
     sensitivity to anti-angiogenesis therapy and ICIs despite a low mutational burden,
@@ -1259,7 +1259,7 @@
   tags:
   - cancer
   links:
-    pdf: https://github.com/ncborcherding/borcherding/blob/master/content/publication/zhao2022tifab/zhao2022tifab.pdf
+    pdf: https://github.com/ncborcherding/borcherding/raw/93462c9dbadb5b9a2ac5e512755052464323f67c/content/publication/zhao2022tifab/zhao2022tifab.pdf
   highlight: We previously showed stabilization of NIK-induced activation of NF-κB
     non-canonical signaling suppresses MLL-AF9-induced AML.
   abstract: We previously showed stabilization of NIK-induced activation of NF-κB
@@ -1283,7 +1283,7 @@
   - breast cancer
   - Review
   links:
-    pdf: https://github.com/ncborcherding/borcherding/blob/master/content/publication/maharjan2022natural/maharjan2022natural.pdf
+    pdf: https://github.com/ncborcherding/borcherding/raw/93462c9dbadb5b9a2ac5e512755052464323f67c/content/publication/maharjan2022natural/maharjan2022natural.pdf
   highlight: The oncogenic role of estrogen receptor (ER) signaling in breast cancer
     has long been established.
   abstract: The oncogenic role of estrogen receptor (ER) signaling in breast cancer
@@ -1316,7 +1316,7 @@
   - Single-Cell
   links:
     code: https://github.com/ncborcherding/Lasrado_Myocarditis
-    pdf: https://github.com/ncborcherding/borcherding/blob/master/content/publication/lasrado2022dissecting/lasrado2022dissecting.pdf
+    pdf: https://github.com/ncborcherding/borcherding/raw/93462c9dbadb5b9a2ac5e512755052464323f67c/content/publication/lasrado2022dissecting/lasrado2022dissecting.pdf
   highlight: Coxsackievirus B3 (CVB3)-induced myocarditis is commonly employed to
     study viral pathogenesis in mice.
   abstract: Coxsackievirus B3 (CVB3)-induced myocarditis is commonly employed to study
@@ -1339,7 +1339,7 @@
   - Obesity
   - Mitochondria
   links:
-    pdf: https://github.com/ncborcherding/borcherding/blob/master/content/publication/rosina2022ejection/rosina2022ejection.pdf
+    pdf: https://github.com/ncborcherding/borcherding/raw/93462c9dbadb5b9a2ac5e512755052464323f67c/content/publication/rosina2022ejection/rosina2022ejection.pdf
   highlight: Recent findings have demonstrated that mitochondria can be transferred
     between cells to control metabolic homeostasis.
   abstract: Recent findings have demonstrated that mitochondria can be transferred
@@ -1363,7 +1363,7 @@
   - Single-Cell
   - Autoimmune
   links:
-    pdf: https://github.com/ncborcherding/borcherding/blob/master/content/publication/alam2022single/alam2022single.pdf
+    pdf: https://github.com/ncborcherding/borcherding/raw/93462c9dbadb5b9a2ac5e512755052464323f67c/content/publication/alam2022single/alam2022single.pdf
   highlight: Immune cells in the exposed conjunctiva mucosa defend against environmental
     and microbial stresses.
   abstract: Immune cells in the exposed conjunctiva mucosa defend against environmental
@@ -1391,7 +1391,7 @@
   - TCR
   - CTCL
   links:
-    pdf: https://github.com/ncborcherding/borcherding/blob/master/content/publication/borcherding2022single/borcherding2022single.pdf
+    pdf: https://github.com/ncborcherding/borcherding/raw/93462c9dbadb5b9a2ac5e512755052464323f67c/content/publication/borcherding2022single/borcherding2022single.pdf
   highlight: Cutaneous T cell lymphomas (CTCLs) are a spectrum of diseases with varied
     clinical courses caused by malignant clonal proliferation of skin-tropic T cells.
   abstract: Cutaneous T cell lymphomas (CTCLs) are a spectrum of diseases with varied
@@ -1421,7 +1421,7 @@
   - Autoimmune
   - Single-Cell
   links:
-    pdf: https://github.com/ncborcherding/borcherding/blob/master/content/publication/alam2022IL17/alam2022IL17.pdf
+    pdf: https://github.com/ncborcherding/borcherding/raw/93462c9dbadb5b9a2ac5e512755052464323f67c/content/publication/alam2022IL17/alam2022IL17.pdf
 '36070756':
   featured: true
   tags:
@@ -1430,7 +1430,7 @@
   - Mitochondria
   links:
     code: https://github.com/ncborcherding/mtD2
-    pdf: https://github.com/ncborcherding/borcherding/blob/master/content/publication/borcherding2022dietary/borcherding2022dietary.pdf
+    pdf: https://github.com/ncborcherding/borcherding/raw/93462c9dbadb5b9a2ac5e512755052464323f67c/content/publication/borcherding2022dietary/borcherding2022dietary.pdf
   highlight: Adipocytes transfer mitochondria to macrophages in white and brown adipose
     tissues to maintain metabolic homeostasis.
   abstract: Adipocytes transfer mitochondria to macrophages in white and brown adipose
@@ -1452,7 +1452,7 @@
   featured: false
   links:
     code: https://github.com/ncborcherding/Metabolite
-    pdf: https://github.com/ncborcherding/borcherding/blob/master/content/publication/rauckhorst2022mouse/rauckhorst2022mouse.pdf
+    pdf: https://github.com/ncborcherding/borcherding/raw/93462c9dbadb5b9a2ac5e512755052464323f67c/content/publication/rauckhorst2022mouse/rauckhorst2022mouse.pdf
 '36165893':
   featured: false
   tags:
@@ -1460,7 +1460,7 @@
   - Microenvironment
   - Single-Cell
   links:
-    pdf: https://github.com/ncborcherding/borcherding/blob/master/content/publication/lander2022stromal/lander2022stromal.pdf
+    pdf: https://github.com/ncborcherding/borcherding/raw/93462c9dbadb5b9a2ac5e512755052464323f67c/content/publication/lander2022stromal/lander2022stromal.pdf
   highlight: The effects of radiotherapy (RT) on tumor immunity in pancreatic ductal
     adenocarcinoma (PDAC) are not well understood.
   abstract: The effects of radiotherapy (RT) on tumor immunity in pancreatic ductal
@@ -1482,7 +1482,7 @@
   tags:
   - cancer
   links:
-    pdf: https://github.com/ncborcherding/borcherding/blob/master/content/publication/dong2022HSF1/dong2022HSF1.pdf
+    pdf: https://github.com/ncborcherding/borcherding/raw/93462c9dbadb5b9a2ac5e512755052464323f67c/content/publication/dong2022HSF1/dong2022HSF1.pdf
   highlight: Acute myeloid leukemia (AML) is maintained by self-renewing leukemic
     stem cells (LSCs).
   abstract: Acute myeloid leukemia (AML) is maintained by self-renewing leukemic stem
@@ -1505,7 +1505,7 @@
   - Autoimmune
   - Inflammation
   links:
-    pdf: https://github.com/ncborcherding/borcherding/blob/master/content/publication/shrode2022isoflavone/shrode2022isoflavone.pdf
+    pdf: https://github.com/ncborcherding/borcherding/raw/93462c9dbadb5b9a2ac5e512755052464323f67c/content/publication/shrode2022isoflavone/shrode2022isoflavone.pdf
 '36795805':
   featured: false
   tags:
@@ -1515,7 +1515,7 @@
   - TCR
   - Immunotherapy
   links:
-    pdf: https://github.com/ncborcherding/borcherding/blob/master/content/publication/he2023CD5/he2023CD5.pdf
+    pdf: https://github.com/ncborcherding/borcherding/raw/93462c9dbadb5b9a2ac5e512755052464323f67c/content/publication/he2023CD5/he2023CD5.pdf
   highlight: The induction of proinflammatory T cells by dendritic cell (DC) subtypes
     is critical for antitumor responses and effective immune checkpoint blockade (ICB)
     therapy.
@@ -1536,7 +1536,7 @@
   - Immune Response
   - Immunotherapy
   links:
-    pdf: https://github.com/ncborcherding/borcherding/blob/master/content/publication/crawford2023IL17/crawford2023IL17.pdf
+    pdf: https://github.com/ncborcherding/borcherding/raw/93462c9dbadb5b9a2ac5e512755052464323f67c/content/publication/crawford2023IL17/crawford2023IL17.pdf
   highlight: CD4+ T-helper 17 (Th17) T cells are a key population in protective immunity
     during infection and in self-tolerance/autoimmunity.
   abstract: CD4+ T-helper 17 (Th17) T cells are a key population in protective immunity
@@ -1562,7 +1562,7 @@
   - cancer
   - Immunotherapy
   links:
-    pdf: https://github.com/ncborcherding/borcherding/blob/master/content/publication/liu2023context/liu2023context.pdf
+    pdf: https://github.com/ncborcherding/borcherding/raw/93462c9dbadb5b9a2ac5e512755052464323f67c/content/publication/liu2023context/liu2023context.pdf
   highlight: Chronic activation of inflammatory pathways and suppressed interferon
     are hallmarks of immunosuppressive tumors.
   abstract: Chronic activation of inflammatory pathways and suppressed interferon
@@ -1586,7 +1586,7 @@
   - TCR
   - Single-Cell
   links:
-    pdf: https://github.com/ncborcherding/borcherding/blob/master/content/publication/herzog2023tumor.pdf
+    pdf: https://github.com/ncborcherding/borcherding/raw/93462c9dbadb5b9a2ac5e512755052464323f67c/content/publication/herzog2023tumor/herzog2023tumor.pdf
   highlight: Non–small cell lung cancer (NSCLC) is a leading cause of cancer-related
     deaths.
   abstract: Non–small cell lung cancer (NSCLC) is a leading cause of cancer-related
@@ -1615,7 +1615,7 @@
   - Immunology
   - TCR
   links:
-    pdf: https://github.com/ncborcherding/borcherding/blob/master/content/publication/westerhof2023multifunctional/westerhof2023multifunctional.pdf
+    pdf: https://github.com/ncborcherding/borcherding/raw/93462c9dbadb5b9a2ac5e512755052464323f67c/content/publication/westerhof2023multifunctional/westerhof2023multifunctional.pdf
   highlight: Cytokine production by memory T cells is a key mechanism of T cell mediated
     protection.
   abstract: Cytokine production by memory T cells is a key mechanism of T cell mediated
@@ -1642,7 +1642,7 @@
   - Immunotherapy
   - Macrophages
   links:
-    pdf: https://github.com/ncborcherding/borcherding/blob/master/content/publication/baer2023fibrosis/baer2023fibrosis.pdf
+    pdf: https://github.com/ncborcherding/borcherding/raw/93462c9dbadb5b9a2ac5e512755052464323f67c/content/publication/baer2023fibrosis/baer2023fibrosis.pdf
   highlight: Tissue-resident macrophages (TRMs) are long-lived cells that maintain
     locally and can be phenotypically distinct from monocyte-derived macrophages.
   abstract: Tissue-resident macrophages (TRMs) are long-lived cells that maintain
@@ -1666,7 +1666,7 @@
   - TCR
   - Single-Cell
   links:
-    pdf: https://github.com/ncborcherding/borcherding/blob/master/content/publication/Andreatta2023T/Andreatta2023T.pdf
+    pdf: https://github.com/ncborcherding/borcherding/raw/93462c9dbadb5b9a2ac5e512755052464323f67c/content/publication/Andreatta2023T/Andreatta2023T.pdf
   highlight: T cells are endowed with T-cell antigen receptors (TCR) that give them
     the capacity to recognize specific antigens and mount antigen-specific adaptive
     immune responses.
@@ -1698,7 +1698,7 @@
   - Diagnostics
   - Single-Cell
   links:
-    pdf: https://github.com/ncborcherding/borcherding/blob/master/content/publication/lefebvre2023molecular.pdf
+    pdf: https://github.com/ncborcherding/borcherding/raw/93462c9dbadb5b9a2ac5e512755052464323f67c/content/publication/lefebvre2023molecular/lefebvre2023molecular.pdf
   highlight: Cutaneous T cell lymphoma (CTCL), characterized by malignant T cells
     infiltrating the skin with potential for dissemination, remains a challenging
     disease to diagnose and treat due to disease heterogeneity, treatment resistance,
@@ -1723,7 +1723,7 @@
   - Mitochondria
   - microenvironment
   links:
-    pdf: https://github.com/ncborcherding/borcherding/blob/master/content/publication/borcherding2023the/borcherding2023the.pdf
+    pdf: https://github.com/ncborcherding/borcherding/raw/93462c9dbadb5b9a2ac5e512755052464323f67c/content/publication/borcherding2023the/borcherding2023the.pdf
   highlight: Mitochondria are believed to have originated through an ancient endosymbiotic
     process in which proteobacteria were captured and co-opted for energy production
     and cellular metabolism.
@@ -1748,7 +1748,7 @@
   - cancer
   - TCR
   links:
-    pdf: https://github.com/ncborcherding/borcherding/blob/master/content/publication/pothuri2024intratumoral.pdf
+    pdf: https://github.com/ncborcherding/borcherding/raw/93462c9dbadb5b9a2ac5e512755052464323f67c/content/publication/pothuri2024intratumoral/pothuri2024intratumoral.pdf
   highlight: Pancreatic ductal adenocarcinoma (PDAC) is a lethal malignancy that is
     refractory to immune checkpoint inhibitor therapy.
   abstract: Pancreatic ductal adenocarcinoma (PDAC) is a lethal malignancy that is
@@ -1780,7 +1780,7 @@
   - BCR
   - Single-Cell
   links:
-    pdf: https://github.com/ncborcherding/borcherding/blob/master/content/publication/irac2024single.pdf
+    pdf: https://github.com/ncborcherding/borcherding/raw/93462c9dbadb5b9a2ac5e512755052464323f67c/content/publication/irac2024single/irac2024single.pdf
   highlight: Single-cell T cell and B cell antigen receptor-sequencing data analysis
     can potentially perform in-depth assessments of adaptive immune cells that inform
     on understanding immune cell development to tracking clonal expansion in disease
@@ -1800,7 +1800,7 @@
   - TCR
   - Single-Cell
   links:
-    pdf: https://github.com/ncborcherding/borcherding/blob/master/content/publication/kim2024single.pdf
+    pdf: https://github.com/ncborcherding/borcherding/raw/93462c9dbadb5b9a2ac5e512755052464323f67c/content/publication/kim2024single/kim2024single.pdf
   highlight: Childhood Sjögren’s disease represents critically unmet medical needs
     due to a complete lack of immunological and molecular characterizations.
   abstract: Childhood Sjögren’s disease represents critically unmet medical needs
@@ -1826,7 +1826,7 @@
   - TCR
   - Immune Response
   links:
-    pdf: https://github.com/ncborcherding/borcherding/blob/master/content/publication/mazziotta2024cd8/mazziotta2024cd8.pdf
+    pdf: https://github.com/ncborcherding/borcherding/raw/93462c9dbadb5b9a2ac5e512755052464323f67c/content/publication/mazziotta2024cd8/mazziotta2024cd8.pdf
   highlight: The interplay between T-cell states of differentiation, dysfunction,
     and treatment response in acute myeloid leukemia (AML) remains unclear.
   abstract: The interplay between T-cell states of differentiation, dysfunction, and
@@ -1852,7 +1852,7 @@
   - Immune response
   links:
     code: https://github.com/ncborcherding/COVID_TCR
-    pdf: https://github.com/ncborcherding/borcherding/blob/master/content/publication/borcherding2024CD4/borcherding2024CD4.pdf
+    pdf: https://github.com/ncborcherding/borcherding/raw/93462c9dbadb5b9a2ac5e512755052464323f67c/content/publication/borcherding2024CD4/borcherding2024CD4.pdf
   highlight: Severe acute respiratory syndrome coronavirus 2 (SARS-CoV-2) infection
     and mRNA vaccination induce robust CD4+ T cell responses.
   abstract: Severe acute respiratory syndrome coronavirus 2 (SARS-CoV-2) infection
@@ -1876,7 +1876,7 @@
   - Mitochondria
   - Metabolomics
   links:
-    pdf: https://github.com/ncborcherding/borcherding/blob/master/content/publication/nakai2024mitochondria/nakai2024mitochondria.pdf
+    pdf: https://github.com/ncborcherding/borcherding/raw/93462c9dbadb5b9a2ac5e512755052464323f67c/content/publication/nakai2024mitochondria/nakai2024mitochondria.pdf
   highlight: Mitochondria transfer is a recently described phenomenon in which donor
     cells deliver mitochondria to acceptor cells.
   abstract: Mitochondria transfer is a recently described phenomenon in which donor
@@ -1909,7 +1909,7 @@
   - Immunology
   - Immune response
   links:
-    pdf: https://github.com/ncborcherding/borcherding/blob/master/content/publication/kim2024leveraging/kim2024leveraging.pdf
+    pdf: https://github.com/ncborcherding/borcherding/raw/93462c9dbadb5b9a2ac5e512755052464323f67c/content/publication/kim2024leveraging/kim2024leveraging.pdf
   highlight: Single-cell RNA sequencing (scRNA-seq) has become an essential tool for
     uncovering the complexities of various physiological and immunopathological conditions
     in veterinary medicine.
@@ -1941,7 +1941,7 @@
   - Single-Cell
   - TCR
   links:
-    pdf: https://github.com/ncborcherding/borcherding/blob/master/content/publication/corvino2024type/corvino2024type.pdf
+    pdf: https://github.com/ncborcherding/borcherding/raw/93462c9dbadb5b9a2ac5e512755052464323f67c/content/publication/corvino2024type/corvino2024type.pdf
   highlight: Head and neck squamous cell carcinoma (HNSCC) is linked to human papillomavirus
     (HPV) infection.
   abstract: Head and neck squamous cell carcinoma (HNSCC) is linked to human papillomavirus
@@ -1969,7 +1969,7 @@
   - Myeloid Neoplasia
   - Metabolomics
   links:
-    pdf: https://github.com/ncborcherding/borcherding/blob/master/content/publication/wang2025tifab/wang2025tifab.pdf
+    pdf: https://github.com/ncborcherding/borcherding/raw/93462c9dbadb5b9a2ac5e512755052464323f67c/content/publication/wang2025tifab/wang2025tifab.pdf
   highlight: Tumor necrosis factor (TNF) receptor–associated factor (TRAF)–interacting
     protein with forkhead-associated domain B (TIFAB), an inhibitor of NF-κB signaling,
     plays critical roles in hematopoiesis, myelodysplastic neoplasms, and leukemia.
@@ -1999,7 +1999,7 @@
   - Autoimmunity
   - Single-Cell
   links:
-    pdf: https://github.com/ncborcherding/borcherding/blob/master/content/publication/upadhye2025myelin/upadhye2025myelin.pdf
+    pdf: https://github.com/ncborcherding/borcherding/raw/93462c9dbadb5b9a2ac5e512755052464323f67c/content/publication/upadhye2025myelin/upadhye2025myelin.pdf
   highlight: Multiple sclerosis (MS), an autoimmune demyelinating disease of the central
     nervous system, is modeled in mice as experimental autoimmune encephalomyelitis
     (EAE).
@@ -2034,7 +2034,7 @@
   - BCR
   links:
     code: https://github.com/BorchLab/scRepertoire.v2_manuscript
-    pdf: https://github.com/ncborcherding/borcherding/blob/master/content/publication/yang2025scRepertoire/yang2025scRepertoire.pdf
+    pdf: https://github.com/ncborcherding/borcherding/raw/93462c9dbadb5b9a2ac5e512755052464323f67c/content/publication/yang2025scRepertoire/yang2025scRepertoire.pdf
   highlight: Single-cell adaptive immune receptor repertoire sequencing (scAIRR-seq)
     and single-cell RNA sequencing (scRNA-seq) provide a transformative approach to
     profiling immune responses at unprecedented resolution across diverse pathophysiologic
