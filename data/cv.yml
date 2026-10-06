@@ -124,6 +124,9 @@ service:
   - committee: Trainee Research Symposium Planning Committee, Department of Pathology and Immunology, Washington University St Louis.
     start: '2026'
     end: "Present"
+  - committee: Graduate Application Review Committee, Division of Biology & Biomedical Sciences, Washington University St Louis.
+    start: '2026'
+    end: "Present"
   national:
   - committee: First Aid/USMLErx Student Council
     start: '2016'
