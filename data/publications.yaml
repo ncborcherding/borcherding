@@ -56,6 +56,153 @@ publications:
     improved disease monitoring, biomarker-informed clinical trial design, and genome-guided
     therapeutic decision-making. Moreover, these molecular changes present new opportunities
     for therapeutic targeting in this challenging and incurable cancer.
+- key: PMID42190650
+  pmid: '42190650'
+  title: Tumor-draining lymph nodes in ovarian cancer lack germinal centers but harbor
+    tumor-reactive memory B cells clonally linked to intra-tumoral B cells
+  authors:
+  - Nachum Nathan
+  - Philipp Paparoditis
+  - Avital Sarusi-Portuguez
+  - Liat Stoler-Barak
+  - Hannah Marie Horn
+  - Idan Milo
+  - Roei D Mazor
+  - Adva Levy-Barda
+  - Natalia Yanichkin
+  - Nicholas Borcherding
+  - Ronnie Blecher-Gonen
+  - Revital Ronen
+  - Inbal Bolocan Nachman
+  - Inna Goliand
+  - Liat Fellus-Alyagor
+  - Tomer-Meir Salame
+  - Irit Sagi
+  - Goni Hout Siloni
+  - Menachem Gross
+  - Ariel Tenenbaum
+  - Ilan Kent
+  - Leeat Keren
+  - Oded Raban
+  - Ram Eitan
+  - Ziv Shulman
+  journal: Immunity
+  year: 2026
+  volume: '59'
+  number: '6'
+  pages: 1743-1757.e10
+  doi: 10.1016/j.immuni.2026.04.017
+  pubmed: https://pubmed.ncbi.nlm.nih.gov/42190650/
+  abstract: The presence of B cells within high-grade serous ovarian cancer (HGSOC)
+    tumors associates with favorable prognoses. We examined the contribution of tumor-draining
+    lymph nodes (TDLNs) to the anti-tumor B cell response. Patient-derived TDLNs were
+    largely devoid of active germinal center (GC) structures, plasma cells (PCs),
+    and T follicular helper cells and were instead dominated by quiescent memory B
+    cells (MBCs) that expressed mutated, class-switched antibodies reactive to ovarian
+    tumor cells. GC B cells and PCs largely resided within the tumor, whereas classical
+    class-switched MBCs were present both in the tumor and in matched TDLN samples.
+    MBCs located in the TDLNs were clonally related to MBCs and PCs within the tumor.
+    Increased frequencies of DC-SIGN⁺ macrophages in TDLNs were correlated with reduced
+    presence of GC B cells, suggesting a regulatory role. Thus, in HGSOC, TDLNs fail
+    to sustain active GC responses, serving instead as reservoirs of tumor-reactive
+    memory B cells that contribute to the intra-tumoral B cell response.
+- key: PMID42152613
+  pmid: '42152613'
+  title: Highly focused human CD8+ T-cell response in the lower airways during acute
+    influenza infection
+  authors:
+  - Adam Saidu
+  - Jeremy Chase Crawford
+  - Sarah Walden
+  - Jia-Hua Qu
+  - Heather M Machkovech
+  - Fangjie Han
+  - Resha Sisti
+  - E Kaitlynn Allen
+  - Daniel Reynolds
+  - Nicholas Borcherding
+  - Jackson S Turner
+  - Thomas C Friedrich
+  - Derek E Byers
+  - Ali H Ellebedy
+  - Paul G Thomas
+  - Philip A Mudd
+  journal: 'Journal of immunology (Baltimore, Md. : 1950)'
+  year: 2026
+  volume: '215'
+  number: '5'
+  pages: ''
+  doi: 10.1093/jimmun/vkag068
+  pubmed: https://pubmed.ncbi.nlm.nih.gov/42152613/
+  abstract: Lung tissue-resident CD8+ T cells facilitate viral clearance and protective
+    immunity to influenza viruses in animal models. Their role during acute human
+    infection is not clear. Here we use bronchoalveolar lavage samples collected from
+    human subjects naturally infected with influenza B virus to show that influenza-specific
+    CD8+ T cells are expanded in the lower airways during acute infection and target
+    only a few epitopes from phylogenetically conserved internal influenza virus proteins.
+    The lower airway influenza-specific CD8+ T-cell immunodominance hierarchy is different
+    from the hierarchy observed in matched blood samples. Transcriptional and protein-level
+    analyses using HLA class I tetramers reveal a tissue-resident profile and less
+    expression of cytotoxic effector molecules in lower airway influenza-specific
+    CD8+ T cells. Collectively, our data show that high-frequency influenza-specific
+    CD8+ T cells with a tissue-resident phenotype are found in the lower airways during
+    viral clearance. These cells recognize a handful of conserved viral epitopes and
+    exhibit a functional phenotype different from cells found in blood. These cells
+    may play a role in controlling human influenza infection.
+- key: PMID42374500
+  pmid: '42374500'
+  title: IL-17A deficiency in HLA-DR3 transgenic mice enriches beneficial Prevotella
+    species in gut to promote Tregs and reduce CNS autoimmunity
+  authors:
+  - Shailesh K Shahi
+  - Sudeep Ghimire
+  - Samantha N Jensen
+  - Peter C Lehman
+  - Allison G Rux
+  - Souradip Sinha
+  - Nicholas Borcherding
+  - Munir R Tanas
+  - Katherine N Gibson-Corley
+  - Sukirth M Ganesan
+  - Nitin J Karandikar
+  - Ashutosh K Mangalam
+  journal: Microbiome
+  year: 2026
+  volume: '14'
+  number: '1'
+  pages: ''
+  doi: 10.1186/s40168-026-02394-w
+  pubmed: https://pubmed.ncbi.nlm.nih.gov/42374500/
+  abstract: 'BACKGROUND: Human Leukocyte Antigen (HLA) class-II genes, particularly
+    HLA-DR2 and HLA-DR3, and the gut microbiota are intricately linked to the pathobiology
+    of multiple sclerosis (MS) through their ability to regulate host immunity, a
+    critical factor in disease pathogenesis. An imbalance between anti-inflammatory
+    CD4<sup>+</sup> Tregs and pro-inflammatory IL-17A-secreting CD4<sup>+</sup> Th17
+    cells is thought to drive disease. However, a key unresolved question is whether
+    HLA-class II-restricted CD4<sup>+</sup>IL-17A cells can influence Treg populations
+    and the extent to which gut microbiota regulate this IL-17A-Treg axis. Therefore,
+    we utilized humanized transgenic mice expressing the HLA class-II gene and deficient
+    in mouse class-II molecules, where all CD4<sup>+</sup> T cells are selected on
+    the human HLA class-II molecule, closely mimicking human immune responses. RESULTS:
+    Utilizing IL-17A-deficient (DR3.IL-17A<sup>-/-</sup>) mice expressing HLA-DR3
+    (HLA-DRβ1*0301), we show that IL-17A deficiency enriches beneficial gut bacteria,
+    including Prevotella species, enhances peroxisome proliferator-activated receptor
+    (PPAR) signaling, and increases FoxP3<sup>+</sup> regulatory T (Treg) cells and
+    IL-10 production. The importance of gut microbiota in promoting Tregs and anti-inflammatory
+    responses was confirmed by administering Prevotella copri, a common commensal
+    in human gut, which mirrored the effects observed in IL-17A-deficient mice by
+    inducing PPAR signaling and Treg population. Moreover, DR3.IL-17A<sup>-/-</sup>
+    mice exhibited a marked reduction in EAE severity compared to IL-17A-sufficient
+    (DR3) mice, underscoring the enhanced functional capacity of the Treg population
+    in mitigating disease progression. Cohousing experiments validated the role of
+    gut microbiota in immune regulation including Treg induction, as demonstrated
+    by the transfer of Prevotella species from IL-17A-deficient mice to IL-17A-sufficient
+    mice, increased Treg populations and attenuated EAE severity in recipient DR3
+    mice. CONCLUSIONS: This study redefines IL-17A''s role in immune regulation, emphasizing
+    its ability to directly influence gut microbiota composition and the abundance
+    of Treg-promoting bacteria. Thus, gut microbiota-targeted therapies, particularly
+    those promoting Treg-inducing bacteria like Prevotella species, hold promise for
+    treating autoimmune diseases by modulating host immune responses. Video Abstract.'
 - key: PMID39765189
   pmid: '39765189'
   title: Linking tumor immune infiltration to enhanced longevity in recurrence-free
