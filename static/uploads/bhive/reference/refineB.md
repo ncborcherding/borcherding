@@ -157,5 +157,5 @@ A_refined <- refineB(res$antibodies, X, y = y,
                      loss = "categorical_crossentropy", optimizer = "adam",
                      steps = 3, lr = 0.01, verbose = FALSE)
 dim(A_refined)
-#> [1] 13  4
+#> [1] 12  4
 ```

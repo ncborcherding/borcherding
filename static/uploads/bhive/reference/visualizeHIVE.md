@@ -151,6 +151,7 @@ visualizeHIVE(res_h, X = X, plot_type = "scatter", layer = 1:2,
 
 # A feature by class for a classifier, with each antibody's value overlaid
 res_c <- bHIVE(X, y = iris$Species, maxIter = 10, verbose = FALSE)
+#> This fit cannot predict every class. virginica kept 5 antibodies and recovered 26% of its 50 observations. minPerClass seeds antibodies per class, but suppression removes them afterwards. Raise nAntibodies, lower epsilon, or raise minPerClass. See ?AINet.
 visualizeHIVE(res_c, X = X, plot_type = "violin",
               feature = "Petal.Length", title = "Classifier")
 

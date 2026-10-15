@@ -374,25 +374,25 @@ for single-cell data. It picks its own number of clusters.</li>
 <td align="left">bHIVE, seed 1</td>
 <td align="right">14</td>
 <td align="right">0.805</td>
-<td align="right">0.9</td>
+<td align="right">1.7</td>
 </tr>
 <tr class="even">
 <td align="left">bHIVE, seed 2</td>
 <td align="right">14</td>
 <td align="right">0.869</td>
-<td align="right">0.9</td>
+<td align="right">1.7</td>
 </tr>
 <tr class="odd">
 <td align="left">bHIVE, seed 3</td>
 <td align="right">14</td>
 <td align="right">0.967</td>
-<td align="right">1.0</td>
+<td align="right">1.8</td>
 </tr>
 <tr class="even">
 <td align="left">FlowSOM</td>
 <td align="right">14</td>
 <td align="right">0.897</td>
-<td align="right">4.4</td>
+<td align="right">5.9</td>
 </tr>
 <tr class="odd">
 <td align="left">k-means</td>
@@ -404,7 +404,7 @@ for single-cell data. It picks its own number of clusters.</li>
 <td align="left">SNN graph + Louvain</td>
 <td align="right">8</td>
 <td align="right">0.971</td>
-<td align="right">0.4</td>
+<td align="right">0.8</td>
 </tr>
 </tbody>
 </table>
@@ -515,9 +515,9 @@ cells the original analysis left unassigned are one example.</p>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">model</span><span class="op">$</span><span class="fu">predict</span><span class="op">(</span><span class="va">new_cells</span><span class="op">)</span><span class="op">)</span>, decreasing <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## </span></span>
 <span><span class="co">##    CD4_T_cells      Monocytes    CD8_T_cells Mature_B_cells    Pre_B_cells </span></span>
-<span><span class="co">##            515            460            337            258            119 </span></span>
+<span><span class="co">##            514            458            338            258            119 </span></span>
 <span><span class="co">## CD16-_NK_cells </span></span>
-<span><span class="co">##             93</span></span></code></pre>
+<span><span class="co">##             95</span></span></code></pre>
 <p>These cells were not gated by hand, so these labels have no reference
 to check them against. Treat them as hypotheses to check against the
 markers.</p>

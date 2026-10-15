@@ -245,7 +245,12 @@ rare class (for example a population of a few cells in a cytometry
 sample) often receives no antibody at all and can never be
 predicted. The total can slightly exceed <code>nAntibodies</code>. Set to 0
 to sample all observations without regard to class. Ignored when an
-<code>init</code> module is supplied. Default 5.</p></dd>
+<code>init</code> module is supplied. Default 5. The guarantee holds at
+seeding only: suppression and idiotypic regulation remove antibodies
+afterwards and can take every one a class had. <code>fit()</code> reports
+any class that ends with no antibody or that recovers less than half
+of its own training observations, so raise <code>nAntibodies</code> or
+lower <code>epsilon</code> when that happens.</p></dd>
 
 
 <dt><code>shm</code></dt>
@@ -350,14 +355,14 @@ Inferred from y if NULL.</p></dd>
 <span class="r-in"><span><span class="va">model</span><span class="op">$</span><span class="fu">fit</span><span class="op">(</span><span class="va">X</span>, task <span class="op">=</span> <span class="st">"clustering"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">model</span><span class="op">$</span><span class="va">result</span><span class="op">$</span><span class="va">assignments</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  1  2  3  4  5  6  7  8  9 10 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  4 28  1 21 18 28 20  3  6 21 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  1  2  3  4  5  6  7  8  9 10 11 12 13 14 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  4  4 12 19  1  4 15 13 18 22  7 16  3 12 </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Classification</span></span></span>
 <span class="r-in"><span><span class="va">model2</span> <span class="op">&lt;-</span> <span class="va">AINet</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>nAntibodies <span class="op">=</span> <span class="fl">20</span>, maxIter <span class="op">=</span> <span class="fl">10</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">model2</span><span class="op">$</span><span class="fu">fit</span><span class="op">(</span><span class="va">X</span>, <span class="va">iris</span><span class="op">$</span><span class="va">Species</span>, task <span class="op">=</span> <span class="st">"classification"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">model2</span><span class="op">$</span><span class="va">result</span><span class="op">$</span><span class="va">assignments</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="va">iris</span><span class="op">$</span><span class="va">Species</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.86</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.7666667</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Predict on new data</span></span></span>
 <span class="r-in"><span><span class="va">preds</span> <span class="op">&lt;-</span> <span class="va">model2</span><span class="op">$</span><span class="fu">predict</span><span class="op">(</span><span class="va">X</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="op">]</span><span class="op">)</span></span></span>

@@ -85,7 +85,7 @@ tuning_cls$best_params
 ```
 
     ##   nAntibodies beta epsilon metric_value
-    ## 9          50   10    0.01    0.9533333
+    ## 6          50    5    0.01    0.9733333
 
 ### Parallelization with BiocParallel
 
@@ -132,8 +132,8 @@ layer_info
 ```
 
     ##              [,1] [,2] [,3]
-    ## n_prototypes   22   12    7
-    ## n_clusters     22   12    7
+    ## n_prototypes   22    9    5
+    ## n_clusters     22    9    5
 
 ### Collapse Methods
 
@@ -203,7 +203,7 @@ cat("Accuracy (plain):  ", round(acc_plain, 3), "\n")
 cat("Accuracy (refined):", round(acc_refined, 3), "\n")
 ```
 
-    ## Accuracy (refined): 0.833
+    ## Accuracy (refined): 0.887
 
 ## Gradient Refinement with refineB
 
@@ -403,9 +403,9 @@ model_hc$results[, c("nAntibodies", "layers", "Accuracy", "Kappa")]
 
     ##   nAntibodies layers  Accuracy     Kappa
     ## 1          20      2 0.8947811 0.8412631
-    ## 2          20      3 0.8451178 0.7652050
+    ## 2          20      3 0.8552189 0.7820403
     ## 3          30      2 0.9141414 0.8705741
-    ## 4          30      3 0.8728956 0.8087518
+    ## 4          30      3 0.8543771 0.7807799
 
 ## Visualization with visualizeHIVE
 

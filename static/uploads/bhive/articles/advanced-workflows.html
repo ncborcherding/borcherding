@@ -182,7 +182,7 @@ metric.</p>
 <span>                         maxIter <span class="op">=</span> <span class="fl">15</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="va">tuning_cls</span><span class="op">$</span><span class="va">best_params</span></span></code></pre></div>
 <pre><code><span><span class="co">##   nAntibodies beta epsilon metric_value</span></span>
-<span><span class="co">## 9          50   10    0.01    0.9533333</span></span></code></pre>
+<span><span class="co">## 6          50    5    0.01    0.9733333</span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="parallelization-with-biocparallel">Parallelization with BiocParallel<a class="anchor" aria-label="anchor" href="#parallelization-with-biocparallel"></a>
@@ -225,8 +225,8 @@ next layer, creating a hierarchical compression of the data.</p>
 <span><span class="op">}</span><span class="op">)</span></span>
 <span><span class="va">layer_info</span></span></code></pre></div>
 <pre><code><span><span class="co">##              [,1] [,2] [,3]</span></span>
-<span><span class="co">## n_prototypes   22   12    7</span></span>
-<span><span class="co">## n_clusters     22   12    7</span></span></code></pre>
+<span><span class="co">## n_prototypes   22    9    5</span></span>
+<span><span class="co">## n_clusters     22    9    5</span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="collapse-methods">Collapse Methods<a class="anchor" aria-label="anchor" href="#collapse-methods"></a>
@@ -295,7 +295,7 @@ prototype positions before collapsing.</p>
 <pre><code><span><span class="co">## Accuracy (plain):   0.92</span></span></code></pre>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"Accuracy (refined):"</span>, <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">acc_refined</span>, <span class="fl">3</span><span class="op">)</span>, <span class="st">"\n"</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Accuracy (refined): 0.833</span></span></code></pre>
+<pre><code><span><span class="co">## Accuracy (refined): 0.887</span></span></code></pre>
 </div>
 </div>
 <div class="section level2">
@@ -551,9 +551,9 @@ to the tuning grid:</p>
 <span><span class="va">model_hc</span><span class="op">$</span><span class="va">results</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"nAntibodies"</span>, <span class="st">"layers"</span>, <span class="st">"Accuracy"</span>, <span class="st">"Kappa"</span><span class="op">)</span><span class="op">]</span></span></code></pre></div>
 <pre><code><span><span class="co">##   nAntibodies layers  Accuracy     Kappa</span></span>
 <span><span class="co">## 1          20      2 0.8947811 0.8412631</span></span>
-<span><span class="co">## 2          20      3 0.8451178 0.7652050</span></span>
+<span><span class="co">## 2          20      3 0.8552189 0.7820403</span></span>
 <span><span class="co">## 3          30      2 0.9141414 0.8705741</span></span>
-<span><span class="co">## 4          30      3 0.8728956 0.8087518</span></span></code></pre>
+<span><span class="co">## 4          30      3 0.8543771 0.7807799</span></span></code></pre>
 </div>
 </div>
 <div class="section level2">

@@ -204,6 +204,11 @@ Create a new AINet algorithm instance.
   antibody at all and can never be predicted. The total can slightly
   exceed `nAntibodies`. Set to 0 to sample all observations without
   regard to class. Ignored when an `init` module is supplied. Default 5.
+  The guarantee holds at seeding only: suppression and idiotypic
+  regulation remove antibodies afterwards and can take every one a class
+  had. `fit()` reports any class that ends with no antibody or that
+  recovers less than half of its own training observations, so raise
+  `nAntibodies` or lower `epsilon` when that happens.
 
 - `shm`:
 
@@ -302,14 +307,14 @@ model <- AINet$new(nAntibodies = 15, maxIter = 10, verbose = FALSE)
 model$fit(X, task = "clustering")
 table(model$result$assignments)
 #> 
-#>  1  2  3  4  5  6  7  8  9 10 
-#>  4 28  1 21 18 28 20  3  6 21 
+#>  1  2  3  4  5  6  7  8  9 10 11 12 13 14 
+#>  4  4 12 19  1  4 15 13 18 22  7 16  3 12 
 
 # Classification
 model2 <- AINet$new(nAntibodies = 20, maxIter = 10, verbose = FALSE)
 model2$fit(X, iris$Species, task = "classification")
 mean(model2$result$assignments == as.character(iris$Species))
-#> [1] 0.86
+#> [1] 0.7666667
 
 # Predict on new data
 preds <- model2$predict(X[1:10, ])

@@ -171,5 +171,5 @@ gate <- ActivationGate$new(signal2_type = "density", threshold2 = 0.3)
 aff <- rep$affinity_matrix(X, "gaussian")
 activated <- gate$evaluate(aff, X, A)
 sum(activated)  # number of activated interactions
-#> [1] 449
+#> [1] 469
 ```

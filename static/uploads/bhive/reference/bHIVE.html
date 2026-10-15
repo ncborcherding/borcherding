@@ -309,8 +309,8 @@ classified using an assay or, for a SingleCellExperiment, a
 <span class="r-in"><span>             verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">assignments</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  2 13  7  6  8  4 11  6  3  1 11  1 21  3 12  2  7  2 12  3 15 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16 18  3  6 24  3 13 13  4  2  7  1 12  2  7 13  6 </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Example 2: Classification with Iris species</span></span></span>
 <span class="r-in"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="va">iris</span><span class="op">$</span><span class="va">Species</span></span></span>
@@ -327,8 +327,8 @@ classified using an assay or, for a SingleCellExperiment, a
 <span class="r-out co"><span class="r-pr">#&gt;</span>             y</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>              setosa versicolor virginica</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   setosa         50          0         0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   versicolor      0         47        14</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   virginica       0          3        36</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   versicolor      0         35         2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   virginica       0         15        48</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Example 3: SingleCellExperiment input (features x cells)</span></span></span>
 <span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">SingleCellExperiment</span><span class="op">)</span></span></span>
@@ -408,16 +408,16 @@ classified using an assay or, for a SingleCellExperiment, a
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">sce</span><span class="op">$</span><span class="va">bHIVE</span>, <span class="va">sce</span><span class="op">$</span><span class="va">species</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     setosa versicolor virginica</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   1     50          0         0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   2      0         48        14</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   3      0          2        36</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   1      0         48        14</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   2      0          2        36</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   3     50          0         0</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Cluster on an embedding, or classify with a colData column as labels</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/pkg/SingleCellExperiment/man/reducedDims.html" class="external-link">reducedDim</a></span><span class="op">(</span><span class="va">sce</span>, <span class="st">"PCA"</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/prcomp.html" class="external-link">prcomp</a></span><span class="op">(</span><span class="va">X</span><span class="op">)</span><span class="op">$</span><span class="va">x</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span></span></span>
 <span class="r-in"><span><span class="va">sce</span> <span class="op">&lt;-</span> <span class="fu">bHIVE</span><span class="op">(</span><span class="va">sce</span>, use.dimred <span class="op">=</span> <span class="st">"PCA"</span>, name <span class="op">=</span> <span class="st">"bHIVE_pca"</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">sce</span> <span class="op">&lt;-</span> <span class="fu">bHIVE</span><span class="op">(</span><span class="va">sce</span>, y <span class="op">=</span> <span class="st">"species"</span>, name <span class="op">=</span> <span class="st">"bHIVE_class"</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">sce</span><span class="op">$</span><span class="va">bHIVE_class</span> <span class="op">==</span> <span class="va">sce</span><span class="op">$</span><span class="va">species</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.8466667</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.82</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

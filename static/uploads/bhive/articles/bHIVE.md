@@ -344,12 +344,12 @@ knitr::kable(comparison, digits = c(0, 0, 3, 1))
 
 | method              | clusters |   ARI | seconds |
 |:--------------------|---------:|------:|--------:|
-| bHIVE, seed 1       |       14 | 0.805 |     0.9 |
-| bHIVE, seed 2       |       14 | 0.869 |     0.9 |
-| bHIVE, seed 3       |       14 | 0.967 |     1.0 |
-| FlowSOM             |       14 | 0.897 |     4.4 |
+| bHIVE, seed 1       |       14 | 0.805 |     1.7 |
+| bHIVE, seed 2       |       14 | 0.869 |     1.7 |
+| bHIVE, seed 3       |       14 | 0.967 |     1.8 |
+| FlowSOM             |       14 | 0.897 |     5.9 |
 | k-means             |       14 | 0.583 |     0.0 |
-| SNN graph + Louvain |        8 | 0.971 |     0.4 |
+| SNN graph + Louvain |        8 | 0.971 |     0.8 |
 
 The graph-based method reaches an ARI of 0.97 with only 8 clusters. ARI
 is dominated by the large populations, so merging a few small ones costs
@@ -464,9 +464,9 @@ head(sort(table(model$predict(new_cells)), decreasing = TRUE))
 
     ## 
     ##    CD4_T_cells      Monocytes    CD8_T_cells Mature_B_cells    Pre_B_cells 
-    ##            515            460            337            258            119 
+    ##            514            458            338            258            119 
     ## CD16-_NK_cells 
-    ##             93
+    ##             95
 
 These cells were not gated by hand, so these labels have no reference to
 check them against. Treat them as hypotheses to check against the

@@ -285,8 +285,8 @@ res <- bHIVE(X = X,
              verbose = FALSE)
 table(res$assignments)
 #> 
-#>  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 
-#>  2 13  7  6  8  4 11  6  3  1 11  1 21  3 12  2  7  2 12  3 15 
+#>  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 
+#> 16 18  3  6 24  3 13 13  4  2  7  1 12  2  7 13  6 
 
 # Example 2: Classification with Iris species
 y <- iris$Species
@@ -303,8 +303,8 @@ table(res$assignments, y)
 #>             y
 #>              setosa versicolor virginica
 #>   setosa         50          0         0
-#>   versicolor      0         47        14
-#>   virginica       0          3        36
+#>   versicolor      0         35         2
+#>   virginica       0         15        48
 
 # Example 3: SingleCellExperiment input (features x cells)
 library(SingleCellExperiment)
@@ -384,14 +384,14 @@ sce <- bHIVE(sce, targetK = 3, maxIter = 10, verbose = FALSE)
 table(sce$bHIVE, sce$species)
 #>    
 #>     setosa versicolor virginica
-#>   1     50          0         0
-#>   2      0         48        14
-#>   3      0          2        36
+#>   1      0         48        14
+#>   2      0          2        36
+#>   3     50          0         0
 
 # Cluster on an embedding, or classify with a colData column as labels
 reducedDim(sce, "PCA") <- prcomp(X)$x[, 1:2]
 sce <- bHIVE(sce, use.dimred = "PCA", name = "bHIVE_pca", verbose = FALSE)
 sce <- bHIVE(sce, y = "species", name = "bHIVE_class", verbose = FALSE)
 mean(sce$bHIVE_class == sce$species)
-#> [1] 0.8466667
+#> [1] 0.82
 ```

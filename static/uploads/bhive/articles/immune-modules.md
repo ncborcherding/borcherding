@@ -78,9 +78,9 @@ do.call(rbind, results)
 ```
 
     ##     method  accuracy n_ab
-    ## 1  uniform 0.6466667   12
-    ## 2     airs 0.8933333   14
-    ## 3 adaptive 0.9066667   15
+    ## 1  uniform 0.8000000   12
+    ## 2     airs 0.7266667   10
+    ## 3 adaptive 0.9466667   15
 
 ## Idiotypic Network Regulation
 

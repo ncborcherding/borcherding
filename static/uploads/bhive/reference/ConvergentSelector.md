@@ -166,5 +166,5 @@ results <- lapply(1:3, function(i) {
 conv <- ConvergentSelector$new(tolerance = 1.0, min_appearances = 2)
 public <- conv$from_results(results)
 nrow(public)  # consensus antibodies
-#> [1] 12
+#> [1] 13
 ```
