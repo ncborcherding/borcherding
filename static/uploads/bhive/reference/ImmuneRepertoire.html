@@ -9,7 +9,7 @@ with associated metadata. Core data structure for bHIVE algorithms."><meta prope
 
     <a class="navbar-brand me-2" href="../index.html">bHIVE</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.6</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.7</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -21,7 +21,7 @@ with associated metadata. Core data structure for bHIVE algorithms."><meta prope
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-tutorials" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Tutorials</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-tutorials"><li><a class="dropdown-item" href="../articles/bHIVE.html">Getting Started</a></li>
-    <li><a class="dropdown-item" href="../articles/articles/immune-modules.html">Immune Modules</a></li>
+    <li><a class="dropdown-item" href="../articles/immune-modules.html">Immune Modules</a></li>
     <li><a class="dropdown-item" href="../articles/articles/advanced-workflows.html">Advanced Tuning &amp; Workflows</a></li>
     <li><a class="dropdown-item" href="../articles/articles/foundations.html">Algorithm &amp; Biological Foundations</a></li>
   </ul></li>
@@ -48,6 +48,11 @@ with associated metadata. Core data structure for bHIVE algorithms.</p>
     </div>
 
 
+    <div class="section level2">
+    <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
+    <p>An <code><a href="https://r6.r-lib.org/reference/R6Class.html" class="external-link">R6Class</a></code> generator.
+  <code>ImmuneRepertoire$new()</code> returns an <code>ImmuneRepertoire</code> object.</p>
+    </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>An ImmuneRepertoire holds a matrix of antibody vectors (each row is one
@@ -82,7 +87,7 @@ lineage). All heavy computation is dispatched to C++ via RcppArmadillo.</p>
 <li><p><a href="#method-ImmuneRepertoire-add"><code>ImmuneRepertoire$add()</code></a></p></li>
 <li><p><a href="#method-ImmuneRepertoire-age_all"><code>ImmuneRepertoire$age_all()</code></a></p></li>
 <li><p><a href="#method-ImmuneRepertoire-as_matrix"><code>ImmuneRepertoire$as_matrix()</code></a></p></li>
-<li><p><a href="#method-ImmuneRepertoire-print"><code>ImmuneRepertoire$print()</code></a></p></li>
+<li><p><a href="#method-ImmuneRepertoire-format"><code>ImmuneRepertoire$format()</code></a></p></li>
 <li><p><a href="#method-ImmuneRepertoire-clone"><code>ImmuneRepertoire$clone()</code></a></p></li>
 </ul></div><p></p><hr><a id="method-ImmuneRepertoire-new"></a><div class="section">
 <h3 id="method-new-">Method <code>new()</code><a class="anchor" aria-label="anchor" href="#method-new-"></a></h3>
@@ -294,11 +299,12 @@ lineage). All heavy computation is dispatched to C++ via RcppArmadillo.</p>
 <p>Numeric matrix (nAntibodies x nFeatures).</p>
 </div>
 
-</div><p></p><hr><a id="method-ImmuneRepertoire-print"></a><div class="section">
-<h3 id="method-print-">Method <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code><a class="anchor" aria-label="anchor" href="#method-print-"></a></h3>
-<p>Print summary.</p><div class="section">
+</div><p></p><hr><a id="method-ImmuneRepertoire-format"></a><div class="section">
+<h3 id="method-format-">Method <code><a href="https://rdrr.io/r/base/format.html" class="external-link">format()</a></code><a class="anchor" aria-label="anchor" href="#method-format-"></a></h3>
+<p>Format a short summary, one element per line. Used by
+  <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code>.</p><div class="section">
 <h4 id="usage-10">Usage<a class="anchor" aria-label="anchor" href="#usage-10"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ImmuneRepertoire</span><span class="op">$</span><span class="fu">print</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ImmuneRepertoire</span><span class="op">$</span><span class="fu">format</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -308,6 +314,10 @@ lineage). All heavy computation is dispatched to C++ via RcppArmadillo.</p>
 
 
 </dl><p></p></div>
+</div>
+<div class="section">
+<h4 id="returns-9">Returns<a class="anchor" aria-label="anchor" href="#returns-9"></a></h4>
+<p>A character vector.</p>
 </div>
 
 </div><p></p><hr><a id="method-ImmuneRepertoire-clone"></a><div class="section">
@@ -337,8 +347,8 @@ lineage). All heavy computation is dispatched to C++ via RcppArmadillo.</p>
 <span class="r-in"><span><span class="va">rep</span> <span class="op">&lt;-</span> <span class="va">ImmuneRepertoire</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">A</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">rep</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;ImmuneRepertoire&gt; 10 antibodies x 5 features</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Isotypes: 10 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   States:   10 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Isotypes: 10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   States:   10</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Compute affinity to data</span></span></span>
 <span class="r-in"><span><span class="va">X</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">20</span>, ncol <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></span>
@@ -349,7 +359,7 @@ lineage). All heavy computation is dispatched to C++ via RcppArmadillo.</p>
 <span class="r-in"><span><span class="co"># Network suppression</span></span></span>
 <span class="r-in"><span><span class="va">rep</span><span class="op">$</span><span class="fu">suppress</span><span class="op">(</span>epsilon <span class="op">=</span> <span class="fl">1.5</span>, method <span class="op">=</span> <span class="st">"euclidean"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">rep</span><span class="op">$</span><span class="fu">size</span><span class="op">(</span><span class="op">)</span>  <span class="co"># fewer antibodies after suppression</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 6</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
@@ -362,7 +372,7 @@ lineage). All heavy computation is dispatched to C++ via RcppArmadillo.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer></div>

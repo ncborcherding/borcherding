@@ -13,7 +13,7 @@ diversity, and assigns data points based on affinity or distance metrics.'><meta
 
     <a class="navbar-brand me-2" href="../index.html">bHIVE</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.6</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.7</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -25,7 +25,7 @@ diversity, and assigns data points based on affinity or distance metrics.'><meta
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-tutorials" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Tutorials</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-tutorials"><li><a class="dropdown-item" href="../articles/bHIVE.html">Getting Started</a></li>
-    <li><a class="dropdown-item" href="../articles/articles/immune-modules.html">Immune Modules</a></li>
+    <li><a class="dropdown-item" href="../articles/immune-modules.html">Immune Modules</a></li>
     <li><a class="dropdown-item" href="../articles/articles/advanced-workflows.html">Advanced Tuning &amp; Workflows</a></li>
     <li><a class="dropdown-item" href="../articles/articles/foundations.html">Algorithm &amp; Biological Foundations</a></li>
   </ul></li>
@@ -55,7 +55,10 @@ diversity, and assigns data points based on affinity or distance metrics.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">bHIVE</span><span class="op">(</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">bHIVE</span><span class="op">(</span><span class="va">X</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S4 method for class 'ANY'</span></span>
+<span><span class="fu">bHIVE</span><span class="op">(</span></span>
 <span>  <span class="va">X</span>,</span>
 <span>  y <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  task <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -78,6 +81,19 @@ diversity, and assigns data points based on affinity or distance metrics.</p>
 <span>  epsilonQuantile <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S4 method for class 'SummarizedExperiment'</span></span>
+<span><span class="fu">bHIVE</span><span class="op">(</span><span class="va">X</span>, y <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span>, assay.type <span class="op">=</span> <span class="st">"logcounts"</span>, name <span class="op">=</span> <span class="st">"bHIVE"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S4 method for class 'SingleCellExperiment'</span></span>
+<span><span class="fu">bHIVE</span><span class="op">(</span></span>
+<span>  <span class="va">X</span>,</span>
+<span>  y <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">...</span>,</span>
+<span>  assay.type <span class="op">=</span> <span class="st">"logcounts"</span>,</span>
+<span>  use.dimred <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  name <span class="op">=</span> <span class="st">"bHIVE"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -87,12 +103,24 @@ diversity, and assigns data points based on affinity or distance metrics.</p>
 
 <dl><dt id="arg-x">X<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
 <dd><p>A numeric matrix or data frame of input features, with rows as
-observations and columns as features.</p></dd>
+observations and columns as features. Or a SummarizedExperiment or
+SingleCellExperiment with features in rows and cells in columns.</p></dd>
+
+
+<dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
+<dd><p>Additional arguments forwarded to <code><a href="AINet.html">AINet</a></code>, including
+immunology modules (<code>shm</code>, <code>idiotypic</code>, <code>germinalCenter</code>,
+<code>microenvironment</code>, <code>activation</code>, <code>memory</code>,
+<code>classSwitcher</code>, <code>init</code>), <code>consolidate</code> /
+<code>consolidationSteps</code>, <code>coverageBoost</code> and, for classification,
+<code>minPerClass</code> (antibodies seeded per class, default 5). For the
+SummarizedExperiment methods, all arguments of the matrix method.</p></dd>
 
 
 <dt id="arg-y">y<a class="anchor" aria-label="anchor" href="#arg-y"></a></dt>
 <dd><p>Optional. A factor target vector for classification. If NULL,
-clustering will be performed.</p></dd>
+clustering will be performed. For SummarizedExperiment input, <code>y</code> may
+also be the name of a <code><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">colData()</a></code> column holding the labels.</p></dd>
 
 
 <dt id="arg-task">task<a class="anchor" aria-label="anchor" href="#arg-task"></a></dt>
@@ -134,7 +162,9 @@ or <code>"hamming"</code>.</p></dd>
 
 <dt id="arg-affinityparams">affinityParams<a class="anchor" aria-label="anchor" href="#arg-affinityparams"></a></dt>
 <dd><p>A list of optional parameters for the chosen affinity
-or distance function.</p><ul><li><p><code>alpha</code> (for RBF or Laplace kernel),</p></li>
+or distance function.</p><ul><li><p><code>alpha</code> (for RBF or Laplace kernel). <code>"auto"</code> sets the
+    bandwidth by the median heuristic, which is recommended for
+    high-dimensional data such as mass cytometry.</p></li>
 <li><p><code>c</code>, <code>p</code> (for polynomial kernel or Minkowski distance),</p></li>
 <li><p><code>Sigma</code> (for Mahalanobis distance).</p></li>
 </ul></dd>
@@ -205,64 +235,189 @@ distances instead of the fixed <code>epsilon</code>.</p></dd>
 
 
 <dt id="arg-verbose">verbose<a class="anchor" aria-label="anchor" href="#arg-verbose"></a></dt>
-<dd><p>Logical. If <code>TRUE</code>, prints progress messages each
-iteration.</p></dd>
+<dd><p>Logical. If <code>TRUE</code>, reports progress each iteration
+with <code><a href="https://rdrr.io/r/base/message.html" class="external-link">message()</a></code>.</p></dd>
 
 
-<dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>Additional arguments forwarded to <code><a href="AINet.html">AINet</a></code>, including
-immunology modules (<code>shm</code>, <code>idiotypic</code>, <code>germinalCenter</code>,
-<code>microenvironment</code>, <code>activation</code>, <code>memory</code>,
-<code>classSwitcher</code>, <code>init</code>) and <code>consolidate</code> /
-<code>consolidationSteps</code>.</p></dd>
+<dt id="arg-assay-type">assay.type<a class="anchor" aria-label="anchor" href="#arg-assay-type"></a></dt>
+<dd><p>String or integer. The assay holding the features to
+cluster, for SummarizedExperiment input. Ignored when <code>use.dimred</code> is
+set.</p></dd>
+
+
+<dt id="arg-name">name<a class="anchor" aria-label="anchor" href="#arg-name"></a></dt>
+<dd><p>String. The <code><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">colData()</a></code> column (and <code>metadata()</code>
+entry) the results are stored under.</p></dd>
+
+
+<dt id="arg-use-dimred">use.dimred<a class="anchor" aria-label="anchor" href="#arg-use-dimred"></a></dt>
+<dd><p>String or integer. The <code><a href="https://rdrr.io/pkg/SingleCellExperiment/man/reducedDims.html" class="external-link">reducedDim()</a></code> embedding to
+cluster, for SingleCellExperiment input. Takes precedence over
+<code>assay.type</code>. Recommended for sparse single-cell RNA-seq, since an
+assay is converted to a dense matrix.</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A list:</p><ul><li><p><code>antibodies</code>: Final antibody vectors (nAntibodies x nFeatures).</p></li>
-<li><p><code>assignments</code>:
-        - For clustering: integer cluster IDs in [1..#Antibodies].
-        - For classification: predicted labels.</p></li>
+    <p>For matrix or data frame input, a list:</p><ul><li><p><code>antibodies</code>: Final prototype matrix (prototypes x features),
+    in the scaled space the model was trained in.</p></li>
+<li><p><code>assignments</code>: For clustering, integer cluster IDs, where
+    cluster <code>i</code> is row <code>i</code> of <code>antibodies</code>. For
+    classification, the predicted class labels.</p></li>
+<li><p><code>antibody_classes</code>: Classification only. The class label of
+    each antibody.</p></li>
+<li><p><code>antibody_index</code>: Classification only. The row of
+    <code>antibodies</code> that labeled each observation.</p></li>
+<li><p><code>antibodies_unscaled</code>: The prototypes back-transformed to
+    the original feature units.</p></li>
 <li><p><code>task</code>: The chosen task.</p></li>
-</ul></div>
+<li><p><code>model</code>: The fitted <code><a href="AINet.html">AINet</a></code> object. Use
+    <code>res$model$predict(newdata)</code> to label new observations.</p></li>
+</ul><p>For SummarizedExperiment or SingleCellExperiment input, <code>X</code> with the
+  labels added as a factor column <code>colData(X)[[name]]</code> and the full
+  result list above in <code>metadata(X)[[name]]</code>.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
+    <p><code>bHIVE()</code> accepts a plain matrix or data frame (observations in rows)
+or a <a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">SummarizedExperiment</a> /
+<a href="https://rdrr.io/pkg/SingleCellExperiment/man/SingleCellExperiment.html" class="external-link">SingleCellExperiment</a> (features in rows, cells in columns, the
+Bioconductor convention). For the latter, the cells are clustered or
+classified using an assay or, for a SingleCellExperiment, a
+<code><a href="https://rdrr.io/pkg/SingleCellExperiment/man/reducedDims.html" class="external-link">reducedDim()</a></code> embedding, and the labels are stored in
+<code><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">colData()</a></code>. To use bHIVE through <span class="pkg">bluster</span>, see
+<code><a href="bHIVEParam.html">bHIVEParam</a></code>.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
+    <div class="dont-index"><p><code><a href="bHIVEParam.html">bHIVEParam</a></code> for <span class="pkg">bluster</span> integration,
+  <code><a href="AINet.html">AINet</a></code> for the underlying R6 engine.</p></div>
+    </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Example 1: Clustering with the Iris dataset</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">X</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">iris</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span>  <span class="co"># Numeric features only</span></span></span>
-<span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">bHIVE</span><span class="op">(</span>X <span class="op">=</span> <span class="va">X</span>, </span></span>
-<span class="r-in"><span>             task <span class="op">=</span> <span class="st">"clustering"</span>, </span></span>
-<span class="r-in"><span>             nAntibodies <span class="op">=</span> <span class="fl">30</span>, </span></span>
-<span class="r-in"><span>             beta <span class="op">=</span> <span class="fl">5</span>, </span></span>
-<span class="r-in"><span>             epsilon <span class="op">=</span> <span class="fl">0.01</span>, </span></span>
-<span class="r-in"><span>             maxIter <span class="op">=</span> <span class="fl">20</span>, </span></span>
-<span class="r-in"><span>             k <span class="op">=</span> <span class="fl">3</span>, </span></span>
+<span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">bHIVE</span><span class="op">(</span>X <span class="op">=</span> <span class="va">X</span>,</span></span>
+<span class="r-in"><span>             task <span class="op">=</span> <span class="st">"clustering"</span>,</span></span>
+<span class="r-in"><span>             nAntibodies <span class="op">=</span> <span class="fl">30</span>,</span></span>
+<span class="r-in"><span>             beta <span class="op">=</span> <span class="fl">5</span>,</span></span>
+<span class="r-in"><span>             epsilon <span class="op">=</span> <span class="fl">0.01</span>,</span></span>
+<span class="r-in"><span>             maxIter <span class="op">=</span> <span class="fl">20</span>,</span></span>
+<span class="r-in"><span>             k <span class="op">=</span> <span class="fl">3</span>,</span></span>
 <span class="r-in"><span>             verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">assignments</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  4  5  1  1  6  4 11  7 16  5  7  3  8  3  1  6  5  1  5  3 12  1  5  9 12  3 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 27 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  6 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  2 13  7  6  8  4 11  6  3  1 11  1 21  3 12  2  7  2 12  3 15 </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Example 2: Classification with Iris species</span></span></span>
 <span class="r-in"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="va">iris</span><span class="op">$</span><span class="va">Species</span></span></span>
-<span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">bHIVE</span><span class="op">(</span>X <span class="op">=</span> <span class="va">X</span>, </span></span>
-<span class="r-in"><span>              y <span class="op">=</span> <span class="va">y</span>, </span></span>
-<span class="r-in"><span>              task <span class="op">=</span> <span class="st">"classification"</span>, </span></span>
-<span class="r-in"><span>              nAntibodies <span class="op">=</span> <span class="fl">30</span>, </span></span>
-<span class="r-in"><span>              beta <span class="op">=</span> <span class="fl">5</span>, </span></span>
-<span class="r-in"><span>              epsilon <span class="op">=</span> <span class="fl">0.01</span>, </span></span>
-<span class="r-in"><span>              maxIter <span class="op">=</span> <span class="fl">20</span>, </span></span>
-<span class="r-in"><span>              k <span class="op">=</span> <span class="fl">3</span>, </span></span>
+<span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">bHIVE</span><span class="op">(</span>X <span class="op">=</span> <span class="va">X</span>,</span></span>
+<span class="r-in"><span>              y <span class="op">=</span> <span class="va">y</span>,</span></span>
+<span class="r-in"><span>              task <span class="op">=</span> <span class="st">"classification"</span>,</span></span>
+<span class="r-in"><span>              nAntibodies <span class="op">=</span> <span class="fl">30</span>,</span></span>
+<span class="r-in"><span>              beta <span class="op">=</span> <span class="fl">5</span>,</span></span>
+<span class="r-in"><span>              epsilon <span class="op">=</span> <span class="fl">0.01</span>,</span></span>
+<span class="r-in"><span>              maxIter <span class="op">=</span> <span class="fl">20</span>,</span></span>
+<span class="r-in"><span>              k <span class="op">=</span> <span class="fl">3</span>,</span></span>
 <span class="r-in"><span>              verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">assignments</span>, <span class="va">y</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             y</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>              setosa versicolor virginica</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   setosa         50          0         0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   versicolor      0         45         2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   virginica       0          5        48</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   versicolor      0         47        14</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   virginica       0          3        36</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Example 3: SingleCellExperiment input (features x cells)</span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">SingleCellExperiment</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required package: SummarizedExperiment</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required package: MatrixGenerics</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required package: matrixStats</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Attaching package: ‘MatrixGenerics’</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> The following objects are masked from ‘package:matrixStats’:</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     colAlls, colAnyNAs, colAnys, colAvgsPerRowSet, colCollapse,</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     colCounts, colCummaxs, colCummins, colCumprods, colCumsums,</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     colDiffs, colIQRDiffs, colIQRs, colLogSumExps, colMadDiffs,</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     colMads, colMaxs, colMeans2, colMedians, colMins, colOrderStats,</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     colProds, colQuantiles, colRanges, colRanks, colSdDiffs, colSds,</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     colSums2, colTabulates, colVarDiffs, colVars, colWeightedMads,</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     colWeightedMeans, colWeightedMedians, colWeightedSds,</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     colWeightedVars, rowAlls, rowAnyNAs, rowAnys, rowAvgsPerColSet,</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     rowCollapse, rowCounts, rowCummaxs, rowCummins, rowCumprods,</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     rowCumsums, rowDiffs, rowIQRDiffs, rowIQRs, rowLogSumExps,</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     rowMadDiffs, rowMads, rowMaxs, rowMeans2, rowMedians, rowMins,</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     rowOrderStats, rowProds, rowQuantiles, rowRanges, rowRanks,</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     rowSdDiffs, rowSds, rowSums2, rowTabulates, rowVarDiffs, rowVars,</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     rowWeightedMads, rowWeightedMeans, rowWeightedMedians,</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     rowWeightedSds, rowWeightedVars</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required package: GenomicRanges</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required package: stats4</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required package: BiocGenerics</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required package: generics</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Attaching package: ‘generics’</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> The following objects are masked from ‘package:base’:</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     as.difftime, as.factor, as.ordered, intersect, is.element, setdiff,</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     setequal, union</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Attaching package: ‘BiocGenerics’</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> The following objects are masked from ‘package:stats’:</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     IQR, mad, sd, var, xtabs</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> The following objects are masked from ‘package:base’:</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     Filter, Find, Map, Position, Reduce, anyDuplicated, aperm, append,</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     as.data.frame, basename, cbind, colnames, dirname, do.call,</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     duplicated, eval, evalq, get, grep, grepl, is.unsorted, lapply,</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     mapply, match, mget, order, paste, pmax, pmax.int, pmin, pmin.int,</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     rank, rbind, rownames, sapply, saveRDS, table, tapply, unique,</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     unsplit, which.max, which.min</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required package: S4Vectors</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Attaching package: ‘S4Vectors’</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> The following object is masked from ‘package:utils’:</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     findMatches</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> The following objects are masked from ‘package:base’:</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     I, expand.grid, unname</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required package: IRanges</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required package: Seqinfo</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required package: Biobase</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Welcome to Bioconductor</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     Vignettes contain introductory material; view with</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     'browseVignettes()'. To cite Bioconductor, see</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     'citation("Biobase")', and for packages 'citation("pkgname")'.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Attaching package: ‘Biobase’</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> The following object is masked from ‘package:MatrixGenerics’:</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     rowMedians</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> The following objects are masked from ‘package:matrixStats’:</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     anyMissing, rowMedians</span>
+<span class="r-in"><span><span class="va">sce</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/SingleCellExperiment/man/SingleCellExperiment.html" class="external-link">SingleCellExperiment</a></span><span class="op">(</span>assays <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>logcounts <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="va">X</span><span class="op">)</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                            colData <span class="op">=</span> <span class="fu">DataFrame</span><span class="op">(</span>species <span class="op">=</span> <span class="va">iris</span><span class="op">$</span><span class="va">Species</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">sce</span> <span class="op">&lt;-</span> <span class="fu">bHIVE</span><span class="op">(</span><span class="va">sce</span>, targetK <span class="op">=</span> <span class="fl">3</span>, maxIter <span class="op">=</span> <span class="fl">10</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">sce</span><span class="op">$</span><span class="va">bHIVE</span>, <span class="va">sce</span><span class="op">$</span><span class="va">species</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     setosa versicolor virginica</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   1     50          0         0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   2      0         48        14</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   3      0          2        36</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Cluster on an embedding, or classify with a colData column as labels</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/pkg/SingleCellExperiment/man/reducedDims.html" class="external-link">reducedDim</a></span><span class="op">(</span><span class="va">sce</span>, <span class="st">"PCA"</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/prcomp.html" class="external-link">prcomp</a></span><span class="op">(</span><span class="va">X</span><span class="op">)</span><span class="op">$</span><span class="va">x</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span></span></span>
+<span class="r-in"><span><span class="va">sce</span> <span class="op">&lt;-</span> <span class="fu">bHIVE</span><span class="op">(</span><span class="va">sce</span>, use.dimred <span class="op">=</span> <span class="st">"PCA"</span>, name <span class="op">=</span> <span class="st">"bHIVE_pca"</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">sce</span> <span class="op">&lt;-</span> <span class="fu">bHIVE</span><span class="op">(</span><span class="va">sce</span>, y <span class="op">=</span> <span class="st">"species"</span>, name <span class="op">=</span> <span class="st">"bHIVE_class"</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">sce</span><span class="op">$</span><span class="va">bHIVE_class</span> <span class="op">==</span> <span class="va">sce</span><span class="op">$</span><span class="va">species</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.8466667</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
@@ -275,7 +430,7 @@ immunology modules (<code>shm</code>, <code>idiotypic</code>, <code>germinalCent
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer></div>

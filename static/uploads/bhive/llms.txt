@@ -6,13 +6,17 @@
 
 ### Overview
 
-**bHIVE** is an R package implementing a modular Artificial Immune
-System (AIS) framework for clustering and classification. Built on
+**bHIVE** is an R/Bioconductor package that implements a modular
+Artificial Immune System (AIS) for clustering and classification of
+high-dimensional data such as mass cytometry and single-cell profiles.
+Built on
 [AI-Net](https://www.dca.fee.unicamp.br/~vonzuben/research/lnunes_dout/artigos/DMHA.PDF)
-(de Castro & Von Zuben 2001), bHIVE extends the classical algorithm with
-biologically-grounded modules drawn from modern immunology: somatic
-hypermutation, idiotypic network regulation, germinal center selection,
-and microenvironment-driven adaptation.
+(de Castro & Von Zuben 2001), bHIVE learns a set of prototypes
+(antibodies) by clonal selection, mutation and network suppression. The
+prototypes summarize cell populations in the original marker units, and
+the same fitted model labels new cells. Optional modules drawn from
+immunology add somatic hypermutation strategies, germinal center
+selection, microenvironment-driven adaptation and more.
 
 Performance-critical operations (affinity/distance matrices, clonal
 selection, network suppression, mutation) are implemented in C++ via
@@ -22,7 +26,16 @@ parallelization support through
 
 ### Key Features
 
-- **Two tasks** – clustering and classification on numeric matrices
+- **Two tasks** – clustering and classification on matrices,
+  `SummarizedExperiment` and `SingleCellExperiment` objects
+- **Bioconductor integration** – labels stored in
+  [`colData()`](https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html),
+  and
+  [`bHIVEParam()`](https://www.borch.dev/uploads/bhive/reference/bHIVEParam.md)
+  runs bHIVE through
+  [`bluster::clusterRows()`](https://rdrr.io/pkg/bluster/man/clusterRows.html)
+  and
+  [`bluster::clusterSweep()`](https://rdrr.io/pkg/bluster/man/clusterSweep.html)
 - **C++ backend** – BLAS-optimized bulk affinity/distance computation
 - **Two APIs** – functional
   ([`bHIVE()`](https://www.borch.dev/uploads/bhive/reference/bHIVE.md))
@@ -44,9 +57,20 @@ parallelization support through
 
 ## Installation
 
+bHIVE is submitted to Bioconductor. Once accepted, install it with:
+
 ``` r
 
-devtools::install_github("BorchLab/bHIVE")
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+BiocManager::install("bHIVE")
+```
+
+The development version is available from GitHub:
+
+``` r
+
+BiocManager::install("BorchLab/bHIVE")
 ```
 
 ## Quick Start
@@ -71,6 +95,37 @@ res <- bHIVE(X, y = iris$Species, task = "classification",
 table(Predicted = res$assignments, Actual = iris$Species)
 ```
 
+### Bioconductor objects
+
+[`bHIVE()`](https://www.borch.dev/uploads/bhive/reference/bHIVE.md)
+clusters the cells (columns) of a `SingleCellExperiment` using an assay
+or a
+[`reducedDim()`](https://rdrr.io/pkg/SingleCellExperiment/man/reducedDims.html)
+embedding, and stores the labels in
+[`colData()`](https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html).
+[`bHIVEParam()`](https://www.borch.dev/uploads/bhive/reference/bHIVEParam.md)
+plugs bHIVE into `bluster`:
+
+``` r
+
+library(SingleCellExperiment)
+sce <- SingleCellExperiment(assays = list(logcounts = t(X)))
+reducedDim(sce, "PCA") <- prcomp(X)$x[, 1:3]
+
+sce <- bHIVE(sce, use.dimred = "PCA", targetK = 3, verbose = FALSE)
+table(sce$bHIVE, iris$Species)
+
+colLabels(sce) <- bluster::clusterRows(
+  reducedDim(sce, "PCA"),
+  bHIVEParam(targetK = 3, affinityParams = list(alpha = "auto"))
+)
+```
+
+See
+[`vignette("bHIVE")`](https://www.borch.dev/uploads/bhive/articles/bHIVE.md)
+for a full analysis of mass cytometry data, including a comparison with
+FlowSOM and graph-based clustering.
+
 ### R6 API with Modules
 
 For full control, compose an `AINet` with any combination of immune
@@ -79,12 +134,12 @@ appropriate biological stage:
 
 ``` r
 
-# Adaptive mutation + idiotypic network regulation
+# Adaptive mutation + germinal center selection
 model <- AINet$new(
   nAntibodies = 20,
   maxIter = 30,
   shm = SHMEngine$new(method = "adaptive", base_rate = 0.1),
-  idiotypic = IdiotypicNetwork$new(theta_low = 0.01, theta_high = 0.5),
+  germinalCenter = GerminalCenter$new(nTfh = 20, selectionPressure = 0.2),
   verbose = FALSE
 )
 model$fit(X, iris$Species, task = "classification")
@@ -147,10 +202,13 @@ attach to specific stages and are skipped when absent:
     classifies each antibody into stable / explore / boundary zones and
     applies density-dependent jitter. `ClassSwitcher` binds each zone to
     an isotype (IgM/IgG/IgA) and sets the next iteration’s kernel width.
-6.  **Idiotypic regulation** – `IdiotypicNetwork` runs bell-shaped Ab-Ab
-    dynamics that cull both over-clumped and isolated antibodies. Falls
-    back to a top-population safety net if ill-tuned thresholds would
-    kill the repertoire.
+6.  **Idiotypic regulation** (experimental) – `IdiotypicNetwork` runs
+    bell-shaped Ab-Ab dynamics that cull both over-clumped and isolated
+    antibodies in small, tight repertoires. The rule acts on each
+    antibody pair, so in large or spread-out repertoires it removes
+    every antibody; `AINet` then keeps the top 10% by population and
+    reports it. See
+    [`?IdiotypicNetwork`](https://www.borch.dev/uploads/bhive/reference/IdiotypicNetwork.md).
 7.  **Network suppression** – removes near-duplicate antibodies within
     an epsilon-ball under the chosen distance metric.
 8.  **Orphan pruning + final assignment** (once) – antibodies that bind
@@ -168,7 +226,7 @@ constructor. All modules are optional – use only what you need.
 | Module | Biological Basis | What It Does |
 |:---|:---|:---|
 | `SHMEngine` | Somatic hypermutation | 5 mutation strategies: uniform, airs, hotspot, energy, adaptive |
-| `IdiotypicNetwork` | Ab-Ab network regulation | Bell-shaped activation dynamics replacing epsilon-threshold suppression |
+| `IdiotypicNetwork` | Ab-Ab network regulation | Bell-shaped activation dynamics replacing epsilon-threshold suppression (experimental) |
 | `GerminalCenter` | Tfh-B cell interaction | Task-aware quality selection with resource competition |
 | `Microenvironment` | Tissue microenvironment cues | Density-dependent zone classification and mutation rate modulation |
 | `VDJLibrary` | V(D)J recombination | Combinatorial gene library initialization (PCA, cluster, random partition) |
@@ -203,9 +261,10 @@ Fine-tune antibody positions after training with
 res <- bHIVE(X, y = iris$Species, task = "classification",
              nAntibodies = 20, maxIter = 20)
 
-# Adam-based refinement with cross-entropy loss
+# Adam-based refinement with cross-entropy loss. antibody_index gives the
+# antibody (row of res$antibodies) that labeled each sample.
 A_refined <- refineB(res$antibodies, X, y = iris$Species,
-                     assignments = res$assignments,
+                     assignments = res$antibody_index,
                      task = "classification",
                      loss = "categorical_crossentropy",
                      optimizer = "adam", steps = 10, lr = 0.01)
@@ -272,6 +331,21 @@ for gradient-based post-processing.
 - [`visualizeHIVE()`](https://www.borch.dev/uploads/bhive/reference/visualizeHIVE.md)
   : Visualize bHIVE/honeycombHIVE Results
 
+## Bioconductor Integration
+
+Run bHIVE through
+[`bluster::clusterRows()`](https://rdrr.io/pkg/bluster/man/clusterRows.html)
+and
+[`bluster::clusterSweep()`](https://rdrr.io/pkg/bluster/man/clusterSweep.html).
+[`bHIVE()`](https://www.borch.dev/uploads/bhive/reference/bHIVE.md) also
+accepts SummarizedExperiment and SingleCellExperiment objects directly.
+
+- [`bHIVEParam()`](https://www.borch.dev/uploads/bhive/reference/bHIVEParam.md)
+  [`.defaultScalarArguments(`*`<bHIVEParam>`*`)`](https://www.borch.dev/uploads/bhive/reference/bHIVEParam.md)
+  [`show(`*`<bHIVEParam>`*`)`](https://www.borch.dev/uploads/bhive/reference/bHIVEParam.md)
+  [`clusterRows(`*`<ANY>`*`,`*`<bHIVEParam>`*`)`](https://www.borch.dev/uploads/bhive/reference/bHIVEParam.md)
+  : bHIVE clustering through bluster
+
 ## Hyperparameter Tuning
 
 Grid search over bHIVE hyperparameters with BiocParallel support.
@@ -330,22 +404,22 @@ Modules for environment-driven adaptation, memory, and ensemble methods.
 
 Model objects for use with the caret package’s `train()` function.
 
-- [`bHIVEmodel`](https://www.borch.dev/uploads/bhive/reference/bHIVEModel.md)
-  : B-cell-based Hybrid Immune Virtual Evolution (bHIVE) for caret
+- [`bHIVEmodel`](https://www.borch.dev/uploads/bhive/reference/bHIVEmodel.md)
+  : bHIVE classification model for caret
 - [`honeycombHIVEmodel`](https://www.borch.dev/uploads/bhive/reference/honeycombHIVEmodel.md)
-  : Mulilayered honeycombHIVE for caret
+  : Multilayered honeycombHIVE classification model for caret
 
 # Articles
 
 ### Getting Started
 
-- [The buzz on using
+- [Immune-inspired prototypes for cytometry and single-cell data with
   bHIVE](https://www.borch.dev/uploads/bhive/articles/bHIVE.md):
 
 ### Tutorials
 
-- [Composing Immune
-  Modules](https://www.borch.dev/uploads/bhive/articles/immune-modules.md):
+- [Composing immune modules with
+  AINet](https://www.borch.dev/uploads/bhive/articles/immune-modules.md):
 - [Advanced Tuning &
   Workflows](https://www.borch.dev/uploads/bhive/articles/advanced-workflows.md):
 

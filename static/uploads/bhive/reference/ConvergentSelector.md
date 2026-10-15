@@ -4,6 +4,11 @@ Identifies "public antibodies" shared across independent repertoires,
 implementing the concept of convergent selection from TCR/BCR immunology
 as a biologically-motivated ensemble method.
 
+## Value
+
+An [`R6Class`](https://r6.r-lib.org/reference/R6Class.html) generator.
+`ConvergentSelector$new()` returns a `ConvergentSelector` object.
+
 ## Details
 
 In real immunity, certain immune receptor sequences appear across
@@ -37,7 +42,7 @@ the data.
 
 - [`ConvergentSelector$from_results()`](#method-ConvergentSelector-from_results)
 
-- [`ConvergentSelector$print()`](#method-ConvergentSelector-print)
+- [`ConvergentSelector$format()`](#method-ConvergentSelector-format)
 
 - [`ConvergentSelector$clone()`](#method-ConvergentSelector-clone)
 
@@ -112,19 +117,24 @@ Numeric matrix of consensus antibodies.
 
 ------------------------------------------------------------------------
 
-### Method [`print()`](https://rdrr.io/r/base/print.html)
+### Method [`format()`](https://rdrr.io/r/base/format.html)
 
-Print summary.
+Format a short summary, one element per line. Used by
+[`print()`](https://rdrr.io/r/base/print.html).
 
 #### Usage
 
-    ConvergentSelector$print(...)
+    ConvergentSelector$format(...)
 
 #### Arguments
 
 - `...`:
 
   Not used.
+
+#### Returns
+
+A character vector.
 
 ------------------------------------------------------------------------
 
@@ -156,5 +166,5 @@ results <- lapply(1:3, function(i) {
 conv <- ConvergentSelector$new(tolerance = 1.0, min_appearances = 2)
 public <- conv$from_results(results)
 nrow(public)  # consensus antibodies
-#> [1] 15
+#> [1] 12
 ```

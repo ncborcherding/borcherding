@@ -9,7 +9,7 @@ behavior based on the density and structure of nearby data points."><meta proper
 
     <a class="navbar-brand me-2" href="../index.html">bHIVE</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.6</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.7</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -21,7 +21,7 @@ behavior based on the density and structure of nearby data points."><meta proper
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-tutorials" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Tutorials</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-tutorials"><li><a class="dropdown-item" href="../articles/bHIVE.html">Getting Started</a></li>
-    <li><a class="dropdown-item" href="../articles/articles/immune-modules.html">Immune Modules</a></li>
+    <li><a class="dropdown-item" href="../articles/immune-modules.html">Immune Modules</a></li>
     <li><a class="dropdown-item" href="../articles/articles/advanced-workflows.html">Advanced Tuning &amp; Workflows</a></li>
     <li><a class="dropdown-item" href="../articles/articles/foundations.html">Algorithm &amp; Biological Foundations</a></li>
   </ul></li>
@@ -48,6 +48,11 @@ behavior based on the density and structure of nearby data points.</p>
     </div>
 
 
+    <div class="section level2">
+    <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
+    <p>An <code><a href="https://r6.r-lib.org/reference/R6Class.html" class="external-link">R6Class</a></code> generator.
+  <code>Microenvironment$new()</code> returns a <code>Microenvironment</code> object.</p>
+    </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>In real immunity, B cell fate is strongly influenced by local signals:
@@ -103,7 +108,7 @@ density-dependent adaptation:</p>
 
 <ul><li><p><a href="#method-Microenvironment-new"><code>Microenvironment$new()</code></a></p></li>
 <li><p><a href="#method-Microenvironment-assess"><code>Microenvironment$assess()</code></a></p></li>
-<li><p><a href="#method-Microenvironment-print"><code>Microenvironment$print()</code></a></p></li>
+<li><p><a href="#method-Microenvironment-format"><code>Microenvironment$format()</code></a></p></li>
 <li><p><a href="#method-Microenvironment-clone"><code>Microenvironment$clone()</code></a></p></li>
 </ul></div><p></p><hr><a id="method-Microenvironment-new"></a><div class="section">
 <h3 id="method-new-">Method <code>new()</code><a class="anchor" aria-label="anchor" href="#method-new-"></a></h3>
@@ -180,11 +185,12 @@ density-dependent adaptation:</p>
 <p>Named list with densities, zones, and mutation_modifiers per antibody.</p>
 </div>
 
-</div><p></p><hr><a id="method-Microenvironment-print"></a><div class="section">
-<h3 id="method-print-">Method <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code><a class="anchor" aria-label="anchor" href="#method-print-"></a></h3>
-<p>Print summary.</p><div class="section">
+</div><p></p><hr><a id="method-Microenvironment-format"></a><div class="section">
+<h3 id="method-format-">Method <code><a href="https://rdrr.io/r/base/format.html" class="external-link">format()</a></code><a class="anchor" aria-label="anchor" href="#method-format-"></a></h3>
+<p>Format a short summary, one element per line. Used by
+  <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code>.</p><div class="section">
 <h4 id="usage-2">Usage<a class="anchor" aria-label="anchor" href="#usage-2"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Microenvironment</span><span class="op">$</span><span class="fu">print</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Microenvironment</span><span class="op">$</span><span class="fu">format</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -194,6 +200,10 @@ density-dependent adaptation:</p>
 
 
 </dl><p></p></div>
+</div>
+<div class="section">
+<h4 id="returns-1">Returns<a class="anchor" aria-label="anchor" href="#returns-1"></a></h4>
+<p>A character vector.</p>
 </div>
 
 </div><p></p><hr><a id="method-Microenvironment-clone"></a><div class="section">
@@ -229,7 +239,7 @@ density-dependent adaptation:</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> boundary  explore   stable </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        7        4        4 </span>
 <span class="r-in"><span><span class="va">env</span><span class="op">$</span><span class="va">mutation_modifiers</span>  <span class="co"># per-antibody rate scaling</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 2.0 1.0 0.3 1.0 2.0 1.0 2.0 1.0 1.0 1.0 1.0 0.3 0.3 2.0 0.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 1.0 2.0 2.0 0.3 2.0 0.3 1.0 1.0 1.0 1.0 1.0 0.3 1.0 0.3 2.0</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
@@ -242,7 +252,7 @@ density-dependent adaptation:</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer></div>

@@ -4,6 +4,11 @@ Manages long-lived memory cells that can be recalled when distribution
 shifts are detected. Implements the immunological distinction between
 short-lived effector cells and long-lived memory cells.
 
+## Value
+
+An [`R6Class`](https://r6.r-lib.org/reference/R6Class.html) generator.
+`MemoryPool$new()` returns a `MemoryPool` object.
+
 ## Public fields
 
 - `memory_cells`:
@@ -39,7 +44,7 @@ short-lived effector cells and long-lived memory cells.
 
 - [`MemoryPool$size()`](#method-MemoryPool-size)
 
-- [`MemoryPool$print()`](#method-MemoryPool-print)
+- [`MemoryPool$format()`](#method-MemoryPool-format)
 
 - [`MemoryPool$clone()`](#method-MemoryPool-clone)
 
@@ -157,19 +162,24 @@ Integer.
 
 ------------------------------------------------------------------------
 
-### Method [`print()`](https://rdrr.io/r/base/print.html)
+### Method [`format()`](https://rdrr.io/r/base/format.html)
 
-Print summary.
+Format a short summary, one element per line. Used by
+[`print()`](https://rdrr.io/r/base/print.html).
 
 #### Usage
 
-    MemoryPool$print(...)
+    MemoryPool$format(...)
 
 #### Arguments
 
 - `...`:
 
   Not used.
+
+#### Returns
+
+A character vector.
 
 ------------------------------------------------------------------------
 
@@ -202,5 +212,5 @@ mp$size()  # number of archived memories
 #> [1] 10
 recalled <- mp$recall(X[1:5, ])
 nrow(recalled)  # memories relevant to query
-#> [1] 6
+#> [1] 5
 ```

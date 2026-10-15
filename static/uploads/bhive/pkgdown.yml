@@ -1,12 +1,12 @@
 pandoc: 3.8.3
-pkgdown: 2.2.0
+pkgdown: 2.2.1
 pkgdown_sha: ~
 articles:
   articles/advanced-workflows: advanced-workflows.html
   bHIVE: bHIVE.html
   articles/foundations: foundations.html
-  articles/immune-modules: immune-modules.html
-last_built: 2026-06-26T12:34Z
+  immune-modules: immune-modules.html
+last_built: 2026-10-15T14:27Z
 urls:
   reference: https://www.borch.dev/uploads/bhive/reference
   article: https://www.borch.dev/uploads/bhive/articles

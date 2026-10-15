@@ -37,10 +37,15 @@ swarmbHIVE(
 
 - grid:
 
-  A data frame specifying the hyperparameter combinations. Should have
-  columns: `nAntibodies`, `beta`, `epsilon`. (Optionally more if you
-  want to pass other arguments to
-  [`bHIVE()`](https://www.borch.dev/uploads/bhive/reference/bHIVE.md).)
+  A data frame specifying the hyperparameter combinations, one row per
+  combination. Any column named after a
+  [`bHIVE`](https://www.borch.dev/uploads/bhive/reference/bHIVE.md) or
+  [`AINet`](https://www.borch.dev/uploads/bhive/reference/AINet.md)
+  argument is tuned (for example `nAntibodies`, `beta`, `epsilon`,
+  `targetK`, `scale`, `affinityFunc` or `coverageBoost`). Other columns
+  are ignored. Factor columns, as produced by
+  [`expand.grid()`](https://rdrr.io/r/base/expand.grid.html), are
+  converted to character.
 
 - metric:
 
@@ -52,7 +57,8 @@ swarmbHIVE(
 
 - maxIter:
 
-  Integer. Maximum iterations for each `bHIVE` run (default 50).
+  Integer. Maximum iterations for each `bHIVE` run (default 50). A
+  `maxIter` column in `grid` takes precedence.
 
 - BPPARAM:
 
@@ -62,7 +68,8 @@ swarmbHIVE(
 
 - verbose:
 
-  Logical. If `TRUE`, prints progress messages.
+  Logical. If `TRUE`, reports progress with
+  [`message()`](https://rdrr.io/r/base/message.html).
 
 ## Value
 
@@ -105,17 +112,15 @@ tuning_results <- swarmbHIVE(X = X,
                              metric = "balanced_accuracy",
                              maxIter = 10)
 #> Starting swarmbHIVE with 8 parameter combinations (task=classification, metric=balanced_accuracy).
-#> Evaluating combo 1/8: nAntibodies=10, beta=3, epsilon=0.010
-#> Evaluating combo 2/8: nAntibodies=20, beta=3, epsilon=0.010
-#> Evaluating combo 3/8: nAntibodies=10, beta=5, epsilon=0.010
-#> Evaluating combo 4/8: nAntibodies=20, beta=5, epsilon=0.010
-#> Evaluating combo 5/8: nAntibodies=10, beta=3, epsilon=0.050
-#> Evaluating combo 6/8: nAntibodies=20, beta=3, epsilon=0.050
-#> Evaluating combo 7/8: nAntibodies=10, beta=5, epsilon=0.050
-#> Evaluating combo 8/8: nAntibodies=20, beta=5, epsilon=0.050
-#> Best parameters found:
-#>   nAntibodies beta epsilon metric_value
-#> 6          20    3    0.05    0.9666667
+#> Evaluating combo 1/8: nAntibodies=10, beta=3, epsilon=0.01
+#> Evaluating combo 2/8: nAntibodies=20, beta=3, epsilon=0.01
+#> Evaluating combo 3/8: nAntibodies=10, beta=5, epsilon=0.01
+#> Evaluating combo 4/8: nAntibodies=20, beta=5, epsilon=0.01
+#> Evaluating combo 5/8: nAntibodies=10, beta=3, epsilon=0.05
+#> Evaluating combo 6/8: nAntibodies=20, beta=3, epsilon=0.05
+#> Evaluating combo 7/8: nAntibodies=10, beta=5, epsilon=0.05
+#> Evaluating combo 8/8: nAntibodies=20, beta=5, epsilon=0.05
+#> Best parameters: nAntibodies=10, beta=3, epsilon=0.05, metric_value=0.96
 
 # For clustering with silhouette
 set.seed(42)
@@ -127,21 +132,19 @@ res_clust <- swarmbHIVE(X_clust,
                         task = "clustering", 
                         grid = grid_clust, 
                         metric = "silhouette")
-#> Precomputing distance matrix for clustering metrics.
+#> Precomputing distance matrix for the silhouette metric.
 #> Starting swarmbHIVE with 8 parameter combinations (task=clustering, metric=silhouette).
-#> Evaluating combo 1/8: nAntibodies=5, beta=3, epsilon=0.010
-#> Evaluating combo 2/8: nAntibodies=10, beta=3, epsilon=0.010
-#> Evaluating combo 3/8: nAntibodies=5, beta=5, epsilon=0.010
-#> Evaluating combo 4/8: nAntibodies=10, beta=5, epsilon=0.010
-#> Evaluating combo 5/8: nAntibodies=5, beta=3, epsilon=0.050
-#> Evaluating combo 6/8: nAntibodies=10, beta=3, epsilon=0.050
-#> Evaluating combo 7/8: nAntibodies=5, beta=5, epsilon=0.050
-#> Evaluating combo 8/8: nAntibodies=10, beta=5, epsilon=0.050
-#> Best parameters found:
-#>   nAntibodies beta epsilon metric_value
-#> 7           5    5    0.05    0.1750165
+#> Evaluating combo 1/8: nAntibodies=5, beta=3, epsilon=0.01
+#> Evaluating combo 2/8: nAntibodies=10, beta=3, epsilon=0.01
+#> Evaluating combo 3/8: nAntibodies=5, beta=5, epsilon=0.01
+#> Evaluating combo 4/8: nAntibodies=10, beta=5, epsilon=0.01
+#> Evaluating combo 5/8: nAntibodies=5, beta=3, epsilon=0.05
+#> Evaluating combo 6/8: nAntibodies=10, beta=3, epsilon=0.05
+#> Evaluating combo 7/8: nAntibodies=5, beta=5, epsilon=0.05
+#> Evaluating combo 8/8: nAntibodies=10, beta=5, epsilon=0.05
+#> Best parameters: nAntibodies=5, beta=5, epsilon=0.01, metric_value=0.1721
 res_clust$best_params
 #>   nAntibodies beta epsilon metric_value
-#> 7           5    5    0.05    0.1750165
+#> 3           5    5    0.01    0.1720884
 
 ```

@@ -1,5 +1,122 @@
 # Changelog
 
+## bHIVE 0.99.7
+
+Changes in response to the first round of Bioconductor review.
+
+### Bioconductor integration
+
+- [`bHIVE()`](https://www.borch.dev/uploads/bhive/reference/bHIVE.md) is
+  now an S4 generic. New methods accept a `SummarizedExperiment` (cells
+  from `assay.type`) or a `SingleCellExperiment` (cells from an assay or
+  a
+  [`reducedDim()`](https://rdrr.io/pkg/SingleCellExperiment/man/reducedDims.html)
+  via `use.dimred`). They return the object with the labels in
+  `colData()[[name]]` and the full result, including the fitted model,
+  in `metadata()[[name]]`. For classification, `y` can name a
+  [`colData()`](https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html)
+  column.
+- New
+  [`bHIVEParam()`](https://www.borch.dev/uploads/bhive/reference/bHIVEParam.md),
+  a `BlusterParam` subclass. bHIVE now runs through
+  [`bluster::clusterRows()`](https://rdrr.io/pkg/bluster/man/clusterRows.html)
+  and
+  [`bluster::clusterSweep()`](https://rdrr.io/pkg/bluster/man/clusterSweep.html).
+
+### Bug fixes
+
+- With the default `maxClones = Inf`, clonal selection never cloned or
+  mutated an antibody on x86-64 machines (Linux, Windows, Intel Macs).
+  Converting `Inf` to an integer is undefined in C++, and x86-64
+  returned the most negative integer. Apple Silicon returned the largest
+  one, so results there do not change. The clone count is now capped
+  before the conversion, and `maxClones` must be a non-negative number.
+- The caret wrappers `bHIVEmodel` and `honeycombHIVEmodel` predicted
+  every observation as the first class. They now predict with the fitted
+  model. `honeycombHIVEmodel` also failed in every caret fold because
+  tuning grids store `refineOptimizer` as a factor. Both wrappers now
+  support `tuneLength` and random search, set `prob = NULL`, and declare
+  classification only.
+- [`visualizeHIVE()`](https://www.borch.dev/uploads/bhive/reference/visualizeHIVE.md)
+  embedded the data and the prototypes separately, so the prototypes
+  were drawn in the wrong coordinates. The reduction is now fitted to
+  the data and the prototypes are projected into it (PCA and UMAP), or
+  embedded jointly with the data (tSNE). Several smaller plotting bugs
+  are fixed.
+- [`predict()`](https://rdrr.io/r/stats/predict.html) failed after
+  `affinityParams = list(alpha = "auto")`. It now uses the bandwidth and
+  metric the fit actually read out with, so it reproduces the training
+  labels, including after `ClassSwitcher` modulation and Lloyd
+  consolidation.
+- `targetK` could return fewer than K clusters when Lloyd refinement
+  emptied one. Empty clusters are now re-seeded, so `targetK` gives
+  exactly K.
+- [`honeycombHIVE()`](https://www.borch.dev/uploads/bhive/reference/honeycombHIVE.md)
+  classification collapsed every layer to one prototype per class and
+  predicted a single class from layer 2 on. Layers now collapse by the
+  antibody that labeled each row. Refinement now runs in the scaled
+  space and moves the antibody that labeled each sample.
+- [`refineB()`](https://www.borch.dev/uploads/bhive/reference/refineB.md)
+  re-indexed numeric assignments by first appearance, so samples could
+  pull the wrong antibody. Numeric assignments now index rows of `A`
+  directly.
+- [`swarmbHIVE()`](https://www.borch.dev/uploads/bhive/reference/swarmbHIVE.md)
+  dropped the names of a one-column grid, rejected factor grid columns,
+  ignored a `maxIter` grid column, and crashed on non-integer grid
+  values when `verbose = TRUE`.
+- `compute_pairwise_distance()` left about 6e-8 on the diagonal. It is
+  now exactly 0.
+- `fit()` history is reset between fits. An empty initialization now
+  gives a clear error instead of a C++ error.
+
+### New behavior
+
+- Classification seeds antibodies per class. New argument `minPerClass`
+  (default 5) gives every class at least that many antibodies, so rare
+  populations can be predicted. Use `minPerClass = 0` for the previous
+  behavior.
+- Classification results gain `antibody_index`, the antibody that
+  labeled each observation.
+- Progress is reported with
+  [`message()`](https://rdrr.io/r/base/message.html) throughout, so
+  [`suppressMessages()`](https://rdrr.io/r/base/message.html) silences
+  it.
+- `AINet` reports when `IdiotypicNetwork` removes every antibody and the
+  safety net keeps the top 10%. The module is documented as
+  experimental.
+
+### Code structure
+
+- `AINet$fit()` is split into private methods, one per stage or module.
+  [`honeycombHIVE()`](https://www.borch.dev/uploads/bhive/reference/honeycombHIVE.md),
+  [`visualizeHIVE()`](https://www.borch.dev/uploads/bhive/reference/visualizeHIVE.md),
+  [`swarmbHIVE()`](https://www.borch.dev/uploads/bhive/reference/swarmbHIVE.md)
+  and
+  [`refineB()`](https://www.borch.dev/uploads/bhive/reference/refineB.md)
+  are split into internal helper functions. No function exceeds 50
+  lines.
+- R6 classes print through
+  [`format()`](https://rdrr.io/r/base/format.html) methods.
+
+### Documentation
+
+- The main vignette is rewritten around mass cytometry data from
+  HDCytoData, with a comparison against FlowSOM, k-means and graph-based
+  clustering, and label transfer against a nearest-centroid baseline.
+- The immune modules article is now a second vignette.
+- All R6 classes document their return value. The caret examples are
+  runnable.
+
+### Dependencies
+
+- Imports gain `bluster`, `methods`, `S4Vectors`, `SummarizedExperiment`
+  and `SingleCellExperiment`.
+- `umap` and `Rtsne` move to Suggests and are needed only for those
+  [`visualizeHIVE()`](https://www.borch.dev/uploads/bhive/reference/visualizeHIVE.md)
+  reductions. `viridis` is no longer used.
+- Suggests gain `FlowSOM` and `HDCytoData`, and drop `devtools` and
+  `pkgdown`.
+
 ## bHIVE 0.99.6
 
 ### New Behavior

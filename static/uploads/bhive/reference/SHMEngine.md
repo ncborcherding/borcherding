@@ -3,6 +3,11 @@
 Somatic Hypermutation Engine implementing five biologically- inspired
 mutation strategies for the bHIVE artificial immune system.
 
+## Value
+
+An [`R6Class`](https://r6.r-lib.org/reference/R6Class.html) generator.
+`SHMEngine$new()` returns an `SHMEngine` object.
+
 ## Details
 
 The five strategies are:
@@ -63,7 +68,7 @@ The five strategies are:
 
 - [`SHMEngine$reset_state()`](#method-SHMEngine-reset_state)
 
-- [`SHMEngine$print()`](#method-SHMEngine-print)
+- [`SHMEngine$format()`](#method-SHMEngine-format)
 
 - [`SHMEngine$clone()`](#method-SHMEngine-clone)
 
@@ -150,6 +155,10 @@ Initialize internal state for adaptive method.
 
   Integer. Number of features.
 
+#### Returns
+
+The engine, invisibly, with its moment state set.
+
 ------------------------------------------------------------------------
 
 ### Method `reset_state()`
@@ -174,21 +183,30 @@ Reset moment states (e.g., after suppression changes antibody count).
 
   Integer vector. Indices of antibodies that were kept.
 
+#### Returns
+
+The engine, invisibly, with its moment state reset or subset.
+
 ------------------------------------------------------------------------
 
-### Method [`print()`](https://rdrr.io/r/base/print.html)
+### Method [`format()`](https://rdrr.io/r/base/format.html)
 
-Print summary.
+Format a short summary, one element per line. Used by
+[`print()`](https://rdrr.io/r/base/print.html).
 
 #### Usage
 
-    SHMEngine$print(...)
+    SHMEngine$format(...)
 
 #### Arguments
 
 - `...`:
 
   Not used.
+
+#### Returns
+
+A character vector.
 
 ------------------------------------------------------------------------
 

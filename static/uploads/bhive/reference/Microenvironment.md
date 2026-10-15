@@ -3,6 +3,11 @@
 Models local microenvironment cues that influence antibody behavior
 based on the density and structure of nearby data points.
 
+## Value
+
+An [`R6Class`](https://r6.r-lib.org/reference/R6Class.html) generator.
+`Microenvironment$new()` returns a `Microenvironment` object.
+
 ## Details
 
 In real immunity, B cell fate is strongly influenced by local signals:
@@ -60,7 +65,7 @@ density-dependent adaptation:
 
 - [`Microenvironment$assess()`](#method-Microenvironment-assess)
 
-- [`Microenvironment$print()`](#method-Microenvironment-print)
+- [`Microenvironment$format()`](#method-Microenvironment-format)
 
 - [`Microenvironment$clone()`](#method-Microenvironment-clone)
 
@@ -143,19 +148,24 @@ Named list with densities, zones, and mutation_modifiers per antibody.
 
 ------------------------------------------------------------------------
 
-### Method [`print()`](https://rdrr.io/r/base/print.html)
+### Method [`format()`](https://rdrr.io/r/base/format.html)
 
-Print summary.
+Format a short summary, one element per line. Used by
+[`print()`](https://rdrr.io/r/base/print.html).
 
 #### Usage
 
-    Microenvironment$print(...)
+    Microenvironment$format(...)
 
 #### Arguments
 
 - `...`:
 
   Not used.
+
+#### Returns
+
+A character vector.
 
 ------------------------------------------------------------------------
 
@@ -187,5 +197,5 @@ table(env$zones)  # stable, explore, boundary
 #> boundary  explore   stable 
 #>        7        4        4 
 env$mutation_modifiers  # per-antibody rate scaling
-#>  [1] 2.0 1.0 0.3 1.0 2.0 1.0 2.0 1.0 1.0 1.0 1.0 0.3 0.3 2.0 0.3
+#>  [1] 1.0 2.0 2.0 0.3 2.0 0.3 1.0 1.0 1.0 1.0 1.0 0.3 1.0 0.3 2.0
 ```

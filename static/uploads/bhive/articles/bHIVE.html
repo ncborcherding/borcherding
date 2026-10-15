@@ -5,12 +5,12 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>The buzz on using bHIVE • bHIVE</title>
+<title>Immune-inspired prototypes for cytometry and single-cell data with bHIVE • bHIVE</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="The buzz on using bHIVE">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Immune-inspired prototypes for cytometry and single-cell data with bHIVE">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">bHIVE</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.6</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.7</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -34,7 +34,7 @@
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-tutorials" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Tutorials</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-tutorials">
 <li><a class="dropdown-item" href="../articles/bHIVE.html">Getting Started</a></li>
-    <li><a class="dropdown-item" href="../articles/articles/immune-modules.html">Immune Modules</a></li>
+    <li><a class="dropdown-item" href="../articles/immune-modules.html">Immune Modules</a></li>
     <li><a class="dropdown-item" href="../articles/articles/advanced-workflows.html">Advanced Tuning &amp; Workflows</a></li>
     <li><a class="dropdown-item" href="../articles/articles/foundations.html">Algorithm &amp; Biological Foundations</a></li>
   </ul>
@@ -59,7 +59,7 @@
 
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="../logo.png" class="logo" alt=""><h1>The buzz on using bHIVE</h1>
+      <img src="../logo.png" class="logo" alt=""><h1>Immune-inspired prototypes for cytometry and single-cell data with bHIVE</h1>
                         <h4 data-toc-skip class="author">Nick
 Borcherding</h4>
             <address class="author_afil">
@@ -67,7 +67,7 @@ Borcherding</h4>
 MO, USA<br><a class="author_email" href="mailto:#"></a><a href="mailto:ncborch@gmail.com" class="email">ncborch@gmail.com</a>
       </address>
                   
-            <h4 data-toc-skip class="date">2026-06-26</h4>
+            <h4 data-toc-skip class="date">2026-10-15</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/BorchLab/bHIVE/blob/main/vignettes/bHIVE.Rmd" class="external-link"><code>vignettes/bHIVE.Rmd</code></a></small>
       <div class="d-none name"><code>bHIVE.Rmd</code></div>
@@ -78,650 +78,527 @@ MO, USA<br><a class="author_email" href="mailto:#"></a><a href="mailto:ncborch@g
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
-<p>The <strong>bHIVE</strong> package implements an Artificial Immune
-Network (AI-Net) algorithm for clustering and classification tasks.
-Inspired by biological immune systems, bHIVE uses principles like clonal
-selection, mutation, and suppression to analyze and model data.</p>
-<p>This vignette demonstrates how to: 1. Perform clustering and
-classification using <code>bHIVE</code>. 2. Tune hyperparameters using
-<code>swarmbHIVE</code>. 3. Use the <code>caret</code> wrapper for easy
-integration with machine learning workflows. 4. Use multilayered immune
-networks with <code>honeycombHIVE</code> 5. Visualize results with
-<code>ggplot2</code>.</p>
+<p>Cytometry and single-cell RNA-seq measure many markers on many cells.
+Two questions come up in almost every analysis. Which cell populations
+are present? And which population does a new cell belong to? Clustering
+answers the first. Classification, or label transfer from an annotated
+reference, answers the second.</p>
+<p><em><a href="https://bioconductor.org/packages/3.23/bHIVE" class="external-link">bHIVE</a></em>
+answers both with one model, an artificial immune network. A set of
+prototypes, called antibodies, evolves the way B cells do in an immune
+response. Antibodies that bind the data well are cloned, the clones
+mutate, and near-duplicates are suppressed. What remains is a small set
+of points in marker space that summarize the cells.</p>
+<p>What this gives an analyst:</p>
+<ul>
+<li>
+<strong>Prototypes you can read.</strong> Each antibody is a point
+in the original marker units, so a heatmap of the antibodies reads like
+a table of population phenotypes.</li>
+<li>
+<strong>One model for clustering and label transfer.</strong> The
+same fitted object that clusters a sample can label new cells with
+<code>$predict()</code>.</li>
+<li>
+<strong>Rare populations.</strong> In supervised mode every class is
+seeded with its own antibodies, so a population of a few cells is not
+lost. In unsupervised mode <code>coverageBoost</code> seeds antibodies
+where coverage is poor.</li>
+<li>
+<strong>A cluster count you choose or let emerge.</strong> By
+default the number of clusters comes out of the suppression dynamics.
+Set <code>targetK</code> to fix it.</li>
+<li>
+<strong>Composable immune modules.</strong> The R6 engine,
+<code>AINet</code>, accepts modules for somatic hypermutation, germinal
+center selection, microenvironment and more. The second vignette,
+<code><a href="../articles/immune-modules.html">vignette("immune-modules", package = "bHIVE")</a></code>, covers
+them.</li>
+</ul>
+<p>bHIVE works with Bioconductor data structures. <code><a href="../reference/bHIVE.html">bHIVE()</a></code>
+accepts a <code>SummarizedExperiment</code> or
+<code>SingleCellExperiment</code> and stores its labels in
+<code><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">colData()</a></code>. <code><a href="../reference/bHIVEParam.html">bHIVEParam()</a></code> plugs bHIVE into
+<em><a href="https://bioconductor.org/packages/3.23/bluster" class="external-link">bluster</a></em>,
+so it also runs through <code><a href="https://rdrr.io/pkg/bluster/man/clusterRows.html" class="external-link">bluster::clusterRows()</a></code> and
+<code><a href="https://rdrr.io/pkg/bluster/man/clusterSweep.html" class="external-link">bluster::clusterSweep()</a></code>.</p>
+<p>bHIVE does not replace graph-based clustering or <em><a href="https://bioconductor.org/packages/3.23/FlowSOM" class="external-link">FlowSOM</a></em>.
+The comparison below shows that a shared-nearest-neighbor graph recovers
+manually gated populations better on this dataset. bHIVE is a prototype
+model to inspect and reuse.</p>
+</div>
+<div class="section level2">
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h2>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"BiocManager"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"BiocManager"</span><span class="op">)</span></span>
+<span><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://bioconductor.github.io/BiocManager/reference/install.html" class="external-link">install</a></span><span class="op">(</span><span class="st">"bHIVE"</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="a-mass-cytometry-dataset">A mass cytometry dataset<a class="anchor" aria-label="anchor" href="#a-mass-cytometry-dataset"></a>
+</h2>
+<p>We use bone marrow mass cytometry data from Levine et al. (2015),
+available through <em><a href="https://bioconductor.org/packages/3.23/HDCytoData" class="external-link">HDCytoData</a></em>.
+Each cell was gated by hand into one of 14 populations or left
+unassigned. The gates give a reference to score clusterings against.</p>
+<p>HDCytoData stores cells in rows and markers in columns. Bioconductor
+single-cell containers use the opposite orientation, so we transpose. We
+keep the 32 lineage markers, take 5,000 gated cells, and apply the usual
+<code>asinh(x / 5)</code> transform for mass cytometry.</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://www.borch.dev/uploads/bhive/">bHIVE</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">SingleCellExperiment</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/lmweber/HDCytoData" class="external-link">HDCytoData</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">bluster</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">se</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/HDCytoData/man/Levine_32dim_SE.html" class="external-link">Levine_32dim_SE</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">type_markers</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">colData</a></span><span class="op">(</span><span class="va">se</span><span class="op">)</span><span class="op">$</span><span class="va">marker_class</span> <span class="op">==</span> <span class="st">"type"</span></span>
+<span><span class="va">gated</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">rowData</a></span><span class="op">(</span><span class="va">se</span><span class="op">)</span><span class="op">$</span><span class="va">population_id</span> <span class="op">!=</span> <span class="st">"unassigned"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">keep</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="va">gated</span>, <span class="fl">5000</span><span class="op">)</span></span>
+<span><span class="va">sce</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/SingleCellExperiment/man/SingleCellExperiment.html" class="external-link">SingleCellExperiment</a></span><span class="op">(</span></span>
+<span>    assays <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>exprs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Hyperbolic.html" class="external-link">asinh</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">assay</a></span><span class="op">(</span><span class="va">se</span>, <span class="st">"exprs"</span><span class="op">)</span><span class="op">[</span><span class="va">keep</span>, <span class="va">type_markers</span><span class="op">]</span> <span class="op">/</span> <span class="fl">5</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>    colData <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/droplevels.html" class="external-link">droplevels</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">rowData</a></span><span class="op">(</span><span class="va">se</span><span class="op">)</span><span class="op">[</span><span class="va">keep</span>, <span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">sce</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"cell"</span>, <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">sce</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">sce</span></span></code></pre></div>
+<pre><code><span><span class="co">## class: SingleCellExperiment </span></span>
+<span><span class="co">## dim: 32 5000 </span></span>
+<span><span class="co">## metadata(0):</span></span>
+<span><span class="co">## assays(1): exprs</span></span>
+<span><span class="co">## rownames(32): CD45RA CD133 ... CD64 CD41</span></span>
+<span><span class="co">## rowData names(0):</span></span>
+<span><span class="co">## colnames(5000): cell1 cell2 ... cell4999 cell5000</span></span>
+<span><span class="co">## colData names(2): patient_id population_id</span></span>
+<span><span class="co">## reducedDimNames(0):</span></span>
+<span><span class="co">## mainExpName: NULL</span></span>
+<span><span class="co">## altExpNames(0):</span></span></code></pre>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">sce</span><span class="op">$</span><span class="va">population_id</span><span class="op">)</span>, decreasing <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## </span></span>
+<span><span class="co">##            CD4_T_cells              Monocytes            CD8_T_cells </span></span>
+<span><span class="co">##                   1275                   1022                    936 </span></span>
+<span><span class="co">##         Mature_B_cells            Pre_B_cells         CD16-_NK_cells </span></span>
+<span><span class="co">##                    780                    302                    187 </span></span>
+<span><span class="co">## CD34+CD38+CD123-_HSPCs         CD16+_NK_cells                   pDCs </span></span>
+<span><span class="co">##                    166                    109                     71 </span></span>
+<span><span class="co">##              Basophils       CD34+CD38lo_HSCs            Pro_B_cells </span></span>
+<span><span class="co">##                     59                     34                     25 </span></span>
+<span><span class="co">##         Plasma_B_cells CD34+CD38+CD123+_HSPCs </span></span>
+<span><span class="co">##                     20                     14</span></span></code></pre>
+<p>The smallest populations have only a few dozen cells in this
+sample.</p>
+</div>
+<div class="section level2">
+<h2 id="clustering-a-singlecellexperiment">Clustering a SingleCellExperiment<a class="anchor" aria-label="anchor" href="#clustering-a-singlecellexperiment"></a>
+</h2>
+<p><code><a href="../reference/bHIVE.html">bHIVE()</a></code> clusters the cells (the columns) of a
+<code>SingleCellExperiment</code> using an assay, here
+<code>exprs</code>, or a <code><a href="https://rdrr.io/pkg/SingleCellExperiment/man/reducedDims.html" class="external-link">reducedDim()</a></code> embedding through
+<code>use.dimred</code>. For scRNA-seq, cluster a PCA embedding rather
+than a sparse assay.</p>
+<p>Two settings matter for high-dimensional data.
+<code>affinityParams = list(alpha = "auto")</code> sets the bandwidth of
+the Gaussian affinity from the data. A fixed bandwidth of 1 makes almost
+every affinity zero in 32 dimensions. <code>targetK</code> asks for a
+fixed number of clusters, here the 14 gated populations.</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span></span>
+<span><span class="va">sce</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bHIVE.html">bHIVE</a></span><span class="op">(</span><span class="va">sce</span>, assay.type <span class="op">=</span> <span class="st">"exprs"</span>, targetK <span class="op">=</span> <span class="fl">14</span>,</span>
+<span>             affinityParams <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="st">"auto"</span><span class="op">)</span>,</span>
+<span>             maxIter <span class="op">=</span> <span class="fl">20</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">sce</span><span class="op">$</span><span class="va">bHIVE</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## </span></span>
+<span><span class="co">##    1    2    3    4    5    6    7    8    9   10   11   12   13   14 </span></span>
+<span><span class="co">##  332   57 2211  197  242  391  134   83  296  123  143  214  183  394</span></span></code></pre>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">ari_42</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/bluster/man/pairwiseRand.html" class="external-link">pairwiseRand</a></span><span class="op">(</span><span class="va">sce</span><span class="op">$</span><span class="va">population_id</span>, <span class="va">sce</span><span class="op">$</span><span class="va">bHIVE</span>, mode <span class="op">=</span> <span class="st">"index"</span><span class="op">)</span></span>
+<span><span class="va">ari_42</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] 0.5428569</span></span></code></pre>
+<p>The labels are in <code>colData(sce)$bHIVE</code>. The full result,
+including the fitted model, is in <code>metadata(sce)$bHIVE</code>. The
+last line is the adjusted Rand index (ARI) against the manual gates. An
+ARI of 1 means perfect agreement, and 0 means chance. This run reaches
+0.54. The comparison below shows how much that changes with the random
+seed.</p>
 <div class="section level3">
-<h3 id="parameters-for-bhive">Parameters for <code>bHIVE()</code><a class="anchor" aria-label="anchor" href="#parameters-for-bhive"></a>
+<h3 id="reading-the-prototypes">Reading the prototypes<a class="anchor" aria-label="anchor" href="#reading-the-prototypes"></a>
 </h3>
-<p>The behavior of the <code>bHIVE</code> function can be fine-tuned
-using a range of hyperparameters. Below is a description of the key
-parameters:</p>
+<p>Each cluster has one prototype in marker space. A heatmap of the
+prototypes shows each cluster’s phenotype. We label each cluster with
+the gated population most of its cells came from.</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">metadata</span><span class="op">(</span><span class="va">sce</span><span class="op">)</span><span class="op">$</span><span class="va">bHIVE</span></span>
+<span><span class="va">protos</span> <span class="op">&lt;-</span> <span class="va">res</span><span class="op">$</span><span class="va">antibodies_unscaled</span></span>
+<span><span class="va">majority</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tapply.html" class="external-link">tapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="va">sce</span><span class="op">$</span><span class="va">population_id</span><span class="op">)</span>, <span class="va">sce</span><span class="op">$</span><span class="va">bHIVE</span>,</span>
+<span>                   <span class="kw">function</span><span class="op">(</span><span class="va">p</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/which.min.html" class="external-link">which.max</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">p</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">protos</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">protos</span><span class="op">)</span><span class="op">)</span>, <span class="st">": "</span>, <span class="va">majority</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">long</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
+<span>    cluster <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">protos</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">protos</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>                     levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rev.html" class="external-link">rev</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">protos</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>    marker  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">protos</span><span class="op">)</span>, each <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">protos</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>                     levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">protos</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>    value   <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html" class="external-link">as.vector</a></span><span class="op">(</span><span class="va">protos</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">long</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">marker</span>, <span class="va">cluster</span>, fill <span class="op">=</span> <span class="va">value</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_tile.html" class="external-link">geom_tile</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_viridis.html" class="external-link">scale_fill_viridis_c</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"asinh"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="cn">NULL</span>, y <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_minimal</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>axis.text.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>angle <span class="op">=</span> <span class="fl">90</span>, hjust <span class="op">=</span> <span class="fl">1</span>, vjust <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p><img src="bHIVE_files/figure-html/prototypes-1.png" class="r-plt" alt="" width="1350" style="display: block; margin: auto;"></p>
+<p>Reading the rows shows what a run separates and what it merges. A
+population on more than one row was split. This run splits
+Mature_B_cells, Monocytes. A population with no row of its own was
+merged into its neighbors. Here that is CD16+_NK_cells,
+CD34+CD38+CD123+_HSPCs, CD34+CD38lo_HSCs, CD8_T_cells, Plasma_B_cells,
+Pro_B_cells. That explains most of the gap between this run and the
+gates.</p>
+</div>
+<div class="section level3">
+<h3 id="plotting-the-cells-with-their-prototypes">Plotting the cells with their prototypes<a class="anchor" aria-label="anchor" href="#plotting-the-cells-with-their-prototypes"></a>
+</h3>
+<p><code><a href="../reference/visualizeHIVE.html">visualizeHIVE()</a></code> fits a PCA to the cells and projects the
+prototypes into the same coordinates.</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">X</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">assay</a></span><span class="op">(</span><span class="va">sce</span>, <span class="st">"exprs"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/visualizeHIVE.html">visualizeHIVE</a></span><span class="op">(</span><span class="va">res</span>, X <span class="op">=</span> <span class="va">X</span>, title <span class="op">=</span> <span class="st">"bHIVE prototypes on the PCA of the cells"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="bHIVE_files/figure-html/visualize-1.png" class="r-plt" alt="" width="1050" style="display: block; margin: auto;"></p>
+</div>
+</div>
+<div class="section level2">
+<h2 id="bhive-through-bluster">bHIVE through bluster<a class="anchor" aria-label="anchor" href="#bhive-through-bluster"></a>
+</h2>
+<p><code><a href="../reference/bHIVEParam.html">bHIVEParam()</a></code> describes a bHIVE run for <em><a href="https://bioconductor.org/packages/3.23/bluster" class="external-link">bluster</a></em>.
+It works anywhere a <code>BlusterParam</code> does.</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">param</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bHIVEParam.html">bHIVEParam</a></span><span class="op">(</span>targetK <span class="op">=</span> <span class="fl">14</span>, affinityParams <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="st">"auto"</span><span class="op">)</span>,</span>
+<span>                    maxIter <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></span>
+<span><span class="va">param</span></span></code></pre></div>
+<pre><code><span><span class="co">## class: bHIVEParam</span></span>
+<span><span class="co">## nAntibodies: [default]</span></span>
+<span><span class="co">## beta: [default]</span></span>
+<span><span class="co">## epsilon: [default]</span></span>
+<span><span class="co">## maxIter: 20</span></span>
+<span><span class="co">## k: [default]</span></span>
+<span><span class="co">## affinityFunc: [default]</span></span>
+<span><span class="co">## distFunc: [default]</span></span>
+<span><span class="co">## initMethod: [default]</span></span>
+<span><span class="co">## scale: [default]</span></span>
+<span><span class="co">## targetK: 14</span></span>
+<span><span class="co">## epsilonQuantile: [default]</span></span>
+<span><span class="co">## affinityParams(1): alpha</span></span>
+<span><span class="co">## extra(0):</span></span></code></pre>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span></span>
+<span><span class="va">clusters</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/bluster/man/clusterRows.html" class="external-link">clusterRows</a></span><span class="op">(</span><span class="va">X</span>, <span class="va">param</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">clusters</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## clusters</span></span>
+<span><span class="co">##    1    2    3    4    5    6    7    8    9   10   11   12   13   14 </span></span>
+<span><span class="co">##  332   57 2211  197  242  391  134   83  296  123  143  214  183  394</span></span></code></pre>
+<p>The rows of <code>X</code> are the cells of <code>sce</code>, so the
+labels go straight into <code><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">colData()</a></code>.</p>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/SingleCellExperiment/man/colLabels.html" class="external-link">colLabels</a></span><span class="op">(</span><span class="va">sce</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">clusters</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/nlevels.html" class="external-link">nlevels</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SingleCellExperiment/man/colLabels.html" class="external-link">colLabels</a></span><span class="op">(</span><span class="va">sce</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] 14</span></span></code></pre>
+<p><code><a href="https://rdrr.io/pkg/bluster/man/clusterSweep.html" class="external-link">bluster::clusterSweep()</a></code> varies any setting of the
+parameter object. Here it tries three cluster counts.</p>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span></span>
+<span><span class="va">sweep</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/bluster/man/clusterSweep.html" class="external-link">clusterSweep</a></span><span class="op">(</span><span class="va">X</span>, <span class="fu"><a href="../reference/bHIVEParam.html">bHIVEParam</a></span><span class="op">(</span>affinityParams <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="st">"auto"</span><span class="op">)</span>,</span>
+<span>                                    maxIter <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>,</span>
+<span>                      targetK <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">8</span>, <span class="fl">14</span>, <span class="fl">20</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">vapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">as.list</a></span><span class="op">(</span><span class="va">sweep</span><span class="op">$</span><span class="va">clusters</span><span class="op">)</span>,</span>
+<span>       <span class="kw">function</span><span class="op">(</span><span class="va">cl</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/pkg/bluster/man/pairwiseRand.html" class="external-link">pairwiseRand</a></span><span class="op">(</span><span class="va">sce</span><span class="op">$</span><span class="va">population_id</span>, <span class="va">cl</span>, mode <span class="op">=</span> <span class="st">"index"</span><span class="op">)</span>,</span>
+<span>       <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##  targetK.8 targetK.14 targetK.20 </span></span>
+<span><span class="co">##  0.7106187  0.8473659  0.8432034</span></span></code></pre>
+</div>
+<div class="section level2">
+<h2 id="comparison-with-flowsom-and-bluster-methods">Comparison with FlowSOM and bluster methods<a class="anchor" aria-label="anchor" href="#comparison-with-flowsom-and-bluster-methods"></a>
+</h2>
+<p>We compare bHIVE with three methods used for cytometry and
+single-cell data:</p>
+<ul>
+<li>
+<em><a href="https://bioconductor.org/packages/3.23/FlowSOM" class="external-link">FlowSOM</a></em>
+builds a self-organizing map and merges its nodes into metaclusters. It
+is the standard prototype method for cytometry. We ask for 14
+metaclusters.</li>
+<li>k-means with 14 centers, through
+<code><a href="https://rdrr.io/pkg/bluster/man/KmeansParam-class.html" class="external-link">bluster::KmeansParam()</a></code>.</li>
+<li>A shared-nearest-neighbor graph with Louvain community detection,
+through <code><a href="https://rdrr.io/pkg/bluster/man/NNGraphParam-class.html" class="external-link">bluster::SNNGraphParam()</a></code>. This is the usual default
+for single-cell data. It picks its own number of clusters.</li>
+</ul>
+<p>bHIVE depends on its random seed, so we run it three times.</p>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">truth</span> <span class="op">&lt;-</span> <span class="va">sce</span><span class="op">$</span><span class="va">population_id</span></span>
+<span><span class="va">timed</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">expr</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="va">start</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/proc.time.html" class="external-link">proc.time</a></span><span class="op">(</span><span class="op">)</span><span class="op">[[</span><span class="st">"elapsed"</span><span class="op">]</span><span class="op">]</span></span>
+<span>    <span class="va">clusters</span> <span class="op">&lt;-</span> <span class="va">expr</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>clusters <span class="op">=</span> <span class="va">clusters</span>, seconds <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/proc.time.html" class="external-link">proc.time</a></span><span class="op">(</span><span class="op">)</span><span class="op">[[</span><span class="st">"elapsed"</span><span class="op">]</span><span class="op">]</span> <span class="op">-</span> <span class="va">start</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span><span class="va">runs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>    <span class="st">"bHIVE, seed 1"</span> <span class="op">=</span> <span class="fu">timed</span><span class="op">(</span><span class="op">{</span> <span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span>; <span class="fu"><a href="https://rdrr.io/pkg/bluster/man/clusterRows.html" class="external-link">clusterRows</a></span><span class="op">(</span><span class="va">X</span>, <span class="va">param</span><span class="op">)</span> <span class="op">}</span><span class="op">)</span>,</span>
+<span>    <span class="st">"bHIVE, seed 2"</span> <span class="op">=</span> <span class="fu">timed</span><span class="op">(</span><span class="op">{</span> <span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span>; <span class="fu"><a href="https://rdrr.io/pkg/bluster/man/clusterRows.html" class="external-link">clusterRows</a></span><span class="op">(</span><span class="va">X</span>, <span class="va">param</span><span class="op">)</span> <span class="op">}</span><span class="op">)</span>,</span>
+<span>    <span class="st">"bHIVE, seed 3"</span> <span class="op">=</span> <span class="fu">timed</span><span class="op">(</span><span class="op">{</span> <span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span>; <span class="fu"><a href="https://rdrr.io/pkg/bluster/man/clusterRows.html" class="external-link">clusterRows</a></span><span class="op">(</span><span class="va">X</span>, <span class="va">param</span><span class="op">)</span> <span class="op">}</span><span class="op">)</span>,</span>
+<span>    <span class="st">"FlowSOM"</span> <span class="op">=</span> <span class="fu">timed</span><span class="op">(</span><span class="fu">FlowSOM</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/FlowSOM/man/GetMetaclusters.html" class="external-link">GetMetaclusters</a></span><span class="op">(</span><span class="fu">FlowSOM</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/FlowSOM/man/FlowSOM.html" class="external-link">FlowSOM</a></span><span class="op">(</span></span>
+<span>        <span class="va">X</span>, compensate <span class="op">=</span> <span class="cn">FALSE</span>, transform <span class="op">=</span> <span class="cn">FALSE</span>, scale <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>        colsToUse <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">X</span><span class="op">)</span><span class="op">)</span>, nClus <span class="op">=</span> <span class="fl">14</span>, seed <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>    <span class="st">"k-means"</span> <span class="op">=</span> <span class="fu">timed</span><span class="op">(</span><span class="op">{</span> <span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span>; <span class="fu"><a href="https://rdrr.io/pkg/bluster/man/clusterRows.html" class="external-link">clusterRows</a></span><span class="op">(</span><span class="va">X</span>, <span class="fu"><a href="https://rdrr.io/pkg/bluster/man/KmeansParam-class.html" class="external-link">KmeansParam</a></span><span class="op">(</span>centers <span class="op">=</span> <span class="fl">14</span><span class="op">)</span><span class="op">)</span> <span class="op">}</span><span class="op">)</span>,</span>
+<span>    <span class="st">"SNN graph + Louvain"</span> <span class="op">=</span> <span class="fu">timed</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/bluster/man/clusterRows.html" class="external-link">clusterRows</a></span><span class="op">(</span></span>
+<span>        <span class="va">X</span>, <span class="fu"><a href="https://rdrr.io/pkg/bluster/man/NNGraphParam-class.html" class="external-link">SNNGraphParam</a></span><span class="op">(</span>k <span class="op">=</span> <span class="fl">15</span>, cluster.fun <span class="op">=</span> <span class="st">"louvain"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">comparison</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
+<span>    method   <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">runs</span><span class="op">)</span>,</span>
+<span>    clusters <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">vapply</a></span><span class="op">(</span><span class="va">runs</span>, <span class="kw">function</span><span class="op">(</span><span class="va">r</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">r</span><span class="op">$</span><span class="va">clusters</span><span class="op">)</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/integer.html" class="external-link">integer</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>    ARI      <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">vapply</a></span><span class="op">(</span><span class="va">runs</span>, <span class="kw">function</span><span class="op">(</span><span class="va">r</span><span class="op">)</span></span>
+<span>        <span class="fu"><a href="https://rdrr.io/pkg/bluster/man/pairwiseRand.html" class="external-link">pairwiseRand</a></span><span class="op">(</span><span class="va">truth</span>, <span class="va">r</span><span class="op">$</span><span class="va">clusters</span>, mode <span class="op">=</span> <span class="st">"index"</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>    seconds  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">vapply</a></span><span class="op">(</span><span class="va">runs</span>, <span class="va">`[[`</span>, <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span>, <span class="st">"seconds"</span><span class="op">)</span>,</span>
+<span>    row.names <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
+<span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">comparison</span>, digits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">3</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
-<colgroup>
-<col width="18%">
-<col width="81%">
-</colgroup>
 <thead><tr class="header">
-<th><strong>Parameter</strong></th>
-<th><strong>Description</strong></th>
+<th align="left">method</th>
+<th align="right">clusters</th>
+<th align="right">ARI</th>
+<th align="right">seconds</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td><code>X</code></td>
-<td>A numeric matrix or data frame of input features (rows are
-observations, columns are features).</td>
+<td align="left">bHIVE, seed 1</td>
+<td align="right">14</td>
+<td align="right">0.805</td>
+<td align="right">0.9</td>
 </tr>
 <tr class="even">
-<td><code>y</code></td>
-<td>(Optional) Factor target vector for classification. If
-<code>NULL</code>, clustering is performed.</td>
+<td align="left">bHIVE, seed 2</td>
+<td align="right">14</td>
+<td align="right">0.869</td>
+<td align="right">0.9</td>
 </tr>
 <tr class="odd">
-<td><code>task</code></td>
-<td>Specifies the task: <code>"clustering"</code> or
-<code>"classification"</code>.</td>
+<td align="left">bHIVE, seed 3</td>
+<td align="right">14</td>
+<td align="right">0.967</td>
+<td align="right">1.0</td>
 </tr>
 <tr class="even">
-<td><code>nAntibodies</code></td>
-<td>Number of initial antibodies in the population. Larger values
-increase diversity but add computational cost.</td>
+<td align="left">FlowSOM</td>
+<td align="right">14</td>
+<td align="right">0.897</td>
+<td align="right">4.4</td>
 </tr>
 <tr class="odd">
-<td><code>beta</code></td>
-<td>Clone multiplier. Determines how many clones are generated for
-top-matching antibodies.</td>
+<td align="left">k-means</td>
+<td align="right">14</td>
+<td align="right">0.583</td>
+<td align="right">0.0</td>
 </tr>
 <tr class="even">
-<td><code>epsilon</code></td>
-<td>Suppression threshold. Antibodies closer than <code>epsilon</code>
-are considered redundant and removed.</td>
-</tr>
-<tr class="odd">
-<td><code>maxIter</code></td>
-<td>Maximum number of iterations for the algorithm.</td>
-</tr>
-<tr class="even">
-<td><code>affinityFunc</code></td>
-<td>Affinity (similarity) function. Options include
-<code>"gaussian"</code>, <code>"laplace"</code>,
-<code>"polynomial"</code>, <code>"cosine"</code>,
-<code>"hamming"</code>.</td>
-</tr>
-<tr class="odd">
-<td><code>distFunc</code></td>
-<td>Distance function for clustering and suppression. Options include
-<code>"euclidean"</code>, <code>"manhattan"</code>,
-<code>"cosine"</code>, <code>"minkowski"</code>,
-<code>"hamming"</code>.</td>
-</tr>
-<tr class="even">
-<td><code>affinityParams</code></td>
-<td>A list of optional parameters for the affinity/distance
-functions.</td>
-</tr>
-<tr class="odd">
-<td><code>mutationDecay</code></td>
-<td>Factor controlling how the mutation rate decays over iterations.
-Default is <code>1.0</code> (no decay).</td>
-</tr>
-<tr class="even">
-<td><code>mutationMin</code></td>
-<td>Minimum mutation rate to avoid zero mutation.</td>
-</tr>
-<tr class="odd">
-<td><code>maxClones</code></td>
-<td>Maximum number of clones per antibody. Default is unlimited
-(<code>Inf</code>).</td>
-</tr>
-<tr class="even">
-<td><code>stopTolerance</code></td>
-<td>Tolerance for stopping the algorithm if the antibody population size
-stabilizes.</td>
-</tr>
-<tr class="odd">
-<td><code>noImprovementLimit</code></td>
-<td>Number of iterations without improvement before early stopping.</td>
-</tr>
-<tr class="even">
-<td><code>initMethod</code></td>
-<td>Method for initializing antibodies. Options: <code>"sample"</code>
-(randomly selects rows from <code>X</code>), <code>"random"</code>
-(Gaussian noise), <code>"random_uniform"</code> (samples uniformly in
-[min, max] of each column), or <code>"kmeans++"</code> (kmeans++-like
-initialization for coverage).</td>
-</tr>
-<tr class="odd">
-<td><code>k</code></td>
-<td>Number of top-matching antibodies to consider during cloning.</td>
-</tr>
-<tr class="even">
-<td><code>seed</code></td>
-<td>Random seed for reproducibility.</td>
-</tr>
-<tr class="odd">
-<td><code>verbose</code></td>
-<td>Logical. If <code>TRUE</code>, prints progress messages for each
-iteration.</td>
+<td align="left">SNN graph + Louvain</td>
+<td align="right">8</td>
+<td align="right">0.971</td>
+<td align="right">0.4</td>
 </tr>
 </tbody>
 </table>
-<div class="section level4">
-<h4 id="how-bhive-works">How <code>bHIVE</code> Works<a class="anchor" aria-label="anchor" href="#how-bhive-works"></a>
-</h4>
-<ol style="list-style-type: decimal">
-<li>
-<strong>Affinity Calculation</strong>: Measures the similarity
-between each data point and antibodies using a specified
-<code>affinityFunc</code>.</li>
-<li>
-<strong>Clonal Expansion and Mutation</strong>: Generates clones of
-top-matching antibodies, introducing diversity via mutation.</li>
-<li>
-<strong>Network Suppression</strong>: Removes antibodies that are
-too similar to maintain diversity in the population.</li>
-<li>
-<strong>Assignment</strong>: Assigns data points to antibodies
-(clusters, labels, or numeric predictions).</li>
-</ol>
-</div>
-<div class="section level4">
-<h4 id="example-of-parameter-selection">Example of Parameter Selection<a class="anchor" aria-label="anchor" href="#example-of-parameter-selection"></a>
-</h4>
-<p>The following example demonstrates how to configure the
-<code>bHIVE</code> function for clustering, emphasizing the impact of
-key parameters:</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Load the Iris dataset</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></span>
-<span><span class="va">X</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">iris</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Configure bHIVE parameters for clustering</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span></span>
-<span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bHIVE.html">bHIVE</a></span><span class="op">(</span></span>
-<span>  X <span class="op">=</span> <span class="va">X</span>,                      <span class="co"># Input data</span></span>
-<span>  task <span class="op">=</span> <span class="st">"clustering"</span>,        <span class="co"># Task type</span></span>
-<span>  nAntibodies <span class="op">=</span> <span class="fl">20</span>,           <span class="co"># Number of antibodies</span></span>
-<span>  beta <span class="op">=</span> <span class="fl">5</span>,                   <span class="co"># Clone multiplier</span></span>
-<span>  epsilon <span class="op">=</span> <span class="fl">0.01</span>,             <span class="co"># Suppression threshold</span></span>
-<span>  maxIter <span class="op">=</span> <span class="fl">20</span>,               <span class="co"># Maximum iterations</span></span>
-<span>  affinityFunc <span class="op">=</span> <span class="st">"gaussian"</span>,  <span class="co"># Affinity function</span></span>
-<span>  distFunc <span class="op">=</span> <span class="st">"euclidean"</span>,     <span class="co"># Distance function</span></span>
-<span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>              <span class="co"># Print progress</span></span>
-<span><span class="op">)</span></span></code></pre></div>
-</div>
-</div>
+<p>The graph-based method reaches an ARI of 0.97 with only 8 clusters.
+ARI is dominated by the large populations, so merging a few small ones
+costs little. FlowSOM reaches 0.90 and k-means 0.58. Across the three
+seeds here and the run above, bHIVE ranges from 0.54 to 0.97. A single
+bHIVE run can match the graph method or fall well below FlowSOM.</p>
+<p>That seed dependence is the main practical difference. If the goal is
+one stable partition of a dataset, FlowSOM or a graph-based method is
+the safer choice. With bHIVE, run several seeds and compare them, for
+example with <code><a href="https://rdrr.io/pkg/bluster/man/pairwiseRand.html" class="external-link">bluster::pairwiseRand()</a></code>. The
+<code>ConvergentSelector</code> module keeps the antibodies that recur
+across runs.</p>
+<p>FlowSOM also builds prototypes, its map nodes, and can map new
+samples onto them. So prototypes alone are not what sets bHIVE apart.
+The differences are how bHIVE learns them, by selection, mutation and
+suppression rather than on a fixed grid, and that the same model also
+learns from labels. The next section shows that.</p>
 </div>
 <div class="section level2">
-<h2 id="applications">Applications<a class="anchor" aria-label="anchor" href="#applications"></a>
+<h2 id="label-transfer-to-new-cells">Label transfer to new cells<a class="anchor" aria-label="anchor" href="#label-transfer-to-new-cells"></a>
 </h2>
-<div class="section level3">
-<h3 id="clustering">Clustering<a class="anchor" aria-label="anchor" href="#clustering"></a>
-</h3>
-<p><strong>Clustering</strong> is an unsupervised learning task where we
-group similar data points based on their features. In this example, we
-cluster the numeric features of the Iris dataset using
-<code>bHIVE</code>.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Load Iris dataset</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></span>
-<span><span class="va">X</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">iris</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span></span>
+<p>Label transfer trains a classifier on annotated cells and applies it
+to new ones. We train bHIVE on half of the gated cells and predict the
+other half. For classification, bHIVE seeds every class with at least
+<code>minPerClass</code> antibodies (default 5), so rare populations get
+their own antibodies.</p>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span></span>
+<span><span class="va">train</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">sce</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">sce</span><span class="op">)</span> <span class="op">/</span> <span class="fl">2</span><span class="op">)</span></span>
+<span><span class="va">test</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sets.html" class="external-link">setdiff</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">sce</span><span class="op">)</span><span class="op">)</span>, <span class="va">train</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Perform clustering</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span></span>
-<span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bHIVE.html">bHIVE</a></span><span class="op">(</span>X <span class="op">=</span> <span class="va">X</span>, </span>
-<span>             task <span class="op">=</span> <span class="st">"clustering"</span>, </span>
-<span>             nAntibodies <span class="op">=</span> <span class="fl">10</span>, </span>
-<span>             beta <span class="op">=</span> <span class="fl">5</span>, </span>
-<span>             epsilon <span class="op">=</span> <span class="fl">0.05</span>, </span>
-<span>             maxIter <span class="op">=</span> <span class="fl">20</span>, </span>
-<span>             k <span class="op">=</span> <span class="fl">3</span>,</span>
-<span>             verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span></span>
+<span><span class="va">ref</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bHIVE.html">bHIVE</a></span><span class="op">(</span><span class="va">sce</span><span class="op">[</span>, <span class="va">train</span><span class="op">]</span>, y <span class="op">=</span> <span class="st">"population_id"</span>, assay.type <span class="op">=</span> <span class="st">"exprs"</span>,</span>
+<span>             nAntibodies <span class="op">=</span> <span class="fl">150</span>, maxIter <span class="op">=</span> <span class="fl">20</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu">metadata</span><span class="op">(</span><span class="va">ref</span><span class="op">)</span><span class="op">$</span><span class="va">bHIVE</span><span class="op">$</span><span class="va">model</span></span>
+<span><span class="va">predicted</span> <span class="op">&lt;-</span> <span class="va">model</span><span class="op">$</span><span class="fu">predict</span><span class="op">(</span><span class="va">X</span><span class="op">[</span><span class="va">test</span>, <span class="op">]</span><span class="op">)</span></span></code></pre></div>
+<p>As a baseline we use the nearest class centroid. Each population is
+one mean vector, and each test cell takes the label of the closest
+mean.</p>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">centroids</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="va">X</span><span class="op">[</span><span class="va">train</span>, <span class="op">]</span>, <span class="fl">2</span>, <span class="kw">function</span><span class="op">(</span><span class="va">v</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/tapply.html" class="external-link">tapply</a></span><span class="op">(</span><span class="va">v</span>, <span class="va">truth</span><span class="op">[</span><span class="va">train</span><span class="op">]</span>, <span class="va">mean</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">dist2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">vapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">centroids</span><span class="op">)</span><span class="op">)</span>, <span class="kw">function</span><span class="op">(</span><span class="va">j</span><span class="op">)</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/colSums.html" class="external-link">colSums</a></span><span class="op">(</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="va">X</span><span class="op">[</span><span class="va">test</span>, <span class="op">]</span><span class="op">)</span> <span class="op">-</span> <span class="va">centroids</span><span class="op">[</span><span class="va">j</span>, <span class="op">]</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">test</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">baseline</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">centroids</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/maxCol.html" class="external-link">max.col</a></span><span class="op">(</span><span class="op">-</span><span class="va">dist2</span><span class="op">)</span><span class="op">]</span></span>
 <span></span>
-<span><span class="co"># Add cluster assignments to the data</span></span>
-<span><span class="va">iris</span><span class="op">$</span><span class="va">Cluster</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">assignments</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Visualize clusters</span></span>
-<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">iris</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Sepal.Length</span>, </span>
-<span>                 y <span class="op">=</span> <span class="va">Sepal.Width</span>, </span>
-<span>                 color <span class="op">=</span> <span class="va">Cluster</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">3</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Clustering Results with bHIVE"</span>, </span>
-<span>         x <span class="op">=</span> <span class="st">"Sepal Length"</span>, </span>
-<span>         y <span class="op">=</span> <span class="st">"Sepal Width"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu">scale_color_viridis</span><span class="op">(</span>discrete <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span> </span>
+<span><span class="va">score</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">p</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="va">hit</span> <span class="op">&lt;-</span> <span class="va">p</span> <span class="op">==</span> <span class="va">truth</span><span class="op">[</span><span class="va">test</span><span class="op">]</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>accuracy <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">hit</span><span class="op">)</span>, balanced_accuracy <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tapply.html" class="external-link">tapply</a></span><span class="op">(</span><span class="va">hit</span>, <span class="va">truth</span><span class="op">[</span><span class="va">test</span><span class="op">]</span>, <span class="va">mean</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span>bHIVE <span class="op">=</span> <span class="fu">score</span><span class="op">(</span><span class="va">predicted</span><span class="op">)</span>,</span>
+<span>                   <span class="st">"nearest centroid"</span> <span class="op">=</span> <span class="fu">score</span><span class="op">(</span><span class="va">baseline</span><span class="op">)</span><span class="op">)</span>, digits <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></code></pre></div>
+<table class="table">
+<thead><tr class="header">
+<th align="left"></th>
+<th align="right">accuracy</th>
+<th align="right">balanced_accuracy</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">bHIVE</td>
+<td align="right">0.952</td>
+<td align="right">0.884</td>
+</tr>
+<tr class="even">
+<td align="left">nearest centroid</td>
+<td align="right">0.973</td>
+<td align="right">0.944</td>
+</tr>
+</tbody>
+</table>
+<p>Balanced accuracy averages the recall of each population, so rare
+populations count as much as common ones.</p>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">recall</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">p</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/tapply.html" class="external-link">tapply</a></span><span class="op">(</span><span class="va">p</span> <span class="op">==</span> <span class="va">truth</span><span class="op">[</span><span class="va">test</span><span class="op">]</span>, <span class="va">truth</span><span class="op">[</span><span class="va">test</span><span class="op">]</span>, <span class="va">mean</span><span class="op">)</span></span>
+<span><span class="va">per_pop</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
+<span>    population <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">truth</span><span class="op">)</span>, <span class="fl">2</span><span class="op">)</span>,</span>
+<span>    method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"bHIVE"</span>, <span class="st">"nearest centroid"</span><span class="op">)</span>, each <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nlevels.html" class="external-link">nlevels</a></span><span class="op">(</span><span class="va">truth</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>    recall <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/caret/man/recall.html" class="external-link">recall</a></span><span class="op">(</span><span class="va">predicted</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/pkg/caret/man/recall.html" class="external-link">recall</a></span><span class="op">(</span><span class="va">baseline</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">per_pop</span><span class="op">$</span><span class="va">population</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">per_pop</span><span class="op">$</span><span class="va">population</span>,</span>
+<span>                             levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">truth</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">per_pop</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">population</span>, <span class="va">recall</span>, fill <span class="op">=</span> <span class="va">method</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html" class="external-link">geom_col</a></span><span class="op">(</span>position <span class="op">=</span> <span class="st">"dodge"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_flip.html" class="external-link">coord_flip</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_viridis.html" class="external-link">scale_fill_viridis_d</a></span><span class="op">(</span>end <span class="op">=</span> <span class="fl">0.8</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="cn">NULL</span>, y <span class="op">=</span> <span class="st">"Recall on held-out cells"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="bHIVE_files/figure-html/unnamed-chunk-3-1.png" class="r-plt" alt="" width="1050"></p>
+<p><img src="bHIVE_files/figure-html/recall-1.png" class="r-plt" alt="" width="1200" style="display: block; margin: auto;"></p>
+<p>The nearest-centroid baseline beats bHIVE here. Its accuracy is 0.97
+against 0.95, and its balanced accuracy 0.94 against 0.88. It matches or
+beats bHIVE on 12 of 14 populations. bHIVE’s per-class seeding keeps
+every population represented, and its lowest recall is 0.29 for
+CD34+CD38+CD123-_HSPCs.</p>
+<p>The gated populations in this dataset are compact and well separated
+in marker space, so one mean per population is enough. bHIVE spends
+several antibodies on each population. That helps when a population is
+spread out or has more than one mode, which is not the case here. For
+label transfer on data like these, a simple centroid classifier is the
+better choice.</p>
+<p>The fitted model can label any cells measured on the same panel. The
+cells the original analysis left unassigned are one example.</p>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">unassigned</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">rowData</a></span><span class="op">(</span><span class="va">se</span><span class="op">)</span><span class="op">$</span><span class="va">population_id</span> <span class="op">==</span> <span class="st">"unassigned"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">4</span><span class="op">)</span></span>
+<span><span class="va">new_cells</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Hyperbolic.html" class="external-link">asinh</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">assay</a></span><span class="op">(</span><span class="va">se</span>, <span class="st">"exprs"</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="va">unassigned</span>, <span class="fl">2000</span><span class="op">)</span>,</span>
+<span>                                      <span class="va">type_markers</span><span class="op">]</span> <span class="op">/</span> <span class="fl">5</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">model</span><span class="op">$</span><span class="fu">predict</span><span class="op">(</span><span class="va">new_cells</span><span class="op">)</span><span class="op">)</span>, decreasing <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## </span></span>
+<span><span class="co">##    CD4_T_cells      Monocytes    CD8_T_cells Mature_B_cells    Pre_B_cells </span></span>
+<span><span class="co">##            515            460            337            258            119 </span></span>
+<span><span class="co">## CD16-_NK_cells </span></span>
+<span><span class="co">##             93</span></span></code></pre>
+<p>These cells were not gated by hand, so these labels have no reference
+to check them against. Treat them as hypotheses to check against the
+markers.</p>
 </div>
-<div class="section level3">
-<h3 id="classification">Classification<a class="anchor" aria-label="anchor" href="#classification"></a>
-</h3>
-<p><strong>Classification</strong> is a supervised learning task where
-data points are assigned to predefined categories based on their
-features. Here, we classify the species of Iris flowers using
-<code>bHIVE</code>.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Classification setup</span></span>
-<span><span class="va">y</span> <span class="op">&lt;-</span> <span class="va">iris</span><span class="op">$</span><span class="va">Species</span></span>
-<span></span>
-<span><span class="co"># Perform classification</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span></span>
-<span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bHIVE.html">bHIVE</a></span><span class="op">(</span>X <span class="op">=</span> <span class="va">X</span>, </span>
-<span>             y <span class="op">=</span> <span class="va">y</span>, </span>
-<span>             task <span class="op">=</span> <span class="st">"classification"</span>, </span>
-<span>             nAntibodies <span class="op">=</span> <span class="fl">100</span>, </span>
-<span>             beta <span class="op">=</span> <span class="fl">5</span>, </span>
-<span>             epsilon <span class="op">=</span> <span class="fl">0.05</span>, </span>
-<span>             initMethod <span class="op">=</span> <span class="st">"random"</span>,</span>
-<span>             k <span class="op">=</span> <span class="fl">4</span>,</span>
-<span>             verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Visualize classification results</span></span>
-<span><span class="va">iris</span><span class="op">$</span><span class="va">Predicted</span> <span class="op">&lt;-</span> <span class="va">res</span><span class="op">$</span><span class="va">assignments</span></span>
-<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">iris</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Sepal.Length</span>, </span>
-<span>                 y <span class="op">=</span> <span class="va">Sepal.Width</span>, </span>
-<span>                 color <span class="op">=</span> <span class="va">Predicted</span>, </span>
-<span>                 shape <span class="op">=</span> <span class="va">Species</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">3</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Classification Results with bHIVE"</span>, </span>
-<span>         x <span class="op">=</span> <span class="st">"Sepal Length"</span>, </span>
-<span>         y <span class="op">=</span> <span class="st">"Sepal Width"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu">scale_color_viridis</span><span class="op">(</span>discrete <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="bHIVE_files/figure-html/unnamed-chunk-4-1.png" class="r-plt" alt="" width="1050"></p>
-<p>Comparing predicted vs actual</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span>Predicted <span class="op">=</span> <span class="va">res</span><span class="op">$</span><span class="va">assignments</span>, Actual <span class="op">=</span> <span class="va">y</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##             Actual</span></span>
-<span><span class="co">## Predicted    setosa versicolor virginica</span></span>
-<span><span class="co">##   setosa         50          0         0</span></span>
-<span><span class="co">##   versicolor      0         46         4</span></span>
-<span><span class="co">##   virginica       0          4        46</span></span></code></pre>
+<div class="section level2">
+<h2 id="the-r6-engine-and-immune-modules">The R6 engine and immune modules<a class="anchor" aria-label="anchor" href="#the-r6-engine-and-immune-modules"></a>
+</h2>
+<p><code><a href="../reference/bHIVE.html">bHIVE()</a></code> is a thin wrapper over the R6 class
+<code>AINet</code>. Using <code>AINet</code> directly gives a reusable
+model object and access to the immune modules. Here
+<code>coverageBoost</code> adds antibodies where the data are covered
+worst, before the 14 clusters are formed.</p>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">net</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/AINet.html">AINet</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>nAntibodies <span class="op">=</span> <span class="fl">40</span>, maxIter <span class="op">=</span> <span class="fl">15</span>, targetK <span class="op">=</span> <span class="fl">14</span>,</span>
+<span>                 coverageBoost <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>                 affinityParams <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="st">"auto"</span><span class="op">)</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span></span>
+<span><span class="va">net</span><span class="op">$</span><span class="fu">fit</span><span class="op">(</span><span class="va">X</span><span class="op">)</span></span>
+<span><span class="va">net</span></span></code></pre></div>
+<pre><code><span><span class="co">## &lt;AINet&gt;</span></span>
+<span><span class="co">##   Repertoire: 52 antibodies x 32 features</span></span>
+<span><span class="co">##   Task: clustering</span></span>
+<span><span class="co">##   Iterations: 15</span></span></code></pre>
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/bluster/man/pairwiseRand.html" class="external-link">pairwiseRand</a></span><span class="op">(</span><span class="va">truth</span>, <span class="va">net</span><span class="op">$</span><span class="va">result</span><span class="op">$</span><span class="va">assignments</span>, mode <span class="op">=</span> <span class="st">"index"</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] 0.604857</span></span></code></pre>
+<p><code>AINet</code> also accepts modules for somatic hypermutation
+(<code>SHMEngine</code>), idiotypic regulation
+(<code>IdiotypicNetwork</code>), germinal center selection
+(<code>GerminalCenter</code>), microenvironment-dependent mutation
+(<code>Microenvironment</code>), V(D)J initialization
+(<code>VDJLibrary</code>), two-signal activation
+(<code>ActivationGate</code>), memory (<code>MemoryPool</code>) and
+isotype switching (<code>ClassSwitcher</code>). The second vignette
+demonstrates each one:</p>
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/vignette.html" class="external-link">vignette</a></span><span class="op">(</span><span class="st">"immune-modules"</span>, package <span class="op">=</span> <span class="st">"bHIVE"</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div class="section level3">
-<h3 id="hyperparameter-tuning">Hyperparameter Tuning<a class="anchor" aria-label="anchor" href="#hyperparameter-tuning"></a>
-</h3>
-<p>Tuning hyperparameters is crucial for optimizing the performance of
-machine learning algorithms. In this example, we perform hyperparameter
-tuning for clustering using <code>swarmbHIVE</code>.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">grid</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/expand.grid.html" class="external-link">expand.grid</a></span><span class="op">(</span></span>
-<span>    nAntibodies <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">20</span><span class="op">)</span>,</span>
-<span>    beta <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">5</span><span class="op">)</span>,</span>
-<span>    epsilon <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.01</span>, <span class="fl">0.05</span><span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Perform tuning</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span></span>
-<span><span class="va">tuning_results</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/swarmbHIVE.html">swarmbHIVE</a></span><span class="op">(</span>X <span class="op">=</span> <span class="va">X</span>, </span>
-<span>                             task <span class="op">=</span> <span class="st">"clustering"</span>, </span>
-<span>                             grid <span class="op">=</span> <span class="va">grid</span>, </span>
-<span>                             metric <span class="op">=</span> <span class="st">"silhouette"</span>,</span>
-<span>                             verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Visualize tuning results</span></span>
-<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">tuning_results</span><span class="op">$</span><span class="va">results</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">nAntibodies</span>, </span>
-<span>                                   y <span class="op">=</span> <span class="va">metric_value</span>, </span>
-<span>                                   color <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">beta</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>shape <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">epsilon</span><span class="op">)</span><span class="op">)</span>, </span>
-<span>                   size <span class="op">=</span> <span class="fl">3</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Hyperparameter Tuning Results"</span>, </span>
-<span>         x <span class="op">=</span> <span class="st">"Number of Antibodies"</span>, </span>
-<span>         y <span class="op">=</span> <span class="st">"Silhouette Score"</span>, </span>
-<span>         color <span class="op">=</span> <span class="st">"Beta"</span>, </span>
-<span>         shape <span class="op">=</span> <span class="st">"Epsilon"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu">scale_color_viridis</span><span class="op">(</span>discrete <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="bHIVE_files/figure-html/unnamed-chunk-6-1.png" class="r-plt" alt="" width="1050"></p>
-<p>Best parameters</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">tuning_results</span><span class="op">$</span><span class="va">best_params</span></span></code></pre></div>
-<pre><code><span><span class="co">##   nAntibodies beta epsilon metric_value</span></span>
-<span><span class="co">## 3          10    5    0.01    0.2957736</span></span></code></pre>
-</div>
-<div class="section level3">
-<h3 id="using-the-caret-wrapper">Using the <code>caret</code> wrapper<a class="anchor" aria-label="anchor" href="#using-the-caret-wrapper"></a>
-</h3>
-<p>The <code>bHIVE</code> package provides a <code>caret</code> wrapper
-for seamless integration with the <code>caret</code> framework, allowing
-for easy cross-validation and hyperparameter tuning. Here, we
-demonstrate classification on the iris dataset.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></span>
-<span><span class="va">X</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">iris</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span></span>
-<span><span class="va">y</span> <span class="op">&lt;-</span> <span class="va">iris</span><span class="op">$</span><span class="va">Species</span></span>
-<span></span>
-<span><span class="co"># Splitting Training and Validation Data Sets</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span></span>
-<span><span class="va">sample.idx</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">X</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">X</span><span class="op">)</span><span class="op">*</span><span class="fl">0.7</span><span class="op">)</span></span>
-<span><span class="va">x_test</span> <span class="op">&lt;-</span> <span class="va">X</span><span class="op">[</span><span class="va">sample.idx</span>,<span class="op">]</span></span>
-<span><span class="va">x_val</span> <span class="op">&lt;-</span> <span class="va">X</span><span class="op">[</span><span class="op">-</span><span class="va">sample.idx</span>,<span class="op">]</span></span>
-<span><span class="va">y_test</span> <span class="op">&lt;-</span> <span class="va">y</span><span class="op">[</span><span class="va">sample.idx</span><span class="op">]</span></span>
-<span><span class="va">y_val</span> <span class="op">&lt;-</span> <span class="va">y</span><span class="op">[</span><span class="op">-</span><span class="va">sample.idx</span><span class="op">]</span></span>
-<span></span>
-<span></span>
-<span><span class="va">train_control</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/caret/man/trainControl.html" class="external-link">trainControl</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"cv"</span>, number <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span></span>
-<span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/caret/man/train.html" class="external-link">train</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">x_test</span>,</span>
-<span>               y <span class="op">=</span> <span class="va">y_test</span>,</span>
-<span>               method <span class="op">=</span> <span class="va">bHIVEmodel</span>,</span>
-<span>               trControl <span class="op">=</span> <span class="va">train_control</span>,</span>
-<span>               tuneGrid <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/expand.grid.html" class="external-link">expand.grid</a></span><span class="op">(</span></span>
-<span>                 nAntibodies <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">20</span>, <span class="fl">30</span><span class="op">)</span>,</span>
-<span>                 beta <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">5</span>, <span class="fl">10</span><span class="op">)</span>,</span>
-<span>                 epsilon <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.01</span>, <span class="fl">0.05</span>, <span class="fl">0.1</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>               verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Visualize caret results</span></span>
-<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Caret Tuning Results for bHIVE"</span>,</span>
-<span>         x <span class="op">=</span> <span class="st">"Hyperparameter Combination"</span>,</span>
-<span>         y <span class="op">=</span> <span class="st">"Performance Metric"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu">scale_color_viridis</span><span class="op">(</span>discrete <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="bHIVE_files/figure-html/unnamed-chunk-8-1.png" class="r-plt" alt="" width="1050"></p>
-<div class="section level4">
-<h4 id="applying-the-caret-based-model">Applying the caret-based model<a class="anchor" aria-label="anchor" href="#applying-the-caret-based-model"></a>
-</h4>
-<p>To use the best performing model from the above, we just using the
-<code><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict()</a></code> function with the separated validation data set
-(<strong>X_val</strong>).</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">preds</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">model</span>, newdata <span class="op">=</span> <span class="va">x_val</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span>Predicted <span class="op">=</span> <span class="va">preds</span>, Actual <span class="op">=</span> <span class="va">y_val</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##             Actual</span></span>
-<span><span class="co">## Predicted    setosa versicolor virginica</span></span>
-<span><span class="co">##   setosa          4          3         3</span></span>
-<span><span class="co">##   versicolor      8          6        13</span></span>
-<span><span class="co">##   virginica       0          6         2</span></span></code></pre>
-</div>
-</div>
-<div class="section level3">
-<h3 id="honeycombhive-multilayered-bhives">honeycombHIVE: Multilayered bHIVES<a class="anchor" aria-label="anchor" href="#honeycombhive-multilayered-bhives"></a>
-</h3>
-<p>In <code>honeycombHIVE</code>, clustering proceeds hierarchically
-across multiple layers:</p>
-<p><code>honeycombHIVE</code> iteratively builds and refines a network
-of “antibodies” (prototypes) to capture complex patterns in data.
-Initially, the <code>bHIVE</code> algorithm creates a set of prototypes,
-and then each layer can be fine-tuned using gradient-based updates (via
-the <code><a href="../reference/refineB.html">refineB()</a></code> function) with flexible optimizers like SGD,
-Adam, and RMSProp.</p>
-<p>Fo each layer, a collapse step aggregates the refined prototypes - by
-computing a centroid, medoid, or another statistic - compressing the
-data into a new, lower-dimensional representation where each prototype
-becomes a new observation. This new representation serves as the input
-for the next layer, similar to neural network architecture.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Load the Iris dataset</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></span>
-<span><span class="va">X</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">iris</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Run honeycombHIVE for clustering</span></span>
-<span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/honeycombHIVE.html">honeycombHIVE</a></span><span class="op">(</span>X <span class="op">=</span> <span class="va">X</span>, </span>
-<span>                     task <span class="op">=</span> <span class="st">"clustering"</span>, </span>
-<span>                     epsilon <span class="op">=</span> <span class="fl">0.05</span>,</span>
-<span>                     layers <span class="op">=</span> <span class="fl">3</span>, </span>
-<span>                     nAntibodies <span class="op">=</span> <span class="fl">30</span>, </span>
-<span>                     beta <span class="op">=</span> <span class="fl">5</span>, </span>
-<span>                     maxIter <span class="op">=</span> <span class="fl">10</span>, </span>
-<span>                     verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Visualize results from each layer</span></span>
-<span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_along</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  </span>
-<span>  <span class="co"># Create a data frame for plotting; add original Sepal.Length and Sepal.Width</span></span>
-<span>  <span class="va">plot_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
-<span>    Sepal.Length <span class="op">=</span> <span class="va">iris</span><span class="op">$</span><span class="va">Sepal.Length</span>, </span>
-<span>    Sepal.Width  <span class="op">=</span> <span class="va">iris</span><span class="op">$</span><span class="va">Sepal.Width</span>,</span>
-<span>    Cluster      <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">res</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">membership</span><span class="op">)</span>  <span class="co"># cluster labels from layer i</span></span>
-<span>  <span class="op">)</span></span>
-<span>  </span>
-<span>  <span class="co"># Basic ggplot scatter plot</span></span>
-<span>  <span class="va">plot</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">plot_df</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Sepal.Length</span>, </span>
-<span>                              y <span class="op">=</span> <span class="va">Sepal.Width</span>, </span>
-<span>                              color <span class="op">=</span> <span class="va">Cluster</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">3</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span></span>
-<span>      title <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"honeycombHIVE Clustering - Layer"</span>, <span class="va">i</span><span class="op">)</span>,</span>
-<span>      x     <span class="op">=</span> <span class="st">"Sepal Length"</span>,</span>
-<span>      y     <span class="op">=</span> <span class="st">"Sepal Width"</span></span>
-<span>    <span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_minimal</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu">scale_color_viridis</span><span class="op">(</span>discrete <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span>  </span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">plot</span><span class="op">)</span></span>
-<span><span class="op">}</span></span></code></pre></div>
-<p><img src="bHIVE_files/figure-html/unnamed-chunk-10-1.png" class="r-plt" alt="" width="1050"><img src="bHIVE_files/figure-html/unnamed-chunk-10-2.png" class="r-plt" alt="" width="1050"><img src="bHIVE_files/figure-html/unnamed-chunk-10-3.png" class="r-plt" alt="" width="1050"></p>
-<p>Note: If you use <code>task = "classification"</code>, honeycombHIVE
-will generate multi-layer predictions. You can compare each layer’s
-predictions against the true labels to see if performance improves or if
-the data become too collapsed.</p>
-</div>
-<div class="section level3">
-<h3 id="gradient-based-refinement">Gradient-based Refinement<a class="anchor" aria-label="anchor" href="#gradient-based-refinement"></a>
-</h3>
-<p>The <code><a href="../reference/refineB.html">refineB()</a></code> function takes the prototypes produced by
-the <code><a href="../reference/bHIVE.html">bHIVE()</a></code> algorithm and fine-tunes them using
-gradient‐based updates. In addition to the basic parameters:</p>
+<div class="section level2">
+<h2 id="other-tools-in-the-package">Other tools in the package<a class="anchor" aria-label="anchor" href="#other-tools-in-the-package"></a>
+</h2>
 <ul>
 <li>
-<strong>loss:</strong> The loss function used to guide refinement.
-For a classification task, “categorical_crossentropy” is a typical
-choice.</li>
+<code><a href="../reference/honeycombHIVE.html">honeycombHIVE()</a></code> stacks bHIVE layers. Each layer
+clusters the prototypes of the layer below, which gives a hierarchy of
+populations.</li>
 <li>
-<strong>steps:</strong> The number of gradient update
-iterations.</li>
+<code><a href="../reference/swarmbHIVE.html">swarmbHIVE()</a></code> runs a grid search over any bHIVE setting
+and scores each run with an internal clustering index or a
+classification metric.</li>
 <li>
-<strong>lr:</strong> The learning rate for each update.</li>
-<li>
-<strong>optimizers</strong>
-<ul>
-<li>
-<em>sgd:</em> Standard stochastic gradient descent.</li>
-<li>
-<em>momentum:</em> SGD with momentum. (Control the momentum with
-<strong>momentum_coef</strong>).</li>
-<li>
-<em>adagrad:</em> Adaptive gradient descent.</li>
-<li>
-<em>adam:</em> Adaptive moment estimation. (Control the decay rates
-with <strong>beta1</strong> and <strong>beta2</strong>).</li>
-<li>
-<em>rmsprop:</em> Root Mean Square Propagation. (Control the decay
-of the squared gradient average with
-<strong>rmsprop_decay</strong>)</li>
+<code>bHIVEmodel</code> and <code>honeycombHIVEmodel</code> are
+custom models for <em><a href="https://CRAN.R-project.org/package=caret" class="external-link">caret</a></em>, for
+cross-validated tuning of bHIVE classifiers.</li>
 </ul>
-</li>
-</ul>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Prepare the Iris dataset</span></span>
-<span><span class="va">X</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">iris</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span></span>
-<span><span class="va">y</span> <span class="op">&lt;-</span> <span class="va">iris</span><span class="op">$</span><span class="va">Species</span></span>
-<span></span>
-<span><span class="co"># Run bHIVE to obtain initial antibody prototypes.</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span></span>
-<span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bHIVE.html">bHIVE</a></span><span class="op">(</span>X <span class="op">=</span> <span class="va">X</span>, </span>
-<span>             y <span class="op">=</span> <span class="va">y</span>, </span>
-<span>             task <span class="op">=</span> <span class="st">"classification"</span>, </span>
-<span>             nAntibodies <span class="op">=</span> <span class="fl">10</span>, </span>
-<span>             beta <span class="op">=</span> <span class="fl">5</span>, </span>
-<span>             epsilon <span class="op">=</span> <span class="fl">0.05</span>, </span>
-<span>             initMethod <span class="op">=</span> <span class="st">"random"</span>,</span>
-<span>             k <span class="op">=</span> <span class="fl">4</span>,</span>
-<span>             verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">Ab</span> <span class="op">&lt;-</span> <span class="va">res</span><span class="op">$</span><span class="va">antibodies</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">Ab</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">X</span><span class="op">)</span></span>
-<span><span class="va">assignments</span> <span class="op">&lt;-</span> <span class="va">res</span><span class="op">$</span><span class="va">assignments</span> </span>
-<span><span class="co"># Ensure assignments are numeric indices.</span></span>
-<span><span class="va">assignments</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html" class="external-link">as.integer</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">assignments</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">assignments</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># PCA of the Iris data for visualization in 2D</span></span>
-<span><span class="va">pca</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/prcomp.html" class="external-link">prcomp</a></span><span class="op">(</span><span class="va">X</span>, scale. <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="va">X_pca</span> <span class="op">&lt;-</span> <span class="va">pca</span><span class="op">$</span><span class="va">x</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">X_pca</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"PC1"</span>, <span class="st">"PC2"</span><span class="op">)</span></span>
-<span><span class="co"># Transform initial prototypes into PCA space.</span></span>
-<span><span class="va">A_bhive_pca</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">pca</span>, <span class="va">Ab</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Run refinement using several optimizers.</span></span>
-<span><span class="va">optimizers</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"sgd"</span>, <span class="st">"adam"</span>, <span class="st">"rmsprop"</span><span class="op">)</span></span>
-<span><span class="va">refined_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">optimizers</span>, <span class="kw">function</span><span class="op">(</span><span class="va">opt</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">Ab_refined</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/refineB.html">refineB</a></span><span class="op">(</span>A <span class="op">=</span> <span class="va">Ab</span>,</span>
-<span>                        X <span class="op">=</span> <span class="va">X</span>, </span>
-<span>                        y <span class="op">=</span> <span class="va">y</span>,</span>
-<span>                        assignments <span class="op">=</span> <span class="va">assignments</span>,</span>
-<span>                        loss <span class="op">=</span> <span class="st">"categorical_crossentropy"</span>, </span>
-<span>                        task <span class="op">=</span> <span class="st">"classification"</span>, </span>
-<span>                        steps <span class="op">=</span> <span class="fl">5</span>, </span>
-<span>                        lr <span class="op">=</span> <span class="fl">0.01</span>,</span>
-<span>                        verbose <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>                        optimizer <span class="op">=</span> <span class="va">opt</span>,</span>
-<span>                        beta1 <span class="op">=</span> <span class="fl">0.9</span>,</span>
-<span>                        beta2 <span class="op">=</span> <span class="fl">0.999</span>,</span>
-<span>                        rmsprop_decay <span class="op">=</span> <span class="fl">0.9</span><span class="op">)</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">Ab_refined</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">X</span><span class="op">)</span></span>
-<span>  <span class="va">A_refined_pca</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">pca</span>, <span class="va">Ab_refined</span><span class="op">)</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>optimizer <span class="op">=</span> <span class="va">opt</span>,</span>
-<span>             PC1_after <span class="op">=</span> <span class="va">A_refined_pca</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span>,</span>
-<span>             PC2_after <span class="op">=</span> <span class="va">A_refined_pca</span><span class="op">[</span>,<span class="fl">2</span><span class="op">]</span><span class="op">)</span></span>
-<span><span class="op">}</span><span class="op">)</span></span>
-<span><span class="va">refined_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html" class="external-link">do.call</a></span><span class="op">(</span><span class="va">rbind</span>, <span class="va">refined_list</span><span class="op">)</span></span>
-<span><span class="va">refined_df</span><span class="op">$</span><span class="va">optimizer</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">refined_df</span><span class="op">$</span><span class="va">optimizer</span>, levels <span class="op">=</span> <span class="va">optimizers</span><span class="op">)</span></span></code></pre></div>
-<p><img src="bHIVE_files/figure-html/unnamed-chunk-12-1.png" class="r-plt" alt="" width="1050"></p>
-<p><strong>Interpretation</strong> * Data points are shown in a light
-transparency, colored by their cluster assignments (as determined by the
-original <code>bHIVE</code> algorithm). * Initial prototypes are shown
-in dark purple. These are the prototypes (antibodies) before refinement.
-* Refined prototypes are shown in bright yellow. The arrows indicate the
-direction and magnitude of the update from the original positions to the
-refined positions.</p>
-</div>
-<div class="section level3">
-<h3 id="applying-refinement-to-honeycombhive">Applying Refinement to honeycombHIVE<a class="anchor" aria-label="anchor" href="#applying-refinement-to-honeycombhive"></a>
-</h3>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></span>
-<span><span class="va">X</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">iris</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span></span>
-<span><span class="va">y</span> <span class="op">&lt;-</span> <span class="va">iris</span><span class="op">$</span><span class="va">Species</span></span>
-<span></span>
-<span><span class="va">res_class</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/honeycombHIVE.html">honeycombHIVE</a></span><span class="op">(</span>X <span class="op">=</span> <span class="va">X</span>,</span>
-<span>                           y <span class="op">=</span> <span class="va">y</span>,</span>
-<span>                           layers <span class="op">=</span> <span class="fl">3</span>,</span>
-<span>                           task <span class="op">=</span> <span class="st">"classification"</span>,</span>
-<span>                           nAntibodies <span class="op">=</span> <span class="fl">30</span>,</span>
-<span>                           beta <span class="op">=</span> <span class="fl">5</span>,</span>
-<span>                           epsilon <span class="op">=</span> <span class="fl">0.01</span>,</span>
-<span>                           verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">res_class_refine</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/honeycombHIVE.html">honeycombHIVE</a></span><span class="op">(</span>X <span class="op">=</span> <span class="va">X</span>,</span>
-<span>                                  y <span class="op">=</span> <span class="va">y</span>,</span>
-<span>                                  task <span class="op">=</span> <span class="st">"classification"</span>,</span>
-<span>                                  layers <span class="op">=</span> <span class="fl">3</span>,</span>
-<span>                                  nAntibodies <span class="op">=</span> <span class="fl">30</span>,</span>
-<span>                                  beta <span class="op">=</span> <span class="fl">5</span>,</span>
-<span>                                  epsilon <span class="op">=</span> <span class="fl">0.01</span>,</span>
-<span>                                  refine <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>                                  refineOptimizer <span class="op">=</span> <span class="st">"adam"</span>,</span>
-<span>                                  refineLoss <span class="op">=</span> <span class="st">"categorical_crossentropy"</span>,</span>
-<span>                                  refineSteps <span class="op">=</span> <span class="fl">3</span>,</span>
-<span>                                  refineLR <span class="op">=</span> <span class="fl">0.01</span>,</span>
-<span>                                  verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span>Refined <span class="op">=</span> <span class="va">res_class_refine</span><span class="op">[[</span><span class="fl">3</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">predictions</span>,</span>
-<span>      Actual  <span class="op">=</span> <span class="va">y</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##         Actual</span></span>
-<span><span class="co">## Refined  setosa versicolor virginica</span></span>
-<span><span class="co">##   setosa     50         50        50</span></span></code></pre>
-</div>
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">6</span><span class="op">)</span></span>
+<span><span class="va">layers</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/honeycombHIVE.html">honeycombHIVE</a></span><span class="op">(</span><span class="va">X</span>, task <span class="op">=</span> <span class="st">"clustering"</span>, layers <span class="op">=</span> <span class="fl">2</span>, nAntibodies <span class="op">=</span> <span class="fl">40</span>,</span>
+<span>                        maxIter <span class="op">=</span> <span class="fl">10</span>, affinityParams <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="st">"auto"</span><span class="op">)</span>,</span>
+<span>                        verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">vapply</a></span><span class="op">(</span><span class="va">layers</span>, <span class="kw">function</span><span class="op">(</span><span class="va">l</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">l</span><span class="op">$</span><span class="va">prototypes</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/integer.html" class="external-link">integer</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] 28 14</span></span></code></pre>
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">7</span><span class="op">)</span></span>
+<span><span class="va">tuned</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/swarmbHIVE.html">swarmbHIVE</a></span><span class="op">(</span><span class="va">X</span>, task <span class="op">=</span> <span class="st">"clustering"</span>,</span>
+<span>                    grid <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>targetK <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">14</span>, <span class="fl">20</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>                    metric <span class="op">=</span> <span class="st">"davies_bouldin"</span>, maxIter <span class="op">=</span> <span class="fl">10</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">tuned</span><span class="op">$</span><span class="va">results</span></span></code></pre></div>
+<pre><code><span><span class="co">##   targetK metric_value</span></span>
+<span><span class="co">## 1      10     1.702019</span></span>
+<span><span class="co">## 2      14     1.815448</span></span>
+<span><span class="co">## 3      20     1.712231</span></span></code></pre>
 </div>
 <div class="section level2">
-<h2 id="visualizing-results-with-visualizehive">Visualizing Results with visualizeHIVE<a class="anchor" aria-label="anchor" href="#visualizing-results-with-visualizehive"></a>
+<h2 id="session-information">Session information<a class="anchor" aria-label="anchor" href="#session-information"></a>
 </h2>
-<p>Below are several examples that demonstrate how to use the
-visualizeHIVE() function for different tasks and plot types.</p>
-<div class="section level3">
-<h3 id="example-1-scatterplot-for-clustering-results">Example 1: Scatterplot for Clustering Results<a class="anchor" aria-label="anchor" href="#example-1-scatterplot-for-clustering-results"></a>
-</h3>
-<p>In this example we run <code><a href="../reference/honeycombHIVE.html">honeycombHIVE()</a></code> on the Iris
-dataset for a clustering task. The scatterplot is generated using a PCA
-transformation to reduce the feature space to two dimensions. Data
-points are colored by cluster membership (treated as discrete) and
-prototypes are overlaid as black points.</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></span>
-<span><span class="va">X</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">iris</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span></span>
-<span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span></span>
-<span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/honeycombHIVE.html">honeycombHIVE</a></span><span class="op">(</span>X <span class="op">=</span> <span class="va">X</span>, </span>
-<span>                     task <span class="op">=</span> <span class="st">"clustering"</span>, </span>
-<span>                     epsilon <span class="op">=</span> <span class="fl">0.05</span>,</span>
-<span>                     layers <span class="op">=</span> <span class="fl">3</span>, </span>
-<span>                     nAntibodies <span class="op">=</span> <span class="fl">30</span>, </span>
-<span>                     beta <span class="op">=</span> <span class="fl">5</span>, </span>
-<span>                     maxIter <span class="op">=</span> <span class="fl">10</span>, </span>
-<span>                     verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="../reference/visualizeHIVE.html">visualizeHIVE</a></span><span class="op">(</span>result <span class="op">=</span> <span class="va">res</span>,</span>
-<span>              X <span class="op">=</span> <span class="va">iris</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>,</span>
-<span>              plot_type <span class="op">=</span> <span class="st">"scatter"</span>,</span>
-<span>              title <span class="op">=</span> <span class="st">"Layer 2: Scatterplot (Clustering)"</span>,</span>
-<span>              layer <span class="op">=</span> <span class="fl">2</span>,</span>
-<span>              task <span class="op">=</span> <span class="st">"clustering"</span>,</span>
-<span>              transform <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>              transformation_method <span class="op">=</span> <span class="st">"PCA"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="bHIVE_files/figure-html/unnamed-chunk-14-1.png" class="r-plt" alt="" width="1050"></p>
-<p>This scatterplot shows the data projected onto the first two
-principal components. Each data point is colored according to its
-cluster (discrete grouping), and the prototypes computed by
-honeycombHIVE are displayed as large black points. Faceting by layer is
-applied if multiple layers are selected.</p>
-</div>
-<div class="section level3">
-<h3 id="example-2-violin-plot-for-classification-results">Example 2: Violin Plot for Classification Results<a class="anchor" aria-label="anchor" href="#example-2-violin-plot-for-classification-results"></a>
-</h3>
-<p>For a classification task, assume that the algorithm stores class
-predictions. The following example generates a violin plot of the
-“Sepal.Width” feature from layer 1. The discrete grouping (class labels)
-is used to color the violins, and prototype values are overlaid as black
-points.</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span></span>
-<span><span class="va">res_class</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/honeycombHIVE.html">honeycombHIVE</a></span><span class="op">(</span>X <span class="op">=</span> <span class="va">X</span>, </span>
-<span>                           y <span class="op">=</span> <span class="va">iris</span><span class="op">$</span><span class="va">Species</span>, </span>
-<span>                           task <span class="op">=</span> <span class="st">"classification"</span>, </span>
-<span>                           layers <span class="op">=</span> <span class="fl">2</span>, </span>
-<span>                           nAntibodies <span class="op">=</span> <span class="fl">15</span>, </span>
-<span>                           beta <span class="op">=</span> <span class="fl">5</span>, </span>
-<span>                           maxIter <span class="op">=</span> <span class="fl">10</span>, </span>
-<span>                           verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="../reference/visualizeHIVE.html">visualizeHIVE</a></span><span class="op">(</span>result <span class="op">=</span> <span class="va">res_class</span>,</span>
-<span>              X <span class="op">=</span> <span class="va">iris</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>,</span>
-<span>              plot_type <span class="op">=</span> <span class="st">"violin"</span>,</span>
-<span>              feature <span class="op">=</span> <span class="st">"Sepal.Width"</span>,</span>
-<span>              title <span class="op">=</span> <span class="st">"Violin Plot: Sepal.Width by Group"</span>,</span>
-<span>              layer <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>              task <span class="op">=</span> <span class="st">"classification"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="bHIVE_files/figure-html/unnamed-chunk-15-1.png" class="r-plt" alt="" width="1050"></p>
-<p>The violin plot shows the distribution of
-<strong>Sepal.Width</strong> for each predicted class. Discrete color
-scales ensure that class labels are clearly distinguished, and the black
-markers indicate the prototype (group summary) for each group.</p>
-</div>
-</div>
-<div class="section level2">
-<h2 id="conclusions">Conclusions<a class="anchor" aria-label="anchor" href="#conclusions"></a>
-</h2>
-<p>The <code>bHIVE</code> package is a versatile tool for clustering and
-classification tasks. Its integration with caret simplifies
-hyperparameter tuning and cross-validation, making it suitable for a
-variety of datasets and use cases. If you have any questions, comments,
-or suggestions, please visit the <a href="https://github.com/BorchLab/bHIVE" class="external-link">GitHub repository</a>.</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## R version 4.6.1 (2026-06-24)</span></span>
 <span><span class="co">## Platform: x86_64-pc-linux-gnu</span></span>
-<span><span class="co">## Running under: Ubuntu 24.04.4 LTS</span></span>
+<span><span class="co">## Running under: Ubuntu 24.04.5 LTS</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## Matrix products: default</span></span>
 <span><span class="co">## BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3 </span></span>
@@ -737,45 +614,73 @@ or suggestions, please visit the <a href="https://github.com/BorchLab/bHIVE" cla
 <span><span class="co">## tzcode source: system (glibc)</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## attached base packages:</span></span>
-<span><span class="co">## [1] stats     graphics  grDevices utils     datasets  methods   base     </span></span>
+<span><span class="co">## [1] stats4    stats     graphics  grDevices utils     datasets  methods  </span></span>
+<span><span class="co">## [8] base     </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## other attached packages:</span></span>
-<span><span class="co">## [1] caret_7.0-1       lattice_0.22-9    viridis_0.6.5     viridisLite_0.4.3</span></span>
-<span><span class="co">## [5] ggplot2_4.0.3     bHIVE_0.99.6      BiocStyle_2.40.0 </span></span>
+<span><span class="co">##  [1] ggplot2_4.0.3               bluster_1.22.0             </span></span>
+<span><span class="co">##  [3] HDCytoData_1.32.1           flowCore_2.24.0            </span></span>
+<span><span class="co">##  [5] ExperimentHub_3.2.2         AnnotationHub_4.2.2        </span></span>
+<span><span class="co">##  [7] BiocFileCache_3.2.0         dbplyr_2.6.0               </span></span>
+<span><span class="co">##  [9] SingleCellExperiment_1.34.0 SummarizedExperiment_1.42.0</span></span>
+<span><span class="co">## [11] Biobase_2.72.0              GenomicRanges_1.64.0       </span></span>
+<span><span class="co">## [13] Seqinfo_1.2.0               IRanges_2.46.0             </span></span>
+<span><span class="co">## [15] S4Vectors_0.50.3            BiocGenerics_0.58.1        </span></span>
+<span><span class="co">## [17] generics_0.1.4              MatrixGenerics_1.24.0      </span></span>
+<span><span class="co">## [19] matrixStats_1.5.0           bHIVE_0.99.7               </span></span>
+<span><span class="co">## [21] BiocStyle_2.40.0           </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## loaded via a namespace (and not attached):</span></span>
-<span><span class="co">##  [1] pROC_1.19.0.1        gridExtra_2.3.1      rlang_1.2.0         </span></span>
-<span><span class="co">##  [4] magrittr_2.0.5       otel_0.2.0           e1071_1.7-17        </span></span>
-<span><span class="co">##  [7] compiler_4.6.1       png_0.1-9            systemfonts_1.3.2   </span></span>
-<span><span class="co">## [10] vctrs_0.7.3          reshape2_1.4.5       stringr_1.6.0       </span></span>
-<span><span class="co">## [13] pkgconfig_2.0.3      fastmap_1.2.0        labeling_0.4.3      </span></span>
-<span><span class="co">## [16] rmarkdown_2.31       prodlim_2026.03.11   ragg_1.5.2          </span></span>
-<span><span class="co">## [19] purrr_1.2.2          xfun_0.59            cachem_1.1.0        </span></span>
-<span><span class="co">## [22] jsonlite_2.0.0       recipes_1.3.3        BiocParallel_1.46.0 </span></span>
-<span><span class="co">## [25] clusterCrit_1.3.0    parallel_4.6.1       cluster_2.1.8.2     </span></span>
-<span><span class="co">## [28] R6_2.6.1             bslib_0.11.0         stringi_1.8.7       </span></span>
-<span><span class="co">## [31] RColorBrewer_1.1-3   reticulate_1.46.0    parallelly_1.47.0   </span></span>
-<span><span class="co">## [34] rpart_4.1.27         lubridate_1.9.5      jquerylib_0.1.4     </span></span>
-<span><span class="co">## [37] Rcpp_1.1.1-1.1       bookdown_0.47        iterators_1.0.14    </span></span>
-<span><span class="co">## [40] knitr_1.51           future.apply_1.20.2  Matrix_1.7-5        </span></span>
-<span><span class="co">## [43] splines_4.6.1        nnet_7.3-20          timechange_0.4.0    </span></span>
-<span><span class="co">## [46] tidyselect_1.2.1     yaml_2.3.12          timeDate_4052.112   </span></span>
-<span><span class="co">## [49] codetools_0.2-20     listenv_1.0.0        tibble_3.3.1        </span></span>
-<span><span class="co">## [52] plyr_1.8.9           withr_3.0.3          S7_0.2.2            </span></span>
-<span><span class="co">## [55] askpass_1.2.1        evaluate_1.0.5       Rtsne_0.17          </span></span>
-<span><span class="co">## [58] future_1.70.0        desc_1.4.3           survival_3.8-6      </span></span>
-<span><span class="co">## [61] proxy_0.4-29         pillar_1.11.1        BiocManager_1.30.27 </span></span>
-<span><span class="co">## [64] foreach_1.5.2        stats4_4.6.1         generics_0.1.4      </span></span>
-<span><span class="co">## [67] scales_1.4.0         globals_0.19.1       class_7.3-23        </span></span>
-<span><span class="co">## [70] glue_1.8.1           tools_4.6.1          data.table_1.18.4   </span></span>
-<span><span class="co">## [73] RSpectra_0.16-2      ModelMetrics_1.2.2.2 gower_1.0.2         </span></span>
-<span><span class="co">## [76] fs_2.1.0             grid_4.6.1           umap_0.2.10.0       </span></span>
-<span><span class="co">## [79] ipred_0.9-15         nlme_3.1-169         cli_3.6.6           </span></span>
-<span><span class="co">## [82] textshaping_1.0.5    lava_1.9.1           dplyr_1.2.1         </span></span>
-<span><span class="co">## [85] gtable_0.3.6         sass_0.4.10          digest_0.6.39       </span></span>
-<span><span class="co">## [88] htmlwidgets_1.6.4    farver_2.1.2         htmltools_0.5.9     </span></span>
-<span><span class="co">## [91] pkgdown_2.2.0        lifecycle_1.0.5      hardhat_1.4.3       </span></span>
-<span><span class="co">## [94] openssl_2.4.2        MASS_7.3-65</span></span></code></pre>
+<span><span class="co">##  [1] DBI_1.3.0                   httr2_1.3.0                </span></span>
+<span><span class="co">##  [3] rlang_1.3.0                 magrittr_2.0.5             </span></span>
+<span><span class="co">##  [5] otel_0.2.0                  compiler_4.6.1             </span></span>
+<span><span class="co">##  [7] RSQLite_3.53.3              png_0.1-9                  </span></span>
+<span><span class="co">##  [9] systemfonts_1.3.2           vctrs_0.7.3                </span></span>
+<span><span class="co">## [11] pkgconfig_2.0.3             crayon_1.5.3               </span></span>
+<span><span class="co">## [13] fastmap_1.2.0               backports_1.5.1            </span></span>
+<span><span class="co">## [15] XVector_0.52.0              labeling_0.4.3             </span></span>
+<span><span class="co">## [17] rmarkdown_2.32              ragg_1.5.2                 </span></span>
+<span><span class="co">## [19] purrr_1.2.2                 bit_4.6.0                  </span></span>
+<span><span class="co">## [21] xfun_0.61                   cachem_1.1.0               </span></span>
+<span><span class="co">## [23] jsonlite_2.0.0              blob_1.3.0                 </span></span>
+<span><span class="co">## [25] DelayedArray_0.38.2         tweenr_2.0.3               </span></span>
+<span><span class="co">## [27] BiocParallel_1.46.0         broom_1.0.13               </span></span>
+<span><span class="co">## [29] clusterCrit_1.3.0           parallel_4.6.1             </span></span>
+<span><span class="co">## [31] cluster_2.1.8.2             R6_2.6.1                   </span></span>
+<span><span class="co">## [33] bslib_0.12.0                RColorBrewer_1.1-3         </span></span>
+<span><span class="co">## [35] car_3.1-5                   jquerylib_0.1.4            </span></span>
+<span><span class="co">## [37] Rcpp_1.1.2                  bookdown_0.48              </span></span>
+<span><span class="co">## [39] knitr_1.52                  Matrix_1.7-5               </span></span>
+<span><span class="co">## [41] igraph_2.3.4                tidyselect_1.2.1           </span></span>
+<span><span class="co">## [43] abind_1.4-8                 yaml_2.3.12                </span></span>
+<span><span class="co">## [45] codetools_0.2-20            curl_8.1.0                 </span></span>
+<span><span class="co">## [47] lattice_0.22-9              tibble_3.3.1               </span></span>
+<span><span class="co">## [49] withr_3.0.3                 KEGGREST_1.52.2            </span></span>
+<span><span class="co">## [51] S7_0.2.2                    evaluate_1.0.5             </span></span>
+<span><span class="co">## [53] Rtsne_0.17                  desc_1.4.3                 </span></span>
+<span><span class="co">## [55] polyclip_1.10-7             ConsensusClusterPlus_1.76.0</span></span>
+<span><span class="co">## [57] Biostrings_2.80.2           ggpubr_1.0.0               </span></span>
+<span><span class="co">## [59] pillar_1.11.1               BiocManager_1.30.27        </span></span>
+<span><span class="co">## [61] filelock_1.0.3              carData_3.0-6              </span></span>
+<span><span class="co">## [63] colorRamps_2.3.4            BiocVersion_3.23.1         </span></span>
+<span><span class="co">## [65] scales_1.4.0                glue_1.8.1                 </span></span>
+<span><span class="co">## [67] tools_4.6.1                 ggnewscale_0.5.2           </span></span>
+<span><span class="co">## [69] BiocNeighbors_2.6.0         ggsignif_0.6.4             </span></span>
+<span><span class="co">## [71] XML_3.99-0.25               fs_2.1.0                   </span></span>
+<span><span class="co">## [73] grid_4.6.1                  tidyr_1.3.2                </span></span>
+<span><span class="co">## [75] RProtoBufLib_2.24.0         AnnotationDbi_1.74.0       </span></span>
+<span><span class="co">## [77] ggforce_0.5.0               Formula_1.2-6              </span></span>
+<span><span class="co">## [79] cli_3.6.6                   rappdirs_0.3.4             </span></span>
+<span><span class="co">## [81] textshaping_1.0.5           cytolib_2.24.0             </span></span>
+<span><span class="co">## [83] S4Arrays_1.12.1             viridisLite_0.4.3          </span></span>
+<span><span class="co">## [85] dplyr_1.2.1                 gtable_0.3.6               </span></span>
+<span><span class="co">## [87] rstatix_1.1.0               sass_0.4.10                </span></span>
+<span><span class="co">## [89] digest_0.6.39               FlowSOM_2.20.0             </span></span>
+<span><span class="co">## [91] SparseArray_1.12.3          farver_2.1.2               </span></span>
+<span><span class="co">## [93] memoise_2.0.1               htmltools_0.5.9            </span></span>
+<span><span class="co">## [95] pkgdown_2.2.1               lifecycle_1.0.5            </span></span>
+<span><span class="co">## [97] httr_1.4.9                  MASS_7.3-65                </span></span>
+<span><span class="co">## [99] bit64_4.8.6</span></span></code></pre>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
@@ -788,7 +693,7 @@ or suggestions, please visit the <a href="https://github.com/BorchLab/bHIVE" cla
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer>

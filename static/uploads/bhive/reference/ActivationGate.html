@@ -11,7 +11,7 @@ recognition (Signal 1) AND costimulatory context (Signal 2)."><meta property="og
 
     <a class="navbar-brand me-2" href="../index.html">bHIVE</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.6</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.7</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -23,7 +23,7 @@ recognition (Signal 1) AND costimulatory context (Signal 2)."><meta property="og
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-tutorials" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Tutorials</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-tutorials"><li><a class="dropdown-item" href="../articles/bHIVE.html">Getting Started</a></li>
-    <li><a class="dropdown-item" href="../articles/articles/immune-modules.html">Immune Modules</a></li>
+    <li><a class="dropdown-item" href="../articles/immune-modules.html">Immune Modules</a></li>
     <li><a class="dropdown-item" href="../articles/articles/advanced-workflows.html">Advanced Tuning &amp; Workflows</a></li>
     <li><a class="dropdown-item" href="../articles/articles/foundations.html">Algorithm &amp; Biological Foundations</a></li>
   </ul></li>
@@ -51,6 +51,11 @@ recognition (Signal 1) AND costimulatory context (Signal 2).</p>
     </div>
 
 
+    <div class="section level2">
+    <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
+    <p>An <code><a href="https://r6.r-lib.org/reference/R6Class.html" class="external-link">R6Class</a></code> generator. <code>ActivationGate$new()</code>
+  returns an <code>ActivationGate</code> object.</p>
+    </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>Prevents spurious activation on isolated outliers. An antibody is only
@@ -88,7 +93,7 @@ biologically-principled regularization.</p>
 
 <ul><li><p><a href="#method-ActivationGate-new"><code>ActivationGate$new()</code></a></p></li>
 <li><p><a href="#method-ActivationGate-evaluate"><code>ActivationGate$evaluate()</code></a></p></li>
-<li><p><a href="#method-ActivationGate-print"><code>ActivationGate$print()</code></a></p></li>
+<li><p><a href="#method-ActivationGate-format"><code>ActivationGate$format()</code></a></p></li>
 <li><p><a href="#method-ActivationGate-clone"><code>ActivationGate$clone()</code></a></p></li>
 </ul></div><p></p><hr><a id="method-ActivationGate-new"></a><div class="section">
 <h3 id="method-new-">Method <code>new()</code><a class="anchor" aria-label="anchor" href="#method-new-"></a></h3>
@@ -159,11 +164,12 @@ biologically-principled regularization.</p>
 <p>Logical matrix (n x m) where TRUE means the interaction is activated.</p>
 </div>
 
-</div><p></p><hr><a id="method-ActivationGate-print"></a><div class="section">
-<h3 id="method-print-">Method <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code><a class="anchor" aria-label="anchor" href="#method-print-"></a></h3>
-<p>Print summary.</p><div class="section">
+</div><p></p><hr><a id="method-ActivationGate-format"></a><div class="section">
+<h3 id="method-format-">Method <code><a href="https://rdrr.io/r/base/format.html" class="external-link">format()</a></code><a class="anchor" aria-label="anchor" href="#method-format-"></a></h3>
+<p>Format a short summary, one element per line. Used by
+  <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code>.</p><div class="section">
 <h4 id="usage-2">Usage<a class="anchor" aria-label="anchor" href="#usage-2"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ActivationGate</span><span class="op">$</span><span class="fu">print</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ActivationGate</span><span class="op">$</span><span class="fu">format</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -173,6 +179,10 @@ biologically-principled regularization.</p>
 
 
 </dl><p></p></div>
+</div>
+<div class="section">
+<h4 id="returns-1">Returns<a class="anchor" aria-label="anchor" href="#returns-1"></a></h4>
+<p>A character vector.</p>
 </div>
 
 </div><p></p><hr><a id="method-ActivationGate-clone"></a><div class="section">
@@ -206,7 +216,7 @@ biologically-principled regularization.</p>
 <span class="r-in"><span><span class="va">aff</span> <span class="op">&lt;-</span> <span class="va">rep</span><span class="op">$</span><span class="fu">affinity_matrix</span><span class="op">(</span><span class="va">X</span>, <span class="st">"gaussian"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">activated</span> <span class="op">&lt;-</span> <span class="va">gate</span><span class="op">$</span><span class="fu">evaluate</span><span class="op">(</span><span class="va">aff</span>, <span class="va">X</span>, <span class="va">A</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">activated</span><span class="op">)</span>  <span class="co"># number of activated interactions</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 452</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 449</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
@@ -219,7 +229,7 @@ biologically-principled regularization.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer></div>

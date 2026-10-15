@@ -52,7 +52,7 @@ ggplot(tuning$results, aes(x = nAntibodies, y = metric_value,
   labs(title = "Clustering: Silhouette Score",
        x = "Number of Antibodies", y = "Silhouette",
        color = "Beta", shape = "Epsilon") +
-  scale_color_viridis(discrete = TRUE) +
+  scale_color_viridis_d() +
   theme_minimal()
 ```
 
@@ -63,8 +63,8 @@ ggplot(tuning$results, aes(x = nAntibodies, y = metric_value,
 tuning$best_params
 ```
 
-    ##    nAntibodies beta epsilon metric_value
-    ## 10          10    5    0.05    0.3529172
+    ##   nAntibodies beta epsilon metric_value
+    ## 1          10    3    0.01    0.3203197
 
 ### Classification Tuning
 
@@ -84,8 +84,8 @@ tuning_cls <- swarmbHIVE(X = X, y = y, task = "classification",
 tuning_cls$best_params
 ```
 
-    ##    nAntibodies beta epsilon metric_value
-    ## 11          30    3    0.05    0.9733333
+    ##   nAntibodies beta epsilon metric_value
+    ## 9          50   10    0.01    0.9533333
 
 ### Parallelization with BiocParallel
 
@@ -132,8 +132,8 @@ layer_info
 ```
 
     ##              [,1] [,2] [,3]
-    ## n_prototypes   27   15   10
-    ## n_clusters     27   15   10
+    ## n_prototypes   22   12    7
+    ## n_clusters     22   12    7
 
 ### Collapse Methods
 
@@ -159,14 +159,14 @@ res_medoid <- honeycombHIVE(X = X, task = "clustering", layers = 2,
 cat("Centroid clusters:", length(unique(res_centroid[[2]]$membership)), "\n")
 ```
 
-    ## Centroid clusters: 11
+    ## Centroid clusters: 9
 
 ``` r
 
 cat("Medoid clusters:  ", length(unique(res_medoid[[2]]$membership)), "\n")
 ```
 
-    ## Medoid clusters:   13
+    ## Medoid clusters:   11
 
 ### With Gradient Refinement
 
@@ -196,14 +196,14 @@ acc_refined <- mean(res_refined[[3]]$predictions == as.character(y_iris))
 cat("Accuracy (plain):  ", round(acc_plain, 3), "\n")
 ```
 
-    ## Accuracy (plain):   0.333
+    ## Accuracy (plain):   0.92
 
 ``` r
 
 cat("Accuracy (refined):", round(acc_refined, 3), "\n")
 ```
 
-    ## Accuracy (refined): 0.333
+    ## Accuracy (refined): 0.833
 
 ## Gradient Refinement with refineB
 
@@ -292,7 +292,7 @@ ggplot() +
                    xend = PC1_after, yend = PC2_after),
                arrow = arrow(length = unit(0.2, "cm"), type = "closed"),
                color = "black", linewidth = 0.5) +
-  scale_color_viridis(discrete = TRUE) +
+  scale_color_viridis_d() +
   labs(title = "Prototype Movement by Optimizer",
        subtitle = "Purple = before, Yellow = after refinement",
        x = "PC1", y = "PC2") +
@@ -347,9 +347,18 @@ model <- train(
 
 ggplot(model) +
   labs(title = "caret Cross-Validation Results") +
-  scale_color_viridis(discrete = TRUE) +
+  scale_color_viridis_d() +
   theme_minimal()
 ```
+
+    ## Warning: `aes_string()` was deprecated in ggplot2 3.0.0.
+    ## ℹ Please use tidy evaluation idioms with `aes()`.
+    ## ℹ See also `vignette("ggplot2-in-packages")` for more information.
+    ## ℹ The deprecated feature was likely used in the caret package.
+    ##   Please report the issue at <https://github.com/topepo/caret/issues>.
+    ## This warning is displayed once per session.
+    ## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+    ## generated.
 
 ![](advanced-workflows_files/figure-html/caret-basic-1.png)
 
@@ -363,9 +372,9 @@ table(Predicted = preds, Actual = y_test)
 
     ##             Actual
     ## Predicted    setosa versicolor virginica
-    ##   setosa          0          6         7
-    ##   versicolor      2          7         8
-    ##   virginica      10          2         3
+    ##   setosa         12          0         0
+    ##   versicolor      0         14         7
+    ##   virginica       0          1        11
 
 ### honeycombHIVE caret Model
 
@@ -389,7 +398,14 @@ model_hc <- train(
   ),
   verbose = FALSE
 )
+model_hc$results[, c("nAntibodies", "layers", "Accuracy", "Kappa")]
 ```
+
+    ##   nAntibodies layers  Accuracy     Kappa
+    ## 1          20      2 0.8947811 0.8412631
+    ## 2          20      3 0.8451178 0.7652050
+    ## 3          30      2 0.9141414 0.8705741
+    ## 4          30      3 0.8728956 0.8087518
 
 ## Visualization with visualizeHIVE
 
@@ -477,7 +493,7 @@ sessionInfo()
 
     ## R version 4.6.1 (2026-06-24)
     ## Platform: x86_64-pc-linux-gnu
-    ## Running under: Ubuntu 24.04.4 LTS
+    ## Running under: Ubuntu 24.04.5 LTS
     ## 
     ## Matrix products: default
     ## BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3 
@@ -496,39 +512,60 @@ sessionInfo()
     ## [1] stats     graphics  grDevices utils     datasets  methods   base     
     ## 
     ## other attached packages:
-    ## [1] caret_7.0-1       lattice_0.22-9    viridis_0.6.5     viridisLite_0.4.3
-    ## [5] ggplot2_4.0.3     bHIVE_0.99.6      BiocStyle_2.40.0 
+    ## [1] caret_7.0-1      lattice_0.22-9   ggplot2_4.0.3    bHIVE_0.99.7    
+    ## [5] BiocStyle_2.40.0
     ## 
     ## loaded via a namespace (and not attached):
-    ##  [1] pROC_1.19.0.1        gridExtra_2.3.1      rlang_1.2.0         
-    ##  [4] magrittr_2.0.5       otel_0.2.0           e1071_1.7-17        
-    ##  [7] compiler_4.6.1       png_0.1-9            systemfonts_1.3.2   
-    ## [10] vctrs_0.7.3          reshape2_1.4.5       stringr_1.6.0       
-    ## [13] pkgconfig_2.0.3      fastmap_1.2.0        labeling_0.4.3      
-    ## [16] rmarkdown_2.31       prodlim_2026.03.11   ragg_1.5.2          
-    ## [19] purrr_1.2.2          xfun_0.59            cachem_1.1.0        
-    ## [22] jsonlite_2.0.0       recipes_1.3.3        BiocParallel_1.46.0 
-    ## [25] clusterCrit_1.3.0    parallel_4.6.1       cluster_2.1.8.2     
-    ## [28] R6_2.6.1             bslib_0.11.0         stringi_1.8.7       
-    ## [31] RColorBrewer_1.1-3   reticulate_1.46.0    parallelly_1.47.0   
-    ## [34] rpart_4.1.27         lubridate_1.9.5      jquerylib_0.1.4     
-    ## [37] Rcpp_1.1.1-1.1       bookdown_0.47        iterators_1.0.14    
-    ## [40] knitr_1.51           future.apply_1.20.2  Matrix_1.7-5        
-    ## [43] splines_4.6.1        nnet_7.3-20          timechange_0.4.0    
-    ## [46] tidyselect_1.2.1     yaml_2.3.12          timeDate_4052.112   
-    ## [49] codetools_0.2-20     listenv_1.0.0        tibble_3.3.1        
-    ## [52] plyr_1.8.9           withr_3.0.3          S7_0.2.2            
-    ## [55] askpass_1.2.1        evaluate_1.0.5       Rtsne_0.17          
-    ## [58] future_1.70.0        desc_1.4.3           survival_3.8-6      
-    ## [61] proxy_0.4-29         pillar_1.11.1        BiocManager_1.30.27 
-    ## [64] foreach_1.5.2        stats4_4.6.1         generics_0.1.4      
-    ## [67] scales_1.4.0         globals_0.19.1       class_7.3-23        
-    ## [70] glue_1.8.1           tools_4.6.1          data.table_1.18.4   
-    ## [73] RSpectra_0.16-2      ModelMetrics_1.2.2.2 gower_1.0.2         
-    ## [76] fs_2.1.0             grid_4.6.1           umap_0.2.10.0       
-    ## [79] ipred_0.9-15         nlme_3.1-169         cli_3.6.6           
-    ## [82] textshaping_1.0.5    lava_1.9.1           dplyr_1.2.1         
-    ## [85] gtable_0.3.6         sass_0.4.10          digest_0.6.39       
-    ## [88] htmlwidgets_1.6.4    farver_2.1.2         htmltools_0.5.9     
-    ## [91] pkgdown_2.2.0        lifecycle_1.0.5      hardhat_1.4.3       
-    ## [94] openssl_2.4.2        MASS_7.3-65
+    ##   [1] pROC_1.19.1                 rlang_1.3.0                
+    ##   [3] magrittr_2.0.5              otel_0.2.0                 
+    ##   [5] e1071_1.7-17                matrixStats_1.5.0          
+    ##   [7] compiler_4.6.1              systemfonts_1.3.2          
+    ##   [9] vctrs_0.7.3                 reshape2_1.4.5             
+    ##  [11] stringr_1.6.0               pkgconfig_2.0.3            
+    ##  [13] fastmap_1.2.0               XVector_0.52.0             
+    ##  [15] labeling_0.4.3              rmarkdown_2.32             
+    ##  [17] prodlim_2026.03.11          ragg_1.5.2                 
+    ##  [19] purrr_1.2.2                 xfun_0.61                  
+    ##  [21] bluster_1.22.0              cachem_1.1.0               
+    ##  [23] jsonlite_2.0.0              recipes_1.4.0              
+    ##  [25] DelayedArray_0.38.2         BiocParallel_1.46.0        
+    ##  [27] clusterCrit_1.3.0           parallel_4.6.1             
+    ##  [29] cluster_2.1.8.2             R6_2.6.1                   
+    ##  [31] bslib_0.12.0                stringi_1.8.9              
+    ##  [33] RColorBrewer_1.1-3          parallelly_1.48.0          
+    ##  [35] rpart_4.1.27                GenomicRanges_1.64.0       
+    ##  [37] lubridate_1.9.5             jquerylib_0.1.4            
+    ##  [39] Rcpp_1.1.2                  Seqinfo_1.2.0              
+    ##  [41] bookdown_0.48               SummarizedExperiment_1.42.0
+    ##  [43] iterators_1.0.14            knitr_1.52                 
+    ##  [45] future.apply_1.20.2         IRanges_2.46.0             
+    ##  [47] Matrix_1.7-5                splines_4.6.1              
+    ##  [49] nnet_7.3-20                 igraph_2.3.4               
+    ##  [51] timechange_0.4.0            tidyselect_1.2.1           
+    ##  [53] abind_1.4-8                 yaml_2.3.12                
+    ##  [55] timeDate_4052.112           codetools_0.2-20           
+    ##  [57] listenv_1.1.0               tibble_3.3.1               
+    ##  [59] plyr_1.8.9                  Biobase_2.72.0             
+    ##  [61] withr_3.0.3                 S7_0.2.2                   
+    ##  [63] evaluate_1.0.5              future_1.76.0              
+    ##  [65] desc_1.4.3                  survival_3.8-6             
+    ##  [67] proxy_0.4-29                pillar_1.11.1              
+    ##  [69] BiocManager_1.30.27         MatrixGenerics_1.24.0      
+    ##  [71] foreach_1.5.2               stats4_4.6.1               
+    ##  [73] generics_0.1.4              S4Vectors_0.50.3           
+    ##  [75] scales_1.4.0                globals_0.20.0             
+    ##  [77] class_7.3-23                glue_1.8.1                 
+    ##  [79] tools_4.6.1                 BiocNeighbors_2.6.0        
+    ##  [81] data.table_1.18.6.1         ModelMetrics_1.2.2.2       
+    ##  [83] gower_1.0.2                 fs_2.1.0                   
+    ##  [85] grid_4.6.1                  ipred_0.9-16               
+    ##  [87] SingleCellExperiment_1.34.0 nlme_3.1-169               
+    ##  [89] cli_3.6.6                   textshaping_1.0.5          
+    ##  [91] S4Arrays_1.12.1             viridisLite_0.4.3          
+    ##  [93] lava_1.9.3                  dplyr_1.2.1                
+    ##  [95] gtable_0.3.6                sass_0.4.10                
+    ##  [97] digest_0.6.39               BiocGenerics_0.58.1        
+    ##  [99] SparseArray_1.12.3          farver_2.1.2               
+    ## [101] htmltools_0.5.9             pkgdown_2.2.1              
+    ## [103] lifecycle_1.0.5             hardhat_1.4.3              
+    ## [105] MASS_7.3-65

@@ -11,7 +11,7 @@ from IgM (broad, pentameric) to IgG (specific, monomeric) to IgA (mucosal)."><me
 
     <a class="navbar-brand me-2" href="../index.html">bHIVE</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.6</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.7</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -23,7 +23,7 @@ from IgM (broad, pentameric) to IgG (specific, monomeric) to IgA (mucosal)."><me
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-tutorials" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Tutorials</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-tutorials"><li><a class="dropdown-item" href="../articles/bHIVE.html">Getting Started</a></li>
-    <li><a class="dropdown-item" href="../articles/articles/immune-modules.html">Immune Modules</a></li>
+    <li><a class="dropdown-item" href="../articles/immune-modules.html">Immune Modules</a></li>
     <li><a class="dropdown-item" href="../articles/articles/advanced-workflows.html">Advanced Tuning &amp; Workflows</a></li>
     <li><a class="dropdown-item" href="../articles/articles/foundations.html">Algorithm &amp; Biological Foundations</a></li>
   </ul></li>
@@ -51,6 +51,11 @@ from IgM (broad, pentameric) to IgG (specific, monomeric) to IgA (mucosal).</p>
     </div>
 
 
+    <div class="section level2">
+    <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
+    <p>An <code><a href="https://r6.r-lib.org/reference/R6Class.html" class="external-link">R6Class</a></code> generator. <code>ClassSwitcher$new()</code>
+  returns a <code>ClassSwitcher</code> object.</p>
+    </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>In bHIVE, class switching modifies the effective affinity kernel width:</p><ul><li><p><code>IgM</code>: Broad matching (large kernel width) – good for initial
@@ -85,7 +90,7 @@ from IgM (broad, pentameric) to IgG (specific, monomeric) to IgA (mucosal).</p>
 <ul><li><p><a href="#method-ClassSwitcher-new"><code>ClassSwitcher$new()</code></a></p></li>
 <li><p><a href="#method-ClassSwitcher-switch_isotypes"><code>ClassSwitcher$switch_isotypes()</code></a></p></li>
 <li><p><a href="#method-ClassSwitcher-get_alpha"><code>ClassSwitcher$get_alpha()</code></a></p></li>
-<li><p><a href="#method-ClassSwitcher-print"><code>ClassSwitcher$print()</code></a></p></li>
+<li><p><a href="#method-ClassSwitcher-format"><code>ClassSwitcher$format()</code></a></p></li>
 <li><p><a href="#method-ClassSwitcher-clone"><code>ClassSwitcher$clone()</code></a></p></li>
 </ul></div><p></p><hr><a id="method-ClassSwitcher-new"></a><div class="section">
 <h3 id="method-new-">Method <code>new()</code><a class="anchor" aria-label="anchor" href="#method-new-"></a></h3>
@@ -156,11 +161,12 @@ from IgM (broad, pentameric) to IgG (specific, monomeric) to IgA (mucosal).</p>
 <p>Numeric.</p>
 </div>
 
-</div><p></p><hr><a id="method-ClassSwitcher-print"></a><div class="section">
-<h3 id="method-print-">Method <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code><a class="anchor" aria-label="anchor" href="#method-print-"></a></h3>
-<p>Print summary.</p><div class="section">
+</div><p></p><hr><a id="method-ClassSwitcher-format"></a><div class="section">
+<h3 id="method-format-">Method <code><a href="https://rdrr.io/r/base/format.html" class="external-link">format()</a></code><a class="anchor" aria-label="anchor" href="#method-format-"></a></h3>
+<p>Format a short summary, one element per line. Used by
+  <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code>.</p><div class="section">
 <h4 id="usage-3">Usage<a class="anchor" aria-label="anchor" href="#usage-3"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ClassSwitcher</span><span class="op">$</span><span class="fu">print</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ClassSwitcher</span><span class="op">$</span><span class="fu">format</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -170,6 +176,10 @@ from IgM (broad, pentameric) to IgG (specific, monomeric) to IgA (mucosal).</p>
 
 
 </dl><p></p></div>
+</div>
+<div class="section">
+<h4 id="returns-2">Returns<a class="anchor" aria-label="anchor" href="#returns-2"></a></h4>
+<p>A character vector.</p>
 </div>
 
 </div><p></p><hr><a id="method-ClassSwitcher-clone"></a><div class="section">
@@ -203,7 +213,7 @@ from IgM (broad, pentameric) to IgG (specific, monomeric) to IgA (mucosal).</p>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">rep</span><span class="op">$</span><span class="va">metadata</span><span class="op">$</span><span class="va">isotype</span><span class="op">)</span>  <span class="co"># IgM, IgG, IgA distribution</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> IgA IgG IgM </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   4   4   2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   3   3   4 </span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
@@ -216,7 +226,7 @@ from IgM (broad, pentameric) to IgG (specific, monomeric) to IgA (mucosal).</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer></div>

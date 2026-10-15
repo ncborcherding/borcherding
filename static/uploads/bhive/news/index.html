@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">bHIVE</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.6</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.7</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -19,7 +19,7 @@
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-tutorials" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Tutorials</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-tutorials"><li><a class="dropdown-item" href="../articles/bHIVE.html">Getting Started</a></li>
-    <li><a class="dropdown-item" href="../articles/articles/immune-modules.html">Immune Modules</a></li>
+    <li><a class="dropdown-item" href="../articles/immune-modules.html">Immune Modules</a></li>
     <li><a class="dropdown-item" href="../articles/articles/advanced-workflows.html">Advanced Tuning &amp; Workflows</a></li>
     <li><a class="dropdown-item" href="../articles/articles/foundations.html">Algorithm &amp; Biological Foundations</a></li>
   </ul></li>
@@ -39,6 +39,64 @@
       <small>Source: <a href="https://github.com/BorchLab/bHIVE/blob/main/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.99.7" id="bhive-0997">bHIVE 0.99.7<a class="anchor" aria-label="anchor" href="#bhive-0997"></a></h2>
+<p>Changes in response to the first round of Bioconductor review.</p>
+<div class="section level3">
+<h3 id="bioconductor-integration-0-99-7">Bioconductor integration<a class="anchor" aria-label="anchor" href="#bioconductor-integration-0-99-7"></a></h3>
+<ul><li>
+<code><a href="../reference/bHIVE.html">bHIVE()</a></code> is now an S4 generic. New methods accept a <code>SummarizedExperiment</code> (cells from <code>assay.type</code>) or a <code>SingleCellExperiment</code> (cells from an assay or a <code><a href="https://rdrr.io/pkg/SingleCellExperiment/man/reducedDims.html" class="external-link">reducedDim()</a></code> via <code>use.dimred</code>). They return the object with the labels in <code>colData()[[name]]</code> and the full result, including the fitted model, in <code>metadata()[[name]]</code>. For classification, <code>y</code> can name a <code><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">colData()</a></code> column.</li>
+<li>New <code><a href="../reference/bHIVEParam.html">bHIVEParam()</a></code>, a <code>BlusterParam</code> subclass. bHIVE now runs through <code><a href="https://rdrr.io/pkg/bluster/man/clusterRows.html" class="external-link">bluster::clusterRows()</a></code> and <code><a href="https://rdrr.io/pkg/bluster/man/clusterSweep.html" class="external-link">bluster::clusterSweep()</a></code>.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="bug-fixes-0-99-7">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-99-7"></a></h3>
+<ul><li>With the default <code>maxClones = Inf</code>, clonal selection never cloned or mutated an antibody on x86-64 machines (Linux, Windows, Intel Macs). Converting <code>Inf</code> to an integer is undefined in C++, and x86-64 returned the most negative integer. Apple Silicon returned the largest one, so results there do not change. The clone count is now capped before the conversion, and <code>maxClones</code> must be a non-negative number.</li>
+<li>The caret wrappers <code>bHIVEmodel</code> and <code>honeycombHIVEmodel</code> predicted every observation as the first class. They now predict with the fitted model. <code>honeycombHIVEmodel</code> also failed in every caret fold because tuning grids store <code>refineOptimizer</code> as a factor. Both wrappers now support <code>tuneLength</code> and random search, set <code>prob = NULL</code>, and declare classification only.</li>
+<li>
+<code><a href="../reference/visualizeHIVE.html">visualizeHIVE()</a></code> embedded the data and the prototypes separately, so the prototypes were drawn in the wrong coordinates. The reduction is now fitted to the data and the prototypes are projected into it (PCA and UMAP), or embedded jointly with the data (tSNE). Several smaller plotting bugs are fixed.</li>
+<li>
+<code><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict()</a></code> failed after <code>affinityParams = list(alpha = "auto")</code>. It now uses the bandwidth and metric the fit actually read out with, so it reproduces the training labels, including after <code>ClassSwitcher</code> modulation and Lloyd consolidation.</li>
+<li>
+<code>targetK</code> could return fewer than K clusters when Lloyd refinement emptied one. Empty clusters are now re-seeded, so <code>targetK</code> gives exactly K.</li>
+<li>
+<code><a href="../reference/honeycombHIVE.html">honeycombHIVE()</a></code> classification collapsed every layer to one prototype per class and predicted a single class from layer 2 on. Layers now collapse by the antibody that labeled each row. Refinement now runs in the scaled space and moves the antibody that labeled each sample.</li>
+<li>
+<code><a href="../reference/refineB.html">refineB()</a></code> re-indexed numeric assignments by first appearance, so samples could pull the wrong antibody. Numeric assignments now index rows of <code>A</code> directly.</li>
+<li>
+<code><a href="../reference/swarmbHIVE.html">swarmbHIVE()</a></code> dropped the names of a one-column grid, rejected factor grid columns, ignored a <code>maxIter</code> grid column, and crashed on non-integer grid values when <code>verbose = TRUE</code>.</li>
+<li>
+<code>compute_pairwise_distance()</code> left about 6e-8 on the diagonal. It is now exactly 0.</li>
+<li>
+<code>fit()</code> history is reset between fits. An empty initialization now gives a clear error instead of a C++ error.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="new-behavior-0-99-7">New behavior<a class="anchor" aria-label="anchor" href="#new-behavior-0-99-7"></a></h3>
+<ul><li>Classification seeds antibodies per class. New argument <code>minPerClass</code> (default 5) gives every class at least that many antibodies, so rare populations can be predicted. Use <code>minPerClass = 0</code> for the previous behavior.</li>
+<li>Classification results gain <code>antibody_index</code>, the antibody that labeled each observation.</li>
+<li>Progress is reported with <code><a href="https://rdrr.io/r/base/message.html" class="external-link">message()</a></code> throughout, so <code><a href="https://rdrr.io/r/base/message.html" class="external-link">suppressMessages()</a></code> silences it.</li>
+<li>
+<code>AINet</code> reports when <code>IdiotypicNetwork</code> removes every antibody and the safety net keeps the top 10%. The module is documented as experimental.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="code-structure-0-99-7">Code structure<a class="anchor" aria-label="anchor" href="#code-structure-0-99-7"></a></h3>
+<ul><li>
+<code>AINet$fit()</code> is split into private methods, one per stage or module. <code><a href="../reference/honeycombHIVE.html">honeycombHIVE()</a></code>, <code><a href="../reference/visualizeHIVE.html">visualizeHIVE()</a></code>, <code><a href="../reference/swarmbHIVE.html">swarmbHIVE()</a></code> and <code><a href="../reference/refineB.html">refineB()</a></code> are split into internal helper functions. No function exceeds 50 lines.</li>
+<li>R6 classes print through <code><a href="https://rdrr.io/r/base/format.html" class="external-link">format()</a></code> methods.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="documentation-0-99-7">Documentation<a class="anchor" aria-label="anchor" href="#documentation-0-99-7"></a></h3>
+<ul><li>The main vignette is rewritten around mass cytometry data from HDCytoData, with a comparison against FlowSOM, k-means and graph-based clustering, and label transfer against a nearest-centroid baseline.</li>
+<li>The immune modules article is now a second vignette.</li>
+<li>All R6 classes document their return value. The caret examples are runnable.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="dependencies-0-99-7">Dependencies<a class="anchor" aria-label="anchor" href="#dependencies-0-99-7"></a></h3>
+<ul><li>Imports gain <code>bluster</code>, <code>methods</code>, <code>S4Vectors</code>, <code>SummarizedExperiment</code> and <code>SingleCellExperiment</code>.</li>
+<li>
+<code>umap</code> and <code>Rtsne</code> move to Suggests and are needed only for those <code><a href="../reference/visualizeHIVE.html">visualizeHIVE()</a></code> reductions. <code>viridis</code> is no longer used.</li>
+<li>Suggests gain <code>FlowSOM</code> and <code>HDCytoData</code>, and drop <code>devtools</code> and <code>pkgdown</code>.</li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.99.6" id="bhive-0996">bHIVE 0.99.6<a class="anchor" aria-label="anchor" href="#bhive-0996"></a></h2>
 <div class="section level3">
@@ -218,7 +276,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer></div>

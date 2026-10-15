@@ -1,9 +1,10 @@
-# Mulilayered honeycombHIVE for caret
+# Multilayered honeycombHIVE classification model for caret
 
-A `caret` wrapper for the
+A custom model definition that lets
+[`caret::train()`](https://rdrr.io/pkg/caret/man/train.html) tune,
+resample and evaluate
 [`honeycombHIVE`](https://www.borch.dev/uploads/bhive/reference/honeycombHIVE.md)
-function, enabling seamless integration with the `caret` package for
-hyperparameter tuning, cross-validation, and performance evaluation.
+classifiers with gradient-based refinement.
 
 ## Usage
 
@@ -13,17 +14,29 @@ honeycombHIVEmodel
 
 ## Format
 
-An object of class `list` of length 8.
+A list with the components caret expects of a custom model.
 
 ## Value
 
-A `caret` model definition list. Pass it to
-[`train`](https://rdrr.io/pkg/caret/man/train.html) for model training
-and evaluation.
+A list defining a custom caret model, for use as
+`caret::train(method = honeycombHIVEmodel)`.
+
+## Details
+
+Training runs `honeycombHIVE(refine = TRUE)` with the tuned parameters.
+Further arguments given to
+[`caret::train()`](https://rdrr.io/pkg/caret/man/train.html) are passed
+on to
+[`honeycombHIVE()`](https://www.borch.dev/uploads/bhive/reference/honeycombHIVE.md).
+Progress output is off unless `verbose = TRUE` is passed. Prediction
+uses the fitted
+[`AINet`](https://www.borch.dev/uploads/bhive/reference/AINet.md) model
+of the final layer. caret requires column names on `x`. Class
+probabilities are not implemented (`prob = NULL`).
 
 ## Parameters
 
-- `nAntibodies`: Number of initial antibodies in the network.
+- `nAntibodies`: Number of initial antibodies per layer.
 
 - `beta`: Clone multiplier controlling the number of clones per
   antibody.
@@ -31,54 +44,42 @@ and evaluation.
 - `epsilon`: Threshold for network suppression to remove redundant
   antibodies.
 
-- `layers`: Number of hierarchical layers for iterative refinement.
+- `layers`: Number of hierarchical layers.
 
-- `refineOptimizer`: Optimizer for gradient-based refinement (e.g.
-  "sgd", "momentum", "adagrad", "adam", "rmsprop").
+- `refineOptimizer`: Optimizer for gradient-based refinement ("sgd",
+  "momentum", "adagrad", "adam" or "rmsprop").
 
 - `refineSteps`: Number of gradient update steps in refinement.
 
 - `refineLR`: Learning rate for refinement.
 
-## Supported Tasks
-
-- `"Classification"`: Assigns class labels to input observations.
-
-- `"Clustering"`: Groups data points based on similarity (though
-  typically `caret` is used for supervised tasks).
-
 ## See also
 
-[`train`](https://rdrr.io/pkg/caret/man/train.html),
-[`trainControl`](https://rdrr.io/pkg/caret/man/trainControl.html)
+[`honeycombHIVE`](https://www.borch.dev/uploads/bhive/reference/honeycombHIVE.md),
+[`bHIVEmodel`](https://www.borch.dev/uploads/bhive/reference/bHIVEmodel.md),
+[`train`](https://rdrr.io/pkg/caret/man/train.html)
 
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
-  library(caret)
-  # Example: Classification with Iris
-  data(iris)
-  X <- as.matrix(iris[, 1:4])
-  y <- iris$Species
-
-  train_control <- trainControl(method = "cv", number = 5)
-  set.seed(42)
-  model <- train(
-    x = X,
-    y = y,
-    method = honeycombHIVEmodel,
-    trControl = train_control,
-    tuneGrid = expand.grid(
-      nAntibodies = c(10, 20),
-      beta = c(3, 5),
-      epsilon = c(0.01, 0.05),
-      layers = c(1, 2),
-      refineOptimizer = "adam",
-      refineSteps = 5,
-      refineLR = 0.01
+if (requireNamespace("caret", quietly = TRUE)) {
+    X <- as.matrix(iris[, 1:4])
+    y <- iris$Species
+    set.seed(42)
+    fit <- caret::train(
+        x = X, y = y, method = honeycombHIVEmodel,
+        trControl = caret::trainControl(method = "cv", number = 3),
+        tuneGrid = data.frame(nAntibodies = 30, beta = 5, epsilon = 0.05,
+                              layers = 2, refineOptimizer = "adam",
+                              refineSteps = 3, refineLR = 0.01),
+        maxIter = 10
     )
-  )
-  print(model)
-} # }
+    fit
+    table(Predicted = predict(fit, X), Actual = y)
+}
+#>             Actual
+#> Predicted    setosa versicolor virginica
+#>   setosa         50          0         0
+#>   versicolor      0         25         1
+#>   virginica       0         25        49
 ```

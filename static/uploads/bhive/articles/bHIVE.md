@@ -1,578 +1,557 @@
-# The buzz on using bHIVE
+# Immune-inspired prototypes for cytometry and single-cell data with bHIVE
 
 ## Introduction
 
-The **bHIVE** package implements an Artificial Immune Network (AI-Net)
-algorithm for clustering and classification tasks. Inspired by
-biological immune systems, bHIVE uses principles like clonal selection,
-mutation, and suppression to analyze and model data.
-
-This vignette demonstrates how to: 1. Perform clustering and
-classification using `bHIVE`. 2. Tune hyperparameters using
-`swarmbHIVE`. 3. Use the `caret` wrapper for easy integration with
-machine learning workflows. 4. Use multilayered immune networks with
-`honeycombHIVE` 5. Visualize results with `ggplot2`.
-
-### Parameters for `bHIVE()`
-
-The behavior of the `bHIVE` function can be fine-tuned using a range of
-hyperparameters. Below is a description of the key parameters:
-
-| **Parameter** | **Description** |
-|----|----|
-| `X` | A numeric matrix or data frame of input features (rows are observations, columns are features). |
-| `y` | (Optional) Factor target vector for classification. If `NULL`, clustering is performed. |
-| `task` | Specifies the task: `"clustering"` or `"classification"`. |
-| `nAntibodies` | Number of initial antibodies in the population. Larger values increase diversity but add computational cost. |
-| `beta` | Clone multiplier. Determines how many clones are generated for top-matching antibodies. |
-| `epsilon` | Suppression threshold. Antibodies closer than `epsilon` are considered redundant and removed. |
-| `maxIter` | Maximum number of iterations for the algorithm. |
-| `affinityFunc` | Affinity (similarity) function. Options include `"gaussian"`, `"laplace"`, `"polynomial"`, `"cosine"`, `"hamming"`. |
-| `distFunc` | Distance function for clustering and suppression. Options include `"euclidean"`, `"manhattan"`, `"cosine"`, `"minkowski"`, `"hamming"`. |
-| `affinityParams` | A list of optional parameters for the affinity/distance functions. |
-| `mutationDecay` | Factor controlling how the mutation rate decays over iterations. Default is `1.0` (no decay). |
-| `mutationMin` | Minimum mutation rate to avoid zero mutation. |
-| `maxClones` | Maximum number of clones per antibody. Default is unlimited (`Inf`). |
-| `stopTolerance` | Tolerance for stopping the algorithm if the antibody population size stabilizes. |
-| `noImprovementLimit` | Number of iterations without improvement before early stopping. |
-| `initMethod` | Method for initializing antibodies. Options: `"sample"` (randomly selects rows from `X`), `"random"` (Gaussian noise), `"random_uniform"` (samples uniformly in \[min, max\] of each column), or `"kmeans++"` (kmeans++-like initialization for coverage). |
-| `k` | Number of top-matching antibodies to consider during cloning. |
-| `seed` | Random seed for reproducibility. |
-| `verbose` | Logical. If `TRUE`, prints progress messages for each iteration. |
-
-#### How `bHIVE` Works
-
-1.  **Affinity Calculation**: Measures the similarity between each data
-    point and antibodies using a specified `affinityFunc`.
-2.  **Clonal Expansion and Mutation**: Generates clones of top-matching
-    antibodies, introducing diversity via mutation.
-3.  **Network Suppression**: Removes antibodies that are too similar to
-    maintain diversity in the population.
-4.  **Assignment**: Assigns data points to antibodies (clusters, labels,
-    or numeric predictions).
-
-#### Example of Parameter Selection
-
-The following example demonstrates how to configure the `bHIVE` function
-for clustering, emphasizing the impact of key parameters:
-
-``` r
-
-# Load the Iris dataset
-data(iris)
-X <- as.matrix(iris[, 1:4])
-
-# Configure bHIVE parameters for clustering
-set.seed(42)
-res <- bHIVE(
-  X = X,                      # Input data
-  task = "clustering",        # Task type
-  nAntibodies = 20,           # Number of antibodies
-  beta = 5,                   # Clone multiplier
-  epsilon = 0.01,             # Suppression threshold
-  maxIter = 20,               # Maximum iterations
-  affinityFunc = "gaussian",  # Affinity function
-  distFunc = "euclidean",     # Distance function
-  verbose = TRUE              # Print progress
-)
-```
-
-## Applications
-
-### Clustering
-
-**Clustering** is an unsupervised learning task where we group similar
-data points based on their features. In this example, we cluster the
-numeric features of the Iris dataset using `bHIVE`.
-
-``` r
-
-# Load Iris dataset
-data(iris)
-X <- as.matrix(iris[, 1:4])
-
-# Perform clustering
-set.seed(42)
-res <- bHIVE(X = X, 
-             task = "clustering", 
-             nAntibodies = 10, 
-             beta = 5, 
-             epsilon = 0.05, 
-             maxIter = 20, 
-             k = 3,
-             verbose = FALSE)
-
-# Add cluster assignments to the data
-iris$Cluster <- as.factor(res$assignments)
-
-# Visualize clusters
-ggplot(iris, aes(x = Sepal.Length, 
-                 y = Sepal.Width, 
-                 color = Cluster)) +
-    geom_point(size = 3) +
-    labs(title = "Clustering Results with bHIVE", 
-         x = "Sepal Length", 
-         y = "Sepal Width") +
-    scale_color_viridis(discrete = TRUE) + 
-    theme_minimal()
-```
-
-![](bHIVE_files/figure-html/unnamed-chunk-3-1.png)
-
-### Classification
-
-**Classification** is a supervised learning task where data points are
-assigned to predefined categories based on their features. Here, we
-classify the species of Iris flowers using `bHIVE`.
-
-``` r
-
-# Classification setup
-y <- iris$Species
-
-# Perform classification
-set.seed(42)
-res <- bHIVE(X = X, 
-             y = y, 
-             task = "classification", 
-             nAntibodies = 100, 
-             beta = 5, 
-             epsilon = 0.05, 
-             initMethod = "random",
-             k = 4,
-             verbose = FALSE)
-
-# Visualize classification results
-iris$Predicted <- res$assignments
-ggplot(iris, aes(x = Sepal.Length, 
-                 y = Sepal.Width, 
-                 color = Predicted, 
-                 shape = Species)) +
-    geom_point(size = 3) +
-    labs(title = "Classification Results with bHIVE", 
-         x = "Sepal Length", 
-         y = "Sepal Width") +
-    scale_color_viridis(discrete = TRUE) + 
-    theme_minimal()
-```
-
-![](bHIVE_files/figure-html/unnamed-chunk-4-1.png)
-
-Comparing predicted vs actual
-
-``` r
-
-table(Predicted = res$assignments, Actual = y)
-```
-
-    ##             Actual
-    ## Predicted    setosa versicolor virginica
-    ##   setosa         50          0         0
-    ##   versicolor      0         46         4
-    ##   virginica       0          4        46
-
-### Hyperparameter Tuning
-
-Tuning hyperparameters is crucial for optimizing the performance of
-machine learning algorithms. In this example, we perform hyperparameter
-tuning for clustering using `swarmbHIVE`.
-
-``` r
-
-grid <- expand.grid(
-    nAntibodies = c(10, 20),
-    beta = c(3, 5),
-    epsilon = c(0.01, 0.05)
-)
-
-# Perform tuning
-set.seed(42)
-tuning_results <- swarmbHIVE(X = X, 
-                             task = "clustering", 
-                             grid = grid, 
-                             metric = "silhouette",
-                             verbose = FALSE)
-
-# Visualize tuning results
-ggplot(tuning_results$results, aes(x = nAntibodies, 
-                                   y = metric_value, 
-                                   color = factor(beta))) +
-    geom_line() +
-    geom_point(aes(shape = as.factor(epsilon)), 
-                   size = 3) +
-    labs(title = "Hyperparameter Tuning Results", 
-         x = "Number of Antibodies", 
-         y = "Silhouette Score", 
-         color = "Beta", 
-         shape = "Epsilon") +
-    scale_color_viridis(discrete = TRUE) + 
-    theme_minimal()
-```
-
-![](bHIVE_files/figure-html/unnamed-chunk-6-1.png)
-
-Best parameters
-
-``` r
-
-tuning_results$best_params
-```
-
-    ##   nAntibodies beta epsilon metric_value
-    ## 3          10    5    0.01    0.2957736
-
-### Using the `caret` wrapper
-
-The `bHIVE` package provides a `caret` wrapper for seamless integration
-with the `caret` framework, allowing for easy cross-validation and
-hyperparameter tuning. Here, we demonstrate classification on the iris
-dataset.
-
-``` r
-
-data(iris)
-X <- as.matrix(iris[, 1:4])
-y <- iris$Species
-
-# Splitting Training and Validation Data Sets
-set.seed(42)
-sample.idx <- sample(nrow(X), nrow(X)*0.7)
-x_test <- X[sample.idx,]
-x_val <- X[-sample.idx,]
-y_test <- y[sample.idx]
-y_val <- y[-sample.idx]
-
-
-train_control <- trainControl(method = "cv", number = 2)
-set.seed(42)
-model <- train(x = x_test,
-               y = y_test,
-               method = bHIVEmodel,
-               trControl = train_control,
-               tuneGrid = expand.grid(
-                 nAntibodies = c(10, 20, 30),
-                 beta = c(3, 5, 10),
-                 epsilon = c(0.01, 0.05, 0.1)),
-               verbose = FALSE)
-
-# Visualize caret results
-ggplot(model) +
-    labs(title = "Caret Tuning Results for bHIVE",
-         x = "Hyperparameter Combination",
-         y = "Performance Metric") +
-    scale_color_viridis(discrete = TRUE) +
-    theme_minimal()
-```
-
-![](bHIVE_files/figure-html/unnamed-chunk-8-1.png)
-
-#### Applying the caret-based model
-
-To use the best performing model from the above, we just using the
-[`predict()`](https://rdrr.io/r/stats/predict.html) function with the
-separated validation data set (**X_val**).
-
-``` r
-
-preds <- predict(model, newdata = x_val)
-table(Predicted = preds, Actual = y_val)
-```
-
-    ##             Actual
-    ## Predicted    setosa versicolor virginica
-    ##   setosa          4          3         3
-    ##   versicolor      8          6        13
-    ##   virginica       0          6         2
-
-### honeycombHIVE: Multilayered bHIVES
-
-In `honeycombHIVE`, clustering proceeds hierarchically across multiple
-layers:
-
-`honeycombHIVE` iteratively builds and refines a network of “antibodies”
-(prototypes) to capture complex patterns in data. Initially, the `bHIVE`
-algorithm creates a set of prototypes, and then each layer can be
-fine-tuned using gradient-based updates (via the
-[`refineB()`](https://www.borch.dev/uploads/bhive/reference/refineB.md)
-function) with flexible optimizers like SGD, Adam, and RMSProp.
-
-Fo each layer, a collapse step aggregates the refined prototypes - by
-computing a centroid, medoid, or another statistic - compressing the
-data into a new, lower-dimensional representation where each prototype
-becomes a new observation. This new representation serves as the input
-for the next layer, similar to neural network architecture.
-
-``` r
-
-# Load the Iris dataset
-data(iris)
-X <- as.matrix(iris[, 1:4])
-
-# Run honeycombHIVE for clustering
-res <- honeycombHIVE(X = X, 
-                     task = "clustering", 
-                     epsilon = 0.05,
-                     layers = 3, 
-                     nAntibodies = 30, 
-                     beta = 5, 
-                     maxIter = 10, 
-                     verbose = FALSE)
-
-# Visualize results from each layer
-for (i in seq_along(res)) {
-  
-  # Create a data frame for plotting; add original Sepal.Length and Sepal.Width
-  plot_df <- data.frame(
-    Sepal.Length = iris$Sepal.Length, 
-    Sepal.Width  = iris$Sepal.Width,
-    Cluster      = factor(res[[i]]$membership)  # cluster labels from layer i
-  )
-  
-  # Basic ggplot scatter plot
-  plot <- ggplot(plot_df, aes(x = Sepal.Length, 
-                              y = Sepal.Width, 
-                              color = Cluster)) +
-    geom_point(size = 3) +
-    labs(
-      title = paste("honeycombHIVE Clustering - Layer", i),
-      x     = "Sepal Length",
-      y     = "Sepal Width"
-    ) +
-    theme_minimal() +
-    scale_color_viridis(discrete = TRUE)
-  
-  print(plot)
-}
-```
-
-![](bHIVE_files/figure-html/unnamed-chunk-10-1.png)![](bHIVE_files/figure-html/unnamed-chunk-10-2.png)![](bHIVE_files/figure-html/unnamed-chunk-10-3.png)
-
-Note: If you use `task = "classification"`, honeycombHIVE will generate
-multi-layer predictions. You can compare each layer’s predictions
-against the true labels to see if performance improves or if the data
-become too collapsed.
-
-### Gradient-based Refinement
-
-The
-[`refineB()`](https://www.borch.dev/uploads/bhive/reference/refineB.md)
-function takes the prototypes produced by the
+Cytometry and single-cell RNA-seq measure many markers on many cells.
+Two questions come up in almost every analysis. Which cell populations
+are present? And which population does a new cell belong to? Clustering
+answers the first. Classification, or label transfer from an annotated
+reference, answers the second.
+
+*[bHIVE](https://bioconductor.org/packages/3.23/bHIVE)* answers both
+with one model, an artificial immune network. A set of prototypes,
+called antibodies, evolves the way B cells do in an immune response.
+Antibodies that bind the data well are cloned, the clones mutate, and
+near-duplicates are suppressed. What remains is a small set of points in
+marker space that summarize the cells.
+
+What this gives an analyst:
+
+- **Prototypes you can read.** Each antibody is a point in the original
+  marker units, so a heatmap of the antibodies reads like a table of
+  population phenotypes.
+- **One model for clustering and label transfer.** The same fitted
+  object that clusters a sample can label new cells with `$predict()`.
+- **Rare populations.** In supervised mode every class is seeded with
+  its own antibodies, so a population of a few cells is not lost. In
+  unsupervised mode `coverageBoost` seeds antibodies where coverage is
+  poor.
+- **A cluster count you choose or let emerge.** By default the number of
+  clusters comes out of the suppression dynamics. Set `targetK` to fix
+  it.
+- **Composable immune modules.** The R6 engine, `AINet`, accepts modules
+  for somatic hypermutation, germinal center selection, microenvironment
+  and more. The second vignette,
+  [`vignette("immune-modules", package = "bHIVE")`](https://www.borch.dev/uploads/bhive/articles/immune-modules.md),
+  covers them.
+
+bHIVE works with Bioconductor data structures.
 [`bHIVE()`](https://www.borch.dev/uploads/bhive/reference/bHIVE.md)
-algorithm and fine-tunes them using gradient‐based updates. In addition
-to the basic parameters:
+accepts a `SummarizedExperiment` or `SingleCellExperiment` and stores
+its labels in
+[`colData()`](https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html).
+[`bHIVEParam()`](https://www.borch.dev/uploads/bhive/reference/bHIVEParam.md)
+plugs bHIVE into
+*[bluster](https://bioconductor.org/packages/3.23/bluster)*, so it also
+runs through
+[`bluster::clusterRows()`](https://rdrr.io/pkg/bluster/man/clusterRows.html)
+and
+[`bluster::clusterSweep()`](https://rdrr.io/pkg/bluster/man/clusterSweep.html).
 
-- **loss:** The loss function used to guide refinement. For a
-  classification task, “categorical_crossentropy” is a typical choice.
-- **steps:** The number of gradient update iterations.
-- **lr:** The learning rate for each update.
-- **optimizers**
-  - *sgd:* Standard stochastic gradient descent.
-  - *momentum:* SGD with momentum. (Control the momentum with
-    **momentum_coef**).
-  - *adagrad:* Adaptive gradient descent.
-  - *adam:* Adaptive moment estimation. (Control the decay rates with
-    **beta1** and **beta2**).
-  - *rmsprop:* Root Mean Square Propagation. (Control the decay of the
-    squared gradient average with **rmsprop_decay**)
+bHIVE does not replace graph-based clustering or
+*[FlowSOM](https://bioconductor.org/packages/3.23/FlowSOM)*. The
+comparison below shows that a shared-nearest-neighbor graph recovers
+manually gated populations better on this dataset. bHIVE is a prototype
+model to inspect and reuse.
 
-``` r
-
-# Prepare the Iris dataset
-X <- as.matrix(iris[, 1:4])
-y <- iris$Species
-
-# Run bHIVE to obtain initial antibody prototypes.
-set.seed(42)
-res <- bHIVE(X = X, 
-             y = y, 
-             task = "classification", 
-             nAntibodies = 10, 
-             beta = 5, 
-             epsilon = 0.05, 
-             initMethod = "random",
-             k = 4,
-             verbose = FALSE)
-
-Ab <- res$antibodies
-colnames(Ab) <- colnames(X)
-assignments <- res$assignments 
-# Ensure assignments are numeric indices.
-assignments <- as.integer(factor(assignments, levels = unique(assignments)))
-
-# PCA of the Iris data for visualization in 2D
-pca <- prcomp(X, scale. = TRUE)
-X_pca <- pca$x[, 1:2]
-colnames(X_pca) <- c("PC1", "PC2")
-# Transform initial prototypes into PCA space.
-A_bhive_pca <- predict(pca, Ab)
-
-# Run refinement using several optimizers.
-optimizers <- c("sgd", "adam", "rmsprop")
-refined_list <- lapply(optimizers, function(opt) {
-  Ab_refined <- refineB(A = Ab,
-                        X = X, 
-                        y = y,
-                        assignments = assignments,
-                        loss = "categorical_crossentropy", 
-                        task = "classification", 
-                        steps = 5, 
-                        lr = 0.01,
-                        verbose = FALSE,
-                        optimizer = opt,
-                        beta1 = 0.9,
-                        beta2 = 0.999,
-                        rmsprop_decay = 0.9)
-  colnames(Ab_refined) <- colnames(X)
-  A_refined_pca <- predict(pca, Ab_refined)
-  data.frame(optimizer = opt,
-             PC1_after = A_refined_pca[,1],
-             PC2_after = A_refined_pca[,2])
-})
-refined_df <- do.call(rbind, refined_list)
-refined_df$optimizer <- factor(refined_df$optimizer, levels = optimizers)
-```
-
-![](bHIVE_files/figure-html/unnamed-chunk-12-1.png)
-
-**Interpretation** \* Data points are shown in a light transparency,
-colored by their cluster assignments (as determined by the original
-`bHIVE` algorithm). \* Initial prototypes are shown in dark purple.
-These are the prototypes (antibodies) before refinement. \* Refined
-prototypes are shown in bright yellow. The arrows indicate the direction
-and magnitude of the update from the original positions to the refined
-positions.
-
-### Applying Refinement to honeycombHIVE
+## Installation
 
 ``` r
 
-data(iris)
-X <- as.matrix(iris[, 1:4])
-y <- iris$Species
-
-res_class <- honeycombHIVE(X = X,
-                           y = y,
-                           layers = 3,
-                           task = "classification",
-                           nAntibodies = 30,
-                           beta = 5,
-                           epsilon = 0.01,
-                           verbose = FALSE)
-
-res_class_refine <- honeycombHIVE(X = X,
-                                  y = y,
-                                  task = "classification",
-                                  layers = 3,
-                                  nAntibodies = 30,
-                                  beta = 5,
-                                  epsilon = 0.01,
-                                  refine = TRUE,
-                                  refineOptimizer = "adam",
-                                  refineLoss = "categorical_crossentropy",
-                                  refineSteps = 3,
-                                  refineLR = 0.01,
-                                  verbose = FALSE)
-
-table(Refined = res_class_refine[[3]]$predictions,
-      Actual  = y)
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+BiocManager::install("bHIVE")
 ```
 
-    ##         Actual
-    ## Refined  setosa versicolor virginica
-    ##   setosa     50         50        50
+## A mass cytometry dataset
 
-## Visualizing Results with visualizeHIVE
+We use bone marrow mass cytometry data from Levine et al. (2015),
+available through
+*[HDCytoData](https://bioconductor.org/packages/3.23/HDCytoData)*. Each
+cell was gated by hand into one of 14 populations or left unassigned.
+The gates give a reference to score clusterings against.
 
-Below are several examples that demonstrate how to use the
-visualizeHIVE() function for different tasks and plot types.
-
-### Example 1: Scatterplot for Clustering Results
-
-In this example we run
-[`honeycombHIVE()`](https://www.borch.dev/uploads/bhive/reference/honeycombHIVE.md)
-on the Iris dataset for a clustering task. The scatterplot is generated
-using a PCA transformation to reduce the feature space to two
-dimensions. Data points are colored by cluster membership (treated as
-discrete) and prototypes are overlaid as black points.
+HDCytoData stores cells in rows and markers in columns. Bioconductor
+single-cell containers use the opposite orientation, so we transpose. We
+keep the 32 lineage markers, take 5,000 gated cells, and apply the usual
+`asinh(x / 5)` transform for mass cytometry.
 
 ``` r
 
-data(iris)
-X <- as.matrix(iris[, 1:4])
+library(bHIVE)
+library(SingleCellExperiment)
+library(HDCytoData)
+library(bluster)
+library(ggplot2)
 
-
-set.seed(42)
-res <- honeycombHIVE(X = X, 
-                     task = "clustering", 
-                     epsilon = 0.05,
-                     layers = 3, 
-                     nAntibodies = 30, 
-                     beta = 5, 
-                     maxIter = 10, 
-                     verbose = FALSE)
-
-visualizeHIVE(result = res,
-              X = iris[, 1:4],
-              plot_type = "scatter",
-              title = "Layer 2: Scatterplot (Clustering)",
-              layer = 2,
-              task = "clustering",
-              transform = TRUE,
-              transformation_method = "PCA")
+se <- Levine_32dim_SE()
 ```
 
-![](bHIVE_files/figure-html/unnamed-chunk-14-1.png)
+``` r
 
-This scatterplot shows the data projected onto the first two principal
-components. Each data point is colored according to its cluster
-(discrete grouping), and the prototypes computed by honeycombHIVE are
-displayed as large black points. Faceting by layer is applied if
-multiple layers are selected.
+type_markers <- colData(se)$marker_class == "type"
+gated <- which(rowData(se)$population_id != "unassigned")
 
-### Example 2: Violin Plot for Classification Results
+set.seed(1)
+keep <- sample(gated, 5000)
+sce <- SingleCellExperiment(
+    assays = list(exprs = t(asinh(assay(se, "exprs")[keep, type_markers] / 5))),
+    colData = droplevels(rowData(se)[keep, ]))
+colnames(sce) <- paste0("cell", seq_len(ncol(sce)))
+sce
+```
 
-For a classification task, assume that the algorithm stores class
-predictions. The following example generates a violin plot of the
-“Sepal.Width” feature from layer 1. The discrete grouping (class labels)
-is used to color the violins, and prototype values are overlaid as black
-points.
+    ## class: SingleCellExperiment 
+    ## dim: 32 5000 
+    ## metadata(0):
+    ## assays(1): exprs
+    ## rownames(32): CD45RA CD133 ... CD64 CD41
+    ## rowData names(0):
+    ## colnames(5000): cell1 cell2 ... cell4999 cell5000
+    ## colData names(2): patient_id population_id
+    ## reducedDimNames(0):
+    ## mainExpName: NULL
+    ## altExpNames(0):
+
+``` r
+
+sort(table(sce$population_id), decreasing = TRUE)
+```
+
+    ## 
+    ##            CD4_T_cells              Monocytes            CD8_T_cells 
+    ##                   1275                   1022                    936 
+    ##         Mature_B_cells            Pre_B_cells         CD16-_NK_cells 
+    ##                    780                    302                    187 
+    ## CD34+CD38+CD123-_HSPCs         CD16+_NK_cells                   pDCs 
+    ##                    166                    109                     71 
+    ##              Basophils       CD34+CD38lo_HSCs            Pro_B_cells 
+    ##                     59                     34                     25 
+    ##         Plasma_B_cells CD34+CD38+CD123+_HSPCs 
+    ##                     20                     14
+
+The smallest populations have only a few dozen cells in this sample.
+
+## Clustering a SingleCellExperiment
+
+[`bHIVE()`](https://www.borch.dev/uploads/bhive/reference/bHIVE.md)
+clusters the cells (the columns) of a `SingleCellExperiment` using an
+assay, here `exprs`, or a
+[`reducedDim()`](https://rdrr.io/pkg/SingleCellExperiment/man/reducedDims.html)
+embedding through `use.dimred`. For scRNA-seq, cluster a PCA embedding
+rather than a sparse assay.
+
+Two settings matter for high-dimensional data.
+`affinityParams = list(alpha = "auto")` sets the bandwidth of the
+Gaussian affinity from the data. A fixed bandwidth of 1 makes almost
+every affinity zero in 32 dimensions. `targetK` asks for a fixed number
+of clusters, here the 14 gated populations.
 
 ``` r
 
 set.seed(42)
-res_class <- honeycombHIVE(X = X, 
-                           y = iris$Species, 
-                           task = "classification", 
-                           layers = 2, 
-                           nAntibodies = 15, 
-                           beta = 5, 
-                           maxIter = 10, 
-                           verbose = FALSE)
-
-visualizeHIVE(result = res_class,
-              X = iris[, 1:4],
-              plot_type = "violin",
-              feature = "Sepal.Width",
-              title = "Violin Plot: Sepal.Width by Group",
-              layer = 1,
-              task = "classification")
+sce <- bHIVE(sce, assay.type = "exprs", targetK = 14,
+             affinityParams = list(alpha = "auto"),
+             maxIter = 20, verbose = FALSE)
+table(sce$bHIVE)
 ```
 
-![](bHIVE_files/figure-html/unnamed-chunk-15-1.png)
+    ## 
+    ##    1    2    3    4    5    6    7    8    9   10   11   12   13   14 
+    ##  332   57 2211  197  242  391  134   83  296  123  143  214  183  394
 
-The violin plot shows the distribution of **Sepal.Width** for each
-predicted class. Discrete color scales ensure that class labels are
-clearly distinguished, and the black markers indicate the prototype
-(group summary) for each group.
+``` r
 
-## Conclusions
+ari_42 <- pairwiseRand(sce$population_id, sce$bHIVE, mode = "index")
+ari_42
+```
 
-The `bHIVE` package is a versatile tool for clustering and
-classification tasks. Its integration with caret simplifies
-hyperparameter tuning and cross-validation, making it suitable for a
-variety of datasets and use cases. If you have any questions, comments,
-or suggestions, please visit the [GitHub
-repository](https://github.com/BorchLab/bHIVE).
+    ## [1] 0.5428569
+
+The labels are in `colData(sce)$bHIVE`. The full result, including the
+fitted model, is in `metadata(sce)$bHIVE`. The last line is the adjusted
+Rand index (ARI) against the manual gates. An ARI of 1 means perfect
+agreement, and 0 means chance. This run reaches 0.54. The comparison
+below shows how much that changes with the random seed.
+
+### Reading the prototypes
+
+Each cluster has one prototype in marker space. A heatmap of the
+prototypes shows each cluster’s phenotype. We label each cluster with
+the gated population most of its cells came from.
+
+``` r
+
+res <- metadata(sce)$bHIVE
+protos <- res$antibodies_unscaled
+majority <- tapply(as.character(sce$population_id), sce$bHIVE,
+                   function(p) names(which.max(table(p))))
+rownames(protos) <- paste0(seq_len(nrow(protos)), ": ", majority)
+
+long <- data.frame(
+    cluster = factor(rep(rownames(protos), ncol(protos)),
+                     levels = rev(rownames(protos))),
+    marker  = factor(rep(colnames(protos), each = nrow(protos)),
+                     levels = colnames(protos)),
+    value   = as.vector(protos))
+ggplot(long, aes(marker, cluster, fill = value)) +
+    geom_tile() +
+    scale_fill_viridis_c(name = "asinh") +
+    labs(x = NULL, y = NULL) +
+    theme_minimal() +
+    theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5))
+```
+
+![](bHIVE_files/figure-html/prototypes-1.png)
+
+Reading the rows shows what a run separates and what it merges. A
+population on more than one row was split. This run splits
+Mature_B_cells, Monocytes. A population with no row of its own was
+merged into its neighbors. Here that is CD16+\_NK_cells,
+CD34+CD38+CD123+\_HSPCs, CD34+CD38lo_HSCs, CD8_T_cells, Plasma_B_cells,
+Pro_B_cells. That explains most of the gap between this run and the
+gates.
+
+### Plotting the cells with their prototypes
+
+[`visualizeHIVE()`](https://www.borch.dev/uploads/bhive/reference/visualizeHIVE.md)
+fits a PCA to the cells and projects the prototypes into the same
+coordinates.
+
+``` r
+
+X <- t(assay(sce, "exprs"))
+visualizeHIVE(res, X = X, title = "bHIVE prototypes on the PCA of the cells")
+```
+
+![](bHIVE_files/figure-html/visualize-1.png)
+
+## bHIVE through bluster
+
+[`bHIVEParam()`](https://www.borch.dev/uploads/bhive/reference/bHIVEParam.md)
+describes a bHIVE run for
+*[bluster](https://bioconductor.org/packages/3.23/bluster)*. It works
+anywhere a `BlusterParam` does.
+
+``` r
+
+param <- bHIVEParam(targetK = 14, affinityParams = list(alpha = "auto"),
+                    maxIter = 20)
+param
+```
+
+    ## class: bHIVEParam
+    ## nAntibodies: [default]
+    ## beta: [default]
+    ## epsilon: [default]
+    ## maxIter: 20
+    ## k: [default]
+    ## affinityFunc: [default]
+    ## distFunc: [default]
+    ## initMethod: [default]
+    ## scale: [default]
+    ## targetK: 14
+    ## epsilonQuantile: [default]
+    ## affinityParams(1): alpha
+    ## extra(0):
+
+``` r
+
+set.seed(42)
+clusters <- clusterRows(X, param)
+table(clusters)
+```
+
+    ## clusters
+    ##    1    2    3    4    5    6    7    8    9   10   11   12   13   14 
+    ##  332   57 2211  197  242  391  134   83  296  123  143  214  183  394
+
+The rows of `X` are the cells of `sce`, so the labels go straight into
+[`colData()`](https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html).
+
+``` r
+
+colLabels(sce) <- clusters
+nlevels(colLabels(sce))
+```
+
+    ## [1] 14
+
+[`bluster::clusterSweep()`](https://rdrr.io/pkg/bluster/man/clusterSweep.html)
+varies any setting of the parameter object. Here it tries three cluster
+counts.
+
+``` r
+
+set.seed(42)
+sweep <- clusterSweep(X, bHIVEParam(affinityParams = list(alpha = "auto"),
+                                    maxIter = 10),
+                      targetK = c(8, 14, 20))
+vapply(as.list(sweep$clusters),
+       function(cl) pairwiseRand(sce$population_id, cl, mode = "index"),
+       numeric(1))
+```
+
+    ##  targetK.8 targetK.14 targetK.20 
+    ##  0.7106187  0.8473659  0.8432034
+
+## Comparison with FlowSOM and bluster methods
+
+We compare bHIVE with three methods used for cytometry and single-cell
+data:
+
+- *[FlowSOM](https://bioconductor.org/packages/3.23/FlowSOM)* builds a
+  self-organizing map and merges its nodes into metaclusters. It is the
+  standard prototype method for cytometry. We ask for 14 metaclusters.
+- k-means with 14 centers, through
+  [`bluster::KmeansParam()`](https://rdrr.io/pkg/bluster/man/KmeansParam-class.html).
+- A shared-nearest-neighbor graph with Louvain community detection,
+  through
+  [`bluster::SNNGraphParam()`](https://rdrr.io/pkg/bluster/man/NNGraphParam-class.html).
+  This is the usual default for single-cell data. It picks its own
+  number of clusters.
+
+bHIVE depends on its random seed, so we run it three times.
+
+``` r
+
+truth <- sce$population_id
+timed <- function(expr) {
+    start <- proc.time()[["elapsed"]]
+    clusters <- expr
+    list(clusters = clusters, seconds = proc.time()[["elapsed"]] - start)
+}
+runs <- list(
+    "bHIVE, seed 1" = timed({ set.seed(1); clusterRows(X, param) }),
+    "bHIVE, seed 2" = timed({ set.seed(2); clusterRows(X, param) }),
+    "bHIVE, seed 3" = timed({ set.seed(3); clusterRows(X, param) }),
+    "FlowSOM" = timed(FlowSOM::GetMetaclusters(FlowSOM::FlowSOM(
+        X, compensate = FALSE, transform = FALSE, scale = FALSE,
+        colsToUse = seq_len(ncol(X)), nClus = 14, seed = 1))),
+    "k-means" = timed({ set.seed(1); clusterRows(X, KmeansParam(centers = 14)) }),
+    "SNN graph + Louvain" = timed(clusterRows(
+        X, SNNGraphParam(k = 15, cluster.fun = "louvain"))))
+
+comparison <- data.frame(
+    method   = names(runs),
+    clusters = vapply(runs, function(r) length(unique(r$clusters)), integer(1)),
+    ARI      = vapply(runs, function(r)
+        pairwiseRand(truth, r$clusters, mode = "index"), numeric(1)),
+    seconds  = vapply(runs, `[[`, numeric(1), "seconds"),
+    row.names = NULL)
+knitr::kable(comparison, digits = c(0, 0, 3, 1))
+```
+
+| method              | clusters |   ARI | seconds |
+|:--------------------|---------:|------:|--------:|
+| bHIVE, seed 1       |       14 | 0.805 |     0.9 |
+| bHIVE, seed 2       |       14 | 0.869 |     0.9 |
+| bHIVE, seed 3       |       14 | 0.967 |     1.0 |
+| FlowSOM             |       14 | 0.897 |     4.4 |
+| k-means             |       14 | 0.583 |     0.0 |
+| SNN graph + Louvain |        8 | 0.971 |     0.4 |
+
+The graph-based method reaches an ARI of 0.97 with only 8 clusters. ARI
+is dominated by the large populations, so merging a few small ones costs
+little. FlowSOM reaches 0.90 and k-means 0.58. Across the three seeds
+here and the run above, bHIVE ranges from 0.54 to 0.97. A single bHIVE
+run can match the graph method or fall well below FlowSOM.
+
+That seed dependence is the main practical difference. If the goal is
+one stable partition of a dataset, FlowSOM or a graph-based method is
+the safer choice. With bHIVE, run several seeds and compare them, for
+example with
+[`bluster::pairwiseRand()`](https://rdrr.io/pkg/bluster/man/pairwiseRand.html).
+The `ConvergentSelector` module keeps the antibodies that recur across
+runs.
+
+FlowSOM also builds prototypes, its map nodes, and can map new samples
+onto them. So prototypes alone are not what sets bHIVE apart. The
+differences are how bHIVE learns them, by selection, mutation and
+suppression rather than on a fixed grid, and that the same model also
+learns from labels. The next section shows that.
+
+## Label transfer to new cells
+
+Label transfer trains a classifier on annotated cells and applies it to
+new ones. We train bHIVE on half of the gated cells and predict the
+other half. For classification, bHIVE seeds every class with at least
+`minPerClass` antibodies (default 5), so rare populations get their own
+antibodies.
+
+``` r
+
+set.seed(2)
+train <- sample(ncol(sce), ncol(sce) / 2)
+test <- setdiff(seq_len(ncol(sce)), train)
+
+set.seed(3)
+ref <- bHIVE(sce[, train], y = "population_id", assay.type = "exprs",
+             nAntibodies = 150, maxIter = 20, verbose = FALSE)
+model <- metadata(ref)$bHIVE$model
+predicted <- model$predict(X[test, ])
+```
+
+As a baseline we use the nearest class centroid. Each population is one
+mean vector, and each test cell takes the label of the closest mean.
+
+``` r
+
+centroids <- apply(X[train, ], 2, function(v) tapply(v, truth[train], mean))
+dist2 <- vapply(seq_len(nrow(centroids)), function(j)
+    colSums((t(X[test, ]) - centroids[j, ])^2), numeric(length(test)))
+baseline <- rownames(centroids)[max.col(-dist2)]
+
+score <- function(p) {
+    hit <- p == truth[test]
+    c(accuracy = mean(hit), balanced_accuracy = mean(tapply(hit, truth[test], mean)))
+}
+knitr::kable(rbind(bHIVE = score(predicted),
+                   "nearest centroid" = score(baseline)), digits = 3)
+```
+
+|                  | accuracy | balanced_accuracy |
+|:-----------------|---------:|------------------:|
+| bHIVE            |    0.952 |             0.884 |
+| nearest centroid |    0.973 |             0.944 |
+
+Balanced accuracy averages the recall of each population, so rare
+populations count as much as common ones.
+
+``` r
+
+recall <- function(p) tapply(p == truth[test], truth[test], mean)
+per_pop <- data.frame(
+    population = rep(levels(truth), 2),
+    method = rep(c("bHIVE", "nearest centroid"), each = nlevels(truth)),
+    recall = c(recall(predicted), recall(baseline)))
+per_pop$population <- factor(per_pop$population,
+                             levels = names(sort(table(truth))))
+ggplot(per_pop, aes(population, recall, fill = method)) +
+    geom_col(position = "dodge") +
+    coord_flip() +
+    scale_fill_viridis_d(end = 0.8) +
+    labs(x = NULL, y = "Recall on held-out cells") +
+    theme_minimal()
+```
+
+![](bHIVE_files/figure-html/recall-1.png)
+
+The nearest-centroid baseline beats bHIVE here. Its accuracy is 0.97
+against 0.95, and its balanced accuracy 0.94 against 0.88. It matches or
+beats bHIVE on 12 of 14 populations. bHIVE’s per-class seeding keeps
+every population represented, and its lowest recall is 0.29 for
+CD34+CD38+CD123-\_HSPCs.
+
+The gated populations in this dataset are compact and well separated in
+marker space, so one mean per population is enough. bHIVE spends several
+antibodies on each population. That helps when a population is spread
+out or has more than one mode, which is not the case here. For label
+transfer on data like these, a simple centroid classifier is the better
+choice.
+
+The fitted model can label any cells measured on the same panel. The
+cells the original analysis left unassigned are one example.
+
+``` r
+
+unassigned <- which(rowData(se)$population_id == "unassigned")
+set.seed(4)
+new_cells <- asinh(assay(se, "exprs")[sample(unassigned, 2000),
+                                      type_markers] / 5)
+head(sort(table(model$predict(new_cells)), decreasing = TRUE))
+```
+
+    ## 
+    ##    CD4_T_cells      Monocytes    CD8_T_cells Mature_B_cells    Pre_B_cells 
+    ##            515            460            337            258            119 
+    ## CD16-_NK_cells 
+    ##             93
+
+These cells were not gated by hand, so these labels have no reference to
+check them against. Treat them as hypotheses to check against the
+markers.
+
+## The R6 engine and immune modules
+
+[`bHIVE()`](https://www.borch.dev/uploads/bhive/reference/bHIVE.md) is a
+thin wrapper over the R6 class `AINet`. Using `AINet` directly gives a
+reusable model object and access to the immune modules. Here
+`coverageBoost` adds antibodies where the data are covered worst, before
+the 14 clusters are formed.
+
+``` r
+
+net <- AINet$new(nAntibodies = 40, maxIter = 15, targetK = 14,
+                 coverageBoost = TRUE,
+                 affinityParams = list(alpha = "auto"), verbose = FALSE)
+set.seed(5)
+net$fit(X)
+net
+```
+
+    ## <AINet>
+    ##   Repertoire: 52 antibodies x 32 features
+    ##   Task: clustering
+    ##   Iterations: 15
+
+``` r
+
+pairwiseRand(truth, net$result$assignments, mode = "index")
+```
+
+    ## [1] 0.604857
+
+`AINet` also accepts modules for somatic hypermutation (`SHMEngine`),
+idiotypic regulation (`IdiotypicNetwork`), germinal center selection
+(`GerminalCenter`), microenvironment-dependent mutation
+(`Microenvironment`), V(D)J initialization (`VDJLibrary`), two-signal
+activation (`ActivationGate`), memory (`MemoryPool`) and isotype
+switching (`ClassSwitcher`). The second vignette demonstrates each one:
+
+``` r
+
+vignette("immune-modules", package = "bHIVE")
+```
+
+## Other tools in the package
+
+- [`honeycombHIVE()`](https://www.borch.dev/uploads/bhive/reference/honeycombHIVE.md)
+  stacks bHIVE layers. Each layer clusters the prototypes of the layer
+  below, which gives a hierarchy of populations.
+- [`swarmbHIVE()`](https://www.borch.dev/uploads/bhive/reference/swarmbHIVE.md)
+  runs a grid search over any bHIVE setting and scores each run with an
+  internal clustering index or a classification metric.
+- `bHIVEmodel` and `honeycombHIVEmodel` are custom models for
+  *[caret](https://CRAN.R-project.org/package=caret)*, for
+  cross-validated tuning of bHIVE classifiers.
+
+``` r
+
+set.seed(6)
+layers <- honeycombHIVE(X, task = "clustering", layers = 2, nAntibodies = 40,
+                        maxIter = 10, affinityParams = list(alpha = "auto"),
+                        verbose = FALSE)
+vapply(layers, function(l) nrow(l$prototypes), integer(1))
+```
+
+    ## [1] 28 14
+
+``` r
+
+set.seed(7)
+tuned <- swarmbHIVE(X, task = "clustering",
+                    grid = data.frame(targetK = c(10, 14, 20)),
+                    metric = "davies_bouldin", maxIter = 10, verbose = FALSE)
+tuned$results
+```
+
+    ##   targetK metric_value
+    ## 1      10     1.702019
+    ## 2      14     1.815448
+    ## 3      20     1.712231
+
+## Session information
 
 ``` r
 
@@ -581,7 +560,7 @@ sessionInfo()
 
     ## R version 4.6.1 (2026-06-24)
     ## Platform: x86_64-pc-linux-gnu
-    ## Running under: Ubuntu 24.04.4 LTS
+    ## Running under: Ubuntu 24.04.5 LTS
     ## 
     ## Matrix products: default
     ## BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3 
@@ -597,42 +576,70 @@ sessionInfo()
     ## tzcode source: system (glibc)
     ## 
     ## attached base packages:
-    ## [1] stats     graphics  grDevices utils     datasets  methods   base     
+    ## [1] stats4    stats     graphics  grDevices utils     datasets  methods  
+    ## [8] base     
     ## 
     ## other attached packages:
-    ## [1] caret_7.0-1       lattice_0.22-9    viridis_0.6.5     viridisLite_0.4.3
-    ## [5] ggplot2_4.0.3     bHIVE_0.99.6      BiocStyle_2.40.0 
+    ##  [1] ggplot2_4.0.3               bluster_1.22.0             
+    ##  [3] HDCytoData_1.32.1           flowCore_2.24.0            
+    ##  [5] ExperimentHub_3.2.2         AnnotationHub_4.2.2        
+    ##  [7] BiocFileCache_3.2.0         dbplyr_2.6.0               
+    ##  [9] SingleCellExperiment_1.34.0 SummarizedExperiment_1.42.0
+    ## [11] Biobase_2.72.0              GenomicRanges_1.64.0       
+    ## [13] Seqinfo_1.2.0               IRanges_2.46.0             
+    ## [15] S4Vectors_0.50.3            BiocGenerics_0.58.1        
+    ## [17] generics_0.1.4              MatrixGenerics_1.24.0      
+    ## [19] matrixStats_1.5.0           bHIVE_0.99.7               
+    ## [21] BiocStyle_2.40.0           
     ## 
     ## loaded via a namespace (and not attached):
-    ##  [1] pROC_1.19.0.1        gridExtra_2.3.1      rlang_1.2.0         
-    ##  [4] magrittr_2.0.5       otel_0.2.0           e1071_1.7-17        
-    ##  [7] compiler_4.6.1       png_0.1-9            systemfonts_1.3.2   
-    ## [10] vctrs_0.7.3          reshape2_1.4.5       stringr_1.6.0       
-    ## [13] pkgconfig_2.0.3      fastmap_1.2.0        labeling_0.4.3      
-    ## [16] rmarkdown_2.31       prodlim_2026.03.11   ragg_1.5.2          
-    ## [19] purrr_1.2.2          xfun_0.59            cachem_1.1.0        
-    ## [22] jsonlite_2.0.0       recipes_1.3.3        BiocParallel_1.46.0 
-    ## [25] clusterCrit_1.3.0    parallel_4.6.1       cluster_2.1.8.2     
-    ## [28] R6_2.6.1             bslib_0.11.0         stringi_1.8.7       
-    ## [31] RColorBrewer_1.1-3   reticulate_1.46.0    parallelly_1.47.0   
-    ## [34] rpart_4.1.27         lubridate_1.9.5      jquerylib_0.1.4     
-    ## [37] Rcpp_1.1.1-1.1       bookdown_0.47        iterators_1.0.14    
-    ## [40] knitr_1.51           future.apply_1.20.2  Matrix_1.7-5        
-    ## [43] splines_4.6.1        nnet_7.3-20          timechange_0.4.0    
-    ## [46] tidyselect_1.2.1     yaml_2.3.12          timeDate_4052.112   
-    ## [49] codetools_0.2-20     listenv_1.0.0        tibble_3.3.1        
-    ## [52] plyr_1.8.9           withr_3.0.3          S7_0.2.2            
-    ## [55] askpass_1.2.1        evaluate_1.0.5       Rtsne_0.17          
-    ## [58] future_1.70.0        desc_1.4.3           survival_3.8-6      
-    ## [61] proxy_0.4-29         pillar_1.11.1        BiocManager_1.30.27 
-    ## [64] foreach_1.5.2        stats4_4.6.1         generics_0.1.4      
-    ## [67] scales_1.4.0         globals_0.19.1       class_7.3-23        
-    ## [70] glue_1.8.1           tools_4.6.1          data.table_1.18.4   
-    ## [73] RSpectra_0.16-2      ModelMetrics_1.2.2.2 gower_1.0.2         
-    ## [76] fs_2.1.0             grid_4.6.1           umap_0.2.10.0       
-    ## [79] ipred_0.9-15         nlme_3.1-169         cli_3.6.6           
-    ## [82] textshaping_1.0.5    lava_1.9.1           dplyr_1.2.1         
-    ## [85] gtable_0.3.6         sass_0.4.10          digest_0.6.39       
-    ## [88] htmlwidgets_1.6.4    farver_2.1.2         htmltools_0.5.9     
-    ## [91] pkgdown_2.2.0        lifecycle_1.0.5      hardhat_1.4.3       
-    ## [94] openssl_2.4.2        MASS_7.3-65
+    ##  [1] DBI_1.3.0                   httr2_1.3.0                
+    ##  [3] rlang_1.3.0                 magrittr_2.0.5             
+    ##  [5] otel_0.2.0                  compiler_4.6.1             
+    ##  [7] RSQLite_3.53.3              png_0.1-9                  
+    ##  [9] systemfonts_1.3.2           vctrs_0.7.3                
+    ## [11] pkgconfig_2.0.3             crayon_1.5.3               
+    ## [13] fastmap_1.2.0               backports_1.5.1            
+    ## [15] XVector_0.52.0              labeling_0.4.3             
+    ## [17] rmarkdown_2.32              ragg_1.5.2                 
+    ## [19] purrr_1.2.2                 bit_4.6.0                  
+    ## [21] xfun_0.61                   cachem_1.1.0               
+    ## [23] jsonlite_2.0.0              blob_1.3.0                 
+    ## [25] DelayedArray_0.38.2         tweenr_2.0.3               
+    ## [27] BiocParallel_1.46.0         broom_1.0.13               
+    ## [29] clusterCrit_1.3.0           parallel_4.6.1             
+    ## [31] cluster_2.1.8.2             R6_2.6.1                   
+    ## [33] bslib_0.12.0                RColorBrewer_1.1-3         
+    ## [35] car_3.1-5                   jquerylib_0.1.4            
+    ## [37] Rcpp_1.1.2                  bookdown_0.48              
+    ## [39] knitr_1.52                  Matrix_1.7-5               
+    ## [41] igraph_2.3.4                tidyselect_1.2.1           
+    ## [43] abind_1.4-8                 yaml_2.3.12                
+    ## [45] codetools_0.2-20            curl_8.1.0                 
+    ## [47] lattice_0.22-9              tibble_3.3.1               
+    ## [49] withr_3.0.3                 KEGGREST_1.52.2            
+    ## [51] S7_0.2.2                    evaluate_1.0.5             
+    ## [53] Rtsne_0.17                  desc_1.4.3                 
+    ## [55] polyclip_1.10-7             ConsensusClusterPlus_1.76.0
+    ## [57] Biostrings_2.80.2           ggpubr_1.0.0               
+    ## [59] pillar_1.11.1               BiocManager_1.30.27        
+    ## [61] filelock_1.0.3              carData_3.0-6              
+    ## [63] colorRamps_2.3.4            BiocVersion_3.23.1         
+    ## [65] scales_1.4.0                glue_1.8.1                 
+    ## [67] tools_4.6.1                 ggnewscale_0.5.2           
+    ## [69] BiocNeighbors_2.6.0         ggsignif_0.6.4             
+    ## [71] XML_3.99-0.25               fs_2.1.0                   
+    ## [73] grid_4.6.1                  tidyr_1.3.2                
+    ## [75] RProtoBufLib_2.24.0         AnnotationDbi_1.74.0       
+    ## [77] ggforce_0.5.0               Formula_1.2-6              
+    ## [79] cli_3.6.6                   rappdirs_0.3.4             
+    ## [81] textshaping_1.0.5           cytolib_2.24.0             
+    ## [83] S4Arrays_1.12.1             viridisLite_0.4.3          
+    ## [85] dplyr_1.2.1                 gtable_0.3.6               
+    ## [87] rstatix_1.1.0               sass_0.4.10                
+    ## [89] digest_0.6.39               FlowSOM_2.20.0             
+    ## [91] SparseArray_1.12.3          farver_2.1.2               
+    ## [93] memoise_2.0.1               htmltools_0.5.9            
+    ## [95] pkgdown_2.2.1               lifecycle_1.0.5            
+    ## [97] httr_1.4.9                  MASS_7.3-65                
+    ## [99] bit64_4.8.6

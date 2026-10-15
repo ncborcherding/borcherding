@@ -31,7 +31,7 @@ recognition."><meta property="og:image" content="https://www.borch.dev/uploads/b
 
     <a class="navbar-brand me-2" href="../index.html">bHIVE</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.6</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.7</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -43,7 +43,7 @@ recognition."><meta property="og:image" content="https://www.borch.dev/uploads/b
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-tutorials" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Tutorials</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-tutorials"><li><a class="dropdown-item" href="../articles/bHIVE.html">Getting Started</a></li>
-    <li><a class="dropdown-item" href="../articles/articles/immune-modules.html">Immune Modules</a></li>
+    <li><a class="dropdown-item" href="../articles/immune-modules.html">Immune Modules</a></li>
     <li><a class="dropdown-item" href="../articles/articles/advanced-workflows.html">Advanced Tuning &amp; Workflows</a></li>
     <li><a class="dropdown-item" href="../articles/articles/foundations.html">Algorithm &amp; Biological Foundations</a></li>
   </ul></li>
@@ -181,12 +181,16 @@ discards the cluster and its members from subsequent layers. Ignored when
 
 
 <dt id="arg-verbose">verbose<a class="anchor" aria-label="anchor" href="#arg-verbose"></a></dt>
-<dd><p>Logical, if TRUE prints progress at each layer.</p></dd>
+<dd><p>Logical, if TRUE reports progress at each layer with
+<code><a href="https://rdrr.io/r/base/message.html" class="external-link">message()</a></code>.</p></dd>
 
 
 <dt id="arg-refine">refine<a class="anchor" aria-label="anchor" href="#arg-refine"></a></dt>
 <dd><p>Logical, if TRUE apply gradient-based refinement via
-<code><a href="refineB.html">refineB()</a></code> to each layer's prototypes.</p></dd>
+<code><a href="refineB.html">refineB()</a></code> to each layer's antibodies, in the scaled space the layer
+was trained in. Refinement polishes the reported antibodies and the
+final layer's model. The collapse into the next layer's prototypes uses
+the bHIVE assignments.</p></dd>
 
 
 <dt id="arg-refineloss">refineLoss<a class="anchor" aria-label="anchor" href="#arg-refineloss"></a></dt>
@@ -240,15 +244,25 @@ squared gradients (if using RMSProp).</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A list of length <code>layers</code>. Each element (layer) includes:</p><ul><li><p><code>antibodies</code>: The prototypes in that layer.</p></li>
-<li><p><code>assignments</code>: Antibody index (in that layer) for each row
-    of <code>current_X</code>.</p></li>
+    <p>A list of length <code>layers</code>. Each element (layer) is the
+  <code><a href="bHIVE.html">bHIVE</a></code> result for that layer plus:</p><ul><li><p><code>antibodies</code>: The antibodies learned in that layer.</p></li>
+<li><p><code>assignments</code>: For each row of the layer's input (the
+    original rows for layer 1, the previous layer's prototypes after that),
+    the cluster ID or, for classification, the class label.</p></li>
+<li><p><code>prototypes</code>: The collapsed prototypes that feed the next
+    layer, one row per cluster. Row <code>k</code> summarizes the original
+    observations with <code>membership == k</code>.</p></li>
 <li><p><code>membership</code>: For each <strong>original</strong> row in <code>X</code>,
-    which cluster/antibody it belongs to in this layer.</p></li>
-<li><p><code>predictions</code>: If classification, predicted label for each
-    original row in <code>X</code>.</p></li>
+    the row of <code>prototypes</code> it belongs to (<code>NA</code> if its cluster
+    was dropped).</p></li>
+<li><p><code>predictions</code>: For classification, the predicted label for
+    each original row: the majority label of its cluster.</p></li>
+<li><p><code>model</code>: Final layer only. The fitted <code><a href="AINet.html">AINet</a></code>
+    model, for labeling new observations with <code>$predict()</code>.</p></li>
 <li><p><code>task</code>: The specified task.</p></li>
-</ul></div>
+</ul><p>For classification, each layer collapses observations by the antibody
+  that labeled them, so a layer keeps several prototypes per class.</p>
+    </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
@@ -263,45 +277,42 @@ squared gradients (if using RMSProp).</p></dd>
 <span class="r-in"><span>  beta <span class="op">=</span> <span class="fl">5</span>,</span></span>
 <span class="r-in"><span>  maxIter <span class="op">=</span> <span class="fl">10</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> === honeycombHIVE: Layer 1 / 3 (task=clustering) ===</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Iteration 1 | #Antibodies: 14 | noImproveCount: 0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Iteration 2 | #Antibodies: 14 | noImproveCount: 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Iteration 3 | #Antibodies: 14 | noImproveCount: 2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Iteration 4 | #Antibodies: 14 | noImproveCount: 3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Iteration 5 | #Antibodies: 14 | noImproveCount: 4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Iteration 6 | #Antibodies: 14 | noImproveCount: 5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Iteration 7 | #Antibodies: 14 | noImproveCount: 6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Iteration 8 | #Antibodies: 14 | noImproveCount: 7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Iteration 9 | #Antibodies: 14 | noImproveCount: 8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Iteration 10 | #Antibodies: 14 | noImproveCount: 9</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Layer 1 completed. Next layer will use 14 prototypes.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Iteration 1 | #Antibodies: 15 | noImproveCount: 1</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Iteration 2 | #Antibodies: 15 | noImproveCount: 2</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Iteration 3 | #Antibodies: 15 | noImproveCount: 3</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Iteration 4 | #Antibodies: 15 | noImproveCount: 4</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Iteration 5 | #Antibodies: 15 | noImproveCount: 5</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Iteration 6 | #Antibodies: 15 | noImproveCount: 6</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Iteration 7 | #Antibodies: 15 | noImproveCount: 7</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Iteration 8 | #Antibodies: 15 | noImproveCount: 8</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Iteration 9 | #Antibodies: 15 | noImproveCount: 9</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Iteration 10 | #Antibodies: 15 | noImproveCount: 10</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Layer 1 completed. Next layer will use 11 prototypes.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> === honeycombHIVE: Layer 2 / 3 (task=clustering) ===</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Iteration 1 | #Antibodies: 9 | noImproveCount: 0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Iteration 2 | #Antibodies: 9 | noImproveCount: 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Iteration 3 | #Antibodies: 9 | noImproveCount: 2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Iteration 4 | #Antibodies: 9 | noImproveCount: 3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Iteration 5 | #Antibodies: 9 | noImproveCount: 4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Iteration 6 | #Antibodies: 9 | noImproveCount: 5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Iteration 7 | #Antibodies: 9 | noImproveCount: 6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Iteration 8 | #Antibodies: 9 | noImproveCount: 7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Iteration 9 | #Antibodies: 9 | noImproveCount: 8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Iteration 10 | #Antibodies: 9 | noImproveCount: 9</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Layer 2 completed. Next layer will use 9 prototypes.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Iteration 1 | #Antibodies: 9 | noImproveCount: 0</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Iteration 2 | #Antibodies: 9 | noImproveCount: 1</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Iteration 3 | #Antibodies: 9 | noImproveCount: 2</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Iteration 4 | #Antibodies: 9 | noImproveCount: 3</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Iteration 5 | #Antibodies: 9 | noImproveCount: 4</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Iteration 6 | #Antibodies: 9 | noImproveCount: 5</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Iteration 7 | #Antibodies: 9 | noImproveCount: 6</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Iteration 8 | #Antibodies: 9 | noImproveCount: 7</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Iteration 9 | #Antibodies: 9 | noImproveCount: 8</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Iteration 10 | #Antibodies: 9 | noImproveCount: 9</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Layer 2 completed. Next layer will use 5 prototypes.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> === honeycombHIVE: Layer 3 / 3 (task=clustering) ===</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Iteration 1 | #Antibodies: 5 | noImproveCount: 0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Iteration 2 | #Antibodies: 5 | noImproveCount: 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Iteration 3 | #Antibodies: 5 | noImproveCount: 2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Iteration 4 | #Antibodies: 5 | noImproveCount: 3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Iteration 5 | #Antibodies: 5 | noImproveCount: 4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Iteration 6 | #Antibodies: 5 | noImproveCount: 5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Iteration 7 | #Antibodies: 5 | noImproveCount: 6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Iteration 8 | #Antibodies: 5 | noImproveCount: 7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Iteration 9 | #Antibodies: 5 | noImproveCount: 8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Iteration 10 | #Antibodies: 5 | noImproveCount: 9</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Layer 3 completed. Next layer will use 5 prototypes.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Iteration 1 | #Antibodies: 4 | noImproveCount: 0</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Iteration 2 | #Antibodies: 4 | noImproveCount: 1</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Iteration 3 | #Antibodies: 4 | noImproveCount: 2</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Iteration 4 | #Antibodies: 4 | noImproveCount: 3</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Iteration 5 | #Antibodies: 4 | noImproveCount: 4</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Iteration 6 | #Antibodies: 4 | noImproveCount: 5</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Iteration 7 | #Antibodies: 4 | noImproveCount: 6</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Iteration 8 | #Antibodies: 4 | noImproveCount: 7</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Iteration 9 | #Antibodies: 4 | noImproveCount: 8</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Iteration 10 | #Antibodies: 4 | noImproveCount: 9</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Layer 3 completed. Next layer will use 4 prototypes.</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
@@ -314,7 +325,7 @@ squared gradients (if using RMSProp).</p></dd>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer></div>

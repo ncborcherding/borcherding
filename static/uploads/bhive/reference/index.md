@@ -21,6 +21,21 @@ for gradient-based post-processing.
 - [`visualizeHIVE()`](https://www.borch.dev/uploads/bhive/reference/visualizeHIVE.md)
   : Visualize bHIVE/honeycombHIVE Results
 
+## Bioconductor Integration
+
+Run bHIVE through
+[`bluster::clusterRows()`](https://rdrr.io/pkg/bluster/man/clusterRows.html)
+and
+[`bluster::clusterSweep()`](https://rdrr.io/pkg/bluster/man/clusterSweep.html).
+[`bHIVE()`](https://www.borch.dev/uploads/bhive/reference/bHIVE.md) also
+accepts SummarizedExperiment and SingleCellExperiment objects directly.
+
+- [`bHIVEParam()`](https://www.borch.dev/uploads/bhive/reference/bHIVEParam.md)
+  [`.defaultScalarArguments(`*`<bHIVEParam>`*`)`](https://www.borch.dev/uploads/bhive/reference/bHIVEParam.md)
+  [`show(`*`<bHIVEParam>`*`)`](https://www.borch.dev/uploads/bhive/reference/bHIVEParam.md)
+  [`clusterRows(`*`<ANY>`*`,`*`<bHIVEParam>`*`)`](https://www.borch.dev/uploads/bhive/reference/bHIVEParam.md)
+  : bHIVE clustering through bluster
+
 ## Hyperparameter Tuning
 
 Grid search over bHIVE hyperparameters with BiocParallel support.
@@ -79,7 +94,7 @@ Modules for environment-driven adaptation, memory, and ensemble methods.
 
 Model objects for use with the caret package’s `train()` function.
 
-- [`bHIVEmodel`](https://www.borch.dev/uploads/bhive/reference/bHIVEModel.md)
-  : B-cell-based Hybrid Immune Virtual Evolution (bHIVE) for caret
+- [`bHIVEmodel`](https://www.borch.dev/uploads/bhive/reference/bHIVEmodel.md)
+  : bHIVE classification model for caret
 - [`honeycombHIVEmodel`](https://www.borch.dev/uploads/bhive/reference/honeycombHIVEmodel.md)
-  : Mulilayered honeycombHIVE for caret
+  : Multilayered honeycombHIVE classification model for caret

@@ -116,13 +116,17 @@ honeycombHIVE(
 
 - verbose:
 
-  Logical, if TRUE prints progress at each layer.
+  Logical, if TRUE reports progress at each layer with
+  [`message()`](https://rdrr.io/r/base/message.html).
 
 - refine:
 
   Logical, if TRUE apply gradient-based refinement via
   [`refineB()`](https://www.borch.dev/uploads/bhive/reference/refineB.md)
-  to each layer's prototypes.
+  to each layer's antibodies, in the scaled space the layer was trained
+  in. Refinement polishes the reported antibodies and the final layer's
+  model. The collapse into the next layer's prototypes uses the bHIVE
+  assignments.
 
 - refineLoss:
 
@@ -178,20 +182,34 @@ honeycombHIVE(
 
 ## Value
 
-A list of length `layers`. Each element (layer) includes:
+A list of length `layers`. Each element (layer) is the
+[`bHIVE`](https://www.borch.dev/uploads/bhive/reference/bHIVE.md) result
+for that layer plus:
 
-- `antibodies`: The prototypes in that layer.
+- `antibodies`: The antibodies learned in that layer.
 
-- `assignments`: Antibody index (in that layer) for each row of
-  `current_X`.
+- `assignments`: For each row of the layer's input (the original rows
+  for layer 1, the previous layer's prototypes after that), the cluster
+  ID or, for classification, the class label.
 
-- `membership`: For each **original** row in `X`, which cluster/antibody
-  it belongs to in this layer.
+- `prototypes`: The collapsed prototypes that feed the next layer, one
+  row per cluster. Row `k` summarizes the original observations with
+  `membership == k`.
 
-- `predictions`: If classification, predicted label for each original
-  row in `X`.
+- `membership`: For each **original** row in `X`, the row of
+  `prototypes` it belongs to (`NA` if its cluster was dropped).
+
+- `predictions`: For classification, the predicted label for each
+  original row: the majority label of its cluster.
+
+- `model`: Final layer only. The fitted
+  [`AINet`](https://www.borch.dev/uploads/bhive/reference/AINet.md)
+  model, for labeling new observations with `$predict()`.
 
 - `task`: The specified task.
+
+For classification, each layer collapses observations by the antibody
+that labeled them, so a layer keeps several prototypes per class.
 
 ## Examples
 
@@ -207,20 +225,18 @@ resC <- honeycombHIVE(
   beta = 5,
   maxIter = 10
 )
-#> 
 #> === honeycombHIVE: Layer 1 / 3 (task=clustering) ===
-#> Iteration 1 | #Antibodies: 14 | noImproveCount: 0
-#> Iteration 2 | #Antibodies: 14 | noImproveCount: 1
-#> Iteration 3 | #Antibodies: 14 | noImproveCount: 2
-#> Iteration 4 | #Antibodies: 14 | noImproveCount: 3
-#> Iteration 5 | #Antibodies: 14 | noImproveCount: 4
-#> Iteration 6 | #Antibodies: 14 | noImproveCount: 5
-#> Iteration 7 | #Antibodies: 14 | noImproveCount: 6
-#> Iteration 8 | #Antibodies: 14 | noImproveCount: 7
-#> Iteration 9 | #Antibodies: 14 | noImproveCount: 8
-#> Iteration 10 | #Antibodies: 14 | noImproveCount: 9
-#> Layer 1 completed. Next layer will use 14 prototypes.
-#> 
+#> Iteration 1 | #Antibodies: 15 | noImproveCount: 1
+#> Iteration 2 | #Antibodies: 15 | noImproveCount: 2
+#> Iteration 3 | #Antibodies: 15 | noImproveCount: 3
+#> Iteration 4 | #Antibodies: 15 | noImproveCount: 4
+#> Iteration 5 | #Antibodies: 15 | noImproveCount: 5
+#> Iteration 6 | #Antibodies: 15 | noImproveCount: 6
+#> Iteration 7 | #Antibodies: 15 | noImproveCount: 7
+#> Iteration 8 | #Antibodies: 15 | noImproveCount: 8
+#> Iteration 9 | #Antibodies: 15 | noImproveCount: 9
+#> Iteration 10 | #Antibodies: 15 | noImproveCount: 10
+#> Layer 1 completed. Next layer will use 11 prototypes.
 #> === honeycombHIVE: Layer 2 / 3 (task=clustering) ===
 #> Iteration 1 | #Antibodies: 9 | noImproveCount: 0
 #> Iteration 2 | #Antibodies: 9 | noImproveCount: 1
@@ -232,18 +248,17 @@ resC <- honeycombHIVE(
 #> Iteration 8 | #Antibodies: 9 | noImproveCount: 7
 #> Iteration 9 | #Antibodies: 9 | noImproveCount: 8
 #> Iteration 10 | #Antibodies: 9 | noImproveCount: 9
-#> Layer 2 completed. Next layer will use 9 prototypes.
-#> 
+#> Layer 2 completed. Next layer will use 5 prototypes.
 #> === honeycombHIVE: Layer 3 / 3 (task=clustering) ===
-#> Iteration 1 | #Antibodies: 5 | noImproveCount: 0
-#> Iteration 2 | #Antibodies: 5 | noImproveCount: 1
-#> Iteration 3 | #Antibodies: 5 | noImproveCount: 2
-#> Iteration 4 | #Antibodies: 5 | noImproveCount: 3
-#> Iteration 5 | #Antibodies: 5 | noImproveCount: 4
-#> Iteration 6 | #Antibodies: 5 | noImproveCount: 5
-#> Iteration 7 | #Antibodies: 5 | noImproveCount: 6
-#> Iteration 8 | #Antibodies: 5 | noImproveCount: 7
-#> Iteration 9 | #Antibodies: 5 | noImproveCount: 8
-#> Iteration 10 | #Antibodies: 5 | noImproveCount: 9
-#> Layer 3 completed. Next layer will use 5 prototypes.
+#> Iteration 1 | #Antibodies: 4 | noImproveCount: 0
+#> Iteration 2 | #Antibodies: 4 | noImproveCount: 1
+#> Iteration 3 | #Antibodies: 4 | noImproveCount: 2
+#> Iteration 4 | #Antibodies: 4 | noImproveCount: 3
+#> Iteration 5 | #Antibodies: 4 | noImproveCount: 4
+#> Iteration 6 | #Antibodies: 4 | noImproveCount: 5
+#> Iteration 7 | #Antibodies: 4 | noImproveCount: 6
+#> Iteration 8 | #Antibodies: 4 | noImproveCount: 7
+#> Iteration 9 | #Antibodies: 4 | noImproveCount: 8
+#> Iteration 10 | #Antibodies: 4 | noImproveCount: 9
+#> Layer 3 completed. Next layer will use 4 prototypes.
 ```

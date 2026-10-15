@@ -46,8 +46,10 @@ refineB(
 
 - assignments:
 
-  Integer or character vector (length = nSamples), specifying the
-  antibody index (or label) each sample belongs to.
+  Vector (length = nSamples) giving the antibody each sample belongs to.
+  Numeric values are row indices of `A`. Character or factor values are
+  matched to `rownames(A)` when every value is a row name, and otherwise
+  mapped to rows in order of first appearance.
 
 - task:
 
@@ -73,7 +75,8 @@ refineB(
 
 - verbose:
 
-  Logical. If `TRUE`, prints progress messages each iteration.
+  Logical. If `TRUE`, reports progress with
+  [`message()`](https://rdrr.io/r/base/message.html) each step.
 
 - optimizer:
 
@@ -146,13 +149,13 @@ X <- as.matrix(iris[, 1:4])
 y <- iris$Species
 res <- bHIVE(X, y, task = "classification", nAntibodies = 10,
              maxIter = 5, verbose = FALSE)
-assignments <- as.integer(factor(res$assignments,
-                                 levels = unique(res$assignments)))
+# antibody_index gives the antibody (row of res$antibodies) that labeled
+# each sample
 A_refined <- refineB(res$antibodies, X, y = y,
-                     assignments = assignments,
+                     assignments = res$antibody_index,
                      task = "classification",
                      loss = "categorical_crossentropy", optimizer = "adam",
                      steps = 3, lr = 0.01, verbose = FALSE)
 dim(A_refined)
-#> [1] 10  4
+#> [1] 13  4
 ```

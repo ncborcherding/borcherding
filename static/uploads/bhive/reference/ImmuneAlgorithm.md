@@ -3,6 +3,14 @@
 Abstract R6 base class for all immune-inspired algorithms. Subclasses
 must implement the `fit` method.
 
+## Value
+
+An [`R6Class`](https://r6.r-lib.org/reference/R6Class.html) generator.
+`ImmuneAlgorithm$new()` returns an `ImmuneAlgorithm` object. It is an
+abstract base class: use
+[`AINet`](https://www.borch.dev/uploads/bhive/reference/AINet.md) for a
+fitted model.
+
 ## Public fields
 
 - `repertoire`:
@@ -38,7 +46,7 @@ must implement the `fit` method.
 
 - [`ImmuneAlgorithm$predict()`](#method-ImmuneAlgorithm-predict)
 
-- [`ImmuneAlgorithm$print()`](#method-ImmuneAlgorithm-print)
+- [`ImmuneAlgorithm$format()`](#method-ImmuneAlgorithm-format)
 
 - [`ImmuneAlgorithm$summary()`](#method-ImmuneAlgorithm-summary)
 
@@ -118,19 +126,24 @@ Predictions (class labels, numeric values, or cluster IDs).
 
 ------------------------------------------------------------------------
 
-### Method [`print()`](https://rdrr.io/r/base/print.html)
+### Method [`format()`](https://rdrr.io/r/base/format.html)
 
-Print summary of the algorithm.
+Format a short summary, one element per line. Used by
+[`print()`](https://rdrr.io/r/base/print.html).
 
 #### Usage
 
-    ImmuneAlgorithm$print(...)
+    ImmuneAlgorithm$format(...)
 
 #### Arguments
 
 - `...`:
 
   Not used.
+
+#### Returns
+
+A character vector.
 
 ------------------------------------------------------------------------
 

@@ -5,6 +5,11 @@ regulation. Replaces crude epsilon-threshold suppression with principled
 network dynamics based on Varela & Coutinho's (1991) second- generation
 immune network model.
 
+## Value
+
+An [`R6Class`](https://r6.r-lib.org/reference/R6Class.html) generator.
+`IdiotypicNetwork$new()` returns an `IdiotypicNetwork` object.
+
 ## Details
 
 The idiotypic network models antibody-antibody interactions where each
@@ -20,6 +25,21 @@ structure with memory and tolerance properties.
 This is the single most novel contribution of the overhauled bHIVE
 package. No existing AIS implementation uses idiotypic network dynamics
 for repertoire regulation.
+
+## Experimental
+
+The activation rule is applied to each antibody pair and the responses
+are summed: every neighbor whose affinity falls outside
+`[theta_low, theta_high]` counts as one unit of suppression. In a small,
+tight repertoire this culls crowded and isolated antibodies as intended
+(see the example). In a large or spread-out repertoire most pairs are
+far apart, their affinity is near zero, and every antibody is
+suppressed. `regulate()` then warns and leaves the repertoire unchanged,
+and [`AINet`](https://www.borch.dev/uploads/bhive/reference/AINet.md)
+keeps the top 10% by population and reports it with a message. Treat the
+module as experimental and check that antibodies survive on your data. A
+field-based form, in which the activation acts on the total stimulation
+each antibody receives, is planned.
 
 ## Public fields
 
@@ -67,7 +87,7 @@ for repertoire regulation.
 
 - [`IdiotypicNetwork$get_population()`](#method-IdiotypicNetwork-get_population)
 
-- [`IdiotypicNetwork$print()`](#method-IdiotypicNetwork-print)
+- [`IdiotypicNetwork$format()`](#method-IdiotypicNetwork-format)
 
 - [`IdiotypicNetwork$clone()`](#method-IdiotypicNetwork-clone)
 
@@ -184,19 +204,24 @@ Numeric vector or NULL if not yet run.
 
 ------------------------------------------------------------------------
 
-### Method [`print()`](https://rdrr.io/r/base/print.html)
+### Method [`format()`](https://rdrr.io/r/base/format.html)
 
-Print summary.
+Format a short summary, one element per line. Used by
+[`print()`](https://rdrr.io/r/base/print.html).
 
 #### Usage
 
-    IdiotypicNetwork$print(...)
+    IdiotypicNetwork$format(...)
 
 #### Arguments
 
 - `...`:
 
   Not used.
+
+#### Returns
+
+A character vector.
 
 ------------------------------------------------------------------------
 
@@ -217,16 +242,20 @@ The objects of this class are cloneable with this method.
 ## Examples
 
 ``` r
-# Create and run idiotypic regulation
-idi <- IdiotypicNetwork$new(theta_low = 0.01, theta_high = 0.5)
-A <- matrix(rnorm(50), nrow = 10, ncol = 5)
+# Four antibodies with pairwise affinity 0.25 (inside the default
+# activation window) stimulate each other and survive. A fifth, far from
+# the rest, is under-stimulated and dies.
+a <- sqrt(log(4) / 2)
+A <- rbind(cbind(diag(4) * a, 0), c(0, 0, 0, 0, 10))
 rep <- ImmuneRepertoire$new(A)
-idi$regulate(rep, "gaussian", list(alpha = 0.5))
-#> Warning: Idiotypic regulation removed all antibodies. Consider adjusting thresholds (theta_low, theta_high).
+idi <- IdiotypicNetwork$new(theta_low = 0.01, theta_high = 0.5)
+idi$regulate(rep, "gaussian", list(alpha = 1))
 print(idi)
 #> <IdiotypicNetwork>
 #>   Activation window: [0.010, 0.500]
 #>   Dynamics: 20 steps (dt=0.100)
 #>   Source: 0.500  Decay: 0.100  Survival: 0.500
-#>   Last run: 0/10 antibodies survived
+#>   Last run: 4/5 antibodies survived
+rep$size()
+#> [1] 4
 ```

@@ -5,6 +5,12 @@ the core bHIVE algorithm using C++ backends for performance-critical
 operations. Supports composable modules for somatic hypermutation,
 idiotypic network regulation, germinal center selection, and more.
 
+## Value
+
+An [`R6Class`](https://r6.r-lib.org/reference/R6Class.html) generator.
+`AINet$new()` returns an `AINet` object. Call `$fit()` on it to train,
+then `$predict()` to label new data.
+
 ## Super class
 
 [`bHIVE::ImmuneAlgorithm`](https://www.borch.dev/uploads/bhive/reference/ImmuneAlgorithm.md)
@@ -22,8 +28,8 @@ idiotypic network regulation, germinal center selection, and more.
 
 Inherited methods
 
+- [`bHIVE::ImmuneAlgorithm$format()`](https://www.borch.dev/uploads/bhive/reference/ImmuneAlgorithm.html#method-format)
 - [`bHIVE::ImmuneAlgorithm$predict()`](https://www.borch.dev/uploads/bhive/reference/ImmuneAlgorithm.html#method-predict)
-- [`bHIVE::ImmuneAlgorithm$print()`](https://www.borch.dev/uploads/bhive/reference/ImmuneAlgorithm.html#method-print)
 - [`bHIVE::ImmuneAlgorithm$summary()`](https://www.borch.dev/uploads/bhive/reference/ImmuneAlgorithm.html#method-summary)
 
 ------------------------------------------------------------------------
@@ -57,6 +63,7 @@ Create a new AINet algorithm instance.
       epsilonQuantile = NULL,
       coverageBoost = FALSE,
       coverageQuantile = 0.05,
+      minPerClass = 5,
       shm = NULL,
       init = NULL,
       activation = NULL,
@@ -187,6 +194,17 @@ Create a new AINet algorithm instance.
   Numeric in (0, 1). Affinity-coverage tail that defines "poorly
   covered" points for `coverageBoost`. Default 0.05.
 
+- `minPerClass`:
+
+  Integer. Classification only. Antibodies are seeded per class: each
+  class gets `max(minPerClass, round(nAntibodies * class share))`
+  antibodies drawn from its own observations with `initMethod`, and
+  starts with that class label. Without this, a rare class (for example
+  a population of a few cells in a cytometry sample) often receives no
+  antibody at all and can never be predicted. The total can slightly
+  exceed `nAntibodies`. Set to 0 to sample all observations without
+  regard to class. Ignored when an `init` module is supplied. Default 5.
+
 - `shm`:
 
   An SHMEngine instance or NULL for default uniform mutation.
@@ -221,7 +239,10 @@ Create a new AINet algorithm instance.
 
 - `verbose`:
 
-  Logical. Print progress.
+  Logical. Report progress with
+  [`message()`](https://rdrr.io/r/base/message.html), so it can be
+  silenced with
+  [`suppressMessages()`](https://rdrr.io/r/base/message.html).
 
 ------------------------------------------------------------------------
 
@@ -281,14 +302,14 @@ model <- AINet$new(nAntibodies = 15, maxIter = 10, verbose = FALSE)
 model$fit(X, task = "clustering")
 table(model$result$assignments)
 #> 
-#>  1  2  3  4  5  6  7  8  9 10 11 12 13 14 
-#> 10 10 23  7 14 10 10  8 12  9 18 10  3  6 
+#>  1  2  3  4  5  6  7  8  9 10 
+#>  4 28  1 21 18 28 20  3  6 21 
 
 # Classification
 model2 <- AINet$new(nAntibodies = 20, maxIter = 10, verbose = FALSE)
 model2$fit(X, iris$Species, task = "classification")
 mean(model2$result$assignments == as.character(iris$Species))
-#> [1] 0.8933333
+#> [1] 0.86
 
 # Predict on new data
 preds <- model2$predict(X[1:10, ])

@@ -4,6 +4,11 @@ Models T follicular helper (Tfh) cell selection pressure on B cells
 within a germinal center reaction. Implements resource competition where
 antibodies compete for Tfh help, and only helped antibodies survive.
 
+## Value
+
+An [`R6Class`](https://r6.r-lib.org/reference/R6Class.html) generator.
+`GerminalCenter$new()` returns a `GerminalCenter` object.
+
 ## Details
 
 The germinal center is where B cells undergo affinity maturation through
@@ -46,7 +51,7 @@ quality-control selectors:
 
 - [`GerminalCenter$select()`](#method-GerminalCenter-select)
 
-- [`GerminalCenter$print()`](#method-GerminalCenter-print)
+- [`GerminalCenter$format()`](#method-GerminalCenter-format)
 
 - [`GerminalCenter$clone()`](#method-GerminalCenter-clone)
 
@@ -127,19 +132,24 @@ Integer vector of survivor indices relative to the input repertoire
 
 ------------------------------------------------------------------------
 
-### Method [`print()`](https://rdrr.io/r/base/print.html)
+### Method [`format()`](https://rdrr.io/r/base/format.html)
 
-Print summary.
+Format a short summary, one element per line. Used by
+[`print()`](https://rdrr.io/r/base/print.html).
 
 #### Usage
 
-    GerminalCenter$print(...)
+    GerminalCenter$format(...)
 
 #### Arguments
 
 - `...`:
 
   Not used.
+
+#### Returns
+
+A character vector.
 
 ------------------------------------------------------------------------
 

@@ -9,7 +9,7 @@ Subclasses must implement the fit method."><meta property="og:image" content="ht
 
     <a class="navbar-brand me-2" href="../index.html">bHIVE</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.6</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.7</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -21,7 +21,7 @@ Subclasses must implement the fit method."><meta property="og:image" content="ht
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-tutorials" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Tutorials</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-tutorials"><li><a class="dropdown-item" href="../articles/bHIVE.html">Getting Started</a></li>
-    <li><a class="dropdown-item" href="../articles/articles/immune-modules.html">Immune Modules</a></li>
+    <li><a class="dropdown-item" href="../articles/immune-modules.html">Immune Modules</a></li>
     <li><a class="dropdown-item" href="../articles/articles/advanced-workflows.html">Advanced Tuning &amp; Workflows</a></li>
     <li><a class="dropdown-item" href="../articles/articles/foundations.html">Algorithm &amp; Biological Foundations</a></li>
   </ul></li>
@@ -48,6 +48,12 @@ Subclasses must implement the <code>fit</code> method.</p>
     </div>
 
 
+    <div class="section level2">
+    <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
+    <p>An <code><a href="https://r6.r-lib.org/reference/R6Class.html" class="external-link">R6Class</a></code> generator. <code>ImmuneAlgorithm$new()</code>
+  returns an <code>ImmuneAlgorithm</code> object. It is an abstract base class: use
+  <code><a href="AINet.html">AINet</a></code> for a fitted model.</p>
+    </div>
     <div class="section level2">
     <h2 id="public-fields">Public fields<a class="anchor" aria-label="anchor" href="#public-fields"></a></h2>
     <p></p><div class="r6-fields"><dl><dt><code>repertoire</code></dt>
@@ -82,7 +88,7 @@ Subclasses must implement the <code>fit</code> method.</p>
 <ul><li><p><a href="#method-ImmuneAlgorithm-new"><code>ImmuneAlgorithm$new()</code></a></p></li>
 <li><p><a href="#method-ImmuneAlgorithm-fit"><code>ImmuneAlgorithm$fit()</code></a></p></li>
 <li><p><a href="#method-ImmuneAlgorithm-predict"><code>ImmuneAlgorithm$predict()</code></a></p></li>
-<li><p><a href="#method-ImmuneAlgorithm-print"><code>ImmuneAlgorithm$print()</code></a></p></li>
+<li><p><a href="#method-ImmuneAlgorithm-format"><code>ImmuneAlgorithm$format()</code></a></p></li>
 <li><p><a href="#method-ImmuneAlgorithm-summary"><code>ImmuneAlgorithm$summary()</code></a></p></li>
 <li><p><a href="#method-ImmuneAlgorithm-clone"><code>ImmuneAlgorithm$clone()</code></a></p></li>
 </ul></div><p></p><hr><a id="method-ImmuneAlgorithm-new"></a><div class="section">
@@ -157,11 +163,12 @@ Subclasses must implement the <code>fit</code> method.</p>
 <p>Predictions (class labels, numeric values, or cluster IDs).</p>
 </div>
 
-</div><p></p><hr><a id="method-ImmuneAlgorithm-print"></a><div class="section">
-<h3 id="method-print-">Method <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code><a class="anchor" aria-label="anchor" href="#method-print-"></a></h3>
-<p>Print summary of the algorithm.</p><div class="section">
+</div><p></p><hr><a id="method-ImmuneAlgorithm-format"></a><div class="section">
+<h3 id="method-format-">Method <code><a href="https://rdrr.io/r/base/format.html" class="external-link">format()</a></code><a class="anchor" aria-label="anchor" href="#method-format-"></a></h3>
+<p>Format a short summary, one element per line. Used by
+  <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code>.</p><div class="section">
 <h4 id="usage-3">Usage<a class="anchor" aria-label="anchor" href="#usage-3"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ImmuneAlgorithm</span><span class="op">$</span><span class="fu">print</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ImmuneAlgorithm</span><span class="op">$</span><span class="fu">format</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -172,6 +179,10 @@ Subclasses must implement the <code>fit</code> method.</p>
 
 </dl><p></p></div>
 </div>
+<div class="section">
+<h4 id="returns-2">Returns<a class="anchor" aria-label="anchor" href="#returns-2"></a></h4>
+<p>A character vector.</p>
+</div>
 
 </div><p></p><hr><a id="method-ImmuneAlgorithm-summary"></a><div class="section">
 <h3 id="method-summary-">Method <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code><a class="anchor" aria-label="anchor" href="#method-summary-"></a></h3>
@@ -181,7 +192,7 @@ Subclasses must implement the <code>fit</code> method.</p>
 </div>
 
 <div class="section">
-<h4 id="returns-2">Returns<a class="anchor" aria-label="anchor" href="#returns-2"></a></h4>
+<h4 id="returns-3">Returns<a class="anchor" aria-label="anchor" href="#returns-3"></a></h4>
 <p>Data frame of per-iteration metrics.</p>
 </div>
 
@@ -224,7 +235,7 @@ Subclasses must implement the <code>fit</code> method.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer></div>

@@ -3,6 +3,11 @@
 R6 class representing a collection of antibodies (immune cells) with
 associated metadata. Core data structure for bHIVE algorithms.
 
+## Value
+
+An [`R6Class`](https://r6.r-lib.org/reference/R6Class.html) generator.
+`ImmuneRepertoire$new()` returns an `ImmuneRepertoire` object.
+
 ## Details
 
 An ImmuneRepertoire holds a matrix of antibody vectors (each row is one
@@ -44,7 +49,7 @@ RcppArmadillo.
 
 - [`ImmuneRepertoire$as_matrix()`](#method-ImmuneRepertoire-as_matrix)
 
-- [`ImmuneRepertoire$print()`](#method-ImmuneRepertoire-print)
+- [`ImmuneRepertoire$format()`](#method-ImmuneRepertoire-format)
 
 - [`ImmuneRepertoire$clone()`](#method-ImmuneRepertoire-clone)
 
@@ -268,19 +273,24 @@ Numeric matrix (nAntibodies x nFeatures).
 
 ------------------------------------------------------------------------
 
-### Method [`print()`](https://rdrr.io/r/base/print.html)
+### Method [`format()`](https://rdrr.io/r/base/format.html)
 
-Print summary.
+Format a short summary, one element per line. Used by
+[`print()`](https://rdrr.io/r/base/print.html).
 
 #### Usage
 
-    ImmuneRepertoire$print(...)
+    ImmuneRepertoire$format(...)
 
 #### Arguments
 
 - `...`:
 
   Not used.
+
+#### Returns
+
+A character vector.
 
 ------------------------------------------------------------------------
 
@@ -306,8 +316,8 @@ A <- matrix(rnorm(50), nrow = 10, ncol = 5)
 rep <- ImmuneRepertoire$new(A)
 print(rep)
 #> <ImmuneRepertoire> 10 antibodies x 5 features
-#>   Isotypes: 10 
-#>   States:   10 
+#>   Isotypes: 10
+#>   States:   10
 
 # Compute affinity to data
 X <- matrix(rnorm(100), nrow = 20, ncol = 5)
@@ -318,5 +328,5 @@ dim(aff)  # 20 x 10
 # Network suppression
 rep$suppress(epsilon = 1.5, method = "euclidean")
 rep$size()  # fewer antibodies after suppression
-#> [1] 9
+#> [1] 6
 ```

@@ -4,6 +4,11 @@ Two-signal activation gate implementing the immunological principle that
 immune cell activation requires both antigen-specific recognition
 (Signal 1) AND costimulatory context (Signal 2).
 
+## Value
+
+An [`R6Class`](https://r6.r-lib.org/reference/R6Class.html) generator.
+`ActivationGate$new()` returns an `ActivationGate` object.
+
 ## Details
 
 Prevents spurious activation on isolated outliers. An antibody is only
@@ -44,7 +49,7 @@ Signal 2 options:
 
 - [`ActivationGate$evaluate()`](#method-ActivationGate-evaluate)
 
-- [`ActivationGate$print()`](#method-ActivationGate-print)
+- [`ActivationGate$format()`](#method-ActivationGate-format)
 
 - [`ActivationGate$clone()`](#method-ActivationGate-clone)
 
@@ -119,19 +124,24 @@ Logical matrix (n x m) where TRUE means the interaction is activated.
 
 ------------------------------------------------------------------------
 
-### Method [`print()`](https://rdrr.io/r/base/print.html)
+### Method [`format()`](https://rdrr.io/r/base/format.html)
 
-Print summary.
+Format a short summary, one element per line. Used by
+[`print()`](https://rdrr.io/r/base/print.html).
 
 #### Usage
 
-    ActivationGate$print(...)
+    ActivationGate$format(...)
 
 #### Arguments
 
 - `...`:
 
   Not used.
+
+#### Returns
+
+A character vector.
 
 ------------------------------------------------------------------------
 
@@ -161,5 +171,5 @@ gate <- ActivationGate$new(signal2_type = "density", threshold2 = 0.3)
 aff <- rep$affinity_matrix(X, "gaussian")
 activated <- gate$evaluate(aff, X, A)
 sum(activated)  # number of activated interactions
-#> [1] 452
+#> [1] 449
 ```

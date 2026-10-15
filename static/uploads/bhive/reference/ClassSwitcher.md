@@ -5,6 +5,11 @@ change their matching breadth. Inspired by real B cell class switching
 from IgM (broad, pentameric) to IgG (specific, monomeric) to IgA
 (mucosal).
 
+## Value
+
+An [`R6Class`](https://r6.r-lib.org/reference/R6Class.html) generator.
+`ClassSwitcher$new()` returns a `ClassSwitcher` object.
+
 ## Details
 
 In bHIVE, class switching modifies the effective affinity kernel width:
@@ -42,7 +47,7 @@ In bHIVE, class switching modifies the effective affinity kernel width:
 
 - [`ClassSwitcher$get_alpha()`](#method-ClassSwitcher-get_alpha)
 
-- [`ClassSwitcher$print()`](#method-ClassSwitcher-print)
+- [`ClassSwitcher$format()`](#method-ClassSwitcher-format)
 
 - [`ClassSwitcher$clone()`](#method-ClassSwitcher-clone)
 
@@ -118,19 +123,24 @@ Numeric.
 
 ------------------------------------------------------------------------
 
-### Method [`print()`](https://rdrr.io/r/base/print.html)
+### Method [`format()`](https://rdrr.io/r/base/format.html)
 
-Print summary.
+Format a short summary, one element per line. Used by
+[`print()`](https://rdrr.io/r/base/print.html).
 
 #### Usage
 
-    ClassSwitcher$print(...)
+    ClassSwitcher$format(...)
 
 #### Arguments
 
 - `...`:
 
   Not used.
+
+#### Returns
+
+A character vector.
 
 ------------------------------------------------------------------------
 
@@ -160,5 +170,5 @@ alphas <- cs$switch_isotypes(rep, zones)
 table(rep$metadata$isotype)  # IgM, IgG, IgA distribution
 #> 
 #> IgA IgG IgM 
-#>   4   4   2 
+#>   3   3   4 
 ```

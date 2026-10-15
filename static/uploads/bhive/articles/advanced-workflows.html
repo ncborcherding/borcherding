@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">bHIVE</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.6</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.7</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -34,7 +34,7 @@
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-tutorials" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Tutorials</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-tutorials">
 <li><a class="dropdown-item" href="../articles/bHIVE.html">Getting Started</a></li>
-    <li><a class="dropdown-item" href="../articles/articles/immune-modules.html">Immune Modules</a></li>
+    <li><a class="dropdown-item" href="../articles/immune-modules.html">Immune Modules</a></li>
     <li><a class="dropdown-item" href="../articles/articles/advanced-workflows.html">Advanced Tuning &amp; Workflows</a></li>
     <li><a class="dropdown-item" href="../articles/articles/foundations.html">Algorithm &amp; Biological Foundations</a></li>
   </ul>
@@ -67,7 +67,7 @@ Borcherding</h4>
 MO, USA<br><a class="author_email" href="mailto:#"></a><a href="mailto:ncborch@gmail.com" class="email">ncborch@gmail.com</a>
       </address>
                   
-            <h4 data-toc-skip class="date">2026-06-26</h4>
+            <h4 data-toc-skip class="date">2026-10-15</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/BorchLab/bHIVE/blob/main/vignettes/articles/advanced-workflows.Rmd" class="external-link"><code>vignettes/articles/advanced-workflows.Rmd</code></a></small>
       <div class="d-none name"><code>advanced-workflows.Rmd</code></div>
@@ -150,20 +150,20 @@ metric.</p>
 <span><span class="va">tuning</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/swarmbHIVE.html">swarmbHIVE</a></span><span class="op">(</span>X <span class="op">=</span> <span class="va">X</span>, task <span class="op">=</span> <span class="st">"clustering"</span>, grid <span class="op">=</span> <span class="va">grid</span>,</span>
 <span>                     metric <span class="op">=</span> <span class="st">"silhouette"</span>, maxIter <span class="op">=</span> <span class="fl">15</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">tuning</span><span class="op">$</span><span class="va">results</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">nAntibodies</span>, y <span class="op">=</span> <span class="va">metric_value</span>,</span>
+<span><span class="fu">ggplot</span><span class="op">(</span><span class="va">tuning</span><span class="op">$</span><span class="va">results</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">nAntibodies</span>, y <span class="op">=</span> <span class="va">metric_value</span>,</span>
 <span>                            color <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">beta</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>shape <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">epsilon</span><span class="op">)</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">3</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Clustering: Silhouette Score"</span>,</span>
+<span>  <span class="fu">geom_line</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_point</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>shape <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">epsilon</span><span class="op">)</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">3</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Clustering: Silhouette Score"</span>,</span>
 <span>       x <span class="op">=</span> <span class="st">"Number of Antibodies"</span>, y <span class="op">=</span> <span class="st">"Silhouette"</span>,</span>
 <span>       color <span class="op">=</span> <span class="st">"Beta"</span>, shape <span class="op">=</span> <span class="st">"Epsilon"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">scale_color_viridis</span><span class="op">(</span>discrete <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu">scale_color_viridis_d</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">theme_minimal</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="advanced-workflows_files/figure-html/swarm-clustering-1.png" class="r-plt" alt="" width="1050"></p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">tuning</span><span class="op">$</span><span class="va">best_params</span></span></code></pre></div>
-<pre><code><span><span class="co">##    nAntibodies beta epsilon metric_value</span></span>
-<span><span class="co">## 10          10    5    0.05    0.3529172</span></span></code></pre>
+<pre><code><span><span class="co">##   nAntibodies beta epsilon metric_value</span></span>
+<span><span class="co">## 1          10    3    0.01    0.3203197</span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="classification-tuning">Classification Tuning<a class="anchor" aria-label="anchor" href="#classification-tuning"></a>
@@ -181,8 +181,8 @@ metric.</p>
 <span>                         grid <span class="op">=</span> <span class="va">grid_cls</span>, metric <span class="op">=</span> <span class="st">"accuracy"</span>,</span>
 <span>                         maxIter <span class="op">=</span> <span class="fl">15</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="va">tuning_cls</span><span class="op">$</span><span class="va">best_params</span></span></code></pre></div>
-<pre><code><span><span class="co">##    nAntibodies beta epsilon metric_value</span></span>
-<span><span class="co">## 11          30    3    0.05    0.9733333</span></span></code></pre>
+<pre><code><span><span class="co">##   nAntibodies beta epsilon metric_value</span></span>
+<span><span class="co">## 9          50   10    0.01    0.9533333</span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="parallelization-with-biocparallel">Parallelization with BiocParallel<a class="anchor" aria-label="anchor" href="#parallelization-with-biocparallel"></a>
@@ -225,8 +225,8 @@ next layer, creating a hierarchical compression of the data.</p>
 <span><span class="op">}</span><span class="op">)</span></span>
 <span><span class="va">layer_info</span></span></code></pre></div>
 <pre><code><span><span class="co">##              [,1] [,2] [,3]</span></span>
-<span><span class="co">## n_prototypes   27   15   10</span></span>
-<span><span class="co">## n_clusters     27   15   10</span></span></code></pre>
+<span><span class="co">## n_prototypes   22   12    7</span></span>
+<span><span class="co">## n_clusters     22   12    7</span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="collapse-methods">Collapse Methods<a class="anchor" aria-label="anchor" href="#collapse-methods"></a>
@@ -263,10 +263,10 @@ summarized into prototypes for the next layer:</p>
 <span>                            verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"Centroid clusters:"</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">res_centroid</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">membership</span><span class="op">)</span><span class="op">)</span>, <span class="st">"\n"</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Centroid clusters: 11</span></span></code></pre>
+<pre><code><span><span class="co">## Centroid clusters: 9</span></span></code></pre>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"Medoid clusters:  "</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">res_medoid</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">membership</span><span class="op">)</span><span class="op">)</span>, <span class="st">"\n"</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Medoid clusters:   13</span></span></code></pre>
+<pre><code><span><span class="co">## Medoid clusters:   11</span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="with-gradient-refinement">With Gradient Refinement<a class="anchor" aria-label="anchor" href="#with-gradient-refinement"></a>
@@ -292,10 +292,10 @@ prototype positions before collapsing.</p>
 <span><span class="va">acc_plain</span>   <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">res_plain</span><span class="op">[[</span><span class="fl">3</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">predictions</span>   <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="va">y_iris</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">acc_refined</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">res_refined</span><span class="op">[[</span><span class="fl">3</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">predictions</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="va">y_iris</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"Accuracy (plain):  "</span>, <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">acc_plain</span>, <span class="fl">3</span><span class="op">)</span>, <span class="st">"\n"</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Accuracy (plain):   0.333</span></span></code></pre>
+<pre><code><span><span class="co">## Accuracy (plain):   0.92</span></span></code></pre>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"Accuracy (refined):"</span>, <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">acc_refined</span>, <span class="fl">3</span><span class="op">)</span>, <span class="st">"\n"</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Accuracy (refined): 0.333</span></span></code></pre>
+<pre><code><span><span class="co">## Accuracy (refined): 0.833</span></span></code></pre>
 </div>
 </div>
 <div class="section level2">
@@ -427,29 +427,29 @@ optimizers and 8 loss functions.</p>
 <span></span>
 <span><span class="va">merged</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/merge.html" class="external-link">merge</a></span><span class="op">(</span><span class="va">proto_df</span>, <span class="va">refined_df</span>, by <span class="op">=</span> <span class="st">"ID"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>PC1 <span class="op">=</span> <span class="va">X_pca</span><span class="op">[</span>, <span class="fl">1</span><span class="op">]</span>, PC2 <span class="op">=</span> <span class="va">X_pca</span><span class="op">[</span>, <span class="fl">2</span><span class="op">]</span>,</span>
+<span><span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_point</span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>PC1 <span class="op">=</span> <span class="va">X_pca</span><span class="op">[</span>, <span class="fl">1</span><span class="op">]</span>, PC2 <span class="op">=</span> <span class="va">X_pca</span><span class="op">[</span>, <span class="fl">2</span><span class="op">]</span>,</span>
 <span>                                Cluster <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">assignments</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>             <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">PC1</span>, y <span class="op">=</span> <span class="va">PC2</span>, color <span class="op">=</span> <span class="va">Cluster</span><span class="op">)</span>, alpha <span class="op">=</span> <span class="fl">0.4</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">proto_df</span>,</span>
-<span>             <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">PC1_before</span>, y <span class="op">=</span> <span class="va">PC2_before</span><span class="op">)</span>,</span>
+<span>             <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">PC1</span>, y <span class="op">=</span> <span class="va">PC2</span>, color <span class="op">=</span> <span class="va">Cluster</span><span class="op">)</span>, alpha <span class="op">=</span> <span class="fl">0.4</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_point</span><span class="op">(</span>data <span class="op">=</span> <span class="va">proto_df</span>,</span>
+<span>             <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">PC1_before</span>, y <span class="op">=</span> <span class="va">PC2_before</span><span class="op">)</span>,</span>
 <span>             color <span class="op">=</span> <span class="st">"#440154"</span>, size <span class="op">=</span> <span class="fl">4</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">merged</span>,</span>
-<span>             <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">PC1_after</span>, y <span class="op">=</span> <span class="va">PC2_after</span><span class="op">)</span>,</span>
+<span>  <span class="fu">geom_point</span><span class="op">(</span>data <span class="op">=</span> <span class="va">merged</span>,</span>
+<span>             <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">PC1_after</span>, y <span class="op">=</span> <span class="va">PC2_after</span><span class="op">)</span>,</span>
 <span>             color <span class="op">=</span> <span class="st">"#FDE725"</span>, size <span class="op">=</span> <span class="fl">4</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_segment.html" class="external-link">geom_segment</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">merged</span>,</span>
-<span>               <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">PC1_before</span>, y <span class="op">=</span> <span class="va">PC2_before</span>,</span>
+<span>  <span class="fu">geom_segment</span><span class="op">(</span>data <span class="op">=</span> <span class="va">merged</span>,</span>
+<span>               <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">PC1_before</span>, y <span class="op">=</span> <span class="va">PC2_before</span>,</span>
 <span>                   xend <span class="op">=</span> <span class="va">PC1_after</span>, yend <span class="op">=</span> <span class="va">PC2_after</span><span class="op">)</span>,</span>
-<span>               arrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/arrow.html" class="external-link">arrow</a></span><span class="op">(</span>length <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html" class="external-link">unit</a></span><span class="op">(</span><span class="fl">0.2</span>, <span class="st">"cm"</span><span class="op">)</span>, type <span class="op">=</span> <span class="st">"closed"</span><span class="op">)</span>,</span>
+<span>               arrow <span class="op">=</span> <span class="fu">arrow</span><span class="op">(</span>length <span class="op">=</span> <span class="fu">unit</span><span class="op">(</span><span class="fl">0.2</span>, <span class="st">"cm"</span><span class="op">)</span>, type <span class="op">=</span> <span class="st">"closed"</span><span class="op">)</span>,</span>
 <span>               color <span class="op">=</span> <span class="st">"black"</span>, linewidth <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">scale_color_viridis</span><span class="op">(</span>discrete <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Prototype Movement by Optimizer"</span>,</span>
+<span>  <span class="fu">scale_color_viridis_d</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Prototype Movement by Optimizer"</span>,</span>
 <span>       subtitle <span class="op">=</span> <span class="st">"Purple = before, Yellow = after refinement"</span>,</span>
 <span>       x <span class="op">=</span> <span class="st">"PC1"</span>, y <span class="op">=</span> <span class="st">"PC2"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">optimizer</span>, nrow <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>             labeller <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/as_labeller.html" class="external-link">as_labeller</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>sgd <span class="op">=</span> <span class="st">"SGD"</span>, adam <span class="op">=</span> <span class="st">"Adam"</span>,</span>
+<span>  <span class="fu">facet_wrap</span><span class="op">(</span><span class="op">~</span><span class="va">optimizer</span>, nrow <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>             labeller <span class="op">=</span> <span class="fu">as_labeller</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>sgd <span class="op">=</span> <span class="st">"SGD"</span>, adam <span class="op">=</span> <span class="st">"Adam"</span>,</span>
 <span>                                      rmsprop <span class="op">=</span> <span class="st">"RMSProp"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu">theme_minimal</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="advanced-workflows_files/figure-html/refine-comparison-1.png" class="r-plt" alt="" width="1200"></p>
 </div>
 </div>
@@ -503,28 +503,36 @@ tuning over <code>layers</code>, <code>refineOptimizer</code>,
 <span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"caret Cross-Validation Results"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">scale_color_viridis</span><span class="op">(</span>discrete <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_viridis.html" class="external-link">scale_color_viridis_d</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## Warning: `aes_string()` was deprecated in ggplot2 3.0.0.</span></span>
+<span><span class="co">## <span style="color: #00BBBB;">ℹ</span> Please use tidy evaluation idioms with `aes()`.</span></span>
+<span><span class="co">## <span style="color: #00BBBB;">ℹ</span> See also `vignette("ggplot2-in-packages")` for more information.</span></span>
+<span><span class="co">## <span style="color: #00BBBB;">ℹ</span> The deprecated feature was likely used in the <span style="color: #0000BB;">caret</span> package.</span></span>
+<span><span class="co">##   Please report the issue at <span style="color: #0000BB; font-style: italic;">&lt;https://github.com/topepo/caret/issues&gt;</span>.</span></span>
+<span><span class="co">## <span style="color: #555555;">This warning is displayed once per session.</span></span></span>
+<span><span class="co">## <span style="color: #555555;">Call `lifecycle::last_lifecycle_warnings()` to see where this warning was</span></span></span>
+<span><span class="co">## <span style="color: #555555;">generated.</span></span></span></code></pre>
 <p><img src="advanced-workflows_files/figure-html/caret-basic-1.png" class="r-plt" alt="" width="1050"></p>
 </div>
 <div class="section level3">
 <h3 id="prediction-on-held-out-data">Prediction on Held-Out Data<a class="anchor" aria-label="anchor" href="#prediction-on-held-out-data"></a>
 </h3>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">preds</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">model</span>, newdata <span class="op">=</span> <span class="va">X_test</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span>Predicted <span class="op">=</span> <span class="va">preds</span>, Actual <span class="op">=</span> <span class="va">y_test</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##             Actual</span></span>
 <span><span class="co">## Predicted    setosa versicolor virginica</span></span>
-<span><span class="co">##   setosa          0          6         7</span></span>
-<span><span class="co">##   versicolor      2          7         8</span></span>
-<span><span class="co">##   virginica      10          2         3</span></span></code></pre>
+<span><span class="co">##   setosa         12          0         0</span></span>
+<span><span class="co">##   versicolor      0         14         7</span></span>
+<span><span class="co">##   virginica       0          1        11</span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="honeycombhive-caret-model">honeycombHIVE caret Model<a class="anchor" aria-label="anchor" href="#honeycombhive-caret-model"></a>
 </h3>
 <p>The multilayer caret model adds layer count and refinement parameters
 to the tuning grid:</p>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">model_hc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/caret/man/train.html" class="external-link">train</a></span><span class="op">(</span></span>
 <span>  x <span class="op">=</span> <span class="va">X_train</span>, y <span class="op">=</span> <span class="va">y_train</span>,</span>
 <span>  method <span class="op">=</span> <span class="va">honeycombHIVEmodel</span>,</span>
@@ -539,7 +547,13 @@ to the tuning grid:</p>
 <span>    refineLR        <span class="op">=</span> <span class="fl">0.01</span></span>
 <span>  <span class="op">)</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">FALSE</span></span>
-<span><span class="op">)</span></span></code></pre></div>
+<span><span class="op">)</span></span>
+<span><span class="va">model_hc</span><span class="op">$</span><span class="va">results</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"nAntibodies"</span>, <span class="st">"layers"</span>, <span class="st">"Accuracy"</span>, <span class="st">"Kappa"</span><span class="op">)</span><span class="op">]</span></span></code></pre></div>
+<pre><code><span><span class="co">##   nAntibodies layers  Accuracy     Kappa</span></span>
+<span><span class="co">## 1          20      2 0.8947811 0.8412631</span></span>
+<span><span class="co">## 2          20      3 0.8451178 0.7652050</span></span>
+<span><span class="co">## 3          30      2 0.9141414 0.8705741</span></span>
+<span><span class="co">## 4          30      3 0.8728956 0.8087518</span></span></code></pre>
 </div>
 </div>
 <div class="section level2">
@@ -584,7 +598,7 @@ overlay</td>
 <div class="section level3">
 <h3 id="scatter-plot-with-pca">Scatter Plot with PCA<a class="anchor" aria-label="anchor" href="#scatter-plot-with-pca"></a>
 </h3>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">X</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">iris</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span></span>
@@ -602,7 +616,7 @@ overlay</td>
 <div class="section level3">
 <h3 id="violin-plot-for-classification">Violin Plot for Classification<a class="anchor" aria-label="anchor" href="#violin-plot-for-classification"></a>
 </h3>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span></span>
 <span><span class="va">res_cls</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/honeycombHIVE.html">honeycombHIVE</a></span><span class="op">(</span>X <span class="op">=</span> <span class="va">X</span>, y <span class="op">=</span> <span class="va">iris</span><span class="op">$</span><span class="va">Species</span>,</span>
 <span>                         task <span class="op">=</span> <span class="st">"classification"</span>,</span>
@@ -642,11 +656,11 @@ hierarchical refinement</li>
 <strong>Visualize</strong> with <code><a href="../reference/visualizeHIVE.html">visualizeHIVE()</a></code> to
 understand results</li>
 </ol>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## R version 4.6.1 (2026-06-24)</span></span>
 <span><span class="co">## Platform: x86_64-pc-linux-gnu</span></span>
-<span><span class="co">## Running under: Ubuntu 24.04.4 LTS</span></span>
+<span><span class="co">## Running under: Ubuntu 24.04.5 LTS</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## Matrix products: default</span></span>
 <span><span class="co">## BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3 </span></span>
@@ -665,42 +679,63 @@ understand results</li>
 <span><span class="co">## [1] stats     graphics  grDevices utils     datasets  methods   base     </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## other attached packages:</span></span>
-<span><span class="co">## [1] caret_7.0-1       lattice_0.22-9    viridis_0.6.5     viridisLite_0.4.3</span></span>
-<span><span class="co">## [5] ggplot2_4.0.3     bHIVE_0.99.6      BiocStyle_2.40.0 </span></span>
+<span><span class="co">## [1] caret_7.0-1      lattice_0.22-9   ggplot2_4.0.3    bHIVE_0.99.7    </span></span>
+<span><span class="co">## [5] BiocStyle_2.40.0</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## loaded via a namespace (and not attached):</span></span>
-<span><span class="co">##  [1] pROC_1.19.0.1        gridExtra_2.3.1      rlang_1.2.0         </span></span>
-<span><span class="co">##  [4] magrittr_2.0.5       otel_0.2.0           e1071_1.7-17        </span></span>
-<span><span class="co">##  [7] compiler_4.6.1       png_0.1-9            systemfonts_1.3.2   </span></span>
-<span><span class="co">## [10] vctrs_0.7.3          reshape2_1.4.5       stringr_1.6.0       </span></span>
-<span><span class="co">## [13] pkgconfig_2.0.3      fastmap_1.2.0        labeling_0.4.3      </span></span>
-<span><span class="co">## [16] rmarkdown_2.31       prodlim_2026.03.11   ragg_1.5.2          </span></span>
-<span><span class="co">## [19] purrr_1.2.2          xfun_0.59            cachem_1.1.0        </span></span>
-<span><span class="co">## [22] jsonlite_2.0.0       recipes_1.3.3        BiocParallel_1.46.0 </span></span>
-<span><span class="co">## [25] clusterCrit_1.3.0    parallel_4.6.1       cluster_2.1.8.2     </span></span>
-<span><span class="co">## [28] R6_2.6.1             bslib_0.11.0         stringi_1.8.7       </span></span>
-<span><span class="co">## [31] RColorBrewer_1.1-3   reticulate_1.46.0    parallelly_1.47.0   </span></span>
-<span><span class="co">## [34] rpart_4.1.27         lubridate_1.9.5      jquerylib_0.1.4     </span></span>
-<span><span class="co">## [37] Rcpp_1.1.1-1.1       bookdown_0.47        iterators_1.0.14    </span></span>
-<span><span class="co">## [40] knitr_1.51           future.apply_1.20.2  Matrix_1.7-5        </span></span>
-<span><span class="co">## [43] splines_4.6.1        nnet_7.3-20          timechange_0.4.0    </span></span>
-<span><span class="co">## [46] tidyselect_1.2.1     yaml_2.3.12          timeDate_4052.112   </span></span>
-<span><span class="co">## [49] codetools_0.2-20     listenv_1.0.0        tibble_3.3.1        </span></span>
-<span><span class="co">## [52] plyr_1.8.9           withr_3.0.3          S7_0.2.2            </span></span>
-<span><span class="co">## [55] askpass_1.2.1        evaluate_1.0.5       Rtsne_0.17          </span></span>
-<span><span class="co">## [58] future_1.70.0        desc_1.4.3           survival_3.8-6      </span></span>
-<span><span class="co">## [61] proxy_0.4-29         pillar_1.11.1        BiocManager_1.30.27 </span></span>
-<span><span class="co">## [64] foreach_1.5.2        stats4_4.6.1         generics_0.1.4      </span></span>
-<span><span class="co">## [67] scales_1.4.0         globals_0.19.1       class_7.3-23        </span></span>
-<span><span class="co">## [70] glue_1.8.1           tools_4.6.1          data.table_1.18.4   </span></span>
-<span><span class="co">## [73] RSpectra_0.16-2      ModelMetrics_1.2.2.2 gower_1.0.2         </span></span>
-<span><span class="co">## [76] fs_2.1.0             grid_4.6.1           umap_0.2.10.0       </span></span>
-<span><span class="co">## [79] ipred_0.9-15         nlme_3.1-169         cli_3.6.6           </span></span>
-<span><span class="co">## [82] textshaping_1.0.5    lava_1.9.1           dplyr_1.2.1         </span></span>
-<span><span class="co">## [85] gtable_0.3.6         sass_0.4.10          digest_0.6.39       </span></span>
-<span><span class="co">## [88] htmlwidgets_1.6.4    farver_2.1.2         htmltools_0.5.9     </span></span>
-<span><span class="co">## [91] pkgdown_2.2.0        lifecycle_1.0.5      hardhat_1.4.3       </span></span>
-<span><span class="co">## [94] openssl_2.4.2        MASS_7.3-65</span></span></code></pre>
+<span><span class="co">##   [1] pROC_1.19.1                 rlang_1.3.0                </span></span>
+<span><span class="co">##   [3] magrittr_2.0.5              otel_0.2.0                 </span></span>
+<span><span class="co">##   [5] e1071_1.7-17                matrixStats_1.5.0          </span></span>
+<span><span class="co">##   [7] compiler_4.6.1              systemfonts_1.3.2          </span></span>
+<span><span class="co">##   [9] vctrs_0.7.3                 reshape2_1.4.5             </span></span>
+<span><span class="co">##  [11] stringr_1.6.0               pkgconfig_2.0.3            </span></span>
+<span><span class="co">##  [13] fastmap_1.2.0               XVector_0.52.0             </span></span>
+<span><span class="co">##  [15] labeling_0.4.3              rmarkdown_2.32             </span></span>
+<span><span class="co">##  [17] prodlim_2026.03.11          ragg_1.5.2                 </span></span>
+<span><span class="co">##  [19] purrr_1.2.2                 xfun_0.61                  </span></span>
+<span><span class="co">##  [21] bluster_1.22.0              cachem_1.1.0               </span></span>
+<span><span class="co">##  [23] jsonlite_2.0.0              recipes_1.4.0              </span></span>
+<span><span class="co">##  [25] DelayedArray_0.38.2         BiocParallel_1.46.0        </span></span>
+<span><span class="co">##  [27] clusterCrit_1.3.0           parallel_4.6.1             </span></span>
+<span><span class="co">##  [29] cluster_2.1.8.2             R6_2.6.1                   </span></span>
+<span><span class="co">##  [31] bslib_0.12.0                stringi_1.8.9              </span></span>
+<span><span class="co">##  [33] RColorBrewer_1.1-3          parallelly_1.48.0          </span></span>
+<span><span class="co">##  [35] rpart_4.1.27                GenomicRanges_1.64.0       </span></span>
+<span><span class="co">##  [37] lubridate_1.9.5             jquerylib_0.1.4            </span></span>
+<span><span class="co">##  [39] Rcpp_1.1.2                  Seqinfo_1.2.0              </span></span>
+<span><span class="co">##  [41] bookdown_0.48               SummarizedExperiment_1.42.0</span></span>
+<span><span class="co">##  [43] iterators_1.0.14            knitr_1.52                 </span></span>
+<span><span class="co">##  [45] future.apply_1.20.2         IRanges_2.46.0             </span></span>
+<span><span class="co">##  [47] Matrix_1.7-5                splines_4.6.1              </span></span>
+<span><span class="co">##  [49] nnet_7.3-20                 igraph_2.3.4               </span></span>
+<span><span class="co">##  [51] timechange_0.4.0            tidyselect_1.2.1           </span></span>
+<span><span class="co">##  [53] abind_1.4-8                 yaml_2.3.12                </span></span>
+<span><span class="co">##  [55] timeDate_4052.112           codetools_0.2-20           </span></span>
+<span><span class="co">##  [57] listenv_1.1.0               tibble_3.3.1               </span></span>
+<span><span class="co">##  [59] plyr_1.8.9                  Biobase_2.72.0             </span></span>
+<span><span class="co">##  [61] withr_3.0.3                 S7_0.2.2                   </span></span>
+<span><span class="co">##  [63] evaluate_1.0.5              future_1.76.0              </span></span>
+<span><span class="co">##  [65] desc_1.4.3                  survival_3.8-6             </span></span>
+<span><span class="co">##  [67] proxy_0.4-29                pillar_1.11.1              </span></span>
+<span><span class="co">##  [69] BiocManager_1.30.27         MatrixGenerics_1.24.0      </span></span>
+<span><span class="co">##  [71] foreach_1.5.2               stats4_4.6.1               </span></span>
+<span><span class="co">##  [73] generics_0.1.4              S4Vectors_0.50.3           </span></span>
+<span><span class="co">##  [75] scales_1.4.0                globals_0.20.0             </span></span>
+<span><span class="co">##  [77] class_7.3-23                glue_1.8.1                 </span></span>
+<span><span class="co">##  [79] tools_4.6.1                 BiocNeighbors_2.6.0        </span></span>
+<span><span class="co">##  [81] data.table_1.18.6.1         ModelMetrics_1.2.2.2       </span></span>
+<span><span class="co">##  [83] gower_1.0.2                 fs_2.1.0                   </span></span>
+<span><span class="co">##  [85] grid_4.6.1                  ipred_0.9-16               </span></span>
+<span><span class="co">##  [87] SingleCellExperiment_1.34.0 nlme_3.1-169               </span></span>
+<span><span class="co">##  [89] cli_3.6.6                   textshaping_1.0.5          </span></span>
+<span><span class="co">##  [91] S4Arrays_1.12.1             viridisLite_0.4.3          </span></span>
+<span><span class="co">##  [93] lava_1.9.3                  dplyr_1.2.1                </span></span>
+<span><span class="co">##  [95] gtable_0.3.6                sass_0.4.10                </span></span>
+<span><span class="co">##  [97] digest_0.6.39               BiocGenerics_0.58.1        </span></span>
+<span><span class="co">##  [99] SparseArray_1.12.3          farver_2.1.2               </span></span>
+<span><span class="co">## [101] htmltools_0.5.9             pkgdown_2.2.1              </span></span>
+<span><span class="co">## [103] lifecycle_1.0.5             hardhat_1.4.3              </span></span>
+<span><span class="co">## [105] MASS_7.3-65</span></span></code></pre>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
@@ -713,7 +748,7 @@ understand results</li>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer>
