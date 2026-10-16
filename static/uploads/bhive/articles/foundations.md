@@ -1,5 +1,8 @@
 # Algorithm & Biological Foundations
 
+    ## Warning: replacing previous import 'S4Arrays::makeNindexFromArrayViewport' by
+    ## 'DelayedArray::makeNindexFromArrayViewport' when loading 'SummarizedExperiment'
+
 ## Overview
 
 This article describes the mathematical formulation and biological
@@ -708,7 +711,7 @@ settings depend on your data.
     ## [1] stats     graphics  grDevices utils     datasets  methods   base     
     ## 
     ## other attached packages:
-    ## [1] ggplot2_4.0.3    bHIVE_0.99.7     BiocStyle_2.40.0
+    ## [1] ggplot2_4.0.3    bHIVE_0.99.8     BiocStyle_2.40.0
     ## 
     ## loaded via a namespace (and not attached):
     ##  [1] sass_0.4.10                 generics_0.1.4             

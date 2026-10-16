@@ -1,6 +1,6 @@
 # Changelog
 
-## bHIVE 0.99.7
+## bHIVE 0.99.8
 
 Changes in response to the first round of Bioconductor review.
 

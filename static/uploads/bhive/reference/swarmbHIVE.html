@@ -11,7 +11,7 @@ combinations. Evaluates each combination using different metrics:"><meta propert
 
     <a class="navbar-brand me-2" href="../index.html">bHIVE</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.7</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.8</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -151,14 +151,16 @@ for parallelization. The function supports <code>SerialParam</code>, <code>Multi
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Starting swarmbHIVE with 8 parameter combinations (task=classification, metric=balanced_accuracy).</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Evaluating combo 1/8: nAntibodies=10, beta=3, epsilon=0.01</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Evaluating combo 2/8: nAntibodies=20, beta=3, epsilon=0.01</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> This fit cannot predict every class. versicolor kept 4 antibodies and recovered 22% of its 50 observations. virginica kept 4 antibodies and recovered 44% of its 50 observations. minPerClass seeds antibodies per class, but suppression removes them afterwards. Raise nAntibodies, lower epsilon, or raise minPerClass. See ?AINet.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Evaluating combo 3/8: nAntibodies=10, beta=5, epsilon=0.01</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> This fit cannot predict every class. versicolor kept 4 antibodies and recovered 48% of its 50 observations. minPerClass seeds antibodies per class, but suppression removes them afterwards. Raise nAntibodies, lower epsilon, or raise minPerClass. See ?AINet.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Evaluating combo 4/8: nAntibodies=20, beta=5, epsilon=0.01</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> This fit cannot predict every class. versicolor kept 6 antibodies and recovered 28% of its 50 observations. minPerClass seeds antibodies per class, but suppression removes them afterwards. Raise nAntibodies, lower epsilon, or raise minPerClass. See ?AINet.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Evaluating combo 5/8: nAntibodies=10, beta=3, epsilon=0.05</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> This fit cannot predict every class. versicolor kept 2 antibodies and recovered 44% of its 50 observations. minPerClass seeds antibodies per class, but suppression removes them afterwards. Raise nAntibodies, lower epsilon, or raise minPerClass. See ?AINet.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Evaluating combo 6/8: nAntibodies=20, beta=3, epsilon=0.05</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Evaluating combo 7/8: nAntibodies=10, beta=5, epsilon=0.05</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Evaluating combo 8/8: nAntibodies=20, beta=5, epsilon=0.05</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Best parameters: nAntibodies=10, beta=5, epsilon=0.05, metric_value=0.9467</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Best parameters: nAntibodies=10, beta=3, epsilon=0.01, metric_value=0.94</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># For clustering with silhouette</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span></span></span>
@@ -180,10 +182,10 @@ for parallelization. The function supports <code>SerialParam</code>, <code>Multi
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Evaluating combo 6/8: nAntibodies=10, beta=3, epsilon=0.05</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Evaluating combo 7/8: nAntibodies=5, beta=5, epsilon=0.05</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Evaluating combo 8/8: nAntibodies=10, beta=5, epsilon=0.05</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Best parameters: nAntibodies=10, beta=3, epsilon=0.05, metric_value=0.1742</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Best parameters: nAntibodies=5, beta=3, epsilon=0.05, metric_value=0.1784</span>
 <span class="r-in"><span><span class="va">res_clust</span><span class="op">$</span><span class="va">best_params</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   nAntibodies beta epsilon metric_value</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6          10    3    0.05    0.1742421</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5           5    3    0.05    0.1783886</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>

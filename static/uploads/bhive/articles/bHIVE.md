@@ -79,6 +79,13 @@ keep the 32 lineage markers, take 5,000 gated cells, and apply the usual
 ``` r
 
 library(bHIVE)
+```
+
+    ## Warning: replacing previous import 'S4Arrays::makeNindexFromArrayViewport' by
+    ## 'DelayedArray::makeNindexFromArrayViewport' when loading 'SummarizedExperiment'
+
+``` r
+
 library(SingleCellExperiment)
 library(HDCytoData)
 library(bluster)
@@ -293,7 +300,7 @@ vapply(as.list(sweep$clusters),
 ```
 
     ##  targetK.8 targetK.14 targetK.20 
-    ##  0.7106187  0.8473659  0.8432034
+    ##  0.6942679  0.5563781  0.8458816
 
 ## Comparison with FlowSOM and bluster methods
 
@@ -347,7 +354,7 @@ knitr::kable(comparison, digits = c(0, 0, 3, 1))
 | bHIVE, seed 1       |       14 | 0.805 |     1.7 |
 | bHIVE, seed 2       |       14 | 0.869 |     1.7 |
 | bHIVE, seed 3       |       14 | 0.967 |     1.8 |
-| FlowSOM             |       14 | 0.897 |     5.9 |
+| FlowSOM             |       14 | 0.897 |     6.2 |
 | k-means             |       14 | 0.583 |     0.0 |
 | SNN graph + Louvain |        8 | 0.971 |     0.8 |
 
@@ -547,9 +554,9 @@ tuned$results
 ```
 
     ##   targetK metric_value
-    ## 1      10     1.702019
-    ## 2      14     1.815448
-    ## 3      20     1.712231
+    ## 1      10     1.853063
+    ## 2      14     1.701136
+    ## 3      20     1.835674
 
 ## Session information
 
@@ -589,7 +596,7 @@ sessionInfo()
     ## [13] Seqinfo_1.2.0               IRanges_2.46.0             
     ## [15] S4Vectors_0.50.3            BiocGenerics_0.58.1        
     ## [17] generics_0.1.4              MatrixGenerics_1.24.0      
-    ## [19] matrixStats_1.5.0           bHIVE_0.99.7               
+    ## [19] matrixStats_1.5.0           bHIVE_0.99.8               
     ## [21] BiocStyle_2.40.0           
     ## 
     ## loaded via a namespace (and not attached):

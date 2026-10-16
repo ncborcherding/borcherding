@@ -1,5 +1,8 @@
 # Advanced Tuning & Workflows
 
+    ## Warning: replacing previous import 'S4Arrays::makeNindexFromArrayViewport' by
+    ## 'DelayedArray::makeNindexFromArrayViewport' when loading 'SummarizedExperiment'
+
 ## Introduction
 
 This vignette covers advanced usage patterns for bHIVE:
@@ -64,7 +67,7 @@ tuning$best_params
 ```
 
     ##   nAntibodies beta epsilon metric_value
-    ## 1          10    3    0.01    0.3203197
+    ## 4          10    5    0.01    0.3300533
 
 ### Classification Tuning
 
@@ -85,7 +88,7 @@ tuning_cls$best_params
 ```
 
     ##   nAntibodies beta epsilon metric_value
-    ## 6          50    5    0.01    0.9733333
+    ## 3          50    3    0.01    0.9666667
 
 ### Parallelization with BiocParallel
 
@@ -512,7 +515,7 @@ sessionInfo()
     ## [1] stats     graphics  grDevices utils     datasets  methods   base     
     ## 
     ## other attached packages:
-    ## [1] caret_7.0-1      lattice_0.22-9   ggplot2_4.0.3    bHIVE_0.99.7    
+    ## [1] caret_7.0-1      lattice_0.22-9   ggplot2_4.0.3    bHIVE_0.99.8    
     ## [5] BiocStyle_2.40.0
     ## 
     ## loaded via a namespace (and not attached):
@@ -547,7 +550,7 @@ sessionInfo()
     ##  [57] listenv_1.1.0               tibble_3.3.1               
     ##  [59] plyr_1.8.9                  Biobase_2.72.0             
     ##  [61] withr_3.0.3                 S7_0.2.2                   
-    ##  [63] evaluate_1.0.5              future_1.76.0              
+    ##  [63] evaluate_1.0.5              future_1.80.0              
     ##  [65] desc_1.4.3                  survival_3.8-6             
     ##  [67] proxy_0.4-29                pillar_1.11.1              
     ##  [69] BiocManager_1.30.27         MatrixGenerics_1.24.0      
