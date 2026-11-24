@@ -5,9 +5,6 @@
 library(bHIVE)
 ```
 
-    ## Warning: replacing previous import 'S4Arrays::makeNindexFromArrayViewport' by
-    ## 'DelayedArray::makeNindexFromArrayViewport' when loading 'SummarizedExperiment'
-
 ## Introduction
 
 The bHIVE package has two interfaces. The functional
@@ -434,13 +431,13 @@ passes extra arguments, modules included, on to
 sessionInfo()
 ```
 
-    ## R version 4.6.1 (2026-06-24)
+    ## R version 4.6.2 (2026-10-29)
     ## Platform: x86_64-pc-linux-gnu
-    ## Running under: Ubuntu 24.04.5 LTS
+    ## Running under: Ubuntu 26.04.1 LTS
     ## 
     ## Matrix products: default
     ## BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3 
-    ## LAPACK: /usr/lib/x86_64-linux-gnu/openblas-pthread/libopenblasp-r0.3.26.so;  LAPACK version 3.12.0
+    ## LAPACK: /usr/lib/x86_64-linux-gnu/openblas-pthread/libopenblasp-r0.3.32.so;  LAPACK version 3.12.0
     ## 
     ## locale:
     ##  [1] LC_CTYPE=C.UTF-8       LC_NUMERIC=C           LC_TIME=C.UTF-8       
@@ -455,42 +452,42 @@ sessionInfo()
     ## [1] stats     graphics  grDevices utils     datasets  methods   base     
     ## 
     ## other attached packages:
-    ## [1] bHIVE_0.99.8     BiocStyle_2.40.0
+    ## [1] bHIVE_0.99.9     BiocStyle_2.40.0
     ## 
     ## loaded via a namespace (and not attached):
-    ##  [1] sass_0.4.10                 generics_0.1.4             
-    ##  [3] SparseArray_1.12.3          lattice_0.22-9             
+    ##  [1] sass_0.5.0                  generics_0.1.4             
+    ##  [3] SparseArray_1.12.3          lattice_0.23-1             
     ##  [5] digest_0.6.39               magrittr_2.0.5             
-    ##  [7] evaluate_1.0.5              grid_4.6.1                 
+    ##  [7] evaluate_1.0.5              grid_4.6.2                 
     ##  [9] RColorBrewer_1.1-3          bookdown_0.48              
-    ## [11] fastmap_1.2.0               Matrix_1.7-5               
+    ## [11] fastmap_1.2.0               Matrix_1.7-6               
     ## [13] jsonlite_2.0.0              BiocManager_1.30.27        
     ## [15] SingleCellExperiment_1.34.0 scales_1.4.0               
-    ## [17] codetools_0.2-20            textshaping_1.0.5          
+    ## [17] codetools_0.2-20            textshaping_1.1.0          
     ## [19] jquerylib_0.1.4             abind_1.4-8                
     ## [21] cli_3.6.6                   rlang_1.3.0                
     ## [23] XVector_0.52.0              BiocNeighbors_2.6.0        
     ## [25] Biobase_2.72.0              DelayedArray_0.38.2        
     ## [27] cachem_1.1.0                yaml_2.3.12                
-    ## [29] otel_0.2.0                  S4Arrays_1.12.1            
-    ## [31] tools_4.6.1                 parallel_4.6.1             
+    ## [29] otel_0.3.0                  S4Arrays_1.12.1            
+    ## [31] tools_4.6.2                 parallel_4.6.2             
     ## [33] BiocParallel_1.46.0         dplyr_1.2.1                
-    ## [35] ggplot2_4.0.3               SummarizedExperiment_1.42.0
+    ## [35] ggplot2_4.0.4               SummarizedExperiment_1.42.0
     ## [37] BiocGenerics_0.58.1         vctrs_0.7.3                
     ## [39] R6_2.6.1                    matrixStats_1.5.0          
-    ## [41] stats4_4.6.1                lifecycle_1.0.5            
+    ## [41] stats4_4.6.2                lifecycle_1.0.5            
     ## [43] Seqinfo_1.2.0               S4Vectors_0.50.3           
     ## [45] fs_2.1.0                    IRanges_2.46.0             
-    ## [47] bluster_1.22.0              cluster_2.1.8.2            
+    ## [47] bluster_1.22.0              cluster_2.1.8.3            
     ## [49] ragg_1.5.2                  pkgconfig_2.0.3            
     ## [51] desc_1.4.3                  pkgdown_2.2.1              
     ## [53] pillar_1.11.1               bslib_0.12.0               
     ## [55] gtable_0.3.6                glue_1.8.1                 
-    ## [57] Rcpp_1.1.2                  systemfonts_1.3.2          
-    ## [59] GenomicRanges_1.64.0        xfun_0.61                  
+    ## [57] Rcpp_1.1.2                  systemfonts_1.3.4          
+    ## [59] GenomicRanges_1.64.0        xfun_0.62                  
     ## [61] tibble_3.3.1                tidyselect_1.2.1           
     ## [63] MatrixGenerics_1.24.0       knitr_1.52                 
     ## [65] farver_2.1.2                igraph_2.3.4               
     ## [67] htmltools_0.5.9             clusterCrit_1.3.0          
-    ## [69] rmarkdown_2.32              compiler_4.6.1             
-    ## [71] S7_0.2.2
+    ## [69] rmarkdown_2.32              compiler_4.6.2             
+    ## [71] S7_1.0.0

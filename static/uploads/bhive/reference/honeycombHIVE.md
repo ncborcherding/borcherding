@@ -238,27 +238,27 @@ resC <- honeycombHIVE(
 #> Iteration 10 | #Antibodies: 15 | noImproveCount: 10
 #> Layer 1 completed. Next layer will use 11 prototypes.
 #> === honeycombHIVE: Layer 2 / 3 (task=clustering) ===
-#> Iteration 1 | #Antibodies: 9 | noImproveCount: 0
-#> Iteration 2 | #Antibodies: 9 | noImproveCount: 1
-#> Iteration 3 | #Antibodies: 9 | noImproveCount: 2
-#> Iteration 4 | #Antibodies: 9 | noImproveCount: 3
-#> Iteration 5 | #Antibodies: 9 | noImproveCount: 4
-#> Iteration 6 | #Antibodies: 9 | noImproveCount: 5
-#> Iteration 7 | #Antibodies: 9 | noImproveCount: 6
-#> Iteration 8 | #Antibodies: 9 | noImproveCount: 7
-#> Iteration 9 | #Antibodies: 9 | noImproveCount: 8
-#> Iteration 10 | #Antibodies: 9 | noImproveCount: 9
-#> Layer 2 completed. Next layer will use 5 prototypes.
+#> Iteration 1 | #Antibodies: 11 | noImproveCount: 1
+#> Iteration 2 | #Antibodies: 11 | noImproveCount: 2
+#> Iteration 3 | #Antibodies: 11 | noImproveCount: 3
+#> Iteration 4 | #Antibodies: 11 | noImproveCount: 4
+#> Iteration 5 | #Antibodies: 11 | noImproveCount: 5
+#> Iteration 6 | #Antibodies: 11 | noImproveCount: 6
+#> Iteration 7 | #Antibodies: 11 | noImproveCount: 7
+#> Iteration 8 | #Antibodies: 11 | noImproveCount: 8
+#> Iteration 9 | #Antibodies: 11 | noImproveCount: 9
+#> Iteration 10 | #Antibodies: 11 | noImproveCount: 10
+#> Layer 2 completed. Next layer will use 8 prototypes.
 #> === honeycombHIVE: Layer 3 / 3 (task=clustering) ===
-#> Iteration 1 | #Antibodies: 4 | noImproveCount: 0
-#> Iteration 2 | #Antibodies: 4 | noImproveCount: 1
-#> Iteration 3 | #Antibodies: 4 | noImproveCount: 2
-#> Iteration 4 | #Antibodies: 4 | noImproveCount: 3
-#> Iteration 5 | #Antibodies: 4 | noImproveCount: 4
-#> Iteration 6 | #Antibodies: 4 | noImproveCount: 5
-#> Iteration 7 | #Antibodies: 4 | noImproveCount: 6
-#> Iteration 8 | #Antibodies: 4 | noImproveCount: 7
-#> Iteration 9 | #Antibodies: 4 | noImproveCount: 8
-#> Iteration 10 | #Antibodies: 4 | noImproveCount: 9
+#> Iteration 1 | #Antibodies: 6 | noImproveCount: 0
+#> Iteration 2 | #Antibodies: 6 | noImproveCount: 1
+#> Iteration 3 | #Antibodies: 6 | noImproveCount: 2
+#> Iteration 4 | #Antibodies: 6 | noImproveCount: 3
+#> Iteration 5 | #Antibodies: 6 | noImproveCount: 4
+#> Iteration 6 | #Antibodies: 6 | noImproveCount: 5
+#> Iteration 7 | #Antibodies: 6 | noImproveCount: 6
+#> Iteration 8 | #Antibodies: 6 | noImproveCount: 7
+#> Iteration 9 | #Antibodies: 6 | noImproveCount: 8
+#> Iteration 10 | #Antibodies: 6 | noImproveCount: 9
 #> Layer 3 completed. Next layer will use 4 prototypes.
 ```

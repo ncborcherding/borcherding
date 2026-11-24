@@ -115,15 +115,13 @@ tuning_results <- swarmbHIVE(X = X,
 #> Evaluating combo 1/8: nAntibodies=10, beta=3, epsilon=0.01
 #> Evaluating combo 2/8: nAntibodies=20, beta=3, epsilon=0.01
 #> Evaluating combo 3/8: nAntibodies=10, beta=5, epsilon=0.01
-#> This fit cannot predict every class. versicolor kept 4 antibodies and recovered 48% of its 50 observations. minPerClass seeds antibodies per class, but suppression removes them afterwards. Raise nAntibodies, lower epsilon, or raise minPerClass. See ?AINet.
 #> Evaluating combo 4/8: nAntibodies=20, beta=5, epsilon=0.01
-#> This fit cannot predict every class. versicolor kept 6 antibodies and recovered 28% of its 50 observations. minPerClass seeds antibodies per class, but suppression removes them afterwards. Raise nAntibodies, lower epsilon, or raise minPerClass. See ?AINet.
 #> Evaluating combo 5/8: nAntibodies=10, beta=3, epsilon=0.05
-#> This fit cannot predict every class. versicolor kept 2 antibodies and recovered 44% of its 50 observations. minPerClass seeds antibodies per class, but suppression removes them afterwards. Raise nAntibodies, lower epsilon, or raise minPerClass. See ?AINet.
 #> Evaluating combo 6/8: nAntibodies=20, beta=3, epsilon=0.05
 #> Evaluating combo 7/8: nAntibodies=10, beta=5, epsilon=0.05
 #> Evaluating combo 8/8: nAntibodies=20, beta=5, epsilon=0.05
-#> Best parameters: nAntibodies=10, beta=3, epsilon=0.01, metric_value=0.94
+#> This fit cannot predict every class. virginica kept 3 antibodies and recovered 32% of its 50 observations. minPerClass seeds antibodies per class, but suppression removes them afterwards. Raise nAntibodies, lower epsilon, or raise minPerClass. See ?AINet.
+#> Best parameters: nAntibodies=10, beta=3, epsilon=0.01, metric_value=0.9133
 
 # For clustering with silhouette
 set.seed(42)
@@ -145,9 +143,9 @@ res_clust <- swarmbHIVE(X_clust,
 #> Evaluating combo 6/8: nAntibodies=10, beta=3, epsilon=0.05
 #> Evaluating combo 7/8: nAntibodies=5, beta=5, epsilon=0.05
 #> Evaluating combo 8/8: nAntibodies=10, beta=5, epsilon=0.05
-#> Best parameters: nAntibodies=5, beta=3, epsilon=0.05, metric_value=0.1784
+#> Best parameters: nAntibodies=5, beta=3, epsilon=0.01, metric_value=0.1794
 res_clust$best_params
 #>   nAntibodies beta epsilon metric_value
-#> 5           5    3    0.05    0.1783886
+#> 1           5    3    0.01    0.1794148
 
 ```

@@ -307,14 +307,14 @@ model <- AINet$new(nAntibodies = 15, maxIter = 10, verbose = FALSE)
 model$fit(X, task = "clustering")
 table(model$result$assignments)
 #> 
-#>  1  2  3  4  5  6  7  8  9 10 11 12 13 14 
-#>  4  4 12 19  1  4 15 13 18 22  7 16  3 12 
+#>  1  2  3  4  5  6  7  8  9 10 
+#>  4 28  1 21 18 28 20  3  6 21 
 
 # Classification
 model2 <- AINet$new(nAntibodies = 20, maxIter = 10, verbose = FALSE)
 model2$fit(X, iris$Species, task = "classification")
 mean(model2$result$assignments == as.character(iris$Species))
-#> [1] 0.7666667
+#> [1] 0.86
 
 # Predict on new data
 preds <- model2$predict(X[1:10, ])

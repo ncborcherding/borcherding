@@ -119,6 +119,6 @@ if (requireNamespace("caret", quietly = TRUE)) {
 #>             Actual
 #> Predicted    setosa versicolor virginica
 #>   setosa         50          0         0
-#>   versicolor      0         43         2
-#>   virginica       0          7        48
+#>   versicolor      0         46         8
+#>   virginica       0          4        42
 ```
